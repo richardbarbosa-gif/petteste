@@ -16,6 +16,20 @@ python3 -m http.server 8080
 Os caminhos dos assets são absolutos (`/assets/...`), então precisa ser servido a partir da raiz —
 abrir o `index.html` com dois cliques não vai carregar as fontes e o logo.
 
+## Versão em arquivo único (para testar sem servidor)
+
+```bash
+python3 build-standalone.py     # gera delivery360-standalone.html
+```
+
+Esse arquivo tem fontes, logos, ícone e JavaScript embutidos: abre com dois cliques,
+de qualquer pasta, sem servidor e sem internet. Serve para revisar, mandar por
+WhatsApp/e-mail e testar no PC.
+
+**Não edite o standalone** — ele é derivado. Altere o `index.html` e rode o script
+de novo, senão suas mudanças somem na próxima geração. O que vai para o ar é o
+`index.html` + `/assets`.
+
 ## Como publicar
 
 | Host | O que fazer |

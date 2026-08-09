@@ -35,7 +35,10 @@ if (counters.length) {
   const run = el => {
     const target = Number(el.dataset.count);
     const suffix = el.dataset.suffix || '';
+    // O valor final já está no HTML: só zeramos no instante de animar, para que
+    // uma falha de JS nunca deixe "0 restaurantes" na tela.
     if (reduceMotion) { el.textContent = target + suffix; return; }
+    el.textContent = '0';
     const dur = 1100;
     const t0 = performance.now();
     const tick = now => {
@@ -54,7 +57,7 @@ if (counters.length) {
         run(e.target);
         obs.unobserve(e.target);
       }
-    }, { threshold: 0.5 });
+    }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
     counters.forEach(el => io.observe(el));
   } else {
     counters.forEach(run);

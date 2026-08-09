@@ -142,6 +142,12 @@
   .wrap{width:var(--wrap);margin-inline:auto}
   .wrap-narrow{width:var(--wrap-narrow);margin-inline:auto}
   .fold{position:relative;padding-block:var(--sp-7);isolation:isolate}
+  /* fio de luz no topo: separa as dobras escuras sem virar borda dura */
+  .fold--rule::before{content:"";position:absolute;inset:0 0 auto;height:1px;
+    background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--red) 70%,transparent) 22%,
+      color-mix(in srgb,var(--orange) 60%,transparent) 50%,
+      color-mix(in srgb,var(--red) 70%,transparent) 78%,transparent);
+    opacity:.5}
   .fold--tight{padding-block:var(--sp-6)}
   /* Cabeçalho de seção: eyebrow → h2 → lead, com o mesmo respiro em toda a página */
   .sec-head{margin-bottom:var(--sp-head)}
@@ -167,7 +173,7 @@
   .eyebrow::before{content:"";width:clamp(20px,4vw,44px);height:2px;background:var(--red);flex:none}
   .eyebrow--center{justify-content:center}
   .eyebrow--center::after{content:"";width:clamp(20px,4vw,44px);height:2px;background:var(--red);flex:none}
-  .h2{font-family:'Anton',Impact,sans-serif;font-size:var(--f-2xl);line-height:.95;
+  .h2{font-family:'Anton',Impact,sans-serif;font-size:var(--f-2xl);line-height:1;
     text-transform:uppercase;letter-spacing:-.005em}
   .h3{font-size:var(--f-lg);font-weight:800;line-height:1.15;letter-spacing:-.01em}
   .lead{font-size:var(--f-md);color:var(--fg-soft);line-height:1.55}
@@ -298,6 +304,8 @@
 @keyframes spin{to{rotate:360deg}}
 .hero__grain{position:absolute;inset:0;z-index:-1;pointer-events:none;
   background-image:var(--grain);opacity:.05;mix-blend-mode:overlay}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:140px;z-index:-1;
+  pointer-events:none;background:linear-gradient(180deg,transparent,var(--ink-800))}
 .hero__in{display:grid;gap:clamp(2.5rem,5vw,4rem);align-items:center;
   grid-template-columns:1fr}
 @media (min-width:960px){.hero__in{grid-template-columns:1.08fr .92fr}}
@@ -365,12 +373,14 @@
 /* ---------- D2 · DIAGNÓSTICO -------------------------------------------- */
 .diag{background:var(--ink-800);border-block:1px solid var(--line)}
 .diag__head{text-align:center;margin-bottom:var(--sp-head)}
+.diag .grid-2{align-items:start}
 .diag__card{overflow:hidden}
 .diag__card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;
   background:linear-gradient(180deg,var(--red),transparent)}
 .diag__card--b::before{background:linear-gradient(180deg,var(--orange),transparent)}
-.diag__n{font-family:'Anton',sans-serif;position:absolute;right:1rem;top:.2rem;
-  font-size:5rem;line-height:1;color:color-mix(in srgb,var(--cream) 5%,transparent);pointer-events:none}
+.diag__n{font-family:'Anton',sans-serif;position:absolute;right:1.1rem;top:1rem;
+  font-size:4rem;line-height:.78;color:color-mix(in srgb,var(--cream) 6%,transparent);
+  pointer-events:none}
 .diag__card h3{margin-bottom:var(--sp-2)}
 .diag__card .card__tag{margin-bottom:var(--sp-3)}
 .diag__card p+p{margin-top:var(--sp-2)}
@@ -409,7 +419,13 @@
 .check__item:has(input:checked) .check__box svg{opacity:1;scale:1}
 .check__item:has(input:focus-visible){outline:3px solid var(--orange);outline-offset:3px}
 .check__item span{font-weight:600;line-height:1.4}
-.check__score{font-size:var(--f-sm);font-weight:700;color:var(--orange);letter-spacing:.02em}
+.check__score{display:inline-flex;align-items:center;gap:.6rem;margin-top:var(--sp-3);
+  font-size:var(--f-sm);font-weight:700;color:var(--cream);letter-spacing:.01em;
+  padding:.7rem 1.15rem;border-radius:999px;
+  background:color-mix(in srgb,var(--orange) 16%,transparent);
+  border:1px solid color-mix(in srgb,var(--orange) 55%,transparent)}
+.check__score::before{content:"";flex:none;width:9px;height:9px;border-radius:999px;
+  background:var(--orange);box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 25%,transparent)}
 .check__score:empty{display:none}
 .check__out{margin-top:var(--sp-3);font-size:var(--f-md);font-weight:700;color:var(--cream)}
 
@@ -438,6 +454,11 @@
   radial-gradient(80% 60% at 50% -10%,color-mix(in srgb,var(--red) 26%,transparent),transparent 60%),
   var(--ink-900)}
 .method__head{text-align:center;max-width:70ch;margin-inline:auto;margin-bottom:var(--sp-head)}
+.method__miojo{text-align:center;font-family:'Anton',sans-serif;text-transform:uppercase;
+  font-size:var(--f-md);letter-spacing:.04em;color:var(--cream);margin-bottom:var(--sp-4)}
+.method__miojo span{font-family:'Archivo',sans-serif;font-weight:600;text-transform:none;
+  letter-spacing:0;color:var(--fg-mute);font-size:.72em}
+.testis__label{justify-content:center;margin-block:var(--sp-4) var(--sp-2)}
 .cycle{display:grid;gap:clamp(1rem,2.4vw,1.6rem);perspective:1600px;
   grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
 .step{position:relative;padding:clamp(1.4rem,3vw,2rem);border-radius:var(--r-lg);
@@ -447,6 +468,11 @@
   transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .3s}
 .step:hover{transform:translateY(-8px) rotateX(6deg);border-color:color-mix(in srgb,var(--orange) 50%,transparent);
   box-shadow:0 16px 0 -2px #0a0a0a,0 34px 54px rgb(0 0 0/.6),0 0 60px -10px color-mix(in srgb,var(--orange) 45%,transparent)}
+.step::before{content:"";position:absolute;inset:0 auto auto 0;height:4px;width:100%;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  background:linear-gradient(90deg,var(--red),var(--orange));
+  opacity:.55;transition:opacity .35s var(--ease)}
+.step:hover::before{opacity:1}
 .step__n{font-family:'Anton',sans-serif;font-size:3.4rem;line-height:.8;
   color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--red) 75%,transparent);
   display:block;margin-bottom:.4rem}
@@ -463,6 +489,11 @@
   .cycle{grid-template-columns:repeat(4,1fr)}
   .step__arrow{display:grid}
   .step:last-child .step__arrow{display:none}
+}
+@media (max-width:1079px){
+  .step__arrow{display:grid;right:50%;top:auto;bottom:-1.15rem;translate:50% 0;rotate:90deg}
+  .step:last-child .step__arrow{display:none}
+  .cycle{gap:clamp(1.6rem,4vw,2.2rem)}
 }
 .method__flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem;
   margin-bottom:var(--sp-4);font-family:'Anton',sans-serif;font-size:clamp(.85rem,2.2vw,1.35rem);
@@ -492,7 +523,9 @@
   letter-spacing:.14em;text-transform:uppercase;color:var(--fg-mute)}
 .testis{display:grid;gap:clamp(1rem,2.4vw,1.6rem);margin-top:var(--sp-head);
   grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
-.testi{display:flex;flex-direction:column;gap:var(--sp-2)}
+.testi{display:flex;flex-direction:column;gap:var(--sp-2);overflow:hidden}
+.testi::before{content:"”";position:absolute;right:1rem;top:.4rem;font-family:'Anton',sans-serif;
+  font-size:5.5rem;line-height:.72;color:var(--red);opacity:.13;pointer-events:none}
 .testi__quote{font-family:'Anton',sans-serif;font-size:var(--f-md);line-height:1.15;
   text-transform:none;color:var(--ink)}
 .testi__body{font-size:var(--f-sm);line-height:1.55;color:color-mix(in srgb,var(--ink) 72%,transparent)}
@@ -513,8 +546,20 @@
 .about__photo::after{content:"";position:absolute;inset:0;background-image:var(--grain);
   opacity:.06;mix-blend-mode:overlay}
 .about__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.slot{font-size:var(--f-xs);letter-spacing:.16em;text-transform:uppercase;color:var(--fg-mute);
-  border:1px dashed var(--line-strong);border-radius:var(--r-md);padding:1rem 1.2rem;max-width:24ch}
+.about__mark{position:absolute;right:-14%;bottom:-8%;width:78%;color:var(--cream);
+  opacity:.07;pointer-events:none}
+.about__corner{position:absolute;width:34px;height:34px;pointer-events:none;
+  border-color:color-mix(in srgb,var(--orange) 75%,transparent);border-style:solid;border-width:0}
+.about__corner--tl{top:18px;left:18px;border-top-width:2px;border-left-width:2px;
+  border-radius:6px 0 0 0}
+.about__corner--br{bottom:18px;right:18px;border-bottom-width:2px;border-right-width:2px;
+  border-radius:0 0 6px 0}
+.slot{position:relative;display:flex;flex-direction:column;align-items:center;gap:.7rem;
+  font-size:var(--f-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-soft);
+  border:1px dashed var(--line-strong);border-radius:var(--r-md);
+  padding:1.15rem 1.3rem;max-width:22ch;line-height:1.5;
+  background:color-mix(in srgb,#000 30%,transparent);backdrop-filter:blur(3px)}
+.slot svg{width:26px;height:26px;color:var(--orange)}
 .about blockquote{font-family:'Anton',sans-serif;font-size:var(--f-xl);line-height:1;
   text-transform:uppercase;color:var(--cream);margin-bottom:var(--sp-3)}
 .about blockquote span{color:var(--red)}
@@ -605,8 +650,9 @@
   opacity:.06;mix-blend-mode:overlay;pointer-events:none}
 .inaction__in{max-width:70ch;margin-inline:auto;text-align:center}
 .inaction__in p+p{margin-top:var(--sp-3)}
-.inaction__q{font-family:'Anton',sans-serif;font-size:var(--f-xl);line-height:1.02;
-  text-transform:uppercase;color:var(--cream);margin-block:var(--sp-3)}
+.inaction__q{font-family:'Anton',sans-serif;font-size:clamp(1.6rem,1.2rem + 1.9vw,2.7rem);
+  line-height:1.12;text-transform:uppercase;color:var(--cream);
+  margin-block:var(--sp-4);text-wrap:balance}
 .inaction__out{font-size:var(--f-md);font-weight:700;color:var(--cream)}
 
 .faq{background:var(--ink-800);padding-block:var(--sp-6)}
@@ -934,7 +980,7 @@
 <!-- ============================================================= -->
 <!-- DOBRA 5 · O MÉTODO DELIVERY 360°                              -->
 <!-- ============================================================= -->
-<section class="fold method defer" aria-labelledby="d5">
+<section class="fold fold--rule method defer" aria-labelledby="d5">
   <div class="wrap">
     <div class="method__head sec-head" data-reveal>
       <p class="eyebrow eyebrow--center">O método</p>
@@ -945,6 +991,8 @@
     <p class="method__flow" data-reveal aria-hidden="true">
       <b>1. Configura</b><i>➔</i><b>2. Precifica</b><i>➔</i><b>3. Roda</b><i>➔</i><b>4. Protege</b>
     </p>
+
+    <p class="method__miojo" data-reveal>No nível do miojo <span>(passo a passo ultra-simples):</span></p>
 
     <div class="cycle">
       <article class="step" data-reveal>
@@ -1010,7 +1058,7 @@
 <!-- ============================================================= -->
 <!-- DOBRA 6 · PROVA DE CAMPO + DEPOIMENTOS + QUEM SOU EU          -->
 <!-- ============================================================= -->
-<section class="fold proof defer" aria-labelledby="d6">
+<section class="fold fold--rule proof defer" aria-labelledby="d6">
   <div class="wrap">
     <div class="sec-head sec-head--center" data-reveal>
       <p class="eyebrow eyebrow--center">Prova de campo e prova social</p>
@@ -1019,13 +1067,15 @@
     </div>
 
     <div class="stats">
-      <div class="stat" data-reveal><b data-count="12">0</b><span>Restaurantes próprios</span></div>
-      <div class="stat" data-reveal data-reveal-delay="1"><b data-count="150" data-suffix="+">0</b><span>Donos usando o Gestoque 360</span></div>
-      <div class="stat" data-reveal data-reveal-delay="2"><b data-count="330">0</b><span>Mil restaurantes impactados</span></div>
-      <div class="stat" data-reveal data-reveal-delay="3"><b data-count="10">0</b><span>Aulas direto ao ponto</span></div>
+      <div class="stat" data-reveal><b data-count="12">12</b><span>Restaurantes próprios</span></div>
+      <div class="stat" data-reveal data-reveal-delay="1"><b data-count="150" data-suffix="+">150+</b><span>Donos usando o Gestoque 360</span></div>
+      <div class="stat" data-reveal data-reveal-delay="2"><b data-count="330">330</b><span>Mil restaurantes impactados</span></div>
+      <div class="stat" data-reveal data-reveal-delay="3"><b data-count="10">10</b><span>Aulas direto ao ponto</span></div>
     </div>
 
     <p class="lead center maxw-center" data-reveal>Mas não acredite apenas no que eu digo. Veja os resultados reais de alunos que saíram do escuro e transformaram suas lojas com o método Delivery 360°:</p>
+
+    <p class="eyebrow eyebrow--center testis__label" data-reveal>Depoimentos reais de quem saiu do escuro</p>
 
     <div class="testis">
       <article class="card card--light testi tilt" data-reveal data-tilt>
@@ -1059,8 +1109,19 @@
     <!-- Quem sou eu -->
     <div class="about" id="sobre">
       <figure class="about__photo" data-reveal>
-        <!-- Substitua por: <img src="/assets/img/rodrigo.webp" alt="Rodrigo Barros na cozinha de um dos restaurantes do Grupo 360 Food" width="800" height="1000" loading="lazy" decoding="async"> -->
-        <figcaption class="slot">Espaço reservado para a foto do Rodrigo</figcaption>
+        <!-- Substitua todo o conteúdo desta <figure> por:
+             <img src="/assets/img/rodrigo.webp"
+                  alt="Rodrigo Barros na cozinha de um dos restaurantes do Grupo 360 Food"
+                  width="800" height="1000" loading="lazy" decoding="async"> -->
+        <svg class="about__mark" viewBox="0 0 180.79 167.47" aria-hidden="true">
+          <path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/>
+        </svg>
+        <span class="about__corner about__corner--tl" aria-hidden="true"></span>
+        <span class="about__corner about__corner--br" aria-hidden="true"></span>
+        <figcaption class="slot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          Espaço reservado para a foto do Rodrigo
+        </figcaption>
       </figure>
 
       <div data-reveal data-reveal-delay="2">
@@ -1082,7 +1143,7 @@
 <!-- ============================================================= -->
 <!-- DOBRA 7 · O QUE VOCÊ LEVA HOJE                                -->
 <!-- ============================================================= -->
-<section class="fold deliver defer" aria-labelledby="d7">
+<section class="fold fold--rule deliver defer" aria-labelledby="d7">
   <div class="wrap">
     <div class="sec-head sec-head--center" data-reveal>
       <p class="eyebrow eyebrow--center">A entrega completa</p>
@@ -1140,7 +1201,7 @@
 <!-- ============================================================= -->
 <!-- DOBRA 8 · ISSO É PARA VOCÊ? + ANCORAGEM + OFERTA              -->
 <!-- ============================================================= -->
-<section class="fold offer defer" id="oferta" aria-labelledby="d8">
+<section class="fold fold--rule offer defer" id="oferta" aria-labelledby="d8">
   <div class="wrap">
     <div class="center maxw-center" style="margin-bottom:var(--sp-5)" data-reveal>
       <p class="eyebrow eyebrow--center">Seja honesto com você mesmo</p>
@@ -1405,7 +1466,10 @@ if (counters.length) {
   const run = el => {
     const target = Number(el.dataset.count);
     const suffix = el.dataset.suffix || '';
+    // O valor final já está no HTML: só zeramos no instante de animar, para que
+    // uma falha de JS nunca deixe "0 restaurantes" na tela.
     if (reduceMotion) { el.textContent = target + suffix; return; }
+    el.textContent = '0';
     const dur = 1100;
     const t0 = performance.now();
     const tick = now => {
@@ -1424,7 +1488,7 @@ if (counters.length) {
         run(e.target);
         obs.unobserve(e.target);
       }
-    }, { threshold: 0.5 });
+    }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
     counters.forEach(el => io.observe(el));
   } else {
     counters.forEach(run);
