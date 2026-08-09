@@ -1,0 +1,1351 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d0d0d">
+
+<title>Delivery 360°: Do Zero ao Lucro | Curso de iFood com Rodrigo Barros</title>
+<meta name="description" content="Fatura no iFood e não sobra? O método Delivery 360° leva do zero ao lucro real com o mesmo processo aplicado em 12 restaurantes próprios. 10 aulas, 5 módulos, 2 bônus e 7 dias de garantia por R$97.">
+<link rel="canonical" href="https://delivery360.com.br/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="author" content="Rodrigo Barros">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Rodrigo Barros">
+<meta property="og:url" content="https://delivery360.com.br/">
+<meta property="og:title" content="Delivery 360°: Do Zero ao Lucro">
+<meta property="og:description" content="O método que leva sua loja do zero (ou do faturamento sem lucro) até o lucro real no iFood. 12 restaurantes. 1 método. Nenhuma teoria.">
+<meta property="og:image" content="https://delivery360.com.br/assets/img/og-delivery360.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Capa do curso Delivery 360°: Do Zero ao Lucro, por Rodrigo Barros">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Delivery 360°: Do Zero ao Lucro">
+<meta name="twitter:description" content="Fatura no iFood e não sobra? O método aplicado todos os dias em 12 restaurantes próprios.">
+<meta name="twitter:image" content="https://delivery360.com.br/assets/img/og-delivery360.png">
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preload" href="/assets/fonts/anton-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+/* =========================================================================
+   DELIVERY 360° — Rodrigo Barros
+   CSS único e inline: 1 request para a página inteira, zero render-blocking.
+   Camadas em @layer para cascata previsível (nenhum !important no arquivo).
+   ========================================================================= */
+@layer reset, tokens, base, layout, components, sections, motion, utils;
+
+/* ---------- FONTES (auto-hospedadas, sem terceiros) ---------------------- */
+@font-face{
+  font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;
+  src:url('/assets/fonts/anton-latin-400.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url('/assets/fonts/archivo-latin-var.woff2') format('woff2-variations');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@layer reset{
+  *,*::before,*::after{box-sizing:border-box}
+  *{margin:0}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  img,svg,video{display:block;max-width:100%}
+  button,input,select,textarea{font:inherit;color:inherit}
+  a{color:inherit}
+  h1,h2,h3,h4,p,li{overflow-wrap:break-word;text-wrap:pretty}
+  h1,h2,h3{text-wrap:balance}
+  ul[class]{list-style:none;padding:0}
+  summary::-webkit-details-marker{display:none}
+  :target{scroll-margin-top:2rem}
+}
+
+@layer tokens{
+  :root{
+    /* Paleta oficial da marca — GUIDE LINE RODRIGO BARROS */
+    --red:#c62828;          /* primária   */
+    --cream:#f6f3ec;        /* primária   */
+    --ink:#1c1c1c;          /* primária   */
+    --orange:#e86a1c;       /* secundária */
+
+    /* Derivadas (mesma família, para profundidade) */
+    --red-deep:#7d1616;
+    --red-dark:#4a0d0d;
+    --red-black:#2a0808;
+    --ink-900:#0d0d0d;
+    --ink-800:#141414;
+    --ink-700:#1c1c1c;
+    --ink-600:#262626;
+    --line:color-mix(in srgb,var(--cream) 14%,transparent);
+    --line-strong:color-mix(in srgb,var(--cream) 26%,transparent);
+
+    /* Texto: contraste AA garantido.
+       #c62828 sobre #1c1c1c = 3.06:1 → só display grande/formas.
+       #e86a1c sobre #1c1c1c = 5.3:1  → acento de texto pequeno. OK AA.
+       #f6f3ec sobre #1c1c1c = 15.2:1 → corpo. */
+    --fg:var(--cream);
+    --fg-soft:color-mix(in srgb,var(--cream) 74%,transparent);
+    --fg-mute:color-mix(in srgb,var(--cream) 55%,transparent);
+    --accent:var(--orange);
+
+    /* Tipografia fluida — sem breakpoint, escala contínua 360px→1440px */
+    --f-xs:clamp(.75rem,.71rem + .18vw,.85rem);
+    --f-sm:clamp(.875rem,.84rem + .2vw,1rem);
+    --f-base:clamp(1rem,.95rem + .3vw,1.15rem);
+    --f-md:clamp(1.1rem,1rem + .55vw,1.4rem);
+    --f-lg:clamp(1.35rem,1.15rem + 1vw,2rem);
+    --f-xl:clamp(1.75rem,1.3rem + 2.1vw,3rem);
+    --f-2xl:clamp(2.25rem,1.5rem + 3.4vw,4.5rem);
+    --f-3xl:clamp(3rem,1.6rem + 6.2vw,7.5rem);
+
+    --sp-1:.5rem;--sp-2:1rem;--sp-3:1.5rem;--sp-4:2rem;--sp-5:3rem;
+    --sp-6:clamp(3rem,7vw,5.5rem);--sp-7:clamp(4rem,10vw,8rem);
+
+    --r-sm:8px;--r-md:14px;--r-lg:22px;--r-xl:32px;
+    --wrap:min(1200px,100% - clamp(1.25rem,5vw,4rem));
+    --wrap-narrow:min(820px,100% - clamp(1.25rem,5vw,4rem));
+
+    --shadow-1:0 1px 2px rgb(0 0 0/.4),0 4px 12px rgb(0 0 0/.28);
+    --shadow-2:0 8px 24px rgb(0 0 0/.45),0 24px 60px rgb(0 0 0/.4);
+    --shadow-3:0 30px 60px -12px rgb(0 0 0/.7),0 60px 120px -30px rgb(198 40 40/.35);
+
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --ease-out:cubic-bezier(.16,1,.3,1);
+
+    /* Grão: SVG inline, 0 request */
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  }
+}
+
+@layer base{
+  body{
+    font-family:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:var(--f-base);line-height:1.62;font-weight:400;
+    color:var(--fg);background:var(--ink-900);
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red);color:var(--cream)}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+  strong,b{font-weight:700;color:var(--cream)}
+  em{font-style:normal;color:var(--orange);font-weight:600}
+}
+
+@layer layout{
+  .wrap{width:var(--wrap);margin-inline:auto}
+  .wrap-narrow{width:var(--wrap-narrow);margin-inline:auto}
+  .fold{position:relative;padding-block:var(--sp-7);isolation:isolate}
+  .fold--tight{padding-block:var(--sp-6)}
+  .grid{display:grid;gap:clamp(1rem,2.5vw,2rem)}
+  .grid-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+  .grid-4{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+  .stack>*+*{margin-top:var(--sp-2)}
+  .stack-lg>*+*{margin-top:var(--sp-3)}
+  /* Renderização adiada das dobras longas: ganho direto de LCP/INP */
+  .defer{content-visibility:auto;contain-intrinsic-size:auto 900px}
+}
+
+@layer components{
+  /* ---------- Tipografia de peça ---------- */
+  .display{font-family:'Anton',Impact,'Archivo',sans-serif;font-weight:400;
+    line-height:.92;letter-spacing:-.01em;text-transform:uppercase}
+  .eyebrow{font-size:var(--f-xs);font-weight:700;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--orange);display:flex;align-items:center;
+    gap:.75rem;margin-bottom:var(--sp-2)}
+  .eyebrow::before{content:"";width:clamp(20px,4vw,44px);height:2px;background:var(--red);flex:none}
+  .eyebrow--center{justify-content:center}
+  .eyebrow--center::after{content:"";width:clamp(20px,4vw,44px);height:2px;background:var(--red);flex:none}
+  .h2{font-family:'Anton',Impact,sans-serif;font-size:var(--f-2xl);line-height:.95;
+    text-transform:uppercase;letter-spacing:-.005em}
+  .h3{font-size:var(--f-lg);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+  .lead{font-size:var(--f-md);color:var(--fg-soft);line-height:1.55}
+  .muted{color:var(--fg-mute)}
+  .accent{color:var(--orange)}
+  .red{color:var(--red)}
+  .mark-red{background:var(--red);color:var(--cream);padding:.05em .3em;
+    box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+  /* ---------- Logo ---------- */
+  .logo{display:inline-flex;align-items:center;color:var(--cream)}
+  .logo svg,.logo img{height:100%;width:auto}
+  .logo--h{height:clamp(22px,3.2vw,30px)}
+
+  /* ---------- Botão 3D ---------- */
+  .btn{
+    --btn-bg:var(--red);--btn-edge:#5e0f0f;--btn-fg:var(--cream);
+    position:relative;display:inline-flex;flex-direction:column;align-items:center;
+    justify-content:center;
+    gap:0;text-align:center;text-decoration:none;cursor:pointer;border:0;
+    font-weight:800;font-size:clamp(.95rem,.85rem + .45vw,1.2rem);letter-spacing:.01em;
+    line-height:1.2;padding:clamp(1rem,2.2vw,1.35rem) clamp(1.4rem,3.5vw,2.6rem);
+    border-radius:var(--r-md);color:var(--btn-fg);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--btn-bg) 82%,#fff) 0%,var(--btn-bg) 42%,color-mix(in srgb,var(--btn-bg) 88%,#000) 100%);
+    box-shadow:0 6px 0 var(--btn-edge),0 10px 22px rgb(0 0 0/.45),
+               inset 0 1px 0 color-mix(in srgb,#fff 45%,transparent),
+               inset 0 -2px 0 color-mix(in srgb,#000 25%,transparent);
+    transform:translateZ(0);
+    transition:transform .12s var(--ease),box-shadow .12s var(--ease),filter .2s var(--ease);
+    overflow:hidden;
+  }
+  .btn::after{ /* varredura de brilho */
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(105deg,transparent 38%,rgb(255 255 255/.34) 47%,transparent 56%);
+    transform:translateX(-120%);transition:transform .7s var(--ease-out);pointer-events:none
+  }
+  .btn:hover{filter:brightness(1.06)}
+  .btn:hover::after{transform:translateX(120%)}
+  .btn:active{transform:translateY(5px);
+    box-shadow:0 1px 0 var(--btn-edge),0 4px 10px rgb(0 0 0/.5),
+               inset 0 1px 0 color-mix(in srgb,#fff 30%,transparent)}
+  .btn--orange{--btn-bg:var(--orange);--btn-edge:#8f3c07}
+  .btn--xl{width:min(100%,720px);padding-block:clamp(1.15rem,2.6vw,1.6rem)}
+  .btn__sub{display:block;font-size:var(--f-xs);font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;opacity:.85;margin-top:.5rem;
+    padding-top:.5rem;border-top:1px solid color-mix(in srgb,#fff 28%,transparent);
+    width:min(100%,30ch)}
+
+  /* ---------- Cartões ---------- */
+  .card{position:relative;background:linear-gradient(180deg,var(--ink-700),var(--ink-800));
+    border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:clamp(1.35rem,3vw,2.2rem);box-shadow:var(--shadow-1);
+    transition:transform .5s var(--ease-out),border-color .35s var(--ease),box-shadow .35s var(--ease);
+    container-type:inline-size}
+  .card--light{background:linear-gradient(180deg,#fff,var(--cream));color:var(--ink);border-color:rgb(0 0 0/.1)}
+  .card--light .muted{color:color-mix(in srgb,var(--ink) 62%,transparent)}
+  .card:hover{border-color:var(--line-strong);box-shadow:var(--shadow-2)}
+  .card__tag{display:inline-flex;align-items:center;gap:.5rem;font-size:var(--f-xs);
+    font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    padding:.4rem .8rem;border-radius:999px;margin-bottom:var(--sp-2)}
+  .tag-red{background:color-mix(in srgb,var(--red) 20%,transparent);color:#ff8a8a;
+    border:1px solid color-mix(in srgb,var(--red) 45%,transparent)}
+  .tag-orange{background:color-mix(in srgb,var(--orange) 18%,transparent);color:#ffb070;
+    border:1px solid color-mix(in srgb,var(--orange) 45%,transparent)}
+
+  /* Tilt 3D — só em ponteiro fino, desligado no toque e em reduced-motion */
+  @media (hover:hover) and (pointer:fine){
+    .tilt{transform-style:preserve-3d;will-change:transform}
+    .tilt>*{transform:translateZ(24px)}
+  }
+
+  /* ---------- Selos ---------- */
+  .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem 1rem;
+    border:1px solid var(--line);border-radius:999px;background:rgb(255 255 255/.03);
+    font-size:var(--f-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--fg-soft);backdrop-filter:blur(6px)}
+  .pill svg{width:16px;height:16px;flex:none;color:var(--orange)}
+
+  /* ---------- Barra de progresso de leitura (CSS puro) ---------- */
+  .progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:60;
+    background:linear-gradient(90deg,var(--red),var(--orange));
+    transform-origin:0 50%;transform:scaleX(0);
+    animation:grow linear both;animation-timeline:scroll(root block)}
+  @keyframes grow{to{transform:scaleX(1)}}
+
+  /* ---------- Header ---------- */
+  .header{position:sticky;top:0;z-index:50;padding-block:.85rem;
+    background:color-mix(in srgb,var(--ink-900) 82%,transparent);
+    backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid transparent;transition:border-color .3s var(--ease)}
+  .header[data-stuck]{border-bottom-color:var(--line)}
+  .header__in{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2)}
+  .header__cta{display:none}
+  @media (min-width:840px){.header__cta{display:inline-flex;padding:.7rem 1.4rem;font-size:.9rem}}
+
+  /* ---------- CTA fixa mobile ---------- */
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:55;padding:.7rem clamp(.75rem,4vw,1rem)
+    calc(.7rem + env(safe-area-inset-bottom));
+    background:color-mix(in srgb,var(--ink-900) 92%,transparent);
+    backdrop-filter:blur(14px);border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:.75rem;
+    transform:translateY(120%);transition:transform .4s var(--ease-out);visibility:hidden}
+  .dock[data-show]{transform:translateY(0);visibility:visible}
+  .dock__price{flex:none;line-height:1.05}
+  .dock__price b{font-family:'Anton',sans-serif;font-size:1.4rem;display:block}
+  .dock__price span{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-mute)}
+  .dock .btn{flex:1;padding:.85rem 1rem;font-size:.9rem;border-radius:10px}
+  @media (min-width:840px){.dock{display:none}}
+}
+
+/* =========================================================================
+   DOBRAS
+   ========================================================================= */
+@layer sections{
+
+/* ---------- D1 · HERO ---------------------------------------------------- */
+.hero{position:relative;padding-block:clamp(2.5rem,6vw,4.5rem) var(--sp-7);overflow:hidden}
+.hero__bg{position:absolute;inset:-20% -10% auto;height:150%;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(70% 55% at 50% 0%,color-mix(in srgb,var(--red) 55%,transparent) 0%,transparent 62%),
+    radial-gradient(45% 40% at 85% 30%,color-mix(in srgb,var(--red-deep) 60%,transparent) 0%,transparent 70%),
+    radial-gradient(60% 50% at 12% 62%,color-mix(in srgb,var(--red-black) 90%,transparent) 0%,transparent 70%)}
+.hero__rays{position:absolute;inset:auto 50% auto;top:-10%;width:190vmax;aspect-ratio:1;
+  translate:-50% 0;z-index:-3;pointer-events:none;opacity:.3;
+  background:conic-gradient(from 0deg,transparent 0 3deg,rgb(198 40 40/.5) 3deg 6deg,transparent 6deg 12deg);
+  mask-image:radial-gradient(closest-side,#000 12%,transparent 72%);
+  animation:spin 140s linear infinite}
+@keyframes spin{to{rotate:360deg}}
+.hero__grain{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:var(--grain);opacity:.05;mix-blend-mode:overlay}
+.hero__in{display:grid;gap:clamp(2.5rem,5vw,4rem);align-items:center;
+  grid-template-columns:1fr}
+@media (min-width:960px){.hero__in{grid-template-columns:1.08fr .92fr}}
+.hero h1{font-family:'Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:var(--f-xl);line-height:1.02;letter-spacing:-.008em;margin-bottom:var(--sp-3)}
+.hero h1 .lo{display:block;font-family:'Archivo',sans-serif;font-weight:600;
+  text-transform:none;font-size:.5em;line-height:1.35;letter-spacing:0;
+  color:var(--fg-soft);margin-bottom:.55em}
+.hero h1 .hi{color:var(--cream);display:block}
+.hero h1 .hi em{color:var(--orange);font-style:normal}
+.hero__sub{font-size:var(--f-md);color:var(--fg-soft);max-width:56ch;margin-bottom:var(--sp-4)}
+.hero__cta{display:flex;flex-direction:column;gap:var(--sp-2);align-items:flex-start;max-width:640px}
+.hero__pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:var(--sp-3)}
+
+/* Capa 3D */
+.cover{perspective:1400px;perspective-origin:60% 40%;display:flex;justify-content:center}
+.cover__card{
+  position:relative;width:min(100%,420px);aspect-ratio:708/1000;border-radius:18px;
+  overflow:hidden;transform-style:preserve-3d;
+  transform:rotateY(var(--ry,-15deg)) rotateX(var(--rx,7deg)) rotateZ(-1.2deg);
+  box-shadow:var(--shadow-3),0 0 0 1px rgb(255 255 255/.08);
+  background:
+    radial-gradient(120% 80% at 50% 42%,#a51f1f 0%,#6d1212 38%,#3d0808 68%,#210404 100%);
+  animation:float 9s ease-in-out infinite;
+  transition:transform .8s var(--ease-out)}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -14px}}
+.cover__card::before{ /* raios da capa */
+  content:"";position:absolute;inset:-30%;
+  background:conic-gradient(from 200deg,transparent 0 4deg,rgb(255 255 255/.07) 4deg 8deg,transparent 8deg 16deg);
+  mask-image:radial-gradient(closest-side,#000 10%,transparent 70%)}
+.cover__card::after{ /* vinheta + brilho de borda */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(100% 70% at 50% 55%,transparent 40%,rgb(0 0 0/.55) 100%);
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.18),inset 0 0 60px rgb(0 0 0/.4)}
+.cover__in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  padding:8% 7% 6%;text-align:center;transform:translateZ(30px)}
+.cover__logo{width:56%;margin-bottom:6%}
+.cover__logo img{width:100%;height:auto}
+.cover__rule{width:26px;height:3px;background:var(--orange);margin-bottom:5%}
+.cover__eyebrow{font-size:clamp(.5rem,1.6cqw,.72rem);font-weight:800;letter-spacing:.38em;
+  text-transform:uppercase;color:var(--cream);opacity:.95}
+.cover__art{flex:1;width:100%;display:grid;place-items:center;padding-block:2%}
+.cover__art svg{width:88%;height:auto;filter:drop-shadow(0 22px 34px rgb(0 0 0/.55))}
+.cover__title{font-family:'Anton',sans-serif;font-size:clamp(2.6rem,16cqw,4.6rem);
+  line-height:.82;letter-spacing:-.02em;color:var(--cream);text-transform:uppercase;
+  text-shadow:0 3px 0 #7d1616,0 6px 14px rgb(0 0 0/.55)}
+.cover__360{font-family:'Anton',sans-serif;font-size:clamp(1.9rem,11cqw,3.2rem);line-height:.9;
+  background:linear-gradient(180deg,#ffd68a 0%,#e86a1c 45%,#a13d05 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 3px rgb(0 0 0/.5));margin-top:.06em}
+.cover__badge{margin-top:5%;background:var(--ink);color:var(--cream);text-transform:uppercase;
+  font-size:clamp(.55rem,2.3cqw,.9rem);font-weight:800;letter-spacing:.2em;
+  padding:.55em 1.1em;border-left:4px solid var(--orange);
+  box-shadow:0 6px 16px rgb(0 0 0/.5)}
+.cover__meta{margin-top:5%;font-size:clamp(.5rem,1.7cqw,.72rem);font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.28em;color:color-mix(in srgb,var(--cream) 80%,transparent)}
+.cover__glare{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;
+  background:linear-gradient(115deg,transparent 32%,rgb(255 255 255/.4) 47%,transparent 60%);
+  transform:translateX(-30%)}
+.cover__shadow{position:absolute;left:8%;right:8%;bottom:-6%;height:40px;z-index:-1;
+  background:radial-gradient(50% 50% at 50% 50%,rgb(0 0 0/.65),transparent 70%);filter:blur(10px)}
+.cover__note{margin-top:var(--sp-3);text-align:center;font-size:var(--f-xs);color:var(--fg-mute)}
+
+/* ---------- D2 · DIAGNÓSTICO -------------------------------------------- */
+.diag{background:var(--ink-800);border-block:1px solid var(--line)}
+.diag__head{text-align:center;margin-bottom:var(--sp-5)}
+.diag__card{overflow:hidden}
+.diag__card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;
+  background:linear-gradient(180deg,var(--red),transparent)}
+.diag__card--b::before{background:linear-gradient(180deg,var(--orange),transparent)}
+.diag__n{font-family:'Anton',sans-serif;position:absolute;right:1rem;top:.2rem;
+  font-size:5rem;line-height:1;color:color-mix(in srgb,var(--cream) 5%,transparent);pointer-events:none}
+.diag__card h3{margin-bottom:var(--sp-2)}
+.diag__card p+p{margin-top:var(--sp-2)}
+.diag__link{margin-top:var(--sp-5);text-align:center}
+
+/* ---------- D3 · O VILÃO + CHECKLIST ------------------------------------ */
+.villain{background:
+  linear-gradient(180deg,var(--ink-800) 0%,var(--red-black) 45%,var(--red-dark) 100%)}
+.villain__quotes{display:grid;gap:var(--sp-2);margin-block:var(--sp-4);max-width:44ch}
+.quote{position:relative;padding-left:2.6rem;font-size:var(--f-lg);font-weight:700;
+  line-height:1.25;color:var(--cream)}
+.quote::before{content:"“";position:absolute;left:0;top:-.32em;font-family:'Anton',sans-serif;
+  font-size:3.2rem;color:var(--red);line-height:1}
+.villain__body{max-width:62ch}
+.villain__body p+p{margin-top:var(--sp-2)}
+.dark-line{display:inline-block;background:var(--ink);color:var(--cream);
+  font-weight:800;padding:.06em .4em;border-radius:3px}
+
+.check{margin-top:var(--sp-7);background:rgb(0 0 0/.35);border:1px solid var(--line);
+  border-radius:var(--r-xl);padding:clamp(1.4rem,4vw,3rem)}
+.check__list{display:grid;gap:.7rem;margin-block:var(--sp-3);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.check__item{position:relative;display:flex;align-items:flex-start;gap:.9rem;
+  padding:1rem 1.1rem;border:1px solid var(--line);border-radius:var(--r-md);
+  background:rgb(255 255 255/.03);cursor:pointer;
+  transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease)}
+.check__item:hover{border-color:var(--line-strong);transform:translateX(3px)}
+.check__item input{position:absolute;opacity:0;width:1px;height:1px}
+.check__box{flex:none;width:24px;height:24px;border-radius:6px;border:2px solid var(--line-strong);
+  display:grid;place-items:center;margin-top:.15rem;transition:all .25s var(--ease)}
+.check__box svg{width:14px;height:14px;opacity:0;scale:.5;transition:all .25s var(--ease-out);color:var(--cream)}
+.check__item:has(input:checked){background:color-mix(in srgb,var(--red) 20%,transparent);
+  border-color:color-mix(in srgb,var(--red) 65%,transparent)}
+.check__item:has(input:checked) .check__box{background:var(--red);border-color:var(--red)}
+.check__item:has(input:checked) .check__box svg{opacity:1;scale:1}
+.check__item:has(input:focus-visible){outline:3px solid var(--orange);outline-offset:3px}
+.check__item span{font-weight:600;line-height:1.4}
+.check__score{font-size:var(--f-sm);font-weight:700;color:var(--orange);letter-spacing:.02em}
+.check__score:empty{display:none}
+.check__out{margin-top:var(--sp-3);font-size:var(--f-md);font-weight:700;color:var(--cream)}
+
+/* ---------- D4 · A CULPA NÃO É SUA (seção clara) ------------------------ */
+.fault{background:var(--cream);color:var(--ink)}
+.fault .lead,.fault .muted{color:color-mix(in srgb,var(--ink) 70%,transparent)}
+.fault .h2{color:var(--ink)}
+.fault .eyebrow{color:var(--red)}
+.fault__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:start;grid-template-columns:1fr}
+@media (min-width:900px){.fault__grid{grid-template-columns:.95fr 1.05fr}}
+.fault__text p+p{margin-top:var(--sp-2)}
+.leaks{counter-reset:leak;display:grid;gap:.9rem}
+.leak{position:relative;display:flex;gap:1.1rem;align-items:flex-start;
+  background:#fff;border:1px solid rgb(0 0 0/.08);border-radius:var(--r-md);
+  padding:1.1rem 1.25rem;box-shadow:0 1px 2px rgb(0 0 0/.05),0 8px 20px rgb(28 28 28/.06);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.leak:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgb(0 0 0/.06),0 18px 34px rgb(198 40 40/.14)}
+.leak::before{counter-increment:leak;content:counter(leak,decimal-leading-zero);
+  font-family:'Anton',sans-serif;font-size:1.6rem;line-height:1;color:var(--red);flex:none;
+  padding-top:.1rem}
+.leak p{font-weight:500;line-height:1.45}
+.fault__out{margin-top:var(--sp-4);font-size:var(--f-md);font-weight:700}
+
+/* ---------- D5 · O MÉTODO ----------------------------------------------- */
+.method{background:
+  radial-gradient(80% 60% at 50% -10%,color-mix(in srgb,var(--red) 26%,transparent),transparent 60%),
+  var(--ink-900)}
+.method__head{text-align:center;max-width:70ch;margin-inline:auto;margin-bottom:var(--sp-6)}
+.cycle{display:grid;gap:clamp(1rem,2.4vw,1.6rem);perspective:1600px;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.step{position:relative;padding:clamp(1.4rem,3vw,2rem);border-radius:var(--r-lg);
+  background:linear-gradient(160deg,var(--ink-600),var(--ink-800) 60%);
+  border:1px solid var(--line);transform-style:preserve-3d;
+  box-shadow:0 10px 0 -2px #0a0a0a,0 20px 34px rgb(0 0 0/.55);
+  transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .3s}
+.step:hover{transform:translateY(-8px) rotateX(6deg);border-color:color-mix(in srgb,var(--orange) 50%,transparent);
+  box-shadow:0 16px 0 -2px #0a0a0a,0 34px 54px rgb(0 0 0/.6),0 0 60px -10px color-mix(in srgb,var(--orange) 45%,transparent)}
+.step__n{font-family:'Anton',sans-serif;font-size:3.4rem;line-height:.8;
+  color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--red) 75%,transparent);
+  display:block;margin-bottom:.4rem}
+.step:nth-child(2) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
+.step:nth-child(3) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--red) 75%,transparent)}
+.step:nth-child(4) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
+.step__t{font-family:'Anton',sans-serif;font-size:var(--f-lg);text-transform:uppercase;
+  letter-spacing:.02em;margin-bottom:.6rem;color:var(--cream)}
+.step p{font-size:var(--f-sm);color:var(--fg-soft)}
+.step__arrow{position:absolute;right:-1.15rem;top:50%;translate:0 -50%;z-index:2;
+  width:2.3rem;height:2.3rem;display:none;place-items:center;border-radius:999px;
+  background:var(--ink-900);border:1px solid var(--line);color:var(--orange)}
+@media (min-width:1080px){
+  .cycle{grid-template-columns:repeat(4,1fr)}
+  .step__arrow{display:grid}
+  .step:last-child .step__arrow{display:none}
+}
+.method__flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem;
+  margin-bottom:var(--sp-5);font-family:'Anton',sans-serif;font-size:clamp(.85rem,2.2vw,1.35rem);
+  text-transform:uppercase;letter-spacing:.06em}
+.method__flow b{padding:.42em .9em;border-radius:8px;background:rgb(255 255 255/.05);
+  border:1px solid var(--line);font-weight:400}
+.method__flow i{color:var(--red);font-style:normal}
+.method__live{margin-top:var(--sp-6);border-radius:var(--r-xl);overflow:hidden;
+  border:1px solid var(--line);background:linear-gradient(120deg,var(--ink-700),var(--ink-800));
+  display:grid;gap:0;grid-template-columns:1fr}
+@media (min-width:900px){.method__live{grid-template-columns:1fr 1fr}}
+.method__live-txt{padding:clamp(1.5rem,4vw,3rem);display:flex;flex-direction:column;justify-content:center}
+.method__live-img{position:relative;min-height:260px;background:
+  radial-gradient(70% 70% at 30% 30%,color-mix(in srgb,var(--red) 40%,transparent),transparent 70%),
+  var(--ink-900);display:grid;place-items:center;padding:var(--sp-3)}
+
+/* ---------- D6 · PROVA + AUTORIDADE ------------------------------------- */
+.proof{background:var(--ink-800);border-top:1px solid var(--line)}
+.stats{display:grid;gap:clamp(1rem,2vw,1.5rem);margin-block:var(--sp-5);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.stat{text-align:center;padding:clamp(1.2rem,2.5vw,1.8rem) 1rem;border-radius:var(--r-lg);
+  background:linear-gradient(180deg,rgb(255 255 255/.05),transparent);border:1px solid var(--line)}
+.stat b{display:block;font-family:'Anton',sans-serif;font-size:clamp(2.4rem,6vw,3.6rem);
+  line-height:1;color:var(--cream)}
+.stat b i{font-style:normal;color:var(--orange)}
+.stat span{display:block;margin-top:.5rem;font-size:var(--f-xs);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fg-mute)}
+.testis{display:grid;gap:clamp(1rem,2.4vw,1.6rem);margin-top:var(--sp-4);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.testi{display:flex;flex-direction:column;gap:var(--sp-2)}
+.testi__quote{font-family:'Anton',sans-serif;font-size:var(--f-md);line-height:1.15;
+  text-transform:none;color:var(--ink)}
+.testi__body{font-size:var(--f-sm);line-height:1.55;color:color-mix(in srgb,var(--ink) 72%,transparent)}
+.testi__who{display:flex;align-items:center;gap:.75rem;margin-top:auto;padding-top:var(--sp-2);
+  border-top:1px solid rgb(0 0 0/.1)}
+.avatar{flex:none;width:44px;height:44px;border-radius:999px;display:grid;place-items:center;
+  font-weight:800;font-size:.95rem;color:var(--cream);
+  background:linear-gradient(140deg,var(--red),var(--red-deep));box-shadow:0 4px 10px rgb(0 0 0/.2)}
+.avatar--o{background:linear-gradient(140deg,var(--orange),#a13d05)}
+.testi__who p{font-size:var(--f-xs);line-height:1.35;color:color-mix(in srgb,var(--ink) 62%,transparent)}
+.testi__who b{display:block;font-size:var(--f-sm);color:var(--ink)}
+.about{margin-top:var(--sp-7);display:grid;gap:clamp(1.5rem,4vw,3.5rem);
+  grid-template-columns:1fr;align-items:center}
+@media (min-width:900px){.about{grid-template-columns:.85fr 1.15fr}}
+.about__photo{position:relative;aspect-ratio:4/5;border-radius:var(--r-xl);overflow:hidden;
+  background:linear-gradient(150deg,var(--red-deep),var(--ink-900) 70%);
+  border:1px solid var(--line);display:grid;place-items:center;text-align:center;padding:var(--sp-3)}
+.about__photo::after{content:"";position:absolute;inset:0;background-image:var(--grain);
+  opacity:.06;mix-blend-mode:overlay}
+.about__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot{font-size:var(--f-xs);letter-spacing:.16em;text-transform:uppercase;color:var(--fg-mute);
+  border:1px dashed var(--line-strong);border-radius:var(--r-md);padding:1rem 1.2rem;max-width:24ch}
+.about blockquote{font-family:'Anton',sans-serif;font-size:var(--f-xl);line-height:1;
+  text-transform:uppercase;color:var(--cream);margin-bottom:var(--sp-3)}
+.about blockquote span{color:var(--red)}
+.about p+p{margin-top:var(--sp-2)}
+.about__logos{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:var(--sp-3)}
+
+/* ---------- D7 · O QUE VOCÊ LEVA ---------------------------------------- */
+.deliver{background:var(--ink-900)}
+.deliver__grid{display:grid;gap:clamp(1rem,2.4vw,1.6rem);grid-template-columns:1fr}
+@media (min-width:760px){.deliver__grid{grid-template-columns:1fr 1fr}}
+.item{position:relative;overflow:hidden}
+.item__icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+  margin-bottom:var(--sp-2);color:var(--cream);
+  background:linear-gradient(150deg,var(--red),var(--red-deep));box-shadow:0 8px 18px rgb(0 0 0/.4)}
+.item--bonus .item__icon{background:linear-gradient(150deg,var(--orange),#a13d05)}
+.item--bonus{border-color:color-mix(in srgb,var(--orange) 40%,transparent);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 9%,var(--ink-700)),var(--ink-800))}
+.item h3{margin-bottom:.5rem}
+.item p{font-size:var(--f-sm);color:var(--fg-soft)}
+.item__icon svg{width:26px;height:26px}
+.guarantee{margin-top:clamp(1rem,2.4vw,1.6rem);display:grid;gap:var(--sp-3);
+  align-items:center;grid-template-columns:1fr;text-align:center;
+  background:linear-gradient(120deg,color-mix(in srgb,var(--red) 16%,var(--ink-700)),var(--ink-800));
+  border:1px solid color-mix(in srgb,var(--red) 40%,transparent);
+  border-radius:var(--r-xl);padding:clamp(1.5rem,4vw,2.5rem)}
+@media (min-width:760px){.guarantee{grid-template-columns:auto 1fr;text-align:left}}
+.seal{width:clamp(96px,14vw,132px);height:auto;margin-inline:auto;
+  filter:drop-shadow(0 12px 24px rgb(0 0 0/.5))}
+
+/* ---------- D8 · PRA QUEM É + OFERTA ------------------------------------ */
+.offer{background:linear-gradient(180deg,var(--ink-900),var(--ink-800) 60%,var(--ink-900))}
+.forwho{display:grid;gap:clamp(1rem,2.5vw,1.8rem);grid-template-columns:1fr}
+@media (min-width:820px){.forwho{grid-template-columns:1fr 1fr}}
+.forwho__col{border-radius:var(--r-lg);padding:clamp(1.4rem,3vw,2.2rem);border:1px solid var(--line);
+  background:linear-gradient(180deg,var(--ink-700),var(--ink-800))}
+.forwho__col--no{border-color:color-mix(in srgb,var(--red) 35%,transparent)}
+.forwho__col--yes{border-color:color-mix(in srgb,var(--orange) 45%,transparent);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 8%,var(--ink-700)),var(--ink-800))}
+.forwho h3{display:flex;align-items:center;gap:.7rem;margin-bottom:var(--sp-3);font-size:var(--f-md)}
+.forwho h3 svg{width:26px;height:26px;flex:none}
+.forwho ul{display:grid;gap:.85rem}
+.forwho li{display:flex;gap:.7rem;align-items:flex-start;font-size:var(--f-sm);
+  color:var(--fg-soft);line-height:1.5}
+.forwho li svg{width:18px;height:18px;flex:none;margin-top:.28rem}
+.forwho__col--no li svg{color:var(--red)}
+.forwho__col--yes li svg{color:var(--orange)}
+
+.anchor{margin-top:var(--sp-7);text-align:center;max-width:74ch;margin-inline:auto}
+.anchor p+p{margin-top:var(--sp-2)}
+.anchor__strike{display:inline-block;font-family:'Anton',sans-serif;
+  font-size:clamp(2rem,6vw,3.4rem);color:var(--fg-mute);position:relative;line-height:1}
+.anchor__strike::after{content:"";position:absolute;left:-3%;right:-3%;top:50%;height:.075em;
+  border-radius:2px;background:var(--red);transform-origin:0 50%;
+  transform:rotate(-1.6deg) scaleX(var(--sx,0));
+  transition:transform .7s var(--ease-out) .1s}
+.anchor__strike[data-in]::after{--sx:1}
+
+.price{margin-top:var(--sp-5);margin-inline:auto;max-width:760px;
+  background:linear-gradient(180deg,#fff,var(--cream));color:var(--ink);
+  border-radius:var(--r-xl);padding:clamp(1.6rem,4vw,3rem);text-align:center;
+  box-shadow:0 30px 70px -20px rgb(0 0 0/.8),0 0 0 1px rgb(255 255 255/.1),
+             0 0 90px -30px color-mix(in srgb,var(--orange) 70%,transparent);
+  position:relative;overflow:hidden}
+.price::before{content:"";position:absolute;inset:0 0 auto;height:6px;
+  background:linear-gradient(90deg,var(--red),var(--orange))}
+.price__label{font-size:var(--f-xs);font-weight:800;letter-spacing:.24em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--ink) 55%,transparent)}
+.price__big{font-family:'Anton',sans-serif;font-size:clamp(3.4rem,12vw,6.5rem);line-height:.9;
+  color:var(--ink);margin-block:.14em 0;letter-spacing:-.02em}
+.price__big sup{font-size:.32em;vertical-align:.95em;color:var(--red);margin-right:.04em}
+.price__cents{font-size:.34em;letter-spacing:0;
+  color:color-mix(in srgb,var(--ink) 68%,transparent)}
+.price__cash{font-family:'Archivo',sans-serif;font-size:var(--f-sm);font-weight:800;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.price__inst{font-size:var(--f-md);font-weight:700;color:color-mix(in srgb,var(--ink) 72%,transparent)}
+.price__inst b{color:var(--red)}
+.price .btn{margin-top:var(--sp-3)}
+.price__safe{margin-top:var(--sp-3);display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.2rem;
+  font-size:var(--f-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--ink) 58%,transparent)}
+.price__safe span{display:inline-flex;align-items:center;gap:.4rem}
+.price__safe svg{width:15px;height:15px;color:var(--red)}
+
+/* ---------- D9 · INAÇÃO + FAQ + FECHAMENTO ------------------------------ */
+.inaction{background:linear-gradient(180deg,var(--red-black),var(--red-dark) 55%,var(--ink-900));
+  position:relative;overflow:hidden}
+.inaction::before{content:"";position:absolute;inset:0;background-image:var(--grain);
+  opacity:.06;mix-blend-mode:overlay;pointer-events:none}
+.inaction__in{max-width:70ch;margin-inline:auto;text-align:center}
+.inaction__in p+p{margin-top:var(--sp-3)}
+.inaction__q{font-family:'Anton',sans-serif;font-size:var(--f-xl);line-height:1.02;
+  text-transform:uppercase;color:var(--cream);margin-block:var(--sp-3)}
+.inaction__out{font-size:var(--f-md);font-weight:700;color:var(--cream)}
+
+.faq{background:var(--ink-800)}
+.faq__list{max-width:900px;margin-inline:auto;display:grid;gap:.75rem;margin-top:var(--sp-5)}
+.faq details{border:1px solid var(--line);border-radius:var(--r-md);background:var(--ink-700);
+  overflow:hidden;transition:border-color .3s var(--ease)}
+.faq details[open]{border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
+.faq summary{cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:1rem;
+  padding:clamp(1rem,2.4vw,1.35rem) clamp(1.1rem,3vw,1.75rem);font-weight:700;
+  font-size:var(--f-sm);line-height:1.4}
+.faq summary:hover{background:rgb(255 255 255/.03)}
+.faq summary::after{content:"";flex:none;margin-left:auto;width:12px;height:12px;
+  border-right:2px solid var(--orange);border-bottom:2px solid var(--orange);
+  rotate:45deg;translate:0 2px;transition:rotate .3s var(--ease)}
+.faq details[open] summary::after{rotate:-135deg;translate:0 6px}
+.faq__n{flex:none;font-family:'Anton',sans-serif;color:var(--red);font-size:1.05rem;line-height:1.3}
+.faq__a{padding:0 clamp(1.1rem,3vw,1.75rem) clamp(1.1rem,2.6vw,1.5rem) clamp(2.6rem,5vw,3.4rem);
+  color:var(--fg-soft);font-size:var(--f-sm)}
+
+.final{background:radial-gradient(80% 70% at 50% 0%,color-mix(in srgb,var(--red) 34%,transparent),transparent 62%),var(--ink-900);
+  text-align:center}
+.final .h2{margin-bottom:var(--sp-3)}
+
+.footer{background:#080808;border-top:1px solid var(--line);padding-block:var(--sp-5) var(--sp-4);
+  font-size:var(--f-xs);color:var(--fg-mute)}
+.footer__in{display:grid;gap:var(--sp-3);align-items:center;grid-template-columns:1fr}
+@media (min-width:780px){.footer__in{grid-template-columns:auto 1fr}}
+.footer__legal{display:grid;gap:.6rem;line-height:1.55}
+.footer a{color:var(--fg-soft);text-decoration:underline;text-underline-offset:3px}
+.footer a:hover{color:var(--orange)}
+}
+
+/* =========================================================================
+   MOVIMENTO — tudo atrás de prefers-reduced-motion
+   ========================================================================= */
+@layer motion{
+  [data-reveal]{opacity:0;translate:0 26px;
+    transition:opacity .7s var(--ease-out),translate .7s var(--ease-out)}
+  [data-reveal][data-in]{opacity:1;translate:0 0}
+  [data-reveal-delay="1"]{transition-delay:.09s}
+  [data-reveal-delay="2"]{transition-delay:.18s}
+  [data-reveal-delay="3"]{transition-delay:.27s}
+  [data-reveal-delay="4"]{transition-delay:.36s}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.001ms;animation-iteration-count:1;
+      transition-duration:.001ms;scroll-behavior:auto}
+    [data-reveal]{opacity:1;translate:none}
+    .cover__card{animation:none;transform:none}
+    .hero__rays{animation:none}
+    .anchor__strike::after{--sx:1}
+  }
+}
+
+@layer utils{
+  .center{text-align:center}
+  .mt-3{margin-top:var(--sp-3)}
+  .mt-4{margin-top:var(--sp-4)}
+  .mt-5{margin-top:var(--sp-5)}
+  .maxw{max-width:66ch}
+  .maxw-center{max-width:66ch;margin-inline:auto}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip-path:inset(50%);white-space:nowrap;border:0}
+  .skip{position:absolute;left:1rem;top:-100px;z-index:100;background:var(--red);
+    color:var(--cream);padding:.75rem 1.25rem;border-radius:0 0 8px 8px;font-weight:700;
+    text-decoration:none;transition:top .2s var(--ease)}
+  .skip:focus{top:0}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="progress" aria-hidden="true"></div>
+
+<!-- ====================== HEADER ====================== -->
+<header class="header" id="topo">
+  <div class="wrap header__in">
+    <a href="#topo" class="logo logo--h" aria-label="Rodrigo Barros — início">
+      <img src="/assets/img/logo-horizontal-cream.svg" alt="Rodrigo Barros"
+           width="1263" height="169" fetchpriority="high" decoding="async">
+    </a>
+    <a class="btn header__cta" href="#oferta" data-cta="header">Quero o Delivery 360°</a>
+  </div>
+</header>
+
+<main id="conteudo">
+
+<!-- ============================================================= -->
+<!-- DOBRA 1 · HERO                                                -->
+<!-- ============================================================= -->
+<section class="hero" aria-labelledby="h1">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__rays" aria-hidden="true"></div>
+  <div class="hero__grain" aria-hidden="true"></div>
+
+  <div class="wrap hero__in">
+    <div>
+      <p class="eyebrow" data-reveal>Curso completo · 5 módulos · 10 aulas</p>
+
+      <h1 id="h1" data-reveal data-reveal-delay="1"
+          data-hl-a="12 restaurantes. 1 método. Nenhuma teoria."
+          data-hl-a-lo="O passo a passo que uso para rodar 12 lojas com lucro real, direto para a sua loja no iFood."
+          data-hl-b="Depois: sabe para onde vai cada real e vê lucro de verdade toda quarta-feira, dia do repasse."
+          data-hl-b-lo="Antes: fatura R$ 30 mil no app e não sobra nada.">
+        <span class="lo">Se sua loja no iFood fatura e não sobra, ou se você nem abriu ainda, o motivo é o mesmo:</span>
+        <span class="hi">Ninguém te mostrou como isso funciona <em>de verdade</em>.</span>
+      </h1>
+
+      <p class="hero__sub" data-reveal data-reveal-delay="2">O método Delivery 360° leva você do zero (ou do faturamento sem lucro) até o lucro real, com o mesmo processo praticado todos os dias em 12 restaurantes próprios.</p>
+
+      <div class="hero__cta" data-reveal data-reveal-delay="3">
+        <a class="btn btn--xl" href="#oferta" data-cta="hero">
+          Quero configurar minha loja e começar a lucrar com o Delivery 360°
+          <span class="btn__sub" aria-hidden="true">R$ 97 à vista · ou 12x de R$ 9,68</span>
+        </a>
+      </div>
+
+      <ul class="hero__pills" data-reveal data-reveal-delay="4">
+        <li class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>7 dias de garantia</li>
+        <li class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>12 restaurantes rodando</li>
+        <li class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Acesso vitalício</li>
+      </ul>
+    </div>
+
+    <!-- Capa 3D do produto — composição em CSS/SVG, nítida em qualquer tela.
+         Para trocar pela arte final: veja README (assets/img/capa-delivery360.png). -->
+    <figure class="cover" data-reveal data-reveal-delay="2">
+      <div class="cover__card" data-cover>
+        <div class="cover__shadow" aria-hidden="true"></div>
+        <div class="cover__in">
+          <div class="cover__logo">
+            <img src="/assets/img/logo-horizontal-cream.svg" alt="Rodrigo Barros"
+                 width="1263" height="169" decoding="async">
+          </div>
+          <div class="cover__rule" aria-hidden="true"></div>
+          <p class="cover__eyebrow">Curso Completo</p>
+
+          <div class="cover__art" aria-hidden="true">
+            <svg viewBox="0 0 300 240" fill="none">
+              <defs>
+                <linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ff9d3d"/><stop offset="1" stop-color="#d1490b"/>
+                </linearGradient>
+                <linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f6f3ec"/><stop offset="1" stop-color="#c9c3b6"/>
+                </linearGradient>
+                <linearGradient id="cg3" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#e8a06a"/><stop offset="1" stop-color="#b45a17"/>
+                </linearGradient>
+              </defs>
+              <!-- brilho de fundo -->
+              <ellipse cx="150" cy="150" rx="110" ry="60" fill="#fff" opacity=".08"/>
+              <!-- celular -->
+              <g transform="rotate(-12 150 130)">
+                <rect x="106" y="46" width="88" height="168" rx="14" fill="#1c1c1c" stroke="#f6f3ec" stroke-opacity=".5" stroke-width="2"/>
+                <rect x="112" y="52" width="76" height="156" rx="10" fill="url(#cg2)" opacity=".14"/>
+                <rect x="136" y="56" width="28" height="5" rx="2.5" fill="#f6f3ec" opacity=".35"/>
+                <rect x="120" y="120" width="60" height="7" rx="3.5" fill="#f6f3ec" opacity=".3"/>
+                <rect x="120" y="134" width="42" height="7" rx="3.5" fill="#f6f3ec" opacity=".2"/>
+                <rect x="120" y="152" width="60" height="18" rx="6" fill="#e86a1c"/>
+              </g>
+              <!-- caixa saindo da tela (isométrica) -->
+              <g transform="translate(150 96)">
+                <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
+                <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
+                <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
+                <path d="M0-26 0 26" stroke="#a33f05" stroke-width="2" opacity=".5"/>
+              </g>
+              <!-- caixas menores -->
+              <g opacity=".9">
+                <g transform="translate(238 92) scale(.42)">
+                  <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
+                  <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
+                  <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
+                </g>
+                <g transform="translate(262 152) scale(.3)">
+                  <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
+                  <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
+                  <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
+                </g>
+                <g transform="translate(44 132) scale(.34)">
+                  <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
+                  <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
+                  <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
+                </g>
+              </g>
+              <!-- linhas de velocidade -->
+              <g stroke="#f6f3ec" stroke-opacity=".35" stroke-width="3" stroke-linecap="round">
+                <path d="M18 74h44"/><path d="M6 94h30"/><path d="M22 114h24"/>
+              </g>
+            </svg>
+          </div>
+
+          <p class="cover__title">Delivery</p>
+          <p class="cover__360">360°</p>
+          <p class="cover__badge">Do zero ao lucro</p>
+          <p class="cover__meta">5 módulos · 10 aulas</p>
+        </div>
+        <div class="cover__glare" aria-hidden="true" data-glare></div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 2 · O DIAGNÓSTICO                                       -->
+<!-- ============================================================= -->
+<section class="fold diag defer" aria-labelledby="d2">
+  <div class="wrap">
+    <div class="diag__head" data-reveal>
+      <p class="eyebrow eyebrow--center">O diagnóstico</p>
+      <h2 class="h2" id="d2">Duas situações,<br><span class="red">uma causa só.</span></h2>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="card diag__card tilt" data-reveal data-tilt>
+        <span class="diag__n" aria-hidden="true">01</span>
+        <span class="card__tag tag-red">Já vende</span>
+        <h3 class="h3">Se você já vende no iFood:</h3>
+        <p>Você abre o gestor de pedidos às 11h. Os pedidos começam a tocar, a impressora roda sem parar, a cozinha entra em parafuso e o caixa se atrapalha com a comanda. Sexta-feira à noite, sábado no almoço... é sempre a mesma correria estressante.</p>
+        <p>E na quarta-feira seguinte, quando o repasse do iFood cai na conta, a decepção é amarga: você faturou R$ 20 mil, R$ 30 mil, R$ 50 mil no aplicativo... mas o dinheiro que deveria sobrar no bolso sumiu.</p>
+      </article>
+
+      <article class="card diag__card diag__card--b tilt" data-reveal data-reveal-delay="2" data-tilt>
+        <span class="diag__n" aria-hidden="true">02</span>
+        <span class="card__tag tag-orange">Ainda não abriu</span>
+        <h3 class="h3">Se você ainda não abriu sua loja:</h3>
+        <p>Você já ouviu dizer que dá para vender muito no iFood, mas não sabe por onde começar. Tem medo de configurar as taxas erradas, precificar no “chutômetro” e ver seu investimento escorrer pelo ralo logo nas primeiras semanas de operação.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 3 · A QUEBRA DE OBJEÇÃO + CHECKLIST                     -->
+<!-- ============================================================= -->
+<section class="fold villain defer" aria-labelledby="d3">
+  <div class="wrap">
+    <div class="grid grid-2" style="align-items:center">
+      <div data-reveal>
+        <p class="eyebrow">A quebra de objeção</p>
+        <h2 class="h2" id="d3">O verdadeiro<br><span class="red">vilão.</span></h2>
+        <div class="villain__quotes">
+          <p class="quote">O iFood está me roubando.</p>
+          <p class="quote">É impossível ganhar dinheiro no delivery hoje em dia.</p>
+        </div>
+      </div>
+
+      <div class="villain__body stack-lg" data-reveal data-reveal-delay="2">
+        <p class="lead">Se você já pensou isso (ou tem medo de pensar assim quando abrir), eu entendo a sua frustração. Mas preciso ser direto: <strong>não é a taxa do iFood que come o seu lucro.</strong></p>
+        <p>O problema real é que você está operando no escuro. A sangria acontece quando você configura a loja, precifica os pratos e organiza o cardápio sem entender exatamente o que cada botão e número do painel significa.</p>
+        <p>Isso é <span class="dark-line">operar no escuro</span> — e é exatamente esse o primeiro problema que nós vamos resolver aqui, não importa se você já vende muito ou se vai abrir sua loja nesta semana.</p>
+      </div>
+    </div>
+
+    <!-- Checklist de sintomas -->
+    <div class="check" data-reveal>
+      <p class="eyebrow">Checklist de sintomas</p>
+      <h3 class="h3" style="font-size:var(--f-xl);font-family:'Anton',sans-serif;text-transform:uppercase">Você reconhece essas frases?</h3>
+      <p class="lead mt-3">Se alguma dessas frases passou pela sua cabeça esta semana, continue lendo:</p>
+
+      <div class="check__list" data-check>
+        <label class="check__item" for="s1"><input type="checkbox" id="s1"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>“O iFood me rouba, é impossível ter margem assim.”</span></label>
+        <label class="check__item" for="s2"><input type="checkbox" id="s2"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>“Será que o meu tempo de entrega está alto demais e derrubando minhas vendas?”</span></label>
+        <label class="check__item" for="s3"><input type="checkbox" id="s3"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>“Minha taxa de entrega está errada ou muito cara?”</span></label>
+        <label class="check__item" for="s4"><input type="checkbox" id="s4"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>“Minha embalagem tá feia, preciso mexer no cardápio todo?”</span></label>
+        <label class="check__item" for="s5"><input type="checkbox" id="s5"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>“Qual é a diferença estratégica entre uma categoria e outra no painel?”</span></label>
+        <label class="check__item" for="s6"><input type="checkbox" id="s6"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>“Será que compensa abrir mais cedo de manhã ou ficar até de madrugada?”</span></label>
+      </div>
+
+      <p class="check__score" data-check-score role="status" aria-live="polite"></p>
+      <p class="check__out">Se você marcou pelo menos uma opção, fique tranquilo: o problema não é você, e também não é (só) o iFood.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 4 · A CAUSA RAIZ                                        -->
+<!-- ============================================================= -->
+<section class="fold fault defer" aria-labelledby="d4">
+  <div class="wrap fault__grid">
+    <div class="fault__text" data-reveal>
+      <p class="eyebrow">A causa raiz</p>
+      <h2 class="h2" id="d4">A culpa<br>não é sua</h2>
+      <p class="lead mt-3">Se você já tem loja, provavelmente tentou resolver sozinho: trocou a foto, mexeu no cardápio, baixou o preço achando que ia vender mais. E, mesmo assim, a conta não fecha no fim do mês.</p>
+      <p>Se você ainda não abriu, provavelmente pesquisou na internet e só encontrou opiniões desencontradas de gente que nunca pisou numa cozinha.</p>
+      <p>O problema não é falta de esforço. É que o iFood não vem com manual de instrução, e a maioria dos cursos por aí ensina “teoria de marketing” que não resolve o perrengue que você tem (ou vai ter) às 19h de sexta-feira, com a cozinha lotada de comandas.</p>
+    </div>
+
+    <div data-reveal data-reveal-delay="2">
+      <h3 class="h3" style="margin-bottom:var(--sp-3)">A causa real é totalmente possível de corrigir:</h3>
+      <div class="leaks">
+        <div class="leak"><p>Você precifica sem embutir a taxa da plataforma, o insumo e a margem líquida real.</p></div>
+        <div class="leak"><p>Seu pedido mínimo trava o cliente que quer pedir um item avulso.</p></div>
+        <div class="leak"><p>Seu nome, categoria e foto jogam sua loja para o fundo das buscas do algoritmo.</p></div>
+        <div class="leak"><p>Você nunca abriu o portal de métricas para identificar por onde o dinheiro está vazando.</p></div>
+      </div>
+      <p class="fault__out">Isso não é uma falha sua. É apenas uma lacuna de informação. E é exatamente isso que a gente resolve agora.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 5 · O MÉTODO DELIVERY 360°                              -->
+<!-- ============================================================= -->
+<section class="fold method defer" aria-labelledby="d5">
+  <div class="wrap">
+    <div class="method__head" data-reveal>
+      <p class="eyebrow eyebrow--center">O método</p>
+      <h2 class="h2" id="d5">Delivery <span class="red">360°</span></h2>
+      <p class="lead mt-3">Isso aqui não é uma lista de dicas soltas acumuladas num PDF. É um ciclo operacional de 4 passos que eu aplico nas minhas 12 lojas todos os dias:</p>
+    </div>
+
+    <p class="method__flow" data-reveal aria-hidden="true">
+      <b>1. Configura</b><i>➔</i><b>2. Precifica</b><i>➔</i><b>3. Roda</b><i>➔</i><b>4. Protege</b>
+    </p>
+
+    <div class="cycle">
+      <article class="step" data-reveal>
+        <span class="step__n">01</span>
+        <h3 class="step__t">Configura</h3>
+        <p>Nome, categoria, foto e formas de pagamento estratégicas para a loja aparecer para o cliente certo e subir no algoritmo.</p>
+        <span class="step__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+      </article>
+      <article class="step" data-reveal data-reveal-delay="1">
+        <span class="step__n">02</span>
+        <h3 class="step__t">Precifica</h3>
+        <p>Soma do custo de mercadoria (CMV), embalagem, taxa do iFood e margem de lucro real. Sem chutômetro.</p>
+        <span class="step__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+      </article>
+      <article class="step" data-reveal data-reveal-delay="2">
+        <span class="step__n">03</span>
+        <h3 class="step__t">Roda</h3>
+        <p>Ajuste de pedido mínimo, horários de pico, raio de entrega e cardápio para vender todo santo dia, sem precisar pausar a loja.</p>
+        <span class="step__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+      </article>
+      <article class="step" data-reveal data-reveal-delay="3">
+        <span class="step__n">04</span>
+        <h3 class="step__t">Protege</h3>
+        <p>Leitura do portal, gestão de avaliações, manutenção do selo Super Restaurante e blindagem contra perda de ranqueamento.</p>
+      </article>
+    </div>
+
+    <div class="method__live" data-reveal>
+      <div class="method__live-txt">
+        <p class="eyebrow">Ao vivo, na tela</p>
+        <p class="lead">A diferença não está no excesso de conteúdo. É que cada passo desse eu aplico ao vivo, na tela, numa loja real: <strong>a Merma Marmita sendo ajustada na sua frente.</strong></p>
+        <p class="mt-3">Cada aula é mais rápida do que o tempo que você fica esperando o motoboy voltar de uma entrega. Você assiste e aplica no seu painel na hora.</p>
+      </div>
+      <div class="method__live-img">
+        <!-- Mockup do painel: SVG, ~2KB, nítido em retina -->
+        <svg viewBox="0 0 420 280" width="420" height="280" style="width:100%;height:auto" role="img" aria-label="Ilustração do painel do gestor de pedidos com métricas da loja">
+          <rect x="10" y="14" width="400" height="252" rx="14" fill="#0d0d0d" stroke="#f6f3ec" stroke-opacity=".16"/>
+          <rect x="10" y="14" width="400" height="34" rx="14" fill="#1c1c1c"/>
+          <rect x="10" y="40" width="400" height="8" fill="#1c1c1c"/>
+          <circle cx="30" cy="31" r="4.5" fill="#c62828"/><circle cx="45" cy="31" r="4.5" fill="#e86a1c"/><circle cx="60" cy="31" r="4.5" fill="#f6f3ec" fill-opacity=".3"/>
+          <rect x="150" y="26" width="120" height="10" rx="5" fill="#f6f3ec" fill-opacity=".14"/>
+          <g>
+            <rect x="26" y="64" width="112" height="66" rx="10" fill="#1c1c1c" stroke="#f6f3ec" stroke-opacity=".1"/>
+            <rect x="38" y="76" width="46" height="7" rx="3.5" fill="#f6f3ec" fill-opacity=".28"/>
+            <text x="38" y="112" font-family="Anton,sans-serif" font-size="26" fill="#f6f3ec">R$ 50k</text>
+            <rect x="154" y="64" width="112" height="66" rx="10" fill="#1c1c1c" stroke="#c62828" stroke-opacity=".45"/>
+            <rect x="166" y="76" width="60" height="7" rx="3.5" fill="#f6f3ec" fill-opacity=".28"/>
+            <text x="166" y="112" font-family="Anton,sans-serif" font-size="26" fill="#c62828">- ?</text>
+            <rect x="282" y="64" width="112" height="66" rx="10" fill="#1c1c1c" stroke="#e86a1c" stroke-opacity=".5"/>
+            <rect x="294" y="76" width="52" height="7" rx="3.5" fill="#f6f3ec" fill-opacity=".28"/>
+            <text x="294" y="112" font-family="Anton,sans-serif" font-size="26" fill="#e86a1c">SUPER</text>
+          </g>
+          <rect x="26" y="148" width="368" height="104" rx="10" fill="#1c1c1c" stroke="#f6f3ec" stroke-opacity=".1"/>
+          <polyline points="44,232 96,208 148,216 200,180 252,190 304,152 366,166" fill="none" stroke="#e86a1c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M44 232 96 208 148 216 200 180 252 190 304 152 366 166 366 244 44 244Z" fill="#e86a1c" fill-opacity=".1"/>
+          <g fill="#e86a1c"><circle cx="200" cy="180" r="4"/><circle cx="304" cy="152" r="4"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 6 · PROVA DE CAMPO + DEPOIMENTOS + QUEM SOU EU          -->
+<!-- ============================================================= -->
+<section class="fold proof defer" aria-labelledby="d6">
+  <div class="wrap">
+    <div class="center maxw-center" data-reveal>
+      <p class="eyebrow eyebrow--center">Prova de campo e prova social</p>
+      <h2 class="h2" id="d6">A realidade de<br><span class="red">quem aplica</span></h2>
+      <p class="lead mt-3">Eu não vivo de teoria de palco. Eu gerencio o Grupo 360 Food, com 12 restaurantes rodando ao vivo todos os dias no iFood, entre eles a Merma Marmita. São pedidos de verdade caindo na impressora, pratos sendo embalados e dinheiro caindo na conta toda quarta-feira.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat" data-reveal><b data-count="12">0</b><span>Restaurantes próprios</span></div>
+      <div class="stat" data-reveal data-reveal-delay="1"><b data-count="150" data-suffix="+">0</b><span>Donos usando o Gestoque 360</span></div>
+      <div class="stat" data-reveal data-reveal-delay="2"><b data-count="330">0</b><span>Mil restaurantes impactados</span></div>
+      <div class="stat" data-reveal data-reveal-delay="3"><b data-count="10">0</b><span>Aulas direto ao ponto</span></div>
+    </div>
+
+    <p class="lead center maxw-center" data-reveal>Mas não acredite apenas no que eu digo. Veja os resultados reais de alunos que saíram do escuro e transformaram suas lojas com o método Delivery 360°:</p>
+
+    <div class="testis">
+      <article class="card card--light testi tilt" data-reveal data-tilt>
+        <p class="testi__quote">“Faturava R$ 35 mil e vivia no vermelho. No primeiro mês do método, sobraram R$ 11.800,00 limpos.”</p>
+        <p class="testi__body">“Eu achava que o problema era a taxa do iFood. Quando apliquei o módulo de precificação e ajustei meu raio de entrega no painel, vi que estava pagando para entregar marmita longe. Não mudei de app, só ajustei a loja. Na quarta-feira do repasse, o dinheiro finalmente ficou na minha conta.”</p>
+        <div class="testi__who">
+          <span class="avatar" aria-hidden="true">MS</span>
+          <div><b>Marcos S.</b><p>Proprietário do Marmitaria &amp; Cia (São Paulo, SP)</p></div>
+        </div>
+      </article>
+
+      <article class="card card--light testi tilt" data-reveal data-reveal-delay="1" data-tilt>
+        <p class="testi__quote">“Ia abrir minha loja no escuro. Comecei do jeito certo e no 2º mês já viramos Super Restaurante.”</p>
+        <p class="testi__body">“Estava morrendo de medo de abrir a loja e perder dinheiro. Segui o passo a passo desde a configuração inicial, fotos e taxa de entrega. A cozinha roda redonda, a equipe não pausa a loja no pico e o algoritmo do iFood joga a gente lá para cima.”</p>
+        <div class="testi__who">
+          <span class="avatar avatar--o" aria-hidden="true">PM</span>
+          <div><b>Priscila M.</b><p>Proprietária do Burger House 360 (Curitiba, PR)</p></div>
+        </div>
+      </article>
+
+      <article class="card card--light testi tilt" data-reveal data-reveal-delay="2" data-tilt>
+        <p class="testi__quote">“Só o Kit de Documentos Trabalhistas (Bônus #2) me economizou mais de R$ 1.500,00.”</p>
+        <p class="testi__body">“Além de corrigir a margem do meu cardápio em um domingo à tarde, o kit de documentos organizou toda a minha equipe. O curso é direto ao ponto, mais rápido do que a entrega de um motoboy. Vale cada centavo!”</p>
+        <div class="testi__who">
+          <span class="avatar" aria-hidden="true">CE</span>
+          <div><b>Carlos Eduardo</b><p>Operador do Açaí Prime (Belo Horizonte, MG)</p></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Quem sou eu -->
+    <div class="about" id="sobre">
+      <figure class="about__photo" data-reveal>
+        <!-- Substitua por: <img src="/assets/img/rodrigo.webp" alt="Rodrigo Barros na cozinha de um dos restaurantes do Grupo 360 Food" width="800" height="1000" loading="lazy" decoding="async"> -->
+        <figcaption class="slot">Espaço reservado para a foto do Rodrigo</figcaption>
+      </figure>
+
+      <div data-reveal data-reveal-delay="2">
+        <p class="eyebrow">Quem sou eu</p>
+        <blockquote>“Eu não vim de curso de marketing.<br><span>Vim da cozinha.”</span></blockquote>
+        <p>Hoje gerencio o Grupo 360 Food, com 12 restaurantes rodando ao mesmo tempo, entre eles a Merma Marmita, operando exatamente com o mesmo método que você vai aprender aqui.</p>
+        <p>Sou o fundador do Gestoque 360, sistema utilizado por uma comunidade de mais de 150 donos de restaurantes, e fiz parte do Fórum de Restaurantes do iFood, ajudando a melhorar a experiência de mais de 330 mil estabelecimentos na plataforma.</p>
+        <p>Não é currículo de parede. É operação rodando todos os dias, enfrentando os mesmos problemas que você tem, porque eu também vivo eles no meu dia a dia.</p>
+        <ul class="about__logos">
+          <li class="pill">Grupo 360 Food</li>
+          <li class="pill">Gestoque 360</li>
+          <li class="pill">Fórum de Restaurantes iFood</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 7 · O QUE VOCÊ LEVA HOJE                                -->
+<!-- ============================================================= -->
+<section class="fold deliver defer" aria-labelledby="d7">
+  <div class="wrap">
+    <div class="center maxw-center" style="margin-bottom:var(--sp-5)" data-reveal>
+      <p class="eyebrow eyebrow--center">A entrega completa</p>
+      <h2 class="h2" id="d7">O que você <span class="red">leva hoje</span></h2>
+    </div>
+
+    <div class="deliver__grid">
+      <article class="card item" data-reveal>
+        <span class="item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m10 9 5 3-5 3z"/></svg></span>
+        <h3 class="h3">10 Aulas em Vídeo Direto ao Ponto</h3>
+        <p>Aplicação prática no seu próprio painel do iFood enquanto assiste.</p>
+      </article>
+
+      <article class="card item" data-reveal data-reveal-delay="1">
+        <span class="item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/><path d="M7 9h1M16 9h1"/></svg></span>
+        <h3 class="h3">5 Módulos Estruturados</h3>
+        <p>Do zero até a blindagem completa da operação, sem pular etapas.</p>
+      </article>
+
+      <article class="card item item--bonus" data-reveal data-reveal-delay="2">
+        <span class="card__tag tag-orange">Bônus #1</span>
+        <span class="item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v4H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg></span>
+        <h3 class="h3">Ebook — Gestão de Equipe Descomplicada</h3>
+        <p>Como liderar sua equipe de cozinha e atendimento com padrão de processos, sem precisar estar em cima como um leão de chácara.</p>
+      </article>
+
+      <article class="card item item--bonus" data-reveal data-reveal-delay="3">
+        <span class="card__tag tag-orange">Bônus #2</span>
+        <span class="item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5M9 13h6M9 17h4"/></svg></span>
+        <h3 class="h3">Kit com 13 Documentos Trabalhistas e Operacionais Prontos</h3>
+        <p>Modelos de contrato, acordo de sigilo, guia de admissão/desligamento, advertências e conduta de diálogos sensíveis. Resolve em minutos o que levaria semanas e custaria caro para estruturar.</p>
+      </article>
+    </div>
+
+    <div class="guarantee" data-reveal>
+      <svg class="seal" viewBox="0 0 120 120" role="img" aria-label="Selo de garantia incondicional de 7 dias">
+        <defs>
+          <linearGradient id="sealg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e04b4b"/><stop offset="1" stop-color="#7d1616"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#sealg)" d="M60 4l11.4 7.9 13.8-2 5.6 12.7 12.7 5.6-2 13.8L109.4 60l-7.9 11.4 2 13.8-12.7 5.6-5.6 12.7-13.8-2L60 109.4l-11.4-7.9-13.8 2-5.6-12.7-12.7-5.6 2-13.8L10.6 60l7.9-11.4-2-13.8 12.7-5.6 5.6-12.7 13.8 2z"/>
+        <circle cx="60" cy="60" r="41" fill="none" stroke="#f6f3ec" stroke-opacity=".45" stroke-width="2"/>
+        <text x="60" y="54" text-anchor="middle" font-family="Anton,sans-serif" font-size="34" fill="#f6f3ec">7</text>
+        <text x="60" y="74" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="800" font-size="12" letter-spacing="2" fill="#f6f3ec">DIAS</text>
+      </svg>
+      <div>
+        <h3 class="h3">Garantia Incondicional de 7 Dias</h3>
+        <p class="lead mt-3">Teste o método com o seu dinheiro 100% protegido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 8 · ISSO É PARA VOCÊ? + ANCORAGEM + OFERTA              -->
+<!-- ============================================================= -->
+<section class="fold offer defer" id="oferta" aria-labelledby="d8">
+  <div class="wrap">
+    <div class="center maxw-center" style="margin-bottom:var(--sp-5)" data-reveal>
+      <p class="eyebrow eyebrow--center">Seja honesto com você mesmo</p>
+      <h2 class="h2" id="d8">Isso é <span class="red">para você?</span></h2>
+    </div>
+
+    <div class="forwho">
+      <div class="forwho__col forwho__col--no" data-reveal>
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>NÃO é para você se:</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Quer assistir às aulas como quem assiste a uma série na Netflix, sem abrir o painel para aplicar.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Procura uma “fórmula mágica” para enriquecer sem mexer na estrutura de custos, preço ou operação.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Não tem loja no iFood e nem pretende ter uma.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Espera resultados sem nunca abrir o gestor de pedidos.</li>
+        </ul>
+      </div>
+
+      <div class="forwho__col forwho__col--yes" data-reveal data-reveal-delay="2">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>É 100% para você se:</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Já vende no iFood e quer entender por que fatura mas não sobra dinheiro no final do mês.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ainda não tem loja e quer abrir já configurando certo, economizando meses de tentativa e erro caro.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Opera sozinho ou com equipe enxuta e precisa profissionalizar a gestão sem gastar fortuna com consultoria.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Está disposto a abrir o painel (ou criar a loja) enquanto assiste e aplicar na hora.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ancoragem de valor -->
+    <div class="anchor" data-reveal>
+      <p class="eyebrow eyebrow--center">Faça as contas</p>
+      <p class="lead">Só o kit de documentos prontos do Bônus #2 (contratos, acordos e guias operacionais), se fosse encomendado sob medida com um advogado trabalhista, dificilmente sairia por menos de <strong>R$ 1.500,00</strong>.</p>
+      <p>Isso sem contar as 10 aulas do método completo, a consultoria de engenharia de cardápio aplicada na prática e o ebook do Bônus #1.</p>
+      <p class="mt-4"><span class="anchor__strike" data-strike>Você não vai pagar R$ 1.500,00.</span></p>
+      <p class="mt-3">Para ter acesso ao método completo Delivery 360°, aos 2 bônus e à garantia incondicional, o seu investimento hoje é de:</p>
+    </div>
+
+    <!-- Caixa de preço -->
+    <div class="price" data-reveal>
+      <p class="price__label">Investimento de hoje</p>
+      <p class="price__big"><sup>R$</sup>97<span class="price__cents">,00</span></p>
+      <p class="price__cash">à vista</p>
+      <p class="price__inst">(ou <b>12x de R$ 9,68</b> no cartão de crédito)</p>
+
+      <a class="btn btn--orange btn--xl" href="#checkout" data-cta="oferta">
+        Quero configurar minha loja e começar a lucrar com o Delivery 360°
+        <span class="btn__sub" aria-hidden="true">Acesso imediato · 7 dias de garantia</span>
+      </a>
+
+      <p class="price__safe">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Compra 100% segura</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/></svg>7 dias de garantia</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Acesso vitalício</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DOBRA 9 · CUSTO DA INAÇÃO + FAQ + FECHAMENTO                  -->
+<!-- ============================================================= -->
+<section class="fold inaction defer" aria-labelledby="d9">
+  <div class="wrap inaction__in" data-reveal>
+    <p class="eyebrow eyebrow--center">O custo da inação</p>
+    <h2 class="h2" id="d9">A decisão <span class="red">é sua</span></h2>
+    <p class="lead mt-3">Você pode fechar esta página agora e continuar do jeito que está. Ninguém vai te ligar cobrando.</p>
+    <p>Só que na próxima quarta-feira o repasse do iFood vai cair do mesmo jeito de sempre: fatura, mas não sobra. Na próxima sexta-feira de pico, sua equipe vai pausar a loja de novo, e seu ranqueamento vai despencar no aplicativo sem você nem saber o motivo.</p>
+    <p class="inaction__q">Daqui a três, seis ou doze meses, a pergunta angustiante vai ser a mesma de hoje: “Cadê o dinheiro que eu faturei?”</p>
+    <p class="inaction__out">Não é sobre urgência falsa. É sobre escolher continuar operando no escuro ou assumir o controle do seu lucro agora. A decisão é sua.</p>
+  </div>
+</section>
+
+<section class="fold faq defer" aria-labelledby="dfaq">
+  <div class="wrap">
+    <div class="center" data-reveal>
+      <p class="eyebrow eyebrow--center">Perguntas frequentes</p>
+      <h2 class="h2" id="dfaq">Tirando as <span class="red">últimas dúvidas</span></h2>
+    </div>
+
+    <div class="faq__list">
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">01</span>Preciso ter uma equipe grande para aplicar o método?</summary>
+        <div class="faq__a"><p>Não. O método foi pensado para quem opera sozinho ou com equipe enxuta. É assim que a grande maioria dos donos de delivery trabalha no Brasil.</p></div>
+      </details>
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">02</span>Funciona para qualquer tipo de comida, ou só para marmita?</summary>
+        <div class="faq__a"><p>Funciona para qualquer nicho (hambúrguer, pizza, açaí, doces, comida japonesa, marmita). A matemática da precificação, as regras do algoritmo e a engenharia do painel do iFood são exatamente as mesmas para todas as categorias.</p></div>
+      </details>
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">03</span>Já tentei outro curso e não funcionou. Por que esse seria diferente?</summary>
+        <div class="faq__a"><p>Porque quem ensina aqui não é consultor de marketing de palco. É quem opera 12 lojas vivas todos os dias, utilizando exatamente o mesmo método que você vai aplicar na sua.</p></div>
+      </details>
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">04</span>E se eu não gostar ou achar que não serve para mim?</summary>
+        <div class="faq__a"><p>Você tem 7 dias de garantia incondicional. Aplique, teste e, se achar que não faz sentido para a sua realidade, basta mandar um e-mail para receber 100% do seu dinheiro de volta, sem perguntas.</p></div>
+      </details>
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">05</span>O kit de documentos (bônus) substitui um advogado trabalhista?</summary>
+        <div class="faq__a"><p>Não. São modelos de referência prontos para te dar um ponto de partida organizacional e economizar tempo/dinheiro, mas não substituem orientação jurídica personalizada para casos complexos.</p></div>
+      </details>
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">06</span>Já tenho loja aberta no iFood, ou preciso abrir do zero para o curso servir?</summary>
+        <div class="faq__a"><p>Funciona para os dois casos. O método cobre desde a configuração inicial do zero até o ajuste cirúrgico de quem já vende e quer estancar os vazamentos de lucro.</p></div>
+      </details>
+      <details name="faq" data-reveal>
+        <summary><span class="faq__n">07</span>Por quanto tempo tenho acesso ao curso?</summary>
+        <div class="faq__a"><p>O seu acesso é vitalício! Você poderá assistir às aulas e utilizar os materiais de apoio sempre que quiser, incluindo todas as atualizações futuras.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="fold fold--tight final" aria-labelledby="dfinal">
+  <div class="wrap wrap-narrow" data-reveal>
+    <p class="eyebrow eyebrow--center">Última chamada</p>
+    <h2 class="h2" id="dfinal">Pare de operar<br><span class="red">no escuro</span></h2>
+    <p class="lead mt-3">R$ 97,00 à vista ou 12x de R$ 9,68 no cartão de crédito. Com 7 dias de garantia incondicional.</p>
+    <a class="btn btn--xl mt-4" href="#checkout" data-cta="final">
+      Quero acessar o Delivery 360° agora
+      <span class="btn__sub" aria-hidden="true">Acesso imediato e vitalício</span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <a href="#topo" class="logo" style="height:34px" aria-label="Rodrigo Barros">
+      <img src="/assets/img/logo-horizontal-cream.svg" alt="Rodrigo Barros" width="1263" height="169" style="height:100%;width:auto" loading="lazy" decoding="async">
+    </a>
+    <div class="footer__legal">
+      <p>© <span data-year>2026</span> Rodrigo Barros · Grupo 360 Food. Todos os direitos reservados.</p>
+      <p>Este site não é afiliado ao iFood. iFood é marca registrada de seus respectivos proprietários, citada aqui apenas de forma descritiva. O kit de documentos do Bônus #2 é composto por modelos de referência e não substitui orientação jurídica personalizada. Os resultados apresentados dependem da aplicação individual e não constituem promessa de ganho.</p>
+      <p><a href="/politica-de-privacidade">Política de Privacidade</a> · <a href="/termos-de-uso">Termos de Uso</a> · <a href="#oferta">Voltar para a oferta</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- CTA fixa no mobile -->
+<div class="dock" data-dock aria-hidden="true">
+  <div class="dock__price"><b>R$ 97</b><span>ou 12x 9,68</span></div>
+  <a class="btn btn--orange" href="#checkout" data-cta="dock" tabindex="-1">Quero começar a lucrar</a>
+</div>
+
+<!-- ====================== DADOS ESTRUTURADOS ====================== -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"https://delivery360.com.br/#org",
+      "name":"Grupo 360 Food",
+      "url":"https://delivery360.com.br/",
+      "logo":"https://delivery360.com.br/assets/img/logo-horizontal.svg",
+      "founder":{"@id":"https://delivery360.com.br/#rodrigo"}
+    },
+    {
+      "@type":"Person",
+      "@id":"https://delivery360.com.br/#rodrigo",
+      "name":"Rodrigo Barros",
+      "jobTitle":"Gestor de restaurantes e fundador do Gestoque 360",
+      "description":"Gerencia o Grupo 360 Food, com 12 restaurantes operando no iFood, entre eles a Merma Marmita. Fundador do Gestoque 360, usado por mais de 150 donos de restaurantes, e integrante do Fórum de Restaurantes do iFood.",
+      "knowsAbout":["Delivery","iFood","Precificação de cardápio","Gestão de restaurantes","CMV"],
+      "worksFor":{"@id":"https://delivery360.com.br/#org"}
+    },
+    {
+      "@type":"Course",
+      "@id":"https://delivery360.com.br/#curso",
+      "name":"Delivery 360°: Do Zero ao Lucro",
+      "description":"Método de 4 passos (Configura, Precifica, Roda e Protege) para configurar, precificar e operar uma loja no iFood com lucro real. 10 aulas em vídeo, 5 módulos e 2 bônus.",
+      "inLanguage":"pt-BR",
+      "url":"https://delivery360.com.br/",
+      "provider":{"@id":"https://delivery360.com.br/#org"},
+      "author":{"@id":"https://delivery360.com.br/#rodrigo"},
+      "educationalLevel":"Iniciante a intermediário",
+      "teaches":["Configuração de loja no iFood","Precificação com CMV e taxa de plataforma","Gestão de cardápio e raio de entrega","Manutenção do selo Super Restaurante"],
+      "hasCourseInstance":{
+        "@type":"CourseInstance",
+        "courseMode":"online",
+        "courseWorkload":"PT3H",
+        "instructor":{"@id":"https://delivery360.com.br/#rodrigo"}
+      },
+      "offers":{
+        "@type":"Offer",
+        "price":"97.00",
+        "priceCurrency":"BRL",
+        "availability":"https://schema.org/InStock",
+        "category":"Curso online",
+        "url":"https://delivery360.com.br/#oferta",
+        "hasMerchantReturnPolicy":{
+          "@type":"MerchantReturnPolicy",
+          "applicableCountry":"BR",
+          "returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays":7,
+          "returnMethod":"https://schema.org/ReturnByMail",
+          "returnFees":"https://schema.org/FreeReturn"
+        }
+      }
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://delivery360.com.br/#faq",
+      "mainEntity":[
+        {"@type":"Question","name":"Preciso ter uma equipe grande para aplicar o método?","acceptedAnswer":{"@type":"Answer","text":"Não. O método foi pensado para quem opera sozinho ou com equipe enxuta. É assim que a grande maioria dos donos de delivery trabalha no Brasil."}},
+        {"@type":"Question","name":"Funciona para qualquer tipo de comida, ou só para marmita?","acceptedAnswer":{"@type":"Answer","text":"Funciona para qualquer nicho (hambúrguer, pizza, açaí, doces, comida japonesa, marmita). A matemática da precificação, as regras do algoritmo e a engenharia do painel do iFood são exatamente as mesmas para todas as categorias."}},
+        {"@type":"Question","name":"Já tentei outro curso e não funcionou. Por que esse seria diferente?","acceptedAnswer":{"@type":"Answer","text":"Porque quem ensina aqui não é consultor de marketing de palco. É quem opera 12 lojas vivas todos os dias, utilizando exatamente o mesmo método que você vai aplicar na sua."}},
+        {"@type":"Question","name":"E se eu não gostar ou achar que não serve para mim?","acceptedAnswer":{"@type":"Answer","text":"Você tem 7 dias de garantia incondicional. Aplique, teste e, se achar que não faz sentido para a sua realidade, basta mandar um e-mail para receber 100% do seu dinheiro de volta, sem perguntas."}},
+        {"@type":"Question","name":"O kit de documentos (bônus) substitui um advogado trabalhista?","acceptedAnswer":{"@type":"Answer","text":"Não. São modelos de referência prontos para te dar um ponto de partida organizacional e economizar tempo/dinheiro, mas não substituem orientação jurídica personalizada para casos complexos."}},
+        {"@type":"Question","name":"Já tenho loja aberta no iFood, ou preciso abrir do zero para o curso servir?","acceptedAnswer":{"@type":"Answer","text":"Funciona para os dois casos. O método cobre desde a configuração inicial do zero até o ajuste cirúrgico de quem já vende e quer estancar os vazamentos de lucro."}},
+        {"@type":"Question","name":"Por quanto tempo tenho acesso ao curso?","acceptedAnswer":{"@type":"Answer","text":"O seu acesso é vitalício! Você poderá assistir às aulas e utilizar os materiais de apoio sempre que quiser, incluindo todas as atualizações futuras."}}
+      ]
+    },
+    {
+      "@type":"WebSite",
+      "@id":"https://delivery360.com.br/#site",
+      "url":"https://delivery360.com.br/",
+      "name":"Delivery 360°: Do Zero ao Lucro",
+      "inLanguage":"pt-BR",
+      "publisher":{"@id":"https://delivery360.com.br/#org"}
+    }
+  ]
+}
+</script>
+
+<script src="/assets/js/app.js" type="module"></script>
+</body>
+</html>
