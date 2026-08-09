@@ -110,8 +110,12 @@
     --f-2xl:clamp(2.25rem,1.5rem + 3.4vw,4.5rem);
     --f-3xl:clamp(3rem,1.6rem + 6.2vw,7.5rem);
 
+    /* Escala vertical. sp-7 = borda de dobra, sp-6 = bloco interno grande,
+       sp-head = cabeçalho de seção até o conteúdo. Uma só escala na página. */
     --sp-1:.5rem;--sp-2:1rem;--sp-3:1.5rem;--sp-4:2rem;--sp-5:3rem;
-    --sp-6:clamp(3rem,7vw,5.5rem);--sp-7:clamp(4rem,10vw,8rem);
+    --sp-6:clamp(2.5rem,5.5vw,4rem);
+    --sp-7:clamp(3.25rem,7.5vw,6.5rem);
+    --sp-head:clamp(1.75rem,3.5vw,2.75rem);
 
     --r-sm:8px;--r-md:14px;--r-lg:22px;--r-xl:32px;
     --wrap:min(1200px,100% - clamp(1.25rem,5vw,4rem));
@@ -147,6 +151,10 @@
   .wrap-narrow{width:var(--wrap-narrow);margin-inline:auto}
   .fold{position:relative;padding-block:var(--sp-7);isolation:isolate}
   .fold--tight{padding-block:var(--sp-6)}
+  /* Cabeçalho de seção: eyebrow → h2 → lead, com o mesmo respiro em toda a página */
+  .sec-head{margin-bottom:var(--sp-head)}
+  .sec-head--center{text-align:center;max-width:66ch;margin-inline:auto}
+  .h2+*{margin-top:var(--sp-3)}
   .grid{display:grid;gap:clamp(1rem,2.5vw,2rem)}
   .grid-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
   .grid-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
@@ -240,7 +248,7 @@
   }
 
   /* ---------- Selos ---------- */
-  .pill{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem 1rem;
+  .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .9rem;
     border:1px solid var(--line);border-radius:999px;background:rgb(255 255 255/.03);
     font-size:var(--f-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
     color:var(--fg-soft);backdrop-filter:blur(6px)}
@@ -284,7 +292,7 @@
 @layer sections{
 
 /* ---------- D1 · HERO ---------------------------------------------------- */
-.hero{position:relative;padding-block:clamp(2.5rem,6vw,4.5rem) var(--sp-7);overflow:hidden}
+.hero{position:relative;padding-block:clamp(1.75rem,4vw,3rem) var(--sp-7);overflow:hidden}
 .hero__bg{position:absolute;inset:-20% -10% auto;height:150%;z-index:-2;pointer-events:none;
   background:
     radial-gradient(70% 55% at 50% 0%,color-mix(in srgb,var(--red) 55%,transparent) 0%,transparent 62%),
@@ -310,7 +318,7 @@
 .hero h1 .hi em{color:var(--orange);font-style:normal}
 .hero__sub{font-size:var(--f-md);color:var(--fg-soft);max-width:56ch;margin-bottom:var(--sp-4)}
 .hero__cta{display:flex;flex-direction:column;gap:var(--sp-2);align-items:flex-start;max-width:640px}
-.hero__pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:var(--sp-3)}
+.hero__pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:var(--sp-4)}
 
 /* Capa 3D */
 .cover{perspective:1400px;perspective-origin:60% 40%;display:flex;justify-content:center}
@@ -364,7 +372,7 @@
 
 /* ---------- D2 · DIAGNÓSTICO -------------------------------------------- */
 .diag{background:var(--ink-800);border-block:1px solid var(--line)}
-.diag__head{text-align:center;margin-bottom:var(--sp-5)}
+.diag__head{text-align:center;margin-bottom:var(--sp-head)}
 .diag__card{overflow:hidden}
 .diag__card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;
   background:linear-gradient(180deg,var(--red),transparent)}
@@ -372,23 +380,25 @@
 .diag__n{font-family:'Anton',sans-serif;position:absolute;right:1rem;top:.2rem;
   font-size:5rem;line-height:1;color:color-mix(in srgb,var(--cream) 5%,transparent);pointer-events:none}
 .diag__card h3{margin-bottom:var(--sp-2)}
+.diag__card .card__tag{margin-bottom:var(--sp-3)}
 .diag__card p+p{margin-top:var(--sp-2)}
 .diag__link{margin-top:var(--sp-5);text-align:center}
 
 /* ---------- D3 · O VILÃO + CHECKLIST ------------------------------------ */
 .villain{background:
   linear-gradient(180deg,var(--ink-800) 0%,var(--red-black) 45%,var(--red-dark) 100%)}
-.villain__quotes{display:grid;gap:var(--sp-2);margin-block:var(--sp-4);max-width:44ch}
-.quote{position:relative;padding-left:2.6rem;font-size:var(--f-lg);font-weight:700;
+.villain__quotes{display:grid;gap:var(--sp-3);margin-block:var(--sp-3) 0;max-width:44ch}
+.quote{position:relative;padding-left:2.3rem;font-size:var(--f-lg);font-weight:700;
   line-height:1.25;color:var(--cream)}
-.quote::before{content:"“";position:absolute;left:0;top:-.32em;font-family:'Anton',sans-serif;
-  font-size:3.2rem;color:var(--red);line-height:1}
+.quote::before{content:"“";position:absolute;left:0;top:0;font-family:'Anton',sans-serif;
+  font-size:2.4em;line-height:.86;color:var(--red)}
 .villain__body{max-width:62ch}
+@media (max-width:759px){.villain__quotes{margin-bottom:var(--sp-4)}}
 .villain__body p+p{margin-top:var(--sp-2)}
 .dark-line{display:inline-block;background:var(--ink);color:var(--cream);
   font-weight:800;padding:.06em .4em;border-radius:3px}
 
-.check{margin-top:var(--sp-7);background:rgb(0 0 0/.35);border:1px solid var(--line);
+.check{margin-top:var(--sp-6);background:rgb(0 0 0/.35);border:1px solid var(--line);
   border-radius:var(--r-xl);padding:clamp(1.4rem,4vw,3rem)}
 .check__list{display:grid;gap:.7rem;margin-block:var(--sp-3);
   grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
@@ -435,7 +445,7 @@
 .method{background:
   radial-gradient(80% 60% at 50% -10%,color-mix(in srgb,var(--red) 26%,transparent),transparent 60%),
   var(--ink-900)}
-.method__head{text-align:center;max-width:70ch;margin-inline:auto;margin-bottom:var(--sp-6)}
+.method__head{text-align:center;max-width:70ch;margin-inline:auto;margin-bottom:var(--sp-head)}
 .cycle{display:grid;gap:clamp(1rem,2.4vw,1.6rem);perspective:1600px;
   grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
 .step{position:relative;padding:clamp(1.4rem,3vw,2rem);border-radius:var(--r-lg);
@@ -452,7 +462,7 @@
 .step:nth-child(3) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--red) 75%,transparent)}
 .step:nth-child(4) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
 .step__t{font-family:'Anton',sans-serif;font-size:var(--f-lg);text-transform:uppercase;
-  letter-spacing:.02em;margin-bottom:.6rem;color:var(--cream)}
+  letter-spacing:.02em;margin-bottom:.7rem;color:var(--cream)}
 .step p{font-size:var(--f-sm);color:var(--fg-soft)}
 .step__arrow{position:absolute;right:-1.15rem;top:50%;translate:0 -50%;z-index:2;
   width:2.3rem;height:2.3rem;display:none;place-items:center;border-radius:999px;
@@ -463,7 +473,7 @@
   .step:last-child .step__arrow{display:none}
 }
 .method__flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem;
-  margin-bottom:var(--sp-5);font-family:'Anton',sans-serif;font-size:clamp(.85rem,2.2vw,1.35rem);
+  margin-bottom:var(--sp-4);font-family:'Anton',sans-serif;font-size:clamp(.85rem,2.2vw,1.35rem);
   text-transform:uppercase;letter-spacing:.06em}
 .method__flow b{padding:.42em .9em;border-radius:8px;background:rgb(255 255 255/.05);
   border:1px solid var(--line);font-weight:400}
@@ -473,13 +483,13 @@
   display:grid;gap:0;grid-template-columns:1fr}
 @media (min-width:900px){.method__live{grid-template-columns:1fr 1fr}}
 .method__live-txt{padding:clamp(1.5rem,4vw,3rem);display:flex;flex-direction:column;justify-content:center}
-.method__live-img{position:relative;min-height:260px;background:
+.method__live-img{position:relative;min-height:260px;border-top:1px solid var(--line);background:
   radial-gradient(70% 70% at 30% 30%,color-mix(in srgb,var(--red) 40%,transparent),transparent 70%),
   var(--ink-900);display:grid;place-items:center;padding:var(--sp-3)}
 
 /* ---------- D6 · PROVA + AUTORIDADE ------------------------------------- */
 .proof{background:var(--ink-800);border-top:1px solid var(--line)}
-.stats{display:grid;gap:clamp(1rem,2vw,1.5rem);margin-block:var(--sp-5);
+.stats{display:grid;gap:clamp(1rem,2vw,1.5rem);margin-block:var(--sp-head);
   grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
 .stat{text-align:center;padding:clamp(1.2rem,2.5vw,1.8rem) 1rem;border-radius:var(--r-lg);
   background:linear-gradient(180deg,rgb(255 255 255/.05),transparent);border:1px solid var(--line)}
@@ -488,7 +498,7 @@
 .stat b i{font-style:normal;color:var(--orange)}
 .stat span{display:block;margin-top:.5rem;font-size:var(--f-xs);font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;color:var(--fg-mute)}
-.testis{display:grid;gap:clamp(1rem,2.4vw,1.6rem);margin-top:var(--sp-4);
+.testis{display:grid;gap:clamp(1rem,2.4vw,1.6rem);margin-top:var(--sp-head);
   grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
 .testi{display:flex;flex-direction:column;gap:var(--sp-2)}
 .testi__quote{font-family:'Anton',sans-serif;font-size:var(--f-md);line-height:1.15;
@@ -530,7 +540,7 @@
 .item--bonus .item__icon{background:linear-gradient(150deg,var(--orange),#a13d05)}
 .item--bonus{border-color:color-mix(in srgb,var(--orange) 40%,transparent);
   background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 9%,var(--ink-700)),var(--ink-800))}
-.item h3{margin-bottom:.5rem}
+.item h3{margin-bottom:.7rem}
 .item p{font-size:var(--f-sm);color:var(--fg-soft)}
 .item__icon svg{width:26px;height:26px}
 .guarantee{margin-top:clamp(1rem,2.4vw,1.6rem);display:grid;gap:var(--sp-3);
@@ -560,7 +570,7 @@
 .forwho__col--no li svg{color:var(--red)}
 .forwho__col--yes li svg{color:var(--orange)}
 
-.anchor{margin-top:var(--sp-7);text-align:center;max-width:74ch;margin-inline:auto}
+.anchor{margin-top:var(--sp-6);text-align:center;max-width:74ch;margin-inline:auto}
 .anchor p+p{margin-top:var(--sp-2)}
 .anchor__strike{display:inline-block;font-family:'Anton',sans-serif;
   font-size:clamp(2rem,6vw,3.4rem);color:var(--fg-mute);position:relative;line-height:1}
@@ -570,7 +580,7 @@
   transition:transform .7s var(--ease-out) .1s}
 .anchor__strike[data-in]::after{--sx:1}
 
-.price{margin-top:var(--sp-5);margin-inline:auto;max-width:760px;
+.price{margin-top:var(--sp-head);margin-inline:auto;max-width:760px;
   background:linear-gradient(180deg,#fff,var(--cream));color:var(--ink);
   border-radius:var(--r-xl);padding:clamp(1.6rem,4vw,3rem);text-align:center;
   box-shadow:0 30px 70px -20px rgb(0 0 0/.8),0 0 0 1px rgb(255 255 255/.1),
@@ -607,8 +617,8 @@
   text-transform:uppercase;color:var(--cream);margin-block:var(--sp-3)}
 .inaction__out{font-size:var(--f-md);font-weight:700;color:var(--cream)}
 
-.faq{background:var(--ink-800)}
-.faq__list{max-width:900px;margin-inline:auto;display:grid;gap:.75rem;margin-top:var(--sp-5)}
+.faq{background:var(--ink-800);padding-block:var(--sp-6)}
+.faq__list{max-width:900px;margin-inline:auto;display:grid;gap:.75rem;margin-top:var(--sp-head)}
 .faq details{border:1px solid var(--line);border-radius:var(--r-md);background:var(--ink-700);
   overflow:hidden;transition:border-color .3s var(--ease)}
 .faq details[open]{border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
@@ -817,7 +827,7 @@
 <!-- ============================================================= -->
 <section class="fold diag defer" aria-labelledby="d2">
   <div class="wrap">
-    <div class="diag__head" data-reveal>
+    <div class="diag__head sec-head" data-reveal>
       <p class="eyebrow eyebrow--center">O diagnóstico</p>
       <h2 class="h2" id="d2">Duas situações,<br><span class="red">uma causa só.</span></h2>
     </div>
@@ -915,7 +925,7 @@
 <!-- ============================================================= -->
 <section class="fold method defer" aria-labelledby="d5">
   <div class="wrap">
-    <div class="method__head" data-reveal>
+    <div class="method__head sec-head" data-reveal>
       <p class="eyebrow eyebrow--center">O método</p>
       <h2 class="h2" id="d5">Delivery <span class="red">360°</span></h2>
       <p class="lead mt-3">Isso aqui não é uma lista de dicas soltas acumuladas num PDF. É um ciclo operacional de 4 passos que eu aplico nas minhas 12 lojas todos os dias:</p>
@@ -991,7 +1001,7 @@
 <!-- ============================================================= -->
 <section class="fold proof defer" aria-labelledby="d6">
   <div class="wrap">
-    <div class="center maxw-center" data-reveal>
+    <div class="sec-head sec-head--center" data-reveal>
       <p class="eyebrow eyebrow--center">Prova de campo e prova social</p>
       <h2 class="h2" id="d6">A realidade de<br><span class="red">quem aplica</span></h2>
       <p class="lead mt-3">Eu não vivo de teoria de palco. Eu gerencio o Grupo 360 Food, com 12 restaurantes rodando ao vivo todos os dias no iFood, entre eles a Merma Marmita. São pedidos de verdade caindo na impressora, pratos sendo embalados e dinheiro caindo na conta toda quarta-feira.</p>
@@ -1063,7 +1073,7 @@
 <!-- ============================================================= -->
 <section class="fold deliver defer" aria-labelledby="d7">
   <div class="wrap">
-    <div class="center maxw-center" style="margin-bottom:var(--sp-5)" data-reveal>
+    <div class="sec-head sec-head--center" data-reveal>
       <p class="eyebrow eyebrow--center">A entrega completa</p>
       <h2 class="h2" id="d7">O que você <span class="red">leva hoje</span></h2>
     </div>
@@ -1194,7 +1204,7 @@
 
 <section class="fold faq defer" aria-labelledby="dfaq">
   <div class="wrap">
-    <div class="center" data-reveal>
+    <div class="sec-head" data-reveal>
       <p class="eyebrow eyebrow--center">Perguntas frequentes</p>
       <h2 class="h2" id="dfaq">Tirando as <span class="red">últimas dúvidas</span></h2>
     </div>
