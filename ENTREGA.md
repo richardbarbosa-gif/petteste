@@ -162,11 +162,25 @@ Medido, não estimado:
 |---|---|---|
 | `#c62828` sobre `#1c1c1c` | **3,06:1** | Reprova AA em texto pequeno |
 | `#e86a1c` sobre `#1c1c1c` | **5,3:1** | Passa AA |
+| `#052e14` sobre `#25d366` (CTA) | **7,52:1** | Passa AAA |
+| ~~branco sobre `#25d366`~~ | ~~1,98:1~~ | Reprovado — descartado |
 | `#f6f3ec` sobre `#1c1c1c` | **15,2:1** | Passa AAA |
 
 Por isso: **vermelho** só em display grande, fundos e formas; **laranja** é o acento
-de texto pequeno e CTA; **creme** é sempre o corpo. A marca fica fiel e a página
-legível no celular sob sol — que é onde o público lê.
+de texto pequeno; **creme** é sempre o corpo. A marca fica fiel e a página legível no
+celular sob sol — que é onde o público lê.
+
+### Verde de ação nos CTAs
+
+Os 5 CTAs usam o **verde do WhatsApp (`#25D366`)**, a pedido do cliente: é uma cor que
+o público brasileiro já lê como "clique aqui". Duas decisões em cima disso:
+
+1. **Texto quase preto (`#052e14`), não branco.** Branco sobre `#25D366` dá 1,98:1 e
+   reprova em qualquer critério — fica difícil de ler no celular. O tom escuro dá
+   **7,52:1** e ainda parece mais premium.
+2. **O verde é exclusivo do CTA.** Não aparece em nenhum outro elemento da página.
+   Se aparecesse, deixaria de significar ação. O topo da caixa de preço, os selos e
+   os acentos seguem na paleta da marca justamente para preservar isso.
 
 ---
 
@@ -252,6 +266,7 @@ TOTAL                          ~82 KB
 | **Capa com parallax** | Rotação e reflexo acompanham o ponteiro pela página inteira. |
 | **CTA fixa no mobile** | Aparece depois do hero, com preço ao lado do botão. |
 | **Rastreio de CTA** | Todos os botões têm `data-cta="hero\|header\|oferta\|final\|dock"` para saber qual posição converteu. |
+| **CTAs em verde** | 5 botões em `#25D366` com texto escuro, ícone de seta que avança no hover, física de pressão e brilho ambiente. Largura máxima de 540px — antes eram 720px. |
 
 ---
 
@@ -292,6 +307,11 @@ Registrados porque valem como aprendizado do projeto:
 
 8. **Acentos maiúsculos encostando** — a entrelinha de `.h2` e do bloco de inação
    estava apertada demais para caixa alta acentuada (Ã, Ê, Õ). Corrigida.
+
+9. **Microcopy invisível na caixa de preço** — ao passar os CTAs para verde, a linha de
+   apoio abaixo do botão herdou o creme translúcido e desapareceu sobre o fundo claro
+   da caixa de preço. Além disso repetia a linha de selos logo abaixo. A duplicata foi
+   removida e ficou uma regra defensiva para tom escuro em qualquer fundo claro.
 
 ---
 
@@ -365,6 +385,8 @@ Tudo abaixo foi rodado em Chromium real, não estimado:
 ## 14. Histórico de commits
 
 ```
+(mais recente)  design: CTAs em verde WhatsApp, menores e com ícone
+94628a6  docs: ENTREGA.md com a documentação completa do projeto
 6b01d2c  refine: auditoria de copy nas 9 dobras e acabamento de design
 835d352  refine: escala vertical única e versão em arquivo único
 e4cb569  feat: página de vendas Delivery 360° — 9 dobras, estática e sem dependências
