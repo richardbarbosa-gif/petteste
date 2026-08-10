@@ -34,7 +34,7 @@
 <meta name="twitter:description" content="Fatura no iFood e não sobra? O método aplicado todos os dias em 12 restaurantes próprios.">
 <meta name="twitter:image" content="https://delivery360.com.br/assets/img/og-delivery360.png">
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data: file: blob:; font-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxYzFjMWMiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMS4wMCAxMi41NSkgc2NhbGUoMC4yMzIzKSI+PHBhdGggZmlsbD0iI2M2MjgyOCIgZD0iTTExNy44OSAyOC41NUMxMjkuMDUgMjguNTUgMTM5LjQyIDM1LjA4IDE0My41NiA0NS40NEMxNDQuMDMgNDYuNjEgMTQ0LjM2IDQ3LjcgMTQ0LjUgNDguNjVDMTUwLjU1IDg3LjQzIDEwNi4yOCA4MC44NCA4MC40NCA4MC42MkwyOC41NSAyOC41NUwxMTcuODkgMjguNTVaTTEzMC41OSAxNjcuNDdMMTgwLjc5IDE2Ny40N0wxODAuNzkgMTQyLjczTDE0My42OCAxNDIuNzNMMTEwLjA4IDEwNS45OUwxMjQuNzUgMTA1LjI3QzE0NC41OCAxMDQuMjkgMTYyLjM3IDkxLjgxIDE2OS4wIDczLjA5QzE2OS44MyA3MC43NSAxNzAuNDkgNjguMzUgMTcxLjAgNjUuOTJDMTc4LjA5IDMxLjc2IDE1MC44MyAwLjAgMTE1Ljk0IDAuMEwwLjAgMC4wTDAuMCAzNS4yMUMwLjAgMzYuMCAxMjcuMzggMTY0LjMzIDEzMC41OSAxNjcuNDdaIi8+PHBhdGggZmlsbD0iI2Y2ZjNlYyIgZD0iTTAuMCA5Ny4wNkwwLjAgMTY3LjQ3TDcwLjQxIDE2Ny40N0wwLjAgOTcuMDZaIi8+PC9nPjwvc3ZnPg==" type="image/svg+xml">
@@ -73,6 +73,13 @@
     --orange:#e86a1c;       /* secundária */
 
     /* Derivadas (mesma família, para profundidade) */
+    /* Neon e metálico derivados da própria marca — nenhuma cor nova de identidade */
+    --red-neon:#ff2f2f;         /* vermelho aceso, só para brilho e borda */
+    --red-glow:color-mix(in srgb,var(--red-neon) 60%,transparent);
+    --metal:linear-gradient(118deg,
+              rgb(255 255 255/.00) 0%,rgb(255 255 255/.028) 36%,
+              rgb(255 255 255/.062) 47%,rgb(255 255 255/.02) 58%,
+              rgb(255 255 255/.00) 100%);
     --red-deep:#7d1616;
     --red-dark:#4a0d0d;
     --red-black:#2a0808;
@@ -151,10 +158,9 @@
   .fold{position:relative;padding-block:var(--sp-7);isolation:isolate}
   /* fio de luz no topo: separa as dobras escuras sem virar borda dura */
   .fold--rule::before{content:"";position:absolute;inset:0 0 auto;height:1px;
-    background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--red) 70%,transparent) 22%,
-      color-mix(in srgb,var(--orange) 60%,transparent) 50%,
-      color-mix(in srgb,var(--red) 70%,transparent) 78%,transparent);
-    opacity:.5}
+    background:linear-gradient(90deg,transparent,var(--red-neon) 22%,
+      var(--orange) 50%,var(--red-neon) 78%,transparent);
+    opacity:.55;box-shadow:0 0 14px var(--red-glow)}
   .fold--tight{padding-block:var(--sp-6)}
   /* Cabeçalho de seção: eyebrow → h2 → lead, com o mesmo respiro em toda a página */
   .sec-head{margin-bottom:var(--sp-head)}
@@ -168,6 +174,14 @@
   .stack-lg>*+*{margin-top:var(--sp-3)}
   /* Renderização adiada das dobras longas: ganho direto de LCP/INP */
   .defer{content-visibility:auto;contain-intrinsic-size:auto 900px}
+  /* Imagem de fundo da dobra: entra por trás do conteúdo, esmaecida nas bordas
+     para o texto nunca disputar leitura com a foto. */
+  .fold__bg{position:absolute;inset:0;z-index:-1;width:100%;height:100%;
+    object-fit:cover;opacity:.16;pointer-events:none;
+    filter:grayscale(.45) contrast(1.06) brightness(.85);
+    mask-image:linear-gradient(180deg,transparent 0%,#000 20%,#000 76%,transparent 100%);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 20%,#000 76%,transparent 100%)}
+  .fold__bg--soft{opacity:.11;filter:grayscale(.6) contrast(1.1) brightness(.8)}
 }
 
 @layer components{
@@ -186,7 +200,9 @@
   .lead{font-size:var(--f-md);color:var(--fg-soft);line-height:1.55}
   .muted{color:var(--fg-mute)}
   .accent{color:var(--orange)}
-  .red{color:var(--red)}
+  .red{color:var(--red);
+    text-shadow:0 0 18px color-mix(in srgb,var(--red-neon) 45%,transparent),
+                0 0 44px color-mix(in srgb,var(--red-neon) 18%,transparent)}
   .mark-red{background:var(--red);color:var(--cream);padding:.05em .3em;
     box-decoration-break:clone;-webkit-box-decoration-break:clone}
 
@@ -202,10 +218,13 @@
     font-weight:800;font-size:clamp(.92rem,.88rem + .22vw,1.02rem);letter-spacing:.005em;
     line-height:1.3;padding:clamp(.9rem,1.7vw,1.1rem) clamp(1.3rem,2.6vw,1.9rem);
     border-radius:14px;color:var(--cta-fg);
-    background:linear-gradient(180deg,#4ce183 0%,var(--cta) 46%,var(--cta-2) 100%);
+    background:var(--metal),
+               linear-gradient(180deg,#5ce78d 0%,#2fdd72 34%,var(--cta) 62%,var(--cta-2) 100%);
     box-shadow:0 4px 0 var(--cta-edge),
-               0 10px 26px -6px color-mix(in srgb,var(--cta) 55%,transparent),
-               inset 0 1px 0 rgb(255 255 255/.5);
+               0 12px 30px -6px color-mix(in srgb,var(--cta) 62%,transparent),
+               0 0 0 1px color-mix(in srgb,#0a4a22 45%,transparent),
+               inset 0 1px 0 rgb(255 255 255/.6),
+               inset 0 -6px 12px -8px rgb(0 0 0/.4);
     transform:translateZ(0);
     transition:transform .14s var(--ease),box-shadow .18s var(--ease),filter .2s var(--ease);
     overflow:hidden;
@@ -215,10 +234,11 @@
     background:linear-gradient(105deg,transparent 38%,rgb(255 255 255/.4) 47%,transparent 56%);
     transform:translateX(-125%);transition:transform .75s var(--ease-out);pointer-events:none
   }
-  .btn:hover{filter:brightness(1.05);
+  .btn:hover{filter:brightness(1.06) saturate(1.06);
     box-shadow:0 4px 0 var(--cta-edge),
-               0 14px 34px -6px color-mix(in srgb,var(--cta) 70%,transparent),
-               inset 0 1px 0 rgb(255 255 255/.55)}
+               0 18px 44px -8px color-mix(in srgb,var(--cta) 85%,transparent),
+               0 0 0 1px color-mix(in srgb,#0a4a22 55%,transparent),
+               inset 0 1px 0 rgb(255 255 255/.65)}
   .btn:hover::after{transform:translateX(125%)}
   .btn:active{transform:translateY(4px);
     box-shadow:0 0 0 var(--cta-edge),0 4px 12px rgb(0 0 0/.4),
@@ -239,14 +259,18 @@
   .card--light .cta-note b,.price .cta-note b,.fault .cta-note b{color:var(--ink)}
 
   /* ---------- Cartões ---------- */
-  .card{position:relative;background:linear-gradient(180deg,var(--ink-700),var(--ink-800));
+  .card{position:relative;
+    background:var(--metal),linear-gradient(168deg,#232323 0%,var(--ink-700) 45%,#101010 100%);
     border:1px solid var(--line);border-radius:var(--r-lg);
-    padding:clamp(1.35rem,3vw,2.2rem);box-shadow:var(--shadow-1);
+    padding:clamp(1.35rem,3vw,2.2rem);
+    box-shadow:var(--shadow-1),inset 0 1px 0 rgb(255 255 255/.07);
     transition:transform .5s var(--ease-out),border-color .35s var(--ease),box-shadow .35s var(--ease);
     container-type:inline-size}
   .card--light{background:linear-gradient(180deg,#fff,var(--cream));color:var(--ink);border-color:rgb(0 0 0/.1)}
   .card--light .muted{color:color-mix(in srgb,var(--ink) 62%,transparent)}
-  .card:hover{border-color:var(--line-strong);box-shadow:var(--shadow-2)}
+  .card:hover{border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
+    box-shadow:var(--shadow-2),inset 0 1px 0 rgb(255 255 255/.1),
+               0 0 40px -14px var(--red-glow)}
   .card__tag{display:inline-flex;align-items:center;gap:.5rem;font-size:var(--f-xs);
     font-weight:800;letter-spacing:.16em;text-transform:uppercase;
     padding:.4rem .8rem;border-radius:999px;margin-bottom:var(--sp-2)}
@@ -263,7 +287,9 @@
 
   /* ---------- Selos ---------- */
   .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .9rem;
-    border:1px solid var(--line);border-radius:999px;background:rgb(255 255 255/.03);
+    border:1px solid var(--line);border-radius:999px;
+    background:var(--metal),rgb(255 255 255/.035);
+    box-shadow:inset 0 1px 0 rgb(255 255 255/.08);
     font-size:var(--f-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
     color:var(--fg-soft);backdrop-filter:blur(6px)}
   .pill svg{width:16px;height:16px;flex:none;color:var(--orange)}
@@ -277,10 +303,12 @@
 
   /* ---------- Header ---------- */
   .header{position:sticky;top:0;z-index:50;padding-block:.85rem;
-    background:color-mix(in srgb,var(--ink-900) 82%,transparent);
+    background:linear-gradient(180deg,rgb(255 255 255/.045),transparent),
+               color-mix(in srgb,var(--ink-900) 84%,transparent);
     backdrop-filter:blur(14px) saturate(140%);
     border-bottom:1px solid transparent;transition:border-color .3s var(--ease)}
-  .header[data-stuck]{border-bottom-color:var(--line)}
+  .header[data-stuck]{border-bottom-color:color-mix(in srgb,var(--red-neon) 35%,transparent);
+    box-shadow:0 1px 22px -8px var(--red-glow)}
   .header__in{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2)}
   .header__cta{display:none}
   @media (min-width:840px){.header__cta{display:inline-flex;padding:.7rem 1.4rem;font-size:.9rem}}
@@ -309,8 +337,8 @@
 .hero{position:relative;padding-block:clamp(1.75rem,4vw,3rem) var(--sp-7);overflow:hidden}
 .hero__bg{position:absolute;inset:-20% -10% auto;height:150%;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(70% 55% at 50% 0%,color-mix(in srgb,var(--red) 55%,transparent) 0%,transparent 62%),
-    radial-gradient(45% 40% at 85% 30%,color-mix(in srgb,var(--red-deep) 60%,transparent) 0%,transparent 70%),
+    radial-gradient(68% 52% at 50% 0%,color-mix(in srgb,var(--red-neon) 46%,transparent) 0%,transparent 60%),
+    radial-gradient(45% 40% at 85% 28%,color-mix(in srgb,var(--red) 52%,transparent) 0%,transparent 70%),
     radial-gradient(60% 50% at 12% 62%,color-mix(in srgb,var(--red-black) 90%,transparent) 0%,transparent 70%)}
 .hero__rays{position:absolute;inset:auto 50% auto;top:-10%;width:190vmax;aspect-ratio:1;
   translate:-50% 0;z-index:-3;pointer-events:none;opacity:.3;
@@ -336,49 +364,26 @@
 .hero__cta{display:flex;flex-direction:column;gap:0;align-items:flex-start;max-width:540px}
 .hero__pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:var(--sp-4)}
 
-/* Capa 3D */
+/* Capa do produto (foto) */
 .cover{perspective:1400px;perspective-origin:60% 40%;display:flex;justify-content:center}
 .cover__card{
-  position:relative;width:min(100%,420px);aspect-ratio:708/1000;border-radius:18px;
-  overflow:hidden;transform-style:preserve-3d;
+  position:relative;width:min(100%,420px);border-radius:18px;overflow:hidden;
+  /* reserva o espaço antes da foto carregar: nada pula na dobra 1.
+     Se produto.png tiver outra proporção, a arte aparece inteira, sem corte. */
+  aspect-ratio:708/1000;
+  transform-style:preserve-3d;
   transform:rotateY(var(--ry,-15deg)) rotateX(var(--rx,7deg)) rotateZ(-1.2deg);
-  box-shadow:var(--shadow-3),0 0 0 1px rgb(255 255 255/.08);
-  background:
-    radial-gradient(120% 80% at 50% 42%,#a51f1f 0%,#6d1212 38%,#3d0808 68%,#210404 100%);
+  box-shadow:var(--shadow-3),
+             0 0 0 1px rgb(255 255 255/.10),
+             0 0 90px -22px color-mix(in srgb,var(--red-neon) 70%,transparent);
   animation:float 9s ease-in-out infinite;
   transition:transform .8s var(--ease-out)}
 @keyframes float{0%,100%{translate:0 0}50%{translate:0 -14px}}
-.cover__card::before{ /* raios da capa */
-  content:"";position:absolute;inset:-30%;
-  background:conic-gradient(from 200deg,transparent 0 4deg,rgb(255 255 255/.07) 4deg 8deg,transparent 8deg 16deg);
-  mask-image:radial-gradient(closest-side,#000 10%,transparent 70%)}
-.cover__card::after{ /* vinheta + brilho de borda */
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(100% 70% at 50% 55%,transparent 40%,rgb(0 0 0/.55) 100%);
-  box-shadow:inset 0 1px 0 rgb(255 255 255/.18),inset 0 0 60px rgb(0 0 0/.4)}
-.cover__in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-  padding:8% 7% 6%;text-align:center;transform:translateZ(30px)}
-.cover__logo{width:56%;margin-bottom:6%}
-.cover__logo img{width:100%;height:auto}
-.cover__rule{width:26px;height:3px;background:var(--orange);margin-bottom:5%}
-.cover__eyebrow{font-size:clamp(.5rem,1.6cqw,.72rem);font-weight:800;letter-spacing:.38em;
-  text-transform:uppercase;color:var(--cream);opacity:.95}
-.cover__art{flex:1;width:100%;display:grid;place-items:center;padding-block:2%}
-.cover__art svg{width:88%;height:auto;filter:drop-shadow(0 22px 34px rgb(0 0 0/.55))}
-.cover__title{font-family:'Anton',sans-serif;font-size:clamp(2.6rem,16cqw,4.6rem);
-  line-height:.82;letter-spacing:-.02em;color:var(--cream);text-transform:uppercase;
-  text-shadow:0 3px 0 #7d1616,0 6px 14px rgb(0 0 0/.55)}
-.cover__360{font-family:'Anton',sans-serif;font-size:clamp(1.9rem,11cqw,3.2rem);line-height:.9;
-  background:linear-gradient(180deg,#ffd68a 0%,#e86a1c 45%,#a13d05 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 2px 3px rgb(0 0 0/.5));margin-top:.06em}
-.cover__badge{margin-top:5%;background:var(--ink);color:var(--cream);text-transform:uppercase;
-  font-size:clamp(.55rem,2.3cqw,.9rem);font-weight:800;letter-spacing:.2em;
-  padding:.55em 1.1em;border-left:4px solid var(--orange);
-  box-shadow:0 6px 16px rgb(0 0 0/.5)}
-.cover__meta{margin-top:5%;font-size:clamp(.5rem,1.7cqw,.72rem);font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.28em;color:color-mix(in srgb,var(--cream) 80%,transparent)}
+.cover__img{display:block;width:100%;height:100%;object-fit:contain}
+.cover__card::after{ /* aro metálico */
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.30),inset 0 0 0 1px rgb(255 255 255/.07),
+             inset 0 -18px 30px -20px rgb(0 0 0/.7)}
 .cover__glare{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;
   background:linear-gradient(115deg,transparent 32%,rgb(255 255 255/.4) 47%,transparent 60%);
   transform:translateX(-30%)}
@@ -478,16 +483,17 @@
 .cycle{display:grid;gap:clamp(1rem,2.4vw,1.6rem);perspective:1600px;
   grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
 .step{position:relative;padding:clamp(1.4rem,3vw,2rem);border-radius:var(--r-lg);
-  background:linear-gradient(160deg,var(--ink-600),var(--ink-800) 60%);
+  background:var(--metal),linear-gradient(160deg,#2b2b2b,var(--ink-800) 62%,#0e0e0e);
   border:1px solid var(--line);transform-style:preserve-3d;
-  box-shadow:0 10px 0 -2px #0a0a0a,0 20px 34px rgb(0 0 0/.55);
+  box-shadow:0 10px 0 -2px #0a0a0a,0 20px 34px rgb(0 0 0/.55),
+             inset 0 1px 0 rgb(255 255 255/.09);
   transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .3s}
 .step:hover{transform:translateY(-8px) rotateX(6deg);border-color:color-mix(in srgb,var(--orange) 50%,transparent);
   box-shadow:0 16px 0 -2px #0a0a0a,0 34px 54px rgb(0 0 0/.6),0 0 60px -10px color-mix(in srgb,var(--orange) 45%,transparent)}
 .step::before{content:"";position:absolute;inset:0 auto auto 0;height:4px;width:100%;
   border-radius:var(--r-lg) var(--r-lg) 0 0;
-  background:linear-gradient(90deg,var(--red),var(--orange));
-  opacity:.55;transition:opacity .35s var(--ease)}
+  background:linear-gradient(90deg,var(--red-neon),var(--orange));
+  opacity:.6;box-shadow:0 0 16px var(--red-glow);transition:opacity .35s var(--ease)}
 .step:hover::before{opacity:1}
 .step__n{font-family:'Anton',sans-serif;font-size:3.4rem;line-height:.8;
   color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--red) 75%,transparent);
@@ -549,7 +555,8 @@
   border-top:1px solid rgb(0 0 0/.1)}
 .avatar{flex:none;width:44px;height:44px;border-radius:999px;display:grid;place-items:center;
   font-weight:800;font-size:.95rem;color:var(--cream);
-  background:linear-gradient(140deg,var(--red),var(--red-deep));box-shadow:0 4px 10px rgb(0 0 0/.2)}
+  background:var(--metal),linear-gradient(140deg,#e03a3a,var(--red) 50%,var(--red-deep));
+  box-shadow:0 4px 10px rgb(0 0 0/.25),inset 0 1px 0 rgb(255 255 255/.35)}
 .avatar--o{background:linear-gradient(140deg,var(--orange),#a13d05)}
 .testi__who p{font-size:var(--f-xs);line-height:1.35;color:color-mix(in srgb,var(--ink) 62%,transparent)}
 .testi__who b{display:block;font-size:var(--f-sm);color:var(--ink)}
@@ -589,7 +596,9 @@
 .item{position:relative;overflow:hidden}
 .item__icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
   margin-bottom:var(--sp-2);color:var(--cream);
-  background:linear-gradient(150deg,var(--red),var(--red-deep));box-shadow:0 8px 18px rgb(0 0 0/.4)}
+  background:var(--metal),linear-gradient(150deg,#e03a3a,var(--red) 45%,var(--red-deep));
+  box-shadow:0 8px 18px rgb(0 0 0/.4),inset 0 1px 0 rgb(255 255 255/.35),
+             0 0 22px -8px var(--red-glow)}
 .item--bonus .item__icon{background:linear-gradient(150deg,var(--orange),#a13d05)}
 .item--bonus{border-color:color-mix(in srgb,var(--orange) 40%,transparent);
   background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 9%,var(--ink-700)),var(--ink-800))}
@@ -598,8 +607,10 @@
 .item__icon svg{width:26px;height:26px}
 .guarantee{margin-top:clamp(1rem,2.4vw,1.6rem);display:grid;gap:var(--sp-3);
   align-items:center;grid-template-columns:1fr;text-align:center;
-  background:linear-gradient(120deg,color-mix(in srgb,var(--red) 16%,var(--ink-700)),var(--ink-800));
-  border:1px solid color-mix(in srgb,var(--red) 40%,transparent);
+  background:var(--metal),
+    linear-gradient(120deg,color-mix(in srgb,var(--red) 20%,var(--ink-700)),var(--ink-800));
+  border:1px solid color-mix(in srgb,var(--red-neon) 42%,transparent);
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.08),0 0 60px -26px var(--red-glow);
   border-radius:var(--r-xl);padding:clamp(1.5rem,4vw,2.5rem)}
 @media (min-width:760px){.guarantee{grid-template-columns:auto 1fr;text-align:left}}
 .seal{width:clamp(96px,14vw,132px);height:auto;margin-inline:auto;
@@ -640,7 +651,8 @@
              0 0 90px -30px color-mix(in srgb,var(--orange) 70%,transparent);
   position:relative;overflow:hidden}
 .price::before{content:"";position:absolute;inset:0 0 auto;height:6px;
-  background:linear-gradient(90deg,var(--red),var(--orange))}
+  background:linear-gradient(90deg,var(--red-neon),var(--red) 30%,var(--orange) 70%,var(--red-neon));
+  box-shadow:0 0 18px var(--red-glow)}
 .price__label{font-size:var(--f-xs);font-weight:800;letter-spacing:.24em;text-transform:uppercase;
   color:color-mix(in srgb,var(--ink) 55%,transparent)}
 .price__big{font-family:'Anton',sans-serif;font-size:clamp(3.4rem,12vw,6.5rem);line-height:.9;
@@ -660,7 +672,9 @@
 .price__safe svg{width:15px;height:15px;color:var(--red)}
 
 /* ---------- D9 · INAÇÃO + FAQ + FECHAMENTO ------------------------------ */
-.inaction{background:linear-gradient(180deg,var(--red-black),var(--red-dark) 55%,var(--ink-900));
+.inaction{background:
+  radial-gradient(80% 55% at 50% 42%,color-mix(in srgb,var(--red-neon) 20%,transparent),transparent 70%),
+  linear-gradient(180deg,var(--red-black),var(--red-dark) 55%,var(--ink-900));
   position:relative;overflow:hidden}
 .inaction::before{content:"";position:absolute;inset:0;background-image:var(--grain);
   opacity:.06;mix-blend-mode:overlay;pointer-events:none}
@@ -818,80 +832,13 @@
       </ul>
     </div>
 
-    <!-- Capa 3D do produto — composição em CSS/SVG, nítida em qualquer tela.
-         Para trocar pela arte final: veja README (assets/img/capa-delivery360.png). -->
+    <!-- Capa do produto. Troque o arquivo em fotos/produto.png para atualizar. -->
     <figure class="cover" data-reveal data-reveal-delay="2">
       <div class="cover__card" data-cover>
         <div class="cover__shadow" aria-hidden="true"></div>
-        <div class="cover__in">
-          <div class="cover__logo">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiAgdmlld0JveD0iMCAwIDEyNjIuOTA5NyAxNjkuNDY5MjQiPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcF8xIj48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwtMzY5LjM5MTQ5LDYxMS42NzAzKSIgZD0iTTM2OS4zOTE0OSA0NDIuMjAxMDZIMTYzMi4zMDEyVjYxMS42NzAzSDM2OS4zOTE0OVoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJjbGlwXzIiPjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLC0zNjkuMzkxNDksNjExLjY3MDMpIiBkPSJNMCAxMDgwSDE5MjBWMEgwWiIvPjwvY2xpcFBhdGg+PHBhdGggaWQ9ImZvbnRfM180OSIgZD0iTS4wNDI5OTkyNjkgLjY2MDAwMzY5SC4zMDQwMDA4NkMuMzQ2NjY0NDQgLjY2MDAwMzY5IC4zODQ4MjY2NyAuNjUxMzM2NjkgLjQxODQ4NzU2IC42MzQwMDI3IC40NTIxNTg2IC42MTY2Njg3IC40Nzg0OTUyOCAuNTkyMzM2IC40OTc0OTc1NyAuNTYxMDA0NjYgLjUxNjQ5OTggLjUyOTY3MzMgLjUyNjAwMSAuNDkzNjcyNyAuNTI2MDAxIC40NTMwMDI5NCAuNTI2MDAxIC40MDgzMzUzNyAuNTEzOTk3NCAuMzczMzMxNyAuNDg5OTkwMjQgLjM0Nzk5MTk1IC40NjU5OTMyNyAuMzIyNjYyMzYgLjQzNDk5NzU3IC4zMDU5OTk3NyAuMzk3MDAzMTggLjI5ODAwNDE2Vi4yODk5OTMzQy40MzIzMzIzOCAuMjg5OTkzMyAuNDYwNDk1IC4yODM5OTE1IC40ODE0OTExIC4yNzE5ODc5MiAuNTAyNDk3NCAuMjU5OTk0NSAuNTEzMzM2MiAuMjM3OTk2NDIgLjUxNDAwNzU5IC4yMDU5OTM2NUwuNTIwOTk2MSAwSC40MjU5OTQ4OEwuNDE5OTk4MTggLjIxNDAwNDUyQy40MTk5OTgxOCAuMjI1OTk3OTMgLjQxNzE2NTE0IC4yMzQ0OTE5OSAuNDExNDk5MDMgLjIzOTQ4NjcgLjQwNTgzMjkzIC4yNDQ0OTE1OCAuMzk0OTk5MTkgLjI0Njk5NDAyIC4zNzg5OTc4IC4yNDY5OTQwMkguMTM4MDAwNDlWMEguMDQyOTk5MjY5Vi42NjAwMDM2OU0uMzE1MDAyNDUgLjMzNzAwNTYzQy4zNDgzMzc4IC4zMzcwMDU2MyAuMzc2MDAxOTkgLjM0NzAwNTIzIC4zOTc5OTUgLjM2NzAwNDQgLjQxOTk5ODE4IC4zODcwMDM1OCAuNDMwOTk5NzcgLjQxMjMzMzE3IC40MzA5OTk3NyAuNDQyOTkzMTcgLjQzMDk5OTc3IC40NjQzMzUxIC40MjU4MzIxMyAuNDg0ODM3ODcgLjQxNTQ5Njg0IC41MDQ1MDEzNyAuNDA1MTYxNTQgLjUyNDE2NDg4IC4zOTA5OTEyIC41Mzk5OTgzOCAuMzcyOTg1ODUgLjU1MjAwMTk4IC4zNTQ5OTA2NCAuNTY0MDA1NTggLjMzNTY2Mjg1IC41NzAwMDczIC4zMTUwMDI0NSAuNTcwMDA3M0guMTM4MDAwNDlWLjMzNzAwNTYzSC4zMTUwMDI0NVoiLz48cGF0aCBpZD0iZm9udF8zXzQ2IiBkPSJNLjM4MDAwNDg5IC42Njk5OTgxOUMuNDQ3OTk4MDYgLjY2OTk5ODE5IC41MDc0OTIwOSAuNjU1NjY1MSAuNTU4NDg2OTYgLjYyNjk5ODkgLjYwOTQ5MiAuNTk4MzMyNyAuNjQ4NjYxMyAuNTU4MzI5MyAuNjc1OTk0OSAuNTA2OTg4NSAuNzAzMzI4NDYgLjQ1NTY1Nzk3IC43MTY5OTUyNiAuMzk2NjYyMzkgLjcxNjk5NTI2IC4zMzAwMDE4NCAuNzE2OTk1MjYgLjI2NDAwMjQ4IC43MDMxNjA2IC4yMDUxNjk2OCAuNjc1NDkxMzYgLjE1MzUwMzQyIC42NDc4MzIyIC4xMDE4MzcxNiAuNjA4NjY4IC4wNjE2NzA5NCAuNTU3OTk4NjggLjAzMzAwNDc2IC41MDczMjkzIC4wMDQzMzg1ODI3IC40NDc5OTgwNi0uMDA5OTk0NTA3IC4zODAwMDQ4OS0uMDA5OTk0NTA3IC4zMTIwMDE1Ny0uMDA5OTk0NTA3IC4yNTI2NjUyIC4wMDQzMzg1ODI3IC4yMDE5OTU4NSAuMDMzMDA0NzYgLjE1MTMzNjY3IC4wNjE2NzA5NCAuMTEyMTcyNDUgLjEwMTgzNzE2IC4wODQ1MDMxNzcgLjE1MzUwMzQyIC4wNTY4MzM5MDYgLjIwNTE2OTY4IC4wNDI5OTkyNjkgLjI2NDAwMjQ4IC4wNDI5OTkyNjkgLjMzMDAwMTg0IC4wNDI5OTkyNjkgLjM5NjY2MjM5IC4wNTY2NjYwNTkgLjQ1NTY1Nzk3IC4wODM5OTk2MzcgLjUwNjk4ODUgLjExMTMzMzIxNyAuNTU4MzI5MyAuMTUwNDk3NDQgLjU5ODMzMjcgLjIwMTQ5MjMxIC42MjY5OTg5IC4yNTI0OTczNiAuNjU1NjY1MSAuMzEyMDAxNTcgLjY2OTk5ODE5IC4zODAwMDQ4OSAuNjY5OTk4MTlNLjM4MDAwNDg5IC41ODAwMDE4NkMuMzA1MzM4NTQgLjU4MDAwMTg2IC4yNDYzMzc4OSAuNTU3OTk4NjggLjIwMzAwMjkzIC41MTM5OTIzIC4xNTk2Njc5NyAuNDY5OTk2MTMgLjEzODAwMDQ5IC40MDg2NjU5OSAuMTM4MDAwNDkgLjMzMDAwMTg0IC4xMzgwMDA0OSAuMjUxOTk4OSAuMTU5NjY3OTcgLjE5MDk5NDI3IC4yMDMwMDI5MyAuMTQ2OTg3OTIgLjI0NjMzNzg5IC4xMDI5OTE3NCAuMzA1MzM4NTQgLjA4MDk5MzY1IC4zODAwMDQ4OSAuMDgwOTkzNjUgLjQyNjY2NjI3IC4wODA5OTM2NSAuNDY4MzI3ODYgLjA5MDk5MzI1IC41MDQ5ODk2IC4xMTA5OTI0MyAuNTQxNjYxNTkgLjEzMTAwMTc5IC41NzAzMjc3OCAuMTU5NjczMDUgLjU5MDk4ODE4IC4xOTcwMDYyMyAuNjExNjU4NzggLjIzNDMzOTQgLjYyMTk5NCAuMjc4NjcxMjcgLjYyMTk5NCAuMzMwMDAxODQgLjYyMTk5NCAuMzgxMzMyNCAuNjExNjU4NzggLjQyNTgzMjEzIC41OTA5ODgxOCAuNDYzNTAwOTkgLjU3MDMyNzc4IC41MDExNjk4OSAuNTQxNjYxNTkgLjUzMDAwMzg3IC41MDQ5ODk2IC41NTAwMDMwOCAuNDY4MzI3ODYgLjU3MDAwMjI4IC40MjY2NjYyNyAuNTgwMDAxODYgLjM4MDAwNDg5IC41ODAwMDE4NloiLz48cGF0aCBpZD0iZm9udF8zXzM1IiBkPSJNLjA0Mjk5OTI2OSAuNjYwMDAzNjlILjI2NDk5OTRDLjM2OTAwMzMgLjY2MDAwMzY5IC40NDkwMDUxNCAuNjMzMTY4NSAuNTA1MDA0OSAuNTc5NDk4MyAuNTYxMDA0NjYgLjUyNTgyODA5IC41ODkwMDQ1IC40NDI2NjI1OCAuNTg5MDA0NSAuMzMwMDAxODQgLjU4OTAwNDUgLjIxNzMzMDk0IC41NjEwMDQ2NiAuMTM0MTYwMzYgLjUwNTAwNDkgLjA4MDQ5MDExIC40NDkwMDUxNCAuMDI2ODMwMDM4IC4zNjkwMDMzIDAgLjI2NDk5OTQgMEguMDQyOTk5MjY5Vi42NjAwMDM2OU0uMjg3OTk0MzkgLjA4OTk5NjM0Qy4zNTI2NjExNCAuMDg5OTk2MzQgLjQwMzE2MjY0IC4xMDk2NTk4MyAuNDM5NDk4OSAuMTQ4OTg2ODIgLjQ3NTgzNTE4IC4xODgzMjM5OCAuNDk0MDAzMyAuMjQ4NjYyMzEgLjQ5NDAwMzMgLjMzMDAwMTg0IC40OTQwMDMzIC40MTEzMzExOSAuNDc1ODM1MTggLjQ3MTY2NDQ0IC40Mzk0OTg5IC41MTEwMDE2IC40MDMxNjI2NCAuNTUwMzM4NzcgLjM1MjY2MTE0IC41NzAwMDczIC4yODc5OTQzOSAuNTcwMDA3M0guMTM2OTkzNDFWLjA4OTk5NjM0SC4yODc5OTQzOVoiLz48cGF0aCBpZD0iZm9udF8zXzQwIiBkPSJNLjEzODAwMDQ5IC42NjAwMDM2OVYwSC4wNDI5OTkyNjlWLjY2MDAwMzY5SC4xMzgwMDA0OVoiLz48cGF0aCBpZD0iZm9udF8zXzM4IiBkPSJNLjU4MjAwMDc2IDBWLjEzNjk5MzQxSC41NzIwMDYyQy41NjAwMDI2IC4wOTAzMzIwMyAuNTM1MTY2NDcgLjA1NDE2ODcgLjQ5NzQ5NzU3IC4wMjg1MDM0MTggLjQ1OTgyODcgLjAwMjgzODEzNDggLjQxMzY2MDY5LS4wMDk5OTQ1MDcgLjM1ODk5MzU0LS4wMDk5OTQ1MDcgLjI5NzAwMjE4LS4wMDk5OTQ1MDcgLjI0MjAwNDQgLjAwNDE3MDczNiAuMTk0MDAwMjUgLjAzMjUwMTIyIC4xNDU5OTYxIC4wNjA4MzE3MDggLjEwODgyNTY4IC4xMDA2NjIyMyAuMDgyNDg5MDEgLjE1MTk5MjggLjA1NjE2MjUxOSAuMjAzMzMzNTQgLjA0Mjk5OTI2OSAuMjYyMzM0MiAuMDQyOTk5MjY5IC4zMjg5OTQ3NiAuMDQyOTk5MjY5IC4zOTM2NjE1IC4wNTY4MzM5MDYgLjQ1MTgyOCAuMDg0NTAzMTc3IC41MDM0OTQyOSAuMTEyMTcyNDUgLjU1NTE2MDUgLjE1MTAwNjA2IC41OTU4MjUyIC4yMDEwMDQwMyAuNjI1NDg4MyAuMjUxMDAxOTkgLjY1NTE2MTU4IC4zMDg2NjQ5NiAuNjY5OTk4MTkgLjM3Mzk5MjkzIC42Njk5OTgxOSAuNDM0NjYxODggLjY2OTk5ODE5IC40ODY5OTQ0MyAuNjU5NjYyOSAuNTMwOTkwNiAuNjM4OTkyMyAuNTc0OTk2OTcgLjYxODMzMTkgLjYwODk5ODYgLjU4OTQ5Nzg5IC42MzI5OTU2IC41NTI0OTAyNiAuNjU3MDAyNzcgLjUxNTQ5Mjc2IC42NzAzMzg5IC40NzI5OTcwNSAuNjczMDA0MTggLjQyNTAwMzA2SC41Nzg5OTQ3OEMuNTc2MzI5NSAuNDcyMzM1ODMgLjU1NTk5NDcgLjUwOTgzMTcgLjUxNzk5MDEgLjUzNzQ5MDg3IC40Nzk5OTU3NCAuNTY1MTYwMSAuNDMxOTk2NjggLjU3ODk5NDc4IC4zNzM5OTI5MyAuNTc4OTk0NzggLjMyODY2NDE2IC41Nzg5OTQ3OCAuMjg3OTk5NDkgLjU2ODY1OTUgLjI1MTk5ODkgLjU0Nzk4ODkgLjIxNTk5ODM0IC41MjczMjg1IC4xODc2NjI3NyAuNDk3OTk2IC4xNjY5OTIxOSAuNDU5OTkxNDYgLjE0NjMzMTc5IC40MjE5OTcwOCAuMTM2MDAxNTkgLjM3ODMzMTUgLjEzNjAwMTU5IC4zMjg5OTQ3NiAuMTM2MDAxNTkgLjI4MDMyOTM5IC4xNDYzMzE3OSAuMjM3MTYyMjggLjE2Njk5MjE5IC4xOTk0OTM0MSAuMTg3NjYyNzcgLjE2MTgzNDcyIC4yMTU5OTgzNCAuMTMyNjcwMDkgLjI1MTk5ODkgLjExMTk5OTUxIC4yODc5OTk0OSAuMDkxMzI4OTQgLjMyODY2NDE2IC4wODA5OTM2NSAuMzczOTkyOTMgLjA4MDk5MzY1IC40MTQ2NjI3IC4wODA5OTM2NSAuNDUwODMxMSAuMDg3NjYxNzQgLjQ4MjQ5ODE4IC4xMDA5OTc5MjggLjUxNDE2NTIgLjExNDMzNDExIC41Mzg2NjU4IC4xMzI4MzI4NCAuNTU1OTk5NzggLjE1NjQ5NDE0IC41NzMzMzM3NyAuMTgwMTY1NiAuNTgyMDAwNzYgLjIwNjY2NTA0IC41ODIwMDA3NiAuMjM1OTkyNDNWLjI2MzAwMDVILjM1ODk5MzU0Vi4zNTI5OTY4NEguNjc1OTk0OVYwSC41ODIwMDA3NloiLz48cGF0aCBpZD0iZm9udF8zXzEiIGQ9IiIvPjxwYXRoIGlkPSJmb250XzNfMzMiIGQ9Ik0uMDQyOTk5MjY5IC42NjAwMDM2OUguMzA5MDA1NzVDLjM3MzAwMTEgLjY2MDAwMzY5IC40MjIxNjQ5MyAuNjQ0ODM2NCAuNDU2NDk3MiAuNjE0NTAxOTggLjQ5MDgyOTQ4IC41ODQxNjc1IC41MDc5OTU2IC41NDEzMzEgLjUwNzk5NTYgLjQ4NTk5MjQ0IC41MDc5OTU2IC40Mzc5OTg0NSAuNDkzNDk0NjcgLjQwMjgzMjA0IC40NjQ0OTI4IC4zODA0OTMxNyAuNDM1NTAxMSAuMzU4MTY0NDcgLjM5OTAwMjA5IC4zNDcwMDAxMyAuMzU0OTk1NzQgLjM0NzAwMDEzVi4zMzc5OTc0NUMuNDc4OTk4OCAuMzM3OTk3NDUgLjU0MTAwMDM5IC4yODU2NjQ5IC41NDEwMDAzOSAuMTgwOTk5NzYgLjU0MTAwMDM5IC4xMjEwMDIyIC41MjE5OTgxIC4wNzU4MzYxOCAuNDgzOTkzNTQgLjA0NTUwMTcxIC40NDU5OTkxNiAuMDE1MTY3MjM2IC4zOTM2NjY2IDAgLjMyNjk5NTg2IDBILjA0Mjk5OTI2OVYuNjYwMDAzNjlNLjMxNzAwMTM1IC4zODgwMDA1Qy4zNDkwMDQxMyAuMzg4MDAwNSAuMzczMDAxMSAuMzk1NDk3NjYgLjM4ODk5MjMgLjQxMDQ5MTk1IC40MDQ5OTM2OSAuNDI1NDk2NDQgLjQxMjk5NDM5IC40NDY2NjU0NSAuNDEyOTk0MzkgLjQ3Mzk5OTAzIC40MTI5OTQzOSAuNTAzOTk3OCAuNDA0OTkzNjkgLjUyNzQ5NjM2IC4zODg5OTIzIC41NDQ0OTQ2IC4zNzMwMDExIC41NjE1MDMxIC4zNDYwMDMyIC41NzAwMDczIC4zMDc5OTg2NyAuNTcwMDA3M0guMTM2OTkzNDFWLjM4ODAwMDVILjMxNzAwMTM1TS4zMTcwMDEzNSAuMDg5OTk2MzRDLjM1OTY2NDkzIC4wODk5OTYzNCAuMzkxODMwNDUgLjA5OTMyOTYzIC40MTM0OTc5MyAuMTE3OTk2MjE5IC40MzUxNjU0IC4xMzY2NjI4IC40NDU5OTkxNiAuMTYyOTk5NDcgLjQ0NTk5OTE2IC4xOTcwMDYyMyAuNDQ1OTk5MTYgLjIzMTAwMjgxIC40MzQxNjM0MyAuMjU2NTAwMjUgLjQxMDQ5MTk1IC4yNzM0OTg1NSAuMzg2ODMwNjcgLjI5MDQ5Njg0IC4zNTU2NjcxIC4yOTg5OTU5OCAuMzE3MDAxMzUgLjI5ODk5NTk4SC4xMzY5OTM0MVYuMDg5OTk2MzRILjMxNzAwMTM1WiIvPjxwYXRoIGlkPSJmb250XzNfMzIiIGQ9Ik0uMjc2OTkyOCAuNjYwMDAzNjlILjQ3MDAwMTIzTC43MDM5OTQ3OCAwSC42MDAwMDYxTC41MjAwMDQzIC4yMTY5OTUyNEguMjI1MDA2MUwuMTQ3MDAzMTggMEguMDQyOTk5MjY5TC4yNzY5OTI4IC42NjAwMDM2OU0uNDkyOTk2MjMgLjMwNzAwNjg1IC4zODIwMDM3OSAuNjE5OTk1MUguMzYzOTk4NEwuMjUzMDA1OTkgLjMwNzAwNjg1SC40OTI5OTYyM1oiLz48cGF0aCBpZD0iZm9udF8zXzUwIiBkPSJNLjQ2NDAwNDUzIC40NjIwMDU2M0MuNDYwNjY3OTUgLjUwMjAwMzk5IC40NDUxNjUgLjUzMTY2NzA4IC40MTc0OTU3NCAuNTUwOTk0OSAuMzg5ODM2NjUgLjU3MDMzMjggLjM1MzMzNzYzIC41ODAwMDE4NiAuMzA3OTk4NjcgLjU4MDAwMTg2IC4yNjE5OTg1IC41ODAwMDE4NiAuMjI1MTYzNzggLjU3MTMzNDg2IC4xOTc0OTQ1IC41NTQwMDA4OCAuMTY5ODM1NCAuNTM2NjY2ODkgLjE1NjAwNTg2IC41MTA2NjU5IC4xNTYwMDU4NiAuNDc1OTk3OTMgLjE1NjAwNTg2IC40NDg2NjQzNSAuMTY1NjY5NzYgLjQyNzgzMTAzIC4xODQ5OTc1NiAuNDEzNDk3OTMgLjIwNDMzNTUzIC4zOTkxNjQ4NCAuMjM5MzM0MSAuMzg3NjY0OCAuMjg5OTkzMyAuMzc4OTk3OEwuMzY3MDA0NCAuMzY1MDA1NUMuNDI5MDA1OTYgLjM1MzY3MzMgLjQ3ODMzNzYzIC4zMzM4MzY4OSAuNTE0OTk5NCAuMzA1NDk2MjMgLjU1MTY3MTMgLjI3NzE2NTc1IC41NzAwMDczIC4yMzUwMDA2MSAuNTcwMDA3MyAuMTc5MDAwODYgLjU3MDAwNzMgLjExNjMzODEgLjU0NjgzOTQgLjA2OTMzNTk0IC41MDA1MDM1NiAuMDM3OTk0Mzg2IC40NTQxNjc3IC4wMDY2NjMwMDQ2IC4zOTMwMDAyOC0uMDA5MDAyNjg2IC4zMTcwMDEzNS0uMDA5MDAyNjg2IC4yNjc2NjQ1OS0uMDA5MDAyNjg2IC4yMjI2NjEzMy0uMDAwNTAzNTQwMDYgLjE4MTk5MTU4IC4wMTY0OTQ3NTEgLjE0MTMzMTk5IC4wMzM1MDMyMTcgLjEwODUwMDE2IC4wNTkxNzM1ODUgLjA4MzQ5NjA5NyAuMDkzNTA1ODYgLjA1ODUwMjE5OSAuMTI3ODM4MTQgLjA0NTAwMzI1NSAuMTcwNjY5NTYgLjA0Mjk5OTI2OSAuMjIyMDAwMTJILjEzODAwMDQ5Qy4xNDEzMzcwOCAuMTY5OTk4MTcgLjE1ODgzODkyIC4xMzM0OTQwNyAuMTkwNTA1OTggLjExMjQ4Nzc5IC4yMjIxNzMwNSAuMDkxNDkxNyAuMjY0MzM4MTggLjA4MDk5MzY1IC4zMTcwMDEzNSAuMDgwOTkzNjUgLjQyMjMzNzg3IC4wODA5OTM2NSAuNDc1MDA2MSAuMTEzNjYyNzIgLjQ3NTAwNjEgLjE3OTAwMDg2IC40NzUwMDYxIC4yMDYzMzQ0MyAuNDYxNTAyMDkgLjIyODE2NDY4IC40MzQ0OTQwMyAuMjQ0NDkxNTggLjQwNzQ5NjEzIC4yNjA4Mjg2NSAuMzczMzMxNyAuMjcyMzMzNzggLjMzMjAwMDc0IC4yNzkwMDY5N0wuMjUzOTk3OCAuMjkyOTk5MjhDLjE5NjY2NTQ1IC4zMDM2NzAyNyAuMTUwMTY2ODMgLjMyMjE2ODk5IC4xMTQ1MDE5NSAuMzQ4NDk1NDkgLjA3ODgzNzA3OCAuMzc0ODMyMTYgLjA2MTAwNDY0IC40MTcwMDIzNiAuMDYxMDA0NjQgLjQ3NTAwNjEgLjA2MTAwNDY0IC41MzY5OTc1IC4wODQxNjc0OCAuNTg0OTkxNDggLjEzMDQ5MzE3IC42MTg5ODgwNiAuMTc2ODI5MDMgLjY1Mjk5NDggLjIzNTk5NzUyIC42Njk5OTgxOSAuMzA3OTk4NjcgLjY2OTk5ODE5IC4zNzk5OTk4IC42Njk5OTgxOSAuNDM5NDk4OSAuNjUyMzI4NSAuNDg2NDk1OTggLjYxNjk4OTE2IC41MzM1MDMyNiAuNTgxNjYgLjU1ODMzOTQgLjUyOTk5ODggLjU2MTAwNDY2IC40NjIwMDU2M0guNDY0MDA0NTNaIi8+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwXzEpIj48Zz48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxLjAwMDIxMzYsOTguMDU2MjEpIiBkPSJNMCAwVi03MC40MTNINzAuNDEzWiIgZmlsbD0iI2Y2ZjNlYyIvPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwXzIpIj48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxMTguODg5MDEsMjkuNTQ1OTYpIiBkPSJNMCAwQzExLjE2NSAwIDIxLjUyNi02LjUzMiAyNS42NzUtMTYuODk3IDI2LjE0Mi0xOC4wNjMgMjYuNDY3LTE5LjE1IDI2LjYxNS0yMC4xIDMyLjY1Ny01OC44ODMtMTEuNjA5LTUyLjI5OC0zNy40NDUtNTIuMDc1TC04OS4zNDMgMFpNMTIuNzAzLTEzOC45MjNINjIuOTAyVi0xMTQuMTg0SDI1Ljc5MkwtNy44MTQtNzcuNDQ2IDYuODU4LTc2LjcyMUMyNi42OTMtNzUuNzQyIDQ0LjQ4LTYzLjI2MSA1MS4xMTItNDQuNTQzIDUxLjk0MS00Mi4yMDIgNTIuNjA2LTM5LjgwNiA1My4xMS0zNy4zNzYgNjAuMTk3LTMuMjEgMzIuOTQxIDI4LjU0Ni0xLjk1MiAyOC41NDZILTExNy44ODlWLTYuNjYxQy0xMTcuODg5LTcuNDUzIDkuNDg3LTEzNS43OCAxMi43MDMtMTM4LjkyMyIgZmlsbD0iI2M2MjgyOCIvPjxnPjwvZz48L2c+PC9nPjxnPjx1c2UgZGF0YS10ZXh0PSJSIiB4bGluazpocmVmPSIjZm9udF8zXzQ5IiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsMjExLjkyMTUxLDExOC4xMjE0OSkiIGZpbGw9IiNmNmYzZWMiLz48dXNlIGRhdGEtdGV4dD0iTyIgeGxpbms6aHJlZj0iI2ZvbnRfM180NiIgdHJhbnNmb3JtPSJtYXRyaXgoMTIwLDAsMCwtMTIwLDI4MC4wODE1NSwxMTguMTIxNDkpIiBmaWxsPSIjZjZmM2VjIi8+PHVzZSBkYXRhLXRleHQ9IkQiIHhsaW5rOmhyZWY9IiNmb250XzNfMzUiIHRyYW5zZm9ybT0ibWF0cml4KDEyMCwwLDAsLTEyMCwzNzEuMTYxNTcsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJSIiB4bGluazpocmVmPSIjZm9udF8zXzQ5IiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsNDQ2Ljg4MTYsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJJIiB4bGluazpocmVmPSIjZm9udF8zXzQwIiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsNTE1LjA0MTYsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJHIiB4bGluazpocmVmPSIjZm9udF8zXzM4IiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsNTM2LjY0MTYsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJPIiB4bGluazpocmVmPSIjZm9udF8zXzQ2IiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsNjIyLjkyMTY2LDExOC4xMjE0OSkiIGZpbGw9IiNmNmYzZWMiLz48dXNlIGRhdGEtdGV4dD0iICIgeGxpbms6aHJlZj0iI2ZvbnRfM18xIiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsNzE0LjAwMTYsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJCIiB4bGluazpocmVmPSIjZm9udF8zXzMzIiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsNzU4LjQwMTYsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJBIiB4bGluazpocmVmPSIjZm9udF8zXzMyIiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsODI3LjE0OTU2LDExOC4xMjE0OSkiIGZpbGw9IiNmNmYzZWMiLz48dXNlIGRhdGEtdGV4dD0iUiIgeGxpbms6aHJlZj0iI2ZvbnRfM180OSIgdHJhbnNmb3JtPSJtYXRyaXgoMTIwLDAsMCwtMTIwLDkxNi42Njk1OCwxMTguMTIxNDkpIiBmaWxsPSIjZjZmM2VjIi8+PHVzZSBkYXRhLXRleHQ9IlIiIHhsaW5rOmhyZWY9IiNmb250XzNfNDkiIHRyYW5zZm9ybT0ibWF0cml4KDEyMCwwLDAsLTEyMCw5ODQuODI5NiwxMTguMTIxNDkpIiBmaWxsPSIjZjZmM2VjIi8+PHVzZSBkYXRhLXRleHQ9Ik8iIHhsaW5rOmhyZWY9IiNmb250XzNfNDYiIHRyYW5zZm9ybT0ibWF0cml4KDEyMCwwLDAsLTEyMCwxMDUyLjk4OTYsMTE4LjEyMTQ5KSIgZmlsbD0iI2Y2ZjNlYyIvPjx1c2UgZGF0YS10ZXh0PSJTIiB4bGluazpocmVmPSIjZm9udF8zXzUwIiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsMTE0NC4wNjk2LDExOC4xMjE0OSkiIGZpbGw9IiNmNmYzZWMiLz48dXNlIGRhdGEtdGV4dD0iICIgeGxpbms6aHJlZj0iI2ZvbnRfM18xIiB0cmFuc2Zvcm09Im1hdHJpeCgxMjAsMCwwLC0xMjAsMTIxNy41MDk3LDExOC4xMjE0OSkiIGZpbGw9IiNmNmYzZWMiLz48L2c+PC9nPjwvc3ZnPg==" alt="Rodrigo Barros"
-                 width="1263" height="169" decoding="async">
-          </div>
-          <div class="cover__rule" aria-hidden="true"></div>
-          <p class="cover__eyebrow">Curso Completo</p>
-
-          <div class="cover__art" aria-hidden="true">
-            <svg viewBox="0 0 300 240" fill="none">
-              <defs>
-                <linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#ff9d3d"/><stop offset="1" stop-color="#d1490b"/>
-                </linearGradient>
-                <linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#f6f3ec"/><stop offset="1" stop-color="#c9c3b6"/>
-                </linearGradient>
-                <linearGradient id="cg3" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#e8a06a"/><stop offset="1" stop-color="#b45a17"/>
-                </linearGradient>
-              </defs>
-              <!-- brilho de fundo -->
-              <ellipse cx="150" cy="150" rx="110" ry="60" fill="#fff" opacity=".08"/>
-              <!-- celular -->
-              <g transform="rotate(-12 150 130)">
-                <rect x="106" y="46" width="88" height="168" rx="14" fill="#1c1c1c" stroke="#f6f3ec" stroke-opacity=".5" stroke-width="2"/>
-                <rect x="112" y="52" width="76" height="156" rx="10" fill="url(#cg2)" opacity=".14"/>
-                <rect x="136" y="56" width="28" height="5" rx="2.5" fill="#f6f3ec" opacity=".35"/>
-                <rect x="120" y="120" width="60" height="7" rx="3.5" fill="#f6f3ec" opacity=".3"/>
-                <rect x="120" y="134" width="42" height="7" rx="3.5" fill="#f6f3ec" opacity=".2"/>
-                <rect x="120" y="152" width="60" height="18" rx="6" fill="#e86a1c"/>
-              </g>
-              <!-- caixa saindo da tela (isométrica) -->
-              <g transform="translate(150 96)">
-                <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
-                <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
-                <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
-                <path d="M0-26 0 26" stroke="#a33f05" stroke-width="2" opacity=".5"/>
-              </g>
-              <!-- caixas menores -->
-              <g opacity=".9">
-                <g transform="translate(238 92) scale(.42)">
-                  <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
-                  <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
-                  <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
-                </g>
-                <g transform="translate(262 152) scale(.3)">
-                  <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
-                  <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
-                  <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
-                </g>
-                <g transform="translate(44 132) scale(.34)">
-                  <path d="M0 0 46 22 46 74 0 52Z" fill="url(#cg1)"/>
-                  <path d="M0 0-46 22-46 74 0 52Z" fill="url(#cg3)"/>
-                  <path d="M0-26 46 0 0 26-46 0Z" fill="#ffb066"/>
-                </g>
-              </g>
-              <!-- linhas de velocidade -->
-              <g stroke="#f6f3ec" stroke-opacity=".35" stroke-width="3" stroke-linecap="round">
-                <path d="M18 74h44"/><path d="M6 94h30"/><path d="M22 114h24"/>
-              </g>
-            </svg>
-          </div>
-
-          <p class="cover__title">Delivery</p>
-          <p class="cover__360">360°</p>
-          <p class="cover__badge">Do zero ao lucro</p>
-          <p class="cover__meta">5 módulos · 10 aulas</p>
-        </div>
+        <img class="cover__img" src="fotos/produto.png"
+             alt="Capa do curso Delivery 360°: Do Zero ao Lucro, de Rodrigo Barros"
+             fetchpriority="high" decoding="async">
         <div class="cover__glare" aria-hidden="true" data-glare></div>
       </div>
     </figure>
@@ -931,6 +878,7 @@
 <!-- DOBRA 3 · A QUEBRA DE OBJEÇÃO + CHECKLIST                     -->
 <!-- ============================================================= -->
 <section class="fold villain defer" aria-labelledby="d3">
+  <img class="fold__bg" src="fotos/caneta.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="wrap">
     <div class="grid grid-2" style="align-items:center">
       <div data-reveal>
@@ -1000,6 +948,7 @@
 <!-- DOBRA 5 · O MÉTODO DELIVERY 360°                              -->
 <!-- ============================================================= -->
 <section class="fold fold--rule method defer" aria-labelledby="d5">
+  <img class="fold__bg fold__bg--soft" src="fotos/rodrigoevento.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="wrap">
     <div class="method__head sec-head" data-reveal>
       <p class="eyebrow eyebrow--center">O método</p>
@@ -1128,19 +1077,9 @@
     <!-- Quem sou eu -->
     <div class="about" id="sobre">
       <figure class="about__photo" data-reveal>
-        <!-- Substitua todo o conteúdo desta <figure> por:
-             <img src="/assets/img/rodrigo.webp"
-                  alt="Rodrigo Barros na cozinha de um dos restaurantes do Grupo 360 Food"
-                  width="800" height="1000" loading="lazy" decoding="async"> -->
-        <svg class="about__mark" viewBox="0 0 180.79 167.47" aria-hidden="true">
-          <path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/>
-        </svg>
-        <span class="about__corner about__corner--tl" aria-hidden="true"></span>
-        <span class="about__corner about__corner--br" aria-hidden="true"></span>
-        <figcaption class="slot">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>
-          Espaço reservado para a foto do Rodrigo
-        </figcaption>
+        <img src="fotos/rodrigo.jpg"
+             alt="Rodrigo Barros, fundador do Grupo 360 Food"
+             loading="lazy" decoding="async">
       </figure>
 
       <div data-reveal data-reveal-delay="2">

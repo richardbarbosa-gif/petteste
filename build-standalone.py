@@ -83,11 +83,13 @@ def main() -> None:
 
     # ------------------------------------------------------------------- CSP
     # Em file:// a origem e opaca, entao 'self' nao resolve e bloquearia tudo.
-    # Esta politica continua fechada: sem rede, sem iframe, sem formulario.
+    # img-src precisa aceitar file: porque as fotos ficam soltas na pasta fotos/,
+    # ao lado do HTML — elas nao sao embutidas (sao arquivos do cliente).
+    # A politica segue fechada: sem rede, sem iframe, sem formulario.
     html = re.sub(
         r'<meta http-equiv="Content-Security-Policy"[^>]*>',
         '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; '
-        "img-src data:; font-src data:; style-src 'unsafe-inline'; "
+        "img-src 'self' data: file: blob:; font-src data:; style-src 'unsafe-inline'; "
         "script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'\">",
         html,
     )
@@ -131,8 +133,13 @@ def main() -> None:
 
     kb = DESTINO.stat().st_size / 1024
     restantes = re.findall(r'(?:src|href)="(/assets/[^"]+)"', html)
+    fotos = sorted(set(re.findall(r'src="(fotos/[^"]+)"', html)))
     print(f"gerado: {DESTINO.name}  ({kb:.0f} KB)")
-    print("referencias externas restantes:", set(restantes) or "nenhuma")
+    print("referencias a /assets restantes:", set(restantes) or "nenhuma")
+    print("\nfotos do cliente (NAO embutidas — devem ficar ao lado do HTML):")
+    for f in fotos:
+        existe = "ok" if (RAIZ / f).exists() else "FALTANDO"
+        print(f"  {f:34s} {existe}")
 
 
 if __name__ == "__main__":
