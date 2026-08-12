@@ -40,11 +40,12 @@ de novo, senão suas mudanças somem na próxima geração. O que vai para o ar 
 
 ---
 
-## Estrutura
+## Arquivos
 
 ```
 index.html                  ← página inteira (HTML + CSS crítico inline + JSON-LD)
-assets/js/app.js            ← ~5KB: reveals, contadores, tilt 3D, checklist, A/B de headline
+assets/js/app.js            ← ~5KB: reveals, contadores, checklist, carrossel, tilt 3D
+fotos/                      ← imagens do cliente (ver tabela abaixo)
 assets/fonts/               ← Anton + Archivo Variable (woff2, subset latin, auto-hospedadas)
 assets/img/                 ← logos em vetor, favicons e imagem de compartilhamento
 robots.txt · sitemap.xml · site.webmanifest
@@ -57,7 +58,7 @@ adiciona ida e volta de rede sem ganho de cache.
 
 ---
 
-## Estrutura (v2 — público: quem já vende no iFood)
+## Blocos da página (público: quem já vende no iFood)
 
 1. **Promessa** — "Faturar no iFood não significa lucrar" + capa e CTA
 2. **Diagnóstico** — 5 perguntas clicáveis com placar ao vivo
@@ -94,18 +95,7 @@ JSON-LD), no `sitemap.xml` e no `robots.txt`:
 sed -i 's|https://delivery360.com.br|https://SEUDOMINIO.com.br|g' index.html sitemap.xml robots.txt
 ```
 
-### 3. Foto do Rodrigo
-Na dobra 6 existe um slot marcado. Substitua o `<figcaption class="slot">` por:
-
-```html
-<img src="/assets/img/rodrigo.webp"
-     alt="Rodrigo Barros na cozinha de um dos restaurantes do Grupo 360 Food"
-     width="800" height="1000" loading="lazy" decoding="async">
-```
-
-Recomendado: WebP, 800×1000, abaixo de 120KB.
-
-### 4. Fotos da pasta `fotos/`
+### 3. Fotos da pasta `fotos/`
 
 A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado do HTML:
 
@@ -118,11 +108,11 @@ A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado 
 | `rodrigoevento.jpg` | Fundo esmaecido do método |
 | `dep1.jpg` … `dep5.jpg` | Carrossel de prints reais |
 
-### 5. Capa do produto
-A capa no hero é composta em CSS/SVG — ela é vetorial, nítida em qualquer tela e não pesa nada.
-Se quiser usar a arte final em imagem, coloque o arquivo em
-`assets/img/capa-delivery360.png` e troque o bloco `.cover__in` por um `<img>` com
-`width`/`height` declarados (para não gerar CLS).
+### 4. Confirmar os nomes das aulas 5 a 10
+
+O cliente nomeou os 5 módulos e as aulas 1 a 4. As aulas **5 a 10** na página são
+propostas derivadas dos títulos de módulo e **precisam da confirmação do Rodrigo**.
+Elas estão no bloco `.grade__list`, dentro dos módulos 3, 4 e 5.
 
 ### 5. Pixel / GA4 (opcional)
 Adicione antes de `</body>`. Se usar script de terceiro, atualize o `Content-Security-Policy`
@@ -132,22 +122,6 @@ e vai bloquear qualquer script externo.
 ### 6. E-mail de suporte
 A FAQ 4 promete "basta mandar um e-mail". Não existe e-mail na página — inclua-o na resposta
 da FAQ 4 e no rodapé antes de publicar, ou a promessa de garantia fica sem endereço.
-
----
-
-## Teste A/B de headline (sem ferramenta)
-
-As duas variações da copy já estão no HTML, em `data-`atributos do `<h1>`:
-
-| URL | Headline exibida |
-|---|---|
-| `/` | Principal — "Ninguém te mostrou como isso funciona de verdade" |
-| `/?h=a` | Variação A — Escala e autoridade ("12 restaurantes. 1 método. Nenhuma teoria.") |
-| `/?h=b` | Variação B — Antes e depois (repasse de quarta-feira) |
-
-Basta rodar tráfego para as três URLs e comparar conversão.
-
----
 
 ## Decisões técnicas
 
@@ -175,6 +149,10 @@ contador do checklist.
 **SEO** — canonical, Open Graph e Twitter Card com imagem própria, JSON-LD de
 `Course` + `Offer` + `FAQPage` + `Person` + `Organization`, sitemap e robots.
 
-**Sobre os depoimentos:** eles são exibidos como depoimento visual comum e **não** estão marcados
-como `Review`/`AggregateRating` no JSON-LD. Marcar avaliação sem verificação viola a política de
-rich results do Google e pode gerar penalização manual no domínio.
+**CTA** — verde clássico de compra (`#12873e` → `#0a5f2b`) com texto branco: 4,60:1 no topo do
+gradiente e 7,82:1 na base, passa AA no botão inteiro. O verde é exclusivo dos CTAs; se aparecesse
+em outro elemento, deixaria de significar ação.
+
+**Sobre as provas** — os depoimentos escritos foram substituídos por um carrossel de prints reais.
+Nada é marcado como `Review`/`AggregateRating` no JSON-LD: avaliação estruturada sem verificação
+viola a política de rich results do Google e pode gerar penalização manual no domínio.
