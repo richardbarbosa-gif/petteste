@@ -180,6 +180,12 @@ if (track) {
   }, { passive: true });
   addEventListener('resize', estado, { passive: true });
 
+  // Teclado: o track recebe foco, então as setas precisam funcionar nele
+  track.addEventListener('keydown', ev => {
+    if (ev.key === 'ArrowRight')      { ev.preventDefault(); desliza(1); }
+    else if (ev.key === 'ArrowLeft')  { ev.preventDefault(); desliza(-1); }
+  });
+
   // A seção usa content-visibility e as imagens são lazy: na primeira medição
   // o track ainda não tem largura real e as setas nasceriam desabilitadas.
   // O ResizeObserver refaz a conta assim que o conteúdo ganha tamanho.

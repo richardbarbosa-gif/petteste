@@ -22,6 +22,13 @@ abrir o `index.html` com dois cliques não vai carregar as fontes e o logo.
 python3 build-standalone.py     # gera delivery360-standalone.html
 ```
 
+O script também roda o `sync-fotos.py` antes de gerar: ele lê as dimensões reais
+de cada arquivo em `fotos/` e injeta `width`/`height` nas `<img>` do `index.html`.
+
+**Sempre que trocar uma foto, rode o build de novo.** Sem isso a página volta a
+"pular" enquanto as imagens carregam (Cumulative Layout Shift), o que incomoda o
+visitante e conta contra no ranking do Google.
+
 Esse arquivo tem fontes, logos, ícone e JavaScript embutidos: abre com dois cliques,
 de qualquer pasta, sem servidor e sem internet. Serve para revisar, mandar por
 WhatsApp/e-mail e testar no PC.
@@ -46,6 +53,8 @@ de novo, senão suas mudanças somem na próxima geração. O que vai para o ar 
 index.html                  ← página inteira (HTML + CSS crítico inline + JSON-LD)
 assets/js/app.js            ← ~5KB: reveals, contadores, checklist, carrossel, tilt 3D
 fotos/                      ← imagens do cliente (ver tabela abaixo)
+build-standalone.py         ← gera a versão em arquivo único
+sync-fotos.py               ← lê as dimensões reais das fotos e evita CLS
 assets/fonts/               ← Anton + Archivo Variable (woff2, subset latin, auto-hospedadas)
 assets/img/                 ← logos em vetor, favicons e imagem de compartilhamento
 robots.txt · sitemap.xml · site.webmanifest
@@ -108,21 +117,17 @@ A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado 
 | `rodrigoevento.jpg` | Fundo esmaecido do método |
 | `dep1.jpg` … `dep5.jpg` | Carrossel de prints reais |
 
-### 4. Confirmar os nomes das aulas
+### 4. Grade do curso (já confirmada)
 
-Os **5 módulos** são os nomes reais do curso, confirmados pelo Rodrigo:
-
-| Módulo | Nome |
+| Módulo | Aulas |
 |---|---|
-| 1 | Comece por aqui |
-| 2 | Sua entrega |
-| 3 | Cardápio e faturamento |
-| 4 | Domine o portal |
-| 5 | Encerramento |
+| 1 · Ponto de Partida | 1 |
+| 2 · Configurações Estruturais e Logística | 5 |
+| 3 · Construção e Inteligência de Cardápio | 1 |
+| 4 · Gestão, Análise de Dados e Crescimento | 2 |
+| 5 · Encerramento | 1 |
 
-As **aulas** ainda não. As aulas 1 e 2 usam os títulos que o cliente escreveu; as
-aulas 3 a 10 são propostas encaixadas nos módulos reais e **precisam da confirmação
-do Rodrigo**, incluindo a divisão de 2 aulas por módulo. Estão em `.grade__list`.
+Os 10 títulos vieram do Rodrigo e estão verbatim em `.grade__list`.
 
 ### 5. Pixel / GA4 (opcional)
 Adicione antes de `</body>`. Se usar script de terceiro, atualize o `Content-Security-Policy`

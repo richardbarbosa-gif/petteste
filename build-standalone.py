@@ -39,6 +39,20 @@ def data_uri(caminho_relativo: str, mime: str) -> str:
 
 
 def main() -> None:
+    # As fotos sao trocadas pelo cliente: as dimensoes precisam ser relidas do
+    # arquivo real a cada build, senao a pagina volta a "pular" ao carregar.
+    try:
+        import sync_fotos  # noqa: F401
+    except ImportError:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("sync_fotos", RAIZ / "sync-fotos.py")
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            print("sincronizando dimensoes das fotos:")
+            mod.main()
+            print()
+
     html = ORIGEM.read_text(encoding="utf-8")
 
     # ------------------------------------------------------------------ fontes

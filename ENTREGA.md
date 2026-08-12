@@ -117,7 +117,7 @@ Toda menção a "quem ainda não abriu" foi removida da página.
 | 3 | **Os 4 Vazamentos** | O mecanismo próprio. 4 cards + fecho "o Delivery 360° corrige esses quatro" |
 | 4 | **Demonstração** | `fotos/aula.png` em moldura de navegador com botão de play. Slot pronto para vídeo |
 | 5 | **O Método** | Ciclo Configura → Precifica → Roda → Protege + linha de posicionamento |
-| 6 | **As 10 aulas** | 5 módulos em acordeão, 2 aulas cada |
+| 6 | **As 10 aulas** | 5 módulos em acordeão, com a grade real (1 · 5 · 1 · 2 · 1 aulas) |
 | 7 | **Provas reais** | Números + carrossel de 5 prints (`fotos/dep1..5.jpg`) |
 | 8 | **História e autoridade** | Narrativa em primeira pessoa + foto do Rodrigo |
 | 9 | **Bônus** | Entregáveis e os 2 bônus, sem ancoragem de advogado |
@@ -407,6 +407,52 @@ Tudo abaixo foi rodado em Chromium real, não estimado:
 | 4 | **E-mail de suporte** | A FAQ 4 promete "basta mandar um e-mail" e não existe e-mail na página. |
 | 5 | **Vídeo curto** | O bloco de demonstração já está montado com moldura e botão de play. Trocar a imagem por um player quando o vídeo existir. |
 | 6 | **Pixel / GA4** | O domínio do script precisa entrar no `Content-Security-Policy`. |
+
+## 14. Revisão final: código, ética, SEO, segurança e UX
+
+Auditoria automatizada rodada sobre a versão final. Cada item foi **medido**, não
+estimado.
+
+### Código
+- **Zero** `!important` no arquivo, **zero** handler inline (`onclick` etc.), **zero** ID duplicado
+- 1,5 KB de CSS órfão removido após a reestruturação (18 seletores sem HTML correspondente)
+- Nenhum `innerHTML` com dado externo — todo texto injetado vai por `textContent`
+- Hierarquia de heading sem pulos: 1 `h1`, 10 `h2`, 9 `h3`
+
+### Ética
+- **Removido o botão de play sobre o print da aula.** Um play que não toca nada é
+  promessa que a página não cumpre. Volta quando o vídeo existir.
+- Nenhum número inventado: os KPIs ilustrativos foram trocados pelo print real,
+  e nada na página afirma resultado que o cliente não possa sustentar
+- Depoimentos escritos substituídos por prints reais, sem marcação `Review` no JSON-LD
+
+### SEO
+- `title` reescrito para o novo posicionamento: 52 caracteres (cabia truncar antes)
+- `meta description` de 197 → **157 caracteres**, dentro do limite de exibição
+- Open Graph e Twitter Card alinhados ao novo posicionamento
+- **Alts duplicados corrigidos**: os 5 prints tinham texto alternativo idêntico
+- `preload` da capa do produto, que é o elemento de maior renderização (LCP)
+- JSON-LD com `syllabusSections`: os 5 módulos e as 10 aulas ficam legíveis para o Google
+- `sitemap.xml` com data real
+
+### Segurança
+- CSP restritiva: `script-src 'self'`, `object-src 'none'`, `base-uri 'none'`,
+  `form-action 'none'`, `frame-src 'none'`
+- Headers reforçados com `Cross-Origin-Opener-Policy`, `Cross-Origin-Resource-Policy`
+  e `X-Permitted-Cross-Domain-Policies`; removida a diretiva obsoleta `interest-cohort`
+- Zero requisição a terceiros — nada sai da página para fora do domínio
+
+### Acessibilidade e UX
+- **Contraste medido com composição real em canvas**, não estimado. Três falhas
+  corrigidas: o selo do módulo (4,27:1) e dois rótulos da caixa de preço (3,84 e 4,23:1).
+  Todos agora acima de 4,5:1
+- Carrossel navegável por **teclado** (setas ← →), além de botões e gesto
+- Sem overflow horizontal em **360, 390, 768, 1024, 1280, 1440 e 1920px**
+- **CLS zero**: `sync-fotos.py` lê a dimensão real de cada foto e injeta no HTML,
+  então continua correto depois que o cliente trocar as imagens
+
+### Performance final
+7 requisições · FCP **260 ms** · DOMContentLoaded **44 ms** · zero terceiros
 
 ## 14. Histórico de commits
 
