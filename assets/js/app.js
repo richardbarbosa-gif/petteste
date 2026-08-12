@@ -107,20 +107,7 @@ if ('IntersectionObserver' in window) {
 }
 
 /* ---------------------------------------------------------------------------
-   5. Risco da ancoragem de valor (R$ 1.500)
---------------------------------------------------------------------------- */
-const strike = $('[data-strike]');
-if (strike && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver(([e], obs) => {
-    if (!e.isIntersecting) return;
-    e.target.setAttribute('data-in', '');
-    obs.disconnect();
-  }, { threshold: 0.9 });
-  io.observe(strike);
-}
-
-/* ---------------------------------------------------------------------------
-   6. Tilt 3D nos cartões + parallax da capa
+   5. Tilt 3D nos cartões + parallax da capa
       Um único rAF por frame, coordenadas lidas do evento (zero layout thrash)
 --------------------------------------------------------------------------- */
 if (finePointer && !reduceMotion) {
@@ -164,21 +151,47 @@ if (finePointer && !reduceMotion) {
 }
 
 /* ---------------------------------------------------------------------------
-   7. Teste A/B de headline sem ferramenta externa
-      ?h=a → Escala e autoridade | ?h=b → Antes e depois | padrão → principal
+   6. Carrossel de prints — scroll-snap nativo, setas só como atalho
+      A rolagem horizontal já funciona sem JS (dedo, trackpad, teclado).
 --------------------------------------------------------------------------- */
-const variant = new URLSearchParams(location.search).get('h');
-if (variant === 'a' || variant === 'b') {
-  const h1 = $('#h1');
-  const hi = h1 && $('.hi', h1);
-  const lo = h1 && $('.lo', h1);
-  const top = h1 && h1.dataset[`hl${variant.toUpperCase()}Lo`];
-  const main = h1 && h1.dataset[`hl${variant.toUpperCase()}`];
-  if (hi && lo && top && main) { lo.textContent = top; hi.textContent = main; }
+const track = $('[data-car-track]');
+if (track) {
+  const prev = $('[data-car-prev]');
+  const next = $('[data-car-next]');
+  const passo = () => {
+    const item = track.firstElementChild;
+    if (!item) return track.clientWidth * 0.8;
+    const gap = parseFloat(getComputedStyle(track).gap) || 16;
+    return item.getBoundingClientRect().width + gap;
+  };
+  const desliza = dir => track.scrollBy({ left: dir * passo(), behavior: reduceMotion ? 'auto' : 'smooth' });
+  prev?.addEventListener('click', () => desliza(-1));
+  next?.addEventListener('click', () => desliza(1));
+
+  const estado = () => {
+    const fim = track.scrollWidth - track.clientWidth - 2;
+    if (prev) prev.disabled = track.scrollLeft <= 2;
+    if (next) next.disabled = track.scrollLeft >= fim;
+  };
+  track.addEventListener('scroll', () => {
+    // um rAF por burst de scroll, em vez de um cálculo por evento
+    if (track._raf) return;
+    track._raf = requestAnimationFrame(() => { track._raf = 0; estado(); });
+  }, { passive: true });
+  addEventListener('resize', estado, { passive: true });
+
+  // A seção usa content-visibility e as imagens são lazy: na primeira medição
+  // o track ainda não tem largura real e as setas nasceriam desabilitadas.
+  // O ResizeObserver refaz a conta assim que o conteúdo ganha tamanho.
+  if ('ResizeObserver' in window) new ResizeObserver(estado).observe(track);
+  for (const img of $$('img', track)) {
+    if (!img.complete) img.addEventListener('load', estado, { once: true });
+  }
+  estado();
 }
 
 /* ---------------------------------------------------------------------------
-   8. Ano do rodapé
+   7. Ano do rodapé
 --------------------------------------------------------------------------- */
 const year = $('[data-year]');
 if (year) year.textContent = new Date().getFullYear();

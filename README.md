@@ -57,17 +57,20 @@ adiciona ida e volta de rede sem ganho de cache.
 
 ---
 
-## As 9 dobras
+## Estrutura (v2 — público: quem já vende no iFood)
 
-1. **Hero** — headline principal, capa 3D do produto e CTA
-2. **O Diagnóstico** — duas situações, uma causa só
-3. **O Verdadeiro Vilão** — quebra de objeção + checklist de sintomas (interativo)
-4. **A Culpa Não é Sua** — causa raiz e os 4 vazamentos de lucro
-5. **O Método Delivery 360°** — ciclo Configura → Precifica → Roda → Protege
-6. **A Prova** — números, 3 depoimentos e "Quem sou eu"
-7. **O Que Você Leva Hoje** — 10 aulas, 5 módulos, 2 bônus e a garantia
-8. **Isso é Para Você? + A Oferta** — ✅/❌, ancoragem de R$1.500 e a caixa de preço
-9. **Fechamento** — custo da inação, FAQ e CTA final
+1. **Promessa** — "Faturar no iFood não significa lucrar" + capa e CTA
+2. **Diagnóstico** — 5 perguntas clicáveis com placar ao vivo
+3. **Os 4 Vazamentos** — o mecanismo do método
+4. **Demonstração** — `fotos/aula.png` em moldura, com slot pronto para vídeo
+5. **O Método** — ciclo Configura → Precifica → Roda → Protege
+6. **As 10 aulas** — 5 módulos em acordeão
+7. **Provas reais** — números + carrossel de prints (`fotos/dep1..5.jpg`)
+8. **História e autoridade** — narrativa + foto do Rodrigo
+9. **Bônus** — entregáveis e os 2 bônus
+10. **Oferta + Garantia** — nova ancoragem, preço e selo de 7 dias
+11. **FAQ** — 6 perguntas
+12. **Chamada final**
 
 ---
 
@@ -102,7 +105,20 @@ Na dobra 6 existe um slot marcado. Substitua o `<figcaption class="slot">` por:
 
 Recomendado: WebP, 800×1000, abaixo de 120KB.
 
-### 4. Capa do produto
+### 4. Fotos da pasta `fotos/`
+
+A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado do HTML:
+
+| Arquivo | Onde aparece |
+|---|---|
+| `produto.png` | Capa no hero |
+| `caneta.jpg` | Fundo esmaecido (não usado na v2 — disponível) |
+| `aula.png` | Bloco de demonstração |
+| `rodrigo.jpg` | Bloco de autoridade |
+| `rodrigoevento.jpg` | Fundo esmaecido do método |
+| `dep1.jpg` … `dep5.jpg` | Carrossel de prints reais |
+
+### 5. Capa do produto
 A capa no hero é composta em CSS/SVG — ela é vetorial, nítida em qualquer tela e não pesa nada.
 Se quiser usar a arte final em imagem, coloque o arquivo em
 `assets/img/capa-delivery360.png` e troque o bloco `.cover__in` por um `<img>` com

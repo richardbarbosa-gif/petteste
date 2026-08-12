@@ -79,7 +79,15 @@ Na primeira rodada faltavam 2 trechos, ambos incluídos depois:
 
 **Resultado final: 82/82 presentes.**
 
-### Ponto levantado e mantido a pedido do cliente
+### Depoimentos: resolvido na v2
+
+Os 3 depoimentos escritos foram **removidos** e substituídos por um carrossel de
+prints reais (`fotos/dep1.jpg` a `dep5.jpg`), como o próprio cliente pediu. Isso
+elimina o risco de publicidade enganosa que estava sinalizado abaixo.
+
+<details><summary>Histórico do ponto levantado na v1</summary>
+
+
 
 A Copy 1 diz explicitamente *"Ainda não tenho depoimento de aluno pra te mostrar aqui.
 Prefiro ser direto com você do que inventar um"*. A Copy 2 traz 3 depoimentos com nome,
@@ -92,26 +100,46 @@ página exatamente como escritos.
 política de rich results do Google e pode gerar penalização manual no domínio inteiro.
 Como depoimento visual comum eles funcionam igual e não expõem o site.
 
----
-
-## 3. As 9 dobras
-
-| # | Dobra | Conteúdo | Tratamento |
-|---|---|---|---|
-| 1 | **Hero** | Headline, subheadline, CTA | Fundo radial vermelho, raios em rotação lenta, grão, capa 3D com parallax e reflexo, selos de garantia |
-| 2 | **O Diagnóstico** | "Duas situações, uma causa só" — já vende / ainda não abriu | Dois cards com tilt 3D no ponteiro, barra de acento lateral, número de fundo em marca d'água |
-| 3 | **O Verdadeiro Vilão** | Quebra de objeção + checklist de 6 sintomas | Aspas em display, transição preto→vermelho profundo, **checklist clicável** com placar em selo |
-| 4 | **A Culpa Não é Sua** | Causa raiz + 4 vazamentos de lucro | Seção clara (`#f6f3ec`) quebrando o ritmo escuro; vazamentos numerados em cards brancos |
-| 5 | **O Método Delivery 360°** | Ciclo Configura → Precifica → Roda → Protege | Diagrama do fluxo, 4 cards com extrusão e barra de acento, mockup do painel do iFood em SVG |
-| 6 | **A Prova** | Números, 3 depoimentos, "Quem sou eu" | Contadores animados, cards claros com aspa gráfica, moldura da foto com monograma |
-| 7 | **O Que Você Leva Hoje** | 10 aulas, 5 módulos, 2 bônus, garantia | Grid 2×2, bônus destacados em laranja, selo de garantia em SVG |
-| 8 | **Isso é Para Você? + A Oferta** | ❌/✅, ancoragem de R$1.500, preço, CTA | Colunas opostas, risco animado sobre o R$1.500, caixa de preço clara sobre fundo escuro, botão 3D |
-| 9 | **Fechamento** | Custo da inação, FAQ, CTA final, rodapé | Bloco vermelho-sangue, FAQ em `<details>` nativo, rodapé com avisos legais |
-
-**Fora das dobras:** barra de CTA fixa no mobile que aparece depois do hero, barra de
-progresso de leitura no topo e header com logo + CTA.
+</details>
 
 ---
+
+## 3. Estrutura da página (v2)
+
+Reestruturada a pedido do cliente. **Público-alvo: donos que já vendem no iFood.**
+Toda menção a "quem ainda não abriu" foi removida da página.
+
+| # | Bloco | Função |
+|---|---|---|
+| 1 | **Promessa** | "Faturar no iFood não significa lucrar." Capa do produto, CTA e selos |
+| — | **Faixa de posicionamento** | "Sua loja não precisa de mais pedidos antes de descobrir onde está perdendo dinheiro." |
+| 2 | **Diagnóstico** | 5 perguntas clicáveis com placar ao vivo. Micro-compromisso |
+| 3 | **Os 4 Vazamentos** | O mecanismo próprio. 4 cards + fecho "o Delivery 360° corrige esses quatro" |
+| 4 | **Demonstração** | `fotos/aula.png` em moldura de navegador com botão de play. Slot pronto para vídeo |
+| 5 | **O Método** | Ciclo Configura → Precifica → Roda → Protege + linha de posicionamento |
+| 6 | **As 10 aulas** | 5 módulos em acordeão, 2 aulas cada |
+| 7 | **Provas reais** | Números + carrossel de 5 prints (`fotos/dep1..5.jpg`) |
+| 8 | **História e autoridade** | Narrativa em primeira pessoa + foto do Rodrigo |
+| 9 | **Bônus** | Entregáveis e os 2 bônus, sem ancoragem de advogado |
+| 10 | **Oferta + Garantia** | Nova ancoragem (desperdício por pedido), preço e selo de 7 dias |
+| 11 | **FAQ** | 6 perguntas |
+| 12 | **Chamada final** | CTA de fechamento |
+
+**Fora dos blocos:** barra de CTA fixa no mobile, barra de progresso de leitura e header.
+
+### O que saiu e por quê
+
+O cliente apontou que "O verdadeiro vilão", "A culpa não é sua" e "O custo da inação"
+repetiam a mesma dor com palavras diferentes. Essas três saíram, junto com
+"Duas situações, uma causa só" (público único agora), o checklist de 6 sintomas
+(substituído pelo diagnóstico de 5 perguntas) e "Isso é para você?".
+
+Também saiu a ancoragem de **R$ 1.500 com advogado trabalhista**: abria uma objeção
+lateral e tirava o foco do que o curso vende. No lugar entrou a comparação com o
+desperdício diário, que fala da mesma dor do produto.
+
+**Redução medida: 42% menos texto** no corpo da página — de 2.178 para 1.259 palavras.
+O pedido era 25%.
 
 ## 4. Decisões técnicas
 
@@ -162,8 +190,9 @@ Medido, não estimado:
 |---|---|---|
 | `#c62828` sobre `#1c1c1c` | **3,06:1** | Reprova AA em texto pequeno |
 | `#e86a1c` sobre `#1c1c1c` | **5,3:1** | Passa AA |
-| `#052e14` sobre `#25d366` (CTA) | **7,52:1** | Passa AAA |
-| ~~branco sobre `#25d366`~~ | ~~1,98:1~~ | Reprovado — descartado |
+| branco sobre `#12873e` (topo do CTA) | **4,60:1** | Passa AA |
+| branco sobre `#0a5f2b` (base do CTA) | **7,82:1** | Passa AAA |
+
 | `#f6f3ec` sobre `#1c1c1c` | **15,2:1** | Passa AAA |
 
 Por isso: **vermelho** só em display grande, fundos e formas; **laranja** é o acento
@@ -372,15 +401,12 @@ Tudo abaixo foi rodado em Chromium real, não estimado:
 
 | # | Pendência | Impacto |
 |---|---|---|
-| 1 | **Link do checkout** | Bloqueia a venda. Os 5 CTAs apontam para `#checkout`. O README tem o comando pronto para trocar. |
-| 2 | **Domínio final** | Bloqueia o SEO. Canonical, Open Graph, JSON-LD e sitemap estão com `delivery360.com.br` como marcador. |
-| 3 | **E-mail de suporte** | A FAQ 4 promete *"basta mandar um e-mail"* e não existe e-mail em lugar nenhum da página. Promessa de garantia sem endereço é a que mais gera reclamação. |
-| 4 | **Foto do Rodrigo** | Slot pronto na dobra 6, troca de uma tag. Uma foto na cozinha vale mais que estúdio. |
-| 5 | **Capa oficial em PNG** | A atual é recomposição vetorial fiel ao layout. |
-| 6 | **Pixel / GA4** | Se for usar, o domínio do script precisa entrar no `Content-Security-Policy` — hoje a política é `'self'` e bloqueia script externo. |
-| 7 | **Confirmar os depoimentos** | Ver seção 2. |
-
----
+| 1 | **Confirmar os nomes das aulas 5 a 10** | O cliente nomeou os 5 módulos e só as aulas 1 a 4. As aulas 5 a 10 na página são propostas derivadas dos títulos de módulo — quem sabe o conteúdo real é o Rodrigo. |
+| 2 | **Link do checkout** | Bloqueia a venda. Os 5 CTAs apontam para `#checkout`. |
+| 3 | **Domínio final** | Bloqueia o SEO. Canonical, Open Graph, JSON-LD e sitemap com marcador. |
+| 4 | **E-mail de suporte** | A FAQ 4 promete "basta mandar um e-mail" e não existe e-mail na página. |
+| 5 | **Vídeo curto** | O bloco de demonstração já está montado com moldura e botão de play. Trocar a imagem por um player quando o vídeo existir. |
+| 6 | **Pixel / GA4** | O domínio do script precisa entrar no `Content-Security-Policy`. |
 
 ## 14. Histórico de commits
 
