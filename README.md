@@ -108,11 +108,21 @@ A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado 
 | `rodrigoevento.jpg` | Fundo esmaecido do método |
 | `dep1.jpg` … `dep5.jpg` | Carrossel de prints reais |
 
-### 4. Confirmar os nomes das aulas 5 a 10
+### 4. Confirmar os nomes das aulas
 
-O cliente nomeou os 5 módulos e as aulas 1 a 4. As aulas **5 a 10** na página são
-propostas derivadas dos títulos de módulo e **precisam da confirmação do Rodrigo**.
-Elas estão no bloco `.grade__list`, dentro dos módulos 3, 4 e 5.
+Os **5 módulos** são os nomes reais do curso, confirmados pelo Rodrigo:
+
+| Módulo | Nome |
+|---|---|
+| 1 | Comece por aqui |
+| 2 | Sua entrega |
+| 3 | Cardápio e faturamento |
+| 4 | Domine o portal |
+| 5 | Encerramento |
+
+As **aulas** ainda não. As aulas 1 e 2 usam os títulos que o cliente escreveu; as
+aulas 3 a 10 são propostas encaixadas nos módulos reais e **precisam da confirmação
+do Rodrigo**, incluindo a divisão de 2 aulas por módulo. Estão em `.grade__list`.
 
 ### 5. Pixel / GA4 (opcional)
 Adicione antes de `</body>`. Se usar script de terceiro, atualize o `Content-Security-Policy`
