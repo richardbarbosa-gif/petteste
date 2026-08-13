@@ -976,20 +976,21 @@
 /* WCAG 2.2.2: movimento que dura mais de 5s precisa de como parar */
 .band:hover .band__fita,
 .band__fita:focus-within{animation-play-state:paused}
-/* Sem movimento (seja por preferência do usuário, seja por máquina fraca) as
-   DUAS frases aparecem empilhadas. Antes eu escondia a segunda, e aí a tarja
-   ficava mesmo sem mudar nada — a mensagem sumia pela metade. */
+/* Quem pediu menos movimento não leva letreiro deslizando. A troca das frases
+   continua existindo, só que por opacidade — ver o efeito em @layer nenhum,
+   no fim do arquivo, onde ele vence a regra global que zera animações. */
 @media (prefers-reduced-motion:reduce){
   .band__palco{mask-image:none;-webkit-mask-image:none}
   .band__fita{animation:none;width:auto;display:block;
     padding-inline:clamp(1.25rem,6vw,3rem)}
-  .band__grupo{display:block;text-align:center}
+  .band__grupo{display:grid;align-items:center;text-align:center}
   .band__grupo+.band__grupo{display:none}
-  .band__txt{white-space:normal;text-align:center;text-wrap:balance}
-  /* só o separador do meio fica; o do fim da fita não faz sentido empilhado */
   .band__ponto{display:none}
-  .band__grupo>.band__ponto:first-of-type{display:block;width:max-content;
-    margin:.55rem auto .4rem;padding:0}
+  /* As duas ocupam a mesma célula: a tarja tem a altura da maior e nada pula
+     na troca. Opacidade estática garante frase legível mesmo se a animação
+     não rodar por qualquer motivo. */
+  .band__txt{grid-area:1/1;white-space:normal;text-align:center;text-wrap:balance}
+  .band__txt:nth-of-type(2){opacity:0}
 }
 
 /* ---------- Selo ---------- */
@@ -1010,6 +1011,32 @@
    qualquer camada, então o fallback ganha sem precisar de !important.
    Em navegador atual o @supports é falso e nada aqui é aplicado.
    ============================================================================= */
+/* =============================================================================
+   TARJA COM MENOS MOVIMENTO
+   Fora de @layer de propósito. A camada motion zera a duração de toda
+   animação quando o sistema pede menos movimento (*{animation-duration:.001ms})
+   e vence por ordem de camada. Regra sem camada vence qualquer camada, então
+   é aqui que o cruzamento das frases sobrevive.
+
+   Deslizar de lado incomoda quem tem sensibilidade vestibular; variar opacidade
+   não — não há deslocamento, nem paralaxe, nem piscada rápida (são 12s de ciclo,
+   muito abaixo do limite de 3Hz que representa risco). O visitante que desligou
+   as animações do sistema continua recebendo as duas mensagens.
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .band__txt{animation:bandCruza 12s ease-in-out infinite}
+  .band__txt:nth-of-type(2){animation-delay:6s}
+  .band:hover .band__txt{animation-play-state:paused}
+  /* A entrada é rápida e a saída encosta na entrada da outra frase: a tarja
+     quase não fica vazia entre uma e outra. Sobrepor as duas seria pior —
+     texto diferente no mesmo lugar vira borrão. */
+  @keyframes bandCruza{
+    0%{opacity:0}
+    5%,47%{opacity:1}
+    50%,100%{opacity:0}
+  }
+}
+
 @supports not (translate: 0) {
   .hero__rays{transform:translateX(-50%);animation:none}
   .step__arrow{transform:translateY(-50%)}
