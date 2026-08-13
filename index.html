@@ -926,7 +926,7 @@
 @keyframes varre{0%{translate:-60% 0}55%,100%{translate:60% 0}}
 /* As duas frases ocupam a mesma célula do grid: a tarja tem a altura da maior
    e nada pula quando uma troca pela outra. */
-.band__palco{position:relative;display:grid;align-items:center}
+.band__palco{position:relative;display:grid;align-items:center;overflow:hidden}
 .band__txt{grid-area:1/1;position:relative;margin:0;text-align:center;font-family:'Anton',sans-serif;
   text-transform:uppercase;font-size:clamp(1.05rem,.8rem + 1.45vw,2rem);line-height:1.16;
   color:var(--cream);text-wrap:balance;
@@ -936,12 +936,14 @@
 .band__marca{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;
   opacity:.06}
 .band__marca svg{width:min(420px,60%);height:auto;color:var(--cream)}
-.band__txt{opacity:0;animation:bandGira 13s cubic-bezier(.22,.61,.36,1) infinite}
-.band__txt:nth-child(2){animation-delay:6.5s}
+.band__txt{opacity:0;animation:bandGira 11s cubic-bezier(.22,.61,.36,1) infinite}
+.band__txt:nth-child(2){animation-delay:5.5s}
+/* Deslize horizontal: a frase entra pela direita e sai pela esquerda, como
+   um letreiro. Vertical era sutil demais e a troca passava despercebida. */
 @keyframes bandGira{
-  0%{opacity:0;translate:0 45%}
-  5%,42%{opacity:1;translate:0 0}
-  47%,100%{opacity:0;translate:0 -45%}
+  0%{opacity:0;translate:55% 0}
+  6%,44%{opacity:1;translate:0 0}
+  50%,100%{opacity:0;translate:-55% 0}
 }
 @media (prefers-reduced-motion:reduce){
   .band__txt{animation:none;opacity:1;translate:none}
