@@ -61,6 +61,14 @@ def main() -> None:
     html = re.sub(r'\s*<link rel="(?:manifest|apple-touch-icon|icon|canonical|preload)"[^>]*>', "", html)
     html = re.sub(r"\s*<script type=\"application/ld\+json\">.*?</script>", "", html, flags=re.S)
 
+    # A previa e so da pagina principal: os arquivos legais nao sobem junto,
+    # entao o link viraria 404. Vira texto simples.
+    html = re.sub(
+        r'<a href="(politica-de-privacidade|termos-de-uso)\.html">([^<]+)</a>',
+        r'<span>\2</span>',
+        html,
+    )
+
     cabeca = html.split("<head>", 1)[1].split("</head>", 1)[0]
     corpo = html.split("<body>", 1)[1].split("</body>", 1)[0]
 
