@@ -148,9 +148,11 @@ Adicione antes de `</body>`. Se usar script de terceiro, atualize o `Content-Sec
 no `<head>` incluindo o domínio em `script-src` e `connect-src` — hoje a política é `'self'`
 e vai bloquear qualquer script externo.
 
-### 6. E-mail de suporte
-A FAQ 4 promete "basta mandar um e-mail". Não existe e-mail na página — inclua-o na resposta
-da FAQ 4 e no rodapé antes de publicar, ou a promessa de garantia fica sem endereço.
+### 6. Dados das páginas legais
+`termos-de-uso.html` e `politica-de-privacidade.html` têm campos marcados como
+`[informar ...]` — CNPJ, endereço e cidade/UF. Preencha e apague as caixas laranja.
+A plataforma de checkout já está como **Hotmart**, e o cancelamento nos 7 dias aponta
+para "Minhas compras" da Hotmart em todos os lugares (FAQ, oferta, termos e política).
 
 ## Decisões técnicas
 
