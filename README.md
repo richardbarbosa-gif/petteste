@@ -69,6 +69,7 @@ fotos/                      ← imagens do cliente (ver tabela abaixo)
 build-standalone.py         ← gera a versão em arquivo único
 build-preview.py            ← gera a versão para link de prévia
 sync-fotos.py               ← lê as dimensões reais das fotos e evita CLS
+compat-fallbacks.py         ← gera o rgba() equivalente a cada color-mix() (PC antigo)
 assets/fonts/               ← Anton + Archivo Variable (woff2, subset latin, auto-hospedadas)
 assets/img/                 ← logos em vetor, favicons e imagem de compartilhamento
 robots.txt · sitemap.xml · site.webmanifest
@@ -170,8 +171,42 @@ pequeno e o corpo é sempre creme (15,2:1). A marca fica fiel e a página legív
 visitante para terceiro, que já rendeu multa por LGPD/GDPR em outros países.
 
 **Performance** — 1 request de HTML (CSS inline), 1 de JS, 2 de fonte. Sem terceiros, sem
-jQuery, sem framework. `content-visibility` nas dobras longas, `width`/`height` em todas as
-imagens (CLS zero) e toda animação atrás de `prefers-reduced-motion`.
+jQuery, sem framework. `width`/`height` em todas as imagens (CLS zero) e toda animação
+atrás de `prefers-reduced-motion`.
+
+---
+
+## Computador antigo
+
+O dono de restaurante muitas vezes abre a página no PC do balcão, não num aparelho novo.
+Quem está no Windows 7/8.1 trava no **Chrome 109** — e é aí que o CSS moderno começa a cair.
+
+| Recurso | Exige | O que fiz |
+|---|---|---|
+| `color-mix()` | Chrome 111 | `compat-fallbacks.py` gera o `rgba()` equivalente antes de cada uso |
+| `translate` / `rotate` (propriedades soltas) | Chrome 104 | bloco `@supports not (translate: 0)` com `transform`, fora de `@layer` |
+| `:has()` | Chrome 105 | o JS marca `data-on` no item; regra espelho em CSS |
+| `<dialog>` | Safari 15.4 | sem ele, o print abre em outra aba |
+| `@layer` | Chrome 99 | **mantido** — ver abaixo |
+
+**Por que `@layer` fica.** Se o navegador não entender, ele descarta o bloco inteiro e a
+página fica sem estilo nenhum — a pior falha possível. Mesmo assim eu mantive, por dois
+motivos: o teto real de PC velho (Chrome 109) já suporta, e a camada `motion` depende da
+ordem de camadas para o `*{animation-duration:.001ms}` vencer regras de especificidade
+maior. Sem camadas, o `prefers-reduced-motion` da página inteira deixaria de funcionar.
+Trocar uma falha improvável por uma quebra certa de acessibilidade seria um mau negócio.
+
+**Modo leve.** O `app.js` marca `data-lite` no elemento raiz quando o aparelho tem 2 núcleos
+ou menos, 2GB ou menos, ou quando 1 segundo de medição de quadros fica abaixo de 30fps
+(medido só com a aba visível, 900ms depois do load, e guardado no `sessionStorage`).
+Nesse modo saem `backdrop-filter`, `mix-blend-mode`, máscara e o giro dos raios do hero.
+O letreiro continua andando de propósito: é animação de `transform`, que a GPU resolve
+recompondo a camada sem repintar — dos efeitos mais baratos da página.
+
+**Como testar sem ter um PC velho à mão.** `/tmp/velho.py` (no histórico da sessão) poda do
+CSS tudo que o Chrome 109 não entende e mede a página resultante. O que ele verifica:
+sem vazamento horizontal, sem erro de JS, `.card` com padding e borda corretos, raios e
+setas posicionados via `transform`, letreiro andando e checklist acendendo sem `:has()`.
 
 **Acessibilidade** — HTML semântico, um `<h1>` só, skip link, foco visível, checklist com
 `<input>` real, FAQ em `<details>` nativo (funciona sem JS e é indexável), `aria-live` no

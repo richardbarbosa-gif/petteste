@@ -84,6 +84,7 @@
     /* Derivadas (mesma família, para profundidade) */
     /* Neon e metálico derivados da própria marca — nenhuma cor nova de identidade */
     --red-neon:#ff2f2f;         /* vermelho aceso, só para brilho e borda */
+    --red-glow:rgba(255,47,47,0.6)/*!f*/;/* vermelho aceso, só para brilho e borda */
     --red-glow:color-mix(in srgb,var(--red-neon) 60%,transparent);
     --metal:linear-gradient(118deg,
               rgb(255 255 255/.00) 0%,rgb(255 255 255/.028) 36%,
@@ -103,16 +104,17 @@
     --cta-2:#0a5f2b;
     --cta-edge:#07501f;
     --cta-fg:#ffffff;   /* branco: 4,85:1 no tom mais claro do gradiente */
+    --line:rgba(246,243,236,0.14)/*!f*/;/* branco: 4,85:1 no tom mais claro do gradiente */
     --line:color-mix(in srgb,var(--cream) 14%,transparent);
-    --line-strong:color-mix(in srgb,var(--cream) 26%,transparent);
+    --line-strong:rgba(246,243,236,0.26)/*!f*/;--line-strong:color-mix(in srgb,var(--cream) 26%,transparent);
 
     /* Texto: contraste AA garantido.
        #c62828 sobre #1c1c1c = 3.06:1 → só display grande/formas.
        #e86a1c sobre #1c1c1c = 5.3:1  → acento de texto pequeno. OK AA.
        #f6f3ec sobre #1c1c1c = 15.2:1 → corpo. */
     --fg:var(--cream);
-    --fg-soft:color-mix(in srgb,var(--cream) 74%,transparent);
-    --fg-mute:color-mix(in srgb,var(--cream) 55%,transparent);
+    --fg-soft:rgba(246,243,236,0.74)/*!f*/;--fg-soft:color-mix(in srgb,var(--cream) 74%,transparent);
+    --fg-mute:rgba(246,243,236,0.55)/*!f*/;--fg-mute:color-mix(in srgb,var(--cream) 55%,transparent);
     --accent:var(--orange);
 
     /* Tipografia fluida — sem breakpoint, escala contínua 360px→1440px */
@@ -225,7 +227,7 @@
   
   
   .red{color:var(--red);
-    text-shadow:0 0 14px color-mix(in srgb,var(--red-neon) 32%,transparent)}
+    text-shadow:0 0 14px rgba(255,47,47,0.32)/*!f*/;text-shadow:0 0 14px color-mix(in srgb,var(--red-neon) 32%,transparent)}
   
 
   /* ---------- Logo ---------- */
@@ -243,6 +245,10 @@
     background:var(--metal),
                linear-gradient(180deg,#12873e 0%,#0f7a37 45%,var(--cta-2) 100%);
     box-shadow:0 4px 0 var(--cta-edge),
+               0 12px 30px -6px rgba(18,131,59,0.62),
+               0 0 0 1px rgba(4,56,26,0.55),
+               inset 0 1px 0 rgb(255 255 255/.34),
+               inset 0 -6px 12px -8px rgb(0 0 0/.45)/*!f*/;box-shadow:0 4px 0 var(--cta-edge),
                0 12px 30px -6px color-mix(in srgb,var(--cta) 62%,transparent),
                0 0 0 1px color-mix(in srgb,#04381a 55%,transparent),
                inset 0 1px 0 rgb(255 255 255/.34),
@@ -258,6 +264,9 @@
   }
   .btn:hover{filter:brightness(1.06) saturate(1.06);
     box-shadow:0 4px 0 var(--cta-edge),
+               0 18px 44px -8px rgba(18,131,59,0.85),
+               0 0 0 1px rgba(4,56,26,0.65),
+               inset 0 1px 0 rgb(255 255 255/.4)/*!f*/;box-shadow:0 4px 0 var(--cta-edge),
                0 18px 44px -8px color-mix(in srgb,var(--cta) 85%,transparent),
                0 0 0 1px color-mix(in srgb,#04381a 65%,transparent),
                inset 0 1px 0 rgb(255 255 255/.4)}
@@ -273,7 +282,7 @@
   .cta-note{margin-top:.9rem;font-size:var(--f-xs);font-weight:700;letter-spacing:.12em;
     text-transform:uppercase;color:var(--fg-mute);display:flex;flex-wrap:wrap;gap:.4rem .9rem}
   .cta-note b{color:var(--cream);font-weight:800}
-  .cta-note span{color:color-mix(in srgb,var(--cta) 80%,transparent)}
+  .cta-note span{color:rgba(18,131,59,0.8)/*!f*/;color:color-mix(in srgb,var(--cta) 80%,transparent)}
   .cta-note--center{justify-content:center}
   /* em fundo claro o creme translúcido desaparece: força tom escuro */
   
@@ -286,15 +295,15 @@
     box-shadow:var(--shadow-1),inset 0 1px 0 rgb(255 255 255/.07);
     transition:transform .5s var(--ease-out),border-color .35s var(--ease),box-shadow .35s var(--ease);
     container-type:inline-size}
-  .card:hover{border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
+  .card:hover{border-color:rgba(255,47,47,0.45)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
     box-shadow:var(--shadow-2),inset 0 1px 0 rgb(255 255 255/.1),
                0 0 40px -14px var(--red-glow)}
   .card__tag{display:inline-flex;align-items:center;gap:.5rem;font-size:var(--f-xs);
     font-weight:800;letter-spacing:.16em;text-transform:uppercase;
     padding:.4rem .8rem;border-radius:999px;margin-bottom:var(--sp-2)}
   
-  .tag-orange{background:color-mix(in srgb,var(--orange) 18%,transparent);color:#ffb070;
-    border:1px solid color-mix(in srgb,var(--orange) 45%,transparent)}
+  .tag-orange{background:rgba(232,106,28,0.18)/*!f*/;background:color-mix(in srgb,var(--orange) 18%,transparent);color:#ffb070;
+    border:1px solid rgba(232,106,28,0.45)/*!f*/;border:1px solid color-mix(in srgb,var(--orange) 45%,transparent)}
 
   /* Tilt 3D — só em ponteiro fino, desligado no toque e em reduced-motion */
   
@@ -318,10 +327,11 @@
   /* ---------- Header ---------- */
   .header{position:sticky;top:0;z-index:50;padding-block:.85rem;
     background:linear-gradient(180deg,rgb(255 255 255/.045),transparent),
+               rgba(13,13,13,0.84)/*!f*/;background:linear-gradient(180deg,rgb(255 255 255/.045),transparent),
                color-mix(in srgb,var(--ink-900) 84%,transparent);
     backdrop-filter:blur(14px) saturate(140%);
     border-bottom:1px solid transparent;transition:border-color .3s var(--ease)}
-  .header[data-stuck]{border-bottom-color:color-mix(in srgb,var(--red-neon) 35%,transparent);
+  .header[data-stuck]{border-bottom-color:rgba(255,47,47,0.35)/*!f*/;border-bottom-color:color-mix(in srgb,var(--red-neon) 35%,transparent);
     box-shadow:0 1px 22px -8px var(--red-glow)}
   .header__in{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2)}
   .header__cta{display:none}
@@ -330,7 +340,7 @@
   /* ---------- CTA fixa mobile ---------- */
   .dock{position:fixed;left:0;right:0;bottom:0;z-index:55;padding:.7rem clamp(.75rem,4vw,1rem)
     calc(.7rem + env(safe-area-inset-bottom));
-    background:color-mix(in srgb,var(--ink-900) 92%,transparent);
+    background:rgba(13,13,13,0.92)/*!f*/;background:color-mix(in srgb,var(--ink-900) 92%,transparent);
     backdrop-filter:blur(14px);border-top:1px solid var(--line);
     display:flex;align-items:center;gap:.75rem;
     transform:translateY(120%);transition:transform .4s var(--ease-out);visibility:hidden}
@@ -351,6 +361,9 @@
 .hero{position:relative;padding-block:clamp(1.75rem,4vw,3rem) var(--sp-7);overflow:hidden}
 .hero__bg{position:absolute;inset:-20% -10% auto;height:150%;z-index:-2;pointer-events:none;
   background:
+    radial-gradient(68% 52% at 50% 0%,rgba(255,47,47,0.46) 0%,transparent 60%),
+    radial-gradient(45% 40% at 85% 28%,rgba(198,40,40,0.52) 0%,transparent 70%),
+    radial-gradient(60% 50% at 12% 62%,rgba(42,8,8,0.9) 0%,transparent 70%)/*!f*/;background:
     radial-gradient(68% 52% at 50% 0%,color-mix(in srgb,var(--red-neon) 46%,transparent) 0%,transparent 60%),
     radial-gradient(45% 40% at 85% 28%,color-mix(in srgb,var(--red) 52%,transparent) 0%,transparent 70%),
     radial-gradient(60% 50% at 12% 62%,color-mix(in srgb,var(--red-black) 90%,transparent) 0%,transparent 70%)}
@@ -386,6 +399,8 @@
   transform-style:preserve-3d;
   transform:rotateY(var(--ry,-15deg)) rotateX(var(--rx,7deg)) rotateZ(-1.2deg);
   box-shadow:var(--shadow-3),
+             0 0 0 1px rgb(255 255 255/.10),
+             0 0 90px -22px rgba(255,47,47,0.7)/*!f*/;box-shadow:var(--shadow-3),
              0 0 0 1px rgb(255 255 255/.10),
              0 0 90px -22px color-mix(in srgb,var(--red-neon) 70%,transparent);
   animation:float 9s ease-in-out infinite;
@@ -424,19 +439,25 @@
 .check__box{flex:none;width:24px;height:24px;border-radius:6px;border:2px solid var(--line-strong);
   display:grid;place-items:center;margin-top:.15rem;transition:all .25s var(--ease)}
 .check__box svg{width:14px;height:14px;opacity:0;scale:.5;transition:all .25s var(--ease-out);color:var(--cream)}
-.check__item:has(input:checked){background:color-mix(in srgb,var(--red) 20%,transparent);
-  border-color:color-mix(in srgb,var(--red) 65%,transparent)}
+.check__item:has(input:checked){background:rgba(198,40,40,0.2)/*!f*/;background:color-mix(in srgb,var(--red) 20%,transparent);
+  border-color:rgba(198,40,40,0.65)/*!f*/;border-color:color-mix(in srgb,var(--red) 65%,transparent)}
 .check__item:has(input:checked) .check__box{background:var(--red);border-color:var(--red)}
 .check__item:has(input:checked) .check__box svg{opacity:1;scale:1}
 .check__item:has(input:focus-visible){outline:3px solid var(--orange);outline-offset:3px}
+/* Espelho das regras acima para navegador sem :has() (anterior ao Chrome 105 /
+   Safari 15.4). Precisa ser regra separada: numa lista de seletores, um
+   seletor inválido derruba a lista inteira. O JS marca data-on no item. */
+.check__item[data-on]{background:rgba(198,40,40,0.2);border-color:rgba(198,40,40,0.65)}
+.check__item[data-on] .check__box{background:var(--red);border-color:var(--red)}
+.check__item[data-on] .check__box svg{opacity:1;transform:scale(1)}
 
 .check__score{display:inline-flex;align-items:center;gap:.6rem;margin-top:var(--sp-3);
   font-size:var(--f-sm);font-weight:700;color:var(--cream);letter-spacing:.01em;
   padding:.7rem 1.15rem;border-radius:999px;
-  background:color-mix(in srgb,var(--orange) 16%,transparent);
-  border:1px solid color-mix(in srgb,var(--orange) 55%,transparent)}
+  background:rgba(232,106,28,0.16)/*!f*/;background:color-mix(in srgb,var(--orange) 16%,transparent);
+  border:1px solid rgba(232,106,28,0.55)/*!f*/;border:1px solid color-mix(in srgb,var(--orange) 55%,transparent)}
 .check__score::before{content:"";flex:none;width:9px;height:9px;border-radius:999px;
-  background:var(--orange);box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 25%,transparent)}
+  background:var(--orange);box-shadow:0 0 0 4px rgba(232,106,28,0.25)/*!f*/;box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 25%,transparent)}
 .check__score:empty{display:none}
 .check__out{margin-top:var(--sp-3);font-size:var(--f-md);font-weight:700;color:var(--cream)}
 
@@ -444,6 +465,8 @@
 
 /* ---------- D5 · O MÉTODO ----------------------------------------------- */
 .method{background:
+  radial-gradient(80% 60% at 50% -10%,rgba(198,40,40,0.26),transparent 60%),
+  var(--ink-900)/*!f*/;background:
   radial-gradient(80% 60% at 50% -10%,color-mix(in srgb,var(--red) 26%,transparent),transparent 60%),
   var(--ink-900)}
 .method__head{text-align:center;max-width:70ch;margin-inline:auto;margin-bottom:var(--sp-head)}
@@ -456,19 +479,19 @@
   box-shadow:0 10px 0 -2px #0a0a0a,0 20px 34px rgb(0 0 0/.55),
              inset 0 1px 0 rgb(255 255 255/.09);
   transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out),border-color .3s}
-.step:hover{transform:translateY(-8px) rotateX(6deg);border-color:color-mix(in srgb,var(--orange) 50%,transparent);
-  box-shadow:0 16px 0 -2px #0a0a0a,0 34px 54px rgb(0 0 0/.6),0 0 60px -10px color-mix(in srgb,var(--orange) 45%,transparent)}
+.step:hover{transform:translateY(-8px) rotateX(6deg);border-color:rgba(232,106,28,0.5)/*!f*/;border-color:color-mix(in srgb,var(--orange) 50%,transparent);
+  box-shadow:0 16px 0 -2px #0a0a0a,0 34px 54px rgb(0 0 0/.6),0 0 60px -10px rgba(232,106,28,0.45)/*!f*/;box-shadow:0 16px 0 -2px #0a0a0a,0 34px 54px rgb(0 0 0/.6),0 0 60px -10px color-mix(in srgb,var(--orange) 45%,transparent)}
 .step::before{content:"";position:absolute;inset:0 auto auto 0;height:4px;width:100%;
   border-radius:var(--r-lg) var(--r-lg) 0 0;
   background:linear-gradient(90deg,var(--red-neon),var(--orange));
   opacity:.6;box-shadow:0 0 16px var(--red-glow);transition:opacity .35s var(--ease)}
 .step:hover::before{opacity:1}
 .step__n{font-family:'Anton',sans-serif;font-size:3.4rem;line-height:.8;
-  color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--red) 75%,transparent);
+  color:transparent;-webkit-text-stroke:2px rgba(198,40,40,0.75)/*!f*/;-webkit-text-stroke:2px color-mix(in srgb,var(--red) 75%,transparent);
   display:block;margin-bottom:.4rem}
-.step:nth-child(2) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
-.step:nth-child(3) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--red) 75%,transparent)}
-.step:nth-child(4) .step__n{-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
+.step:nth-child(2) .step__n{-webkit-text-stroke-color:rgba(232,106,28,0.75)/*!f*/;-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
+.step:nth-child(3) .step__n{-webkit-text-stroke-color:rgba(198,40,40,0.75)/*!f*/;-webkit-text-stroke-color:color-mix(in srgb,var(--red) 75%,transparent)}
+.step:nth-child(4) .step__n{-webkit-text-stroke-color:rgba(232,106,28,0.75)/*!f*/;-webkit-text-stroke-color:color-mix(in srgb,var(--orange) 75%,transparent)}
 .step__t{font-family:'Anton',sans-serif;font-size:var(--f-lg);text-transform:uppercase;
   letter-spacing:.02em;margin-bottom:.7rem;color:var(--cream)}
 .step p{font-size:var(--f-sm);color:var(--fg-soft)}
@@ -510,7 +533,7 @@
   transition:border-color .35s var(--ease),box-shadow .35s var(--ease)}
 .stat::before{content:"";position:absolute;inset:0 0 auto;height:2px;
   background:linear-gradient(90deg,transparent,var(--red-neon),transparent);opacity:.55}
-.stat:hover{border-color:color-mix(in srgb,var(--red-neon) 40%,transparent);
+.stat:hover{border-color:rgba(255,47,47,0.4)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 40%,transparent);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.1),0 18px 40px -22px #000,
              0 0 44px -20px var(--red-glow)}
 .stat b{display:block;font-family:'Anton',sans-serif;font-size:clamp(2.4rem,6vw,3.6rem);
@@ -549,21 +572,23 @@
   box-shadow:0 8px 18px rgb(0 0 0/.4),inset 0 1px 0 rgb(255 255 255/.35),
              0 0 22px -8px var(--red-glow)}
 .item--bonus .item__icon{background:linear-gradient(150deg,var(--orange),#a13d05)}
-.item--bonus{border-color:color-mix(in srgb,var(--orange) 40%,transparent);
-  background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 9%,var(--ink-700)),var(--ink-800))}
+.item--bonus{border-color:rgba(232,106,28,0.4)/*!f*/;border-color:color-mix(in srgb,var(--orange) 40%,transparent);
+  background:linear-gradient(180deg,#2e231c,var(--ink-800))/*!f*/;background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 9%,var(--ink-700)),var(--ink-800))}
 .item h3{margin-bottom:.7rem}
 .item p{font-size:var(--f-sm);color:var(--fg-soft)}
 .item__icon svg{width:26px;height:26px}
 .guarantee{margin-top:clamp(1rem,2.4vw,1.6rem);display:grid;gap:var(--sp-3);
   align-items:center;grid-template-columns:1fr;text-align:center;
   background:var(--metal),
+    linear-gradient(120deg,#3e1e1e,var(--ink-800))/*!f*/;background:var(--metal),
     linear-gradient(120deg,color-mix(in srgb,var(--red) 20%,var(--ink-700)),var(--ink-800));
-  border:1px solid color-mix(in srgb,var(--red-neon) 42%,transparent);
+  border:1px solid rgba(255,47,47,0.42)/*!f*/;border:1px solid color-mix(in srgb,var(--red-neon) 42%,transparent);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.08),0 0 60px -26px var(--red-glow);
   border-radius:var(--r-xl);padding:clamp(1.5rem,4vw,2.5rem)}
 @media (min-width:760px){.guarantee{grid-template-columns:auto 1fr;text-align:left}}
 .seal{width:clamp(118px,16vw,158px);height:auto;margin-inline:auto;
   filter:drop-shadow(0 14px 28px rgb(0 0 0/.55))
+         drop-shadow(0 0 26px rgba(255,47,47,0.4))/*!f*/;filter:drop-shadow(0 14px 28px rgb(0 0 0/.55))
          drop-shadow(0 0 26px color-mix(in srgb,var(--red-neon) 40%,transparent))}
 
 .offer{background:linear-gradient(180deg,var(--ink-900),var(--ink-800) 60%,var(--ink-900))}
@@ -577,26 +602,27 @@
   background:linear-gradient(180deg,#fff,var(--cream));color:var(--ink);
   border-radius:var(--r-xl);padding:clamp(1.6rem,4vw,3rem);text-align:center;
   box-shadow:0 30px 70px -20px rgb(0 0 0/.8),0 0 0 1px rgb(255 255 255/.1),
+             0 0 90px -30px rgba(232,106,28,0.7)/*!f*/;box-shadow:0 30px 70px -20px rgb(0 0 0/.8),0 0 0 1px rgb(255 255 255/.1),
              0 0 90px -30px color-mix(in srgb,var(--orange) 70%,transparent);
   position:relative;overflow:hidden}
 .price::before{content:"";position:absolute;inset:0 0 auto;height:6px;
   background:linear-gradient(90deg,var(--red-neon),var(--red) 30%,var(--orange) 70%,var(--red-neon));
   box-shadow:0 0 18px var(--red-glow)}
 .price__label{font-size:var(--f-xs);font-weight:800;letter-spacing:.24em;text-transform:uppercase;
-  color:color-mix(in srgb,var(--ink) 74%,transparent)}
+  color:rgba(28,28,28,0.74)/*!f*/;color:color-mix(in srgb,var(--ink) 74%,transparent)}
 .price__big{font-family:'Anton',sans-serif;font-size:clamp(3.4rem,12vw,6.5rem);line-height:.9;
   color:var(--ink);margin-block:.14em 0;letter-spacing:-.02em}
 .price__big sup{font-size:.32em;vertical-align:.95em;color:var(--red);margin-right:.04em}
 .price__cents{font-size:.34em;letter-spacing:0;
-  color:color-mix(in srgb,var(--ink) 68%,transparent)}
+  color:rgba(28,28,28,0.68)/*!f*/;color:color-mix(in srgb,var(--ink) 68%,transparent)}
 .price__cash{font-family:'Archivo',sans-serif;font-size:var(--f-sm);font-weight:800;
   letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
-.price__inst{font-size:var(--f-md);font-weight:700;color:color-mix(in srgb,var(--ink) 72%,transparent)}
+.price__inst{font-size:var(--f-md);font-weight:700;color:rgba(28,28,28,0.72)/*!f*/;color:color-mix(in srgb,var(--ink) 72%,transparent)}
 .price__inst b{color:var(--red)}
 .price .btn{margin-top:var(--sp-3)}
 .price__safe{margin-top:var(--sp-3);display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.2rem;
   font-size:var(--f-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:color-mix(in srgb,var(--ink) 74%,transparent)}
+  color:rgba(28,28,28,0.74)/*!f*/;color:color-mix(in srgb,var(--ink) 74%,transparent)}
 .price__safe span{display:inline-flex;align-items:center;gap:.4rem}
 .price__safe svg{width:15px;height:15px;color:var(--red)}
 
@@ -604,7 +630,7 @@
 .faq__list{max-width:900px;margin-inline:auto;display:grid;gap:.75rem;margin-top:var(--sp-head)}
 .faq details{border:1px solid var(--line);border-radius:var(--r-md);background:var(--ink-700);
   overflow:hidden;transition:border-color .3s var(--ease)}
-.faq details[open]{border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
+.faq details[open]{border-color:rgba(232,106,28,0.45)/*!f*/;border-color:color-mix(in srgb,var(--orange) 45%,transparent)}
 .faq summary{cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:1rem;
   padding:clamp(1rem,2.4vw,1.35rem) clamp(1.1rem,3vw,1.75rem);font-weight:700;
   font-size:var(--f-sm);line-height:1.4}
@@ -617,7 +643,7 @@
 .faq__a{padding:0 clamp(1.1rem,3vw,1.75rem) clamp(1.1rem,2.6vw,1.5rem) clamp(2.6rem,5vw,3.4rem);
   color:var(--fg-soft);font-size:var(--f-sm)}
 
-.final{background:radial-gradient(80% 70% at 50% 0%,color-mix(in srgb,var(--red) 34%,transparent),transparent 62%),var(--ink-900);
+.final{background:radial-gradient(80% 70% at 50% 0%,rgba(198,40,40,0.34),transparent 62%),var(--ink-900)/*!f*/;background:radial-gradient(80% 70% at 50% 0%,color-mix(in srgb,var(--red) 34%,transparent),transparent 62%),var(--ink-900);
   text-align:center}
 .final .h2{margin-bottom:var(--sp-3)}
 .final .cta-note{justify-content:center}
@@ -639,7 +665,7 @@
   transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease)}
 .social svg{width:19px;height:19px;color:var(--orange)}
 .social:hover{color:var(--cream);transform:translateY(-2px);
-  border-color:color-mix(in srgb,var(--red-neon) 55%,transparent);
+  border-color:rgba(255,47,47,0.55)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 55%,transparent);
   box-shadow:0 0 26px -10px var(--red-glow),inset 0 1px 0 rgb(255 255 255/.1)}
 }
 
@@ -690,7 +716,7 @@
 /* ---------- Faixa de posicionamento ---------- */
 .band{position:relative;padding-block:clamp(1.6rem,4vw,2.6rem);
   background:linear-gradient(90deg,var(--red-black),var(--red-deep) 50%,var(--red-black));
-  border-block:1px solid color-mix(in srgb,var(--red-neon) 35%,transparent);
+  border-block:1px solid rgba(255,47,47,0.35)/*!f*/;border-block:1px solid color-mix(in srgb,var(--red-neon) 35%,transparent);
   box-shadow:0 0 60px -20px var(--red-glow)}
 .band__txt{text-align:center;font-family:'Anton',sans-serif;text-transform:uppercase;
   font-size:clamp(1.05rem,.85rem + 1.3vw,1.9rem);line-height:1.14;color:var(--cream);
@@ -709,16 +735,16 @@
 .leakcard::before{content:"";position:absolute;inset:0 0 auto;height:3px;
   background:linear-gradient(90deg,var(--red-neon),transparent);opacity:.7}
 .leakcard:hover{transform:translateY(-5px);
-  border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
+  border-color:rgba(255,47,47,0.45)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.1),0 22px 44px -22px #000,0 0 46px -18px var(--red-glow)}
 .leakcard__n{display:block;font-family:'Anton',sans-serif;font-size:2.6rem;line-height:.85;
-  color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--red-neon) 70%,transparent);
+  color:transparent;-webkit-text-stroke:2px rgba(255,47,47,0.7)/*!f*/;-webkit-text-stroke:2px color-mix(in srgb,var(--red-neon) 70%,transparent);
   margin-bottom:.7rem}
 .leakcard p{font-weight:600;font-size:var(--f-sm);line-height:1.45;color:var(--fg-soft)}
 .leaks-out{margin-top:var(--sp-5);text-align:center;font-family:'Anton',sans-serif;
   text-transform:uppercase;font-size:clamp(1.1rem,.9rem + 1.1vw,1.7rem);color:var(--cream)}
 .leaks-out strong{color:var(--red);font-weight:400;
-  text-shadow:0 0 18px color-mix(in srgb,var(--red-neon) 45%,transparent)}
+  text-shadow:0 0 18px rgba(255,47,47,0.45)/*!f*/;text-shadow:0 0 18px color-mix(in srgb,var(--red-neon) 45%,transparent)}
 
 /* ---------- Demonstração ---------- */
 .demo{background:var(--ink-900)}
@@ -726,7 +752,7 @@
 @media (min-width:960px){.demo__in{grid-template-columns:.9fr 1.1fr}}
 .shot__frame{position:relative;border-radius:16px;overflow:hidden;
   background:linear-gradient(168deg,#232323,#0d0d0d);
-  border:1px solid color-mix(in srgb,var(--cream) 13%,transparent);
+  border:1px solid rgba(246,243,236,0.13)/*!f*/;border:1px solid color-mix(in srgb,var(--cream) 13%,transparent);
   box-shadow:0 30px 70px -30px #000,inset 0 1px 0 rgb(255 255 255/.08),
              0 0 80px -34px var(--red-glow)}
 .shot__bar{display:flex;align-items:center;gap:.4rem;padding:.6rem .8rem;
@@ -756,7 +782,7 @@
 .mod{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;
   background:var(--metal),linear-gradient(168deg,#212121,var(--ink-700) 60%,#101010);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.06);transition:border-color .3s var(--ease)}
-.mod[open]{border-color:color-mix(in srgb,var(--red-neon) 42%,transparent);
+.mod[open]{border-color:rgba(255,47,47,0.42)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 42%,transparent);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.08),0 0 40px -18px var(--red-glow)}
 .mod summary{cursor:pointer;list-style:none;display:flex;align-items:center;
   gap:clamp(.6rem,2vw,1.1rem);padding:clamp(.95rem,2.2vw,1.25rem) clamp(1rem,2.6vw,1.5rem)}
@@ -792,7 +818,7 @@
   border:1px solid var(--line);box-shadow:inset 0 1px 0 rgb(255 255 255/.08);
   transition:border-color .25s,transform .25s var(--ease),box-shadow .25s}
 .cbtn svg{width:17px;height:17px}
-.cbtn:hover{border-color:color-mix(in srgb,var(--red-neon) 55%,transparent);
+.cbtn:hover{border-color:rgba(255,47,47,0.55)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 55%,transparent);
   transform:translateY(-2px);box-shadow:0 0 26px -10px var(--red-glow)}
 .cbtn[disabled]{opacity:.35;cursor:default;transform:none;box-shadow:none}
 .carrossel__track{display:flex;
@@ -808,7 +834,7 @@
   border:1px solid var(--line);box-shadow:0 18px 40px -24px #000,inset 0 1px 0 rgb(255 255 255/.07);
   transition:transform .35s var(--ease-out),border-color .35s,box-shadow .35s}
 .card--shot:hover{transform:translateY(-5px);
-  border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
+  border-color:rgba(255,47,47,0.45)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
   box-shadow:0 26px 50px -24px #000,0 0 44px -20px var(--red-glow)}
 .card--shot img{display:block;width:100%;height:auto}
 
@@ -816,7 +842,7 @@
 .anchor__hit{margin-top:var(--sp-3);font-family:'Anton',sans-serif;text-transform:uppercase;
   font-size:clamp(1.15rem,.95rem + 1.2vw,1.9rem);color:var(--cream);line-height:1.2}
 .anchor__hit strong{color:var(--red);font-weight:400;
-  text-shadow:0 0 18px color-mix(in srgb,var(--red-neon) 50%,transparent)}
+  text-shadow:0 0 18px rgba(255,47,47,0.5)/*!f*/;text-shadow:0 0 18px color-mix(in srgb,var(--red-neon) 50%,transparent)}
 
 /* ---------- Autoridade ---------- */
 .about-fold{background:var(--ink-900)}
@@ -839,7 +865,7 @@
   opacity:0;translate:0 6px;transition:opacity .25s var(--ease),translate .25s var(--ease)}
 .card--shot__lupa svg{width:17px;height:17px}
 .card--shot:hover{transform:translateY(-5px);
-  border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
+  border-color:rgba(255,47,47,0.45)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
   box-shadow:0 26px 50px -24px #000,0 0 44px -20px var(--red-glow)}
 .card--shot:hover .card--shot__lupa,.card--shot:focus-visible .card--shot__lupa{opacity:1;translate:0 0}
 @media (max-width:760px){
@@ -858,13 +884,13 @@
   display:grid;place-items:center;cursor:pointer;color:var(--cream);border:1px solid var(--line-strong);
   background:linear-gradient(168deg,#2a2a2a,#111);box-shadow:0 10px 24px rgb(0 0 0/.6)}
 .lb__x svg{width:19px;height:19px}
-.lb__x:hover{border-color:color-mix(in srgb,var(--red-neon) 60%,transparent)}
+.lb__x:hover{border-color:rgba(255,47,47,0.6)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 60%,transparent)}
 
 /* ---------- A conta do vazamento ---------- */
 .conta{max-width:960px;margin-inline:auto;border-radius:var(--r-xl);
   padding:clamp(1.4rem,3.4vw,2.4rem);
   background:var(--metal),linear-gradient(168deg,#242424,var(--ink-800) 55%,#0d0d0d);
-  border:1px solid color-mix(in srgb,var(--red-neon) 30%,transparent);
+  border:1px solid rgba(255,47,47,0.3)/*!f*/;border:1px solid color-mix(in srgb,var(--red-neon) 30%,transparent);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.07),0 0 70px -30px var(--red-glow)}
 .conta__linha{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;
   gap:clamp(.5rem,1.6vw,1rem)}
@@ -876,10 +902,10 @@
 .conta__cel i{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;color:var(--fg-mute);line-height:1.35}
 .conta__cel--total{flex:1 1 210px;
-  background:linear-gradient(168deg,color-mix(in srgb,var(--red) 26%,transparent),rgb(255 255 255/.02));
-  border-color:color-mix(in srgb,var(--red-neon) 55%,transparent)}
+  background:linear-gradient(168deg,rgba(198,40,40,0.26),rgb(255 255 255/.02))/*!f*/;background:linear-gradient(168deg,color-mix(in srgb,var(--red) 26%,transparent),rgb(255 255 255/.02));
+  border-color:rgba(255,47,47,0.55)/*!f*/;border-color:color-mix(in srgb,var(--red-neon) 55%,transparent)}
 .conta__cel--total b{color:#ff8a8a;font-size:clamp(1.8rem,1.1rem + 2.6vw,3rem)}
-.conta__cel--total i{color:color-mix(in srgb,var(--cream) 70%,transparent)}
+.conta__cel--total i{color:rgba(246,243,236,0.7)/*!f*/;color:color-mix(in srgb,var(--cream) 70%,transparent)}
 .conta__op{display:grid;place-items:center;font-family:'Anton',sans-serif;
   font-size:clamp(1rem,2.2vw,1.5rem);color:var(--fg-mute);flex:0 0 auto;padding-inline:.1rem}
 .conta__op--eq{color:var(--orange)}
@@ -895,68 +921,146 @@
 .stack__cab{padding:clamp(.9rem,2.2vw,1.15rem) clamp(1.1rem,3vw,1.8rem);
   font-size:var(--f-xs);font-weight:800;letter-spacing:.2em;text-transform:uppercase;
   color:var(--cream);background:linear-gradient(90deg,var(--red-deep),var(--red-black));
-  border-bottom:1px solid color-mix(in srgb,var(--red-neon) 35%,transparent)}
+  border-bottom:1px solid rgba(255,47,47,0.35)/*!f*/;border-bottom:1px solid color-mix(in srgb,var(--red-neon) 35%,transparent)}
 .stack__lista{display:grid;padding:clamp(.6rem,2vw,1rem) clamp(1.1rem,3vw,1.8rem)
   clamp(1.1rem,2.6vw,1.5rem)}
 .stack__lista li{display:flex;gap:.9rem;align-items:flex-start;padding:.75rem 0;
   font-size:var(--f-sm);line-height:1.5;color:var(--fg-soft);
-  border-bottom:1px solid color-mix(in srgb,var(--cream) 8%,transparent)}
+  border-bottom:1px solid rgba(246,243,236,0.08)/*!f*/;border-bottom:1px solid color-mix(in srgb,var(--cream) 8%,transparent)}
 .stack__lista li:last-child{border-bottom:0}
 .stack__lista b{color:var(--cream)}
 .stack__ck{flex:none;width:22px;height:22px;border-radius:999px;display:grid;place-items:center;
   margin-top:.1rem;color:#0a5f2b;background:linear-gradient(180deg,#4ade80,#16a34a);
   box-shadow:inset 0 1px 0 rgb(255 255 255/.5)}
 .stack__ck svg{width:13px;height:13px}
-.stack__bonus{background:linear-gradient(90deg,color-mix(in srgb,var(--orange) 10%,transparent),transparent);
+.stack__bonus{background:linear-gradient(90deg,rgba(232,106,28,0.1),transparent)/*!f*/;background:linear-gradient(90deg,color-mix(in srgb,var(--orange) 10%,transparent),transparent);
   margin-inline:calc(-1*clamp(1.1rem,3vw,1.8rem));padding-inline:clamp(1.1rem,3vw,1.8rem)}
 .stack__bonus .stack__ck{color:#7a3300;background:linear-gradient(180deg,#ffc46b,var(--orange))}
 
 /* ---------- Tarja de posicionamento ---------- */
 .band{position:relative;overflow:hidden;padding-block:clamp(1.9rem,4.5vw,3rem);
   background:
+    radial-gradient(120% 180% at 50% 50%,rgba(255,47,47,0.26),transparent 62%),
+    linear-gradient(100deg,#180404 0%,var(--red-deep) 42%,#8f1a1a 50%,var(--red-deep) 58%,#180404 100%)/*!f*/;background:
     radial-gradient(120% 180% at 50% 50%,color-mix(in srgb,var(--red-neon) 26%,transparent),transparent 62%),
     linear-gradient(100deg,#180404 0%,var(--red-deep) 42%,#8f1a1a 50%,var(--red-deep) 58%,#180404 100%);
-  border-block:1px solid color-mix(in srgb,var(--red-neon) 45%,transparent);
+  border-block:1px solid rgba(255,47,47,0.45)/*!f*/;border-block:1px solid color-mix(in srgb,var(--red-neon) 45%,transparent);
   box-shadow:0 0 70px -22px var(--red-glow),inset 0 1px 0 rgb(255 255 255/.1)}
 .band::before{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:var(--grain);opacity:.08;mix-blend-mode:overlay}
 .band::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(105deg,transparent 38%,rgb(255 255 255/.16) 47%,transparent 56%);
-  translate:-60% 0;animation:varre 7s var(--ease-out) infinite}
-@keyframes varre{0%{translate:-60% 0}55%,100%{translate:60% 0}}
-/* As duas frases ocupam a mesma célula do grid: a tarja tem a altura da maior
-   e nada pula quando uma troca pela outra. */
-.band__palco{position:relative;display:grid;align-items:center;overflow:hidden}
-.band__txt{grid-area:1/1;position:relative;margin:0;text-align:center;font-family:'Anton',sans-serif;
-  text-transform:uppercase;font-size:clamp(1.05rem,.8rem + 1.45vw,2rem);line-height:1.16;
-  color:var(--cream);text-wrap:balance;
-  text-shadow:0 2px 0 rgb(0 0 0/.35),0 0 30px rgb(0 0 0/.4)}
-.band__txt em{color:#ffd4d4;font-style:normal;
-  text-shadow:0 0 20px color-mix(in srgb,#fff 45%,transparent)}
+  transform:translateX(-60%);animation:varre 7s var(--ease-out) infinite}
+@keyframes varre{0%{transform:translateX(-60%)}55%,100%{transform:translateX(60%)}}
+/* Letreiro contínuo. Antes as duas frases se revezavam paradas: entre uma
+   troca e outra a tarja ficava 5,5s imóvel e o visitante rolava a página sem
+   nunca ver o efeito. Agora a fita nunca para — não existe instante em que a
+   tarja pareça estática. */
+.band__palco{position:relative;overflow:hidden;
+  /* as pontas somem no vermelho em vez de cortar a letra na guilhotina */
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
 .band__marca{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;
   opacity:.06}
 .band__marca svg{width:min(420px,60%);height:auto;color:var(--cream)}
-.band__txt{opacity:0;animation:bandGira 11s cubic-bezier(.22,.61,.36,1) infinite}
-.band__txt:nth-child(2){animation-delay:5.5s}
-/* Deslize horizontal: a frase entra pela direita e sai pela esquerda, como
-   um letreiro. Vertical era sutil demais e a troca passava despercebida. */
-@keyframes bandGira{
-  0%{opacity:0;translate:55% 0}
-  6%,44%{opacity:1;translate:0 0}
-  50%,100%{opacity:0;translate:-55% 0}
-}
+/* transform e não a propriedade translate: translate só existe a partir do
+   Chrome 104 e do Safari 14.1. Num PC velho preso no Chrome 109 ou menos, a
+   regra seria ignorada e a tarja ficaria parada — foi exatamente o que
+   aconteceu. transform roda em tudo desde 2012. */
+.band__fita{display:flex;width:max-content;align-items:center;
+  will-change:transform;animation:fita 34s linear infinite}
+.band__grupo{display:flex;align-items:center;flex:none}
+.band__txt{margin:0;white-space:nowrap;font-family:'Anton',sans-serif;
+  text-transform:uppercase;font-size:clamp(1rem,.78rem + 1.2vw,1.75rem);line-height:1.16;
+  color:var(--cream);text-shadow:0 2px 0 rgb(0 0 0/.35),0 0 30px rgb(0 0 0/.4)}
+.band__txt em{color:#ffd4d4;font-style:normal;
+  text-shadow:0 0 20px rgba(255,255,255,0.45)/*!f*/;text-shadow:0 0 20px color-mix(in srgb,#fff 45%,transparent)}
+/* Separador: o monograma da marca entre uma frase e outra */
+.band__ponto{flex:none;display:grid;place-items:center;
+  padding-inline:clamp(1.5rem,4vw,3.25rem);color:var(--cream);opacity:.55}
+.band__ponto svg{width:clamp(15px,1.6vw,21px);height:auto}
+@keyframes fita{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* WCAG 2.2.2: movimento que dura mais de 5s precisa de como parar */
+.band:hover .band__fita,
+.band__fita:focus-within{animation-play-state:paused}
+/* Sem movimento (seja por preferência do usuário, seja por máquina fraca) as
+   DUAS frases aparecem empilhadas. Antes eu escondia a segunda, e aí a tarja
+   ficava mesmo sem mudar nada — a mensagem sumia pela metade. */
 @media (prefers-reduced-motion:reduce){
-  .band__txt{animation:none;opacity:1;translate:none}
-  .band__txt:nth-child(2){display:none}
+  .band__palco{mask-image:none;-webkit-mask-image:none}
+  .band__fita{animation:none;width:auto;display:block;
+    padding-inline:clamp(1.25rem,6vw,3rem)}
+  .band__grupo{display:block;text-align:center}
+  .band__grupo+.band__grupo{display:none}
+  .band__txt{white-space:normal;text-align:center;text-wrap:balance}
+  /* só o separador do meio fica; o do fim da fita não faz sentido empilhado */
+  .band__ponto{display:none}
+  .band__grupo>.band__ponto:first-of-type{display:block;width:max-content;
+    margin:.55rem auto .4rem;padding:0}
 }
 
 /* ---------- Selo ---------- */
 .seal{width:clamp(126px,17vw,168px);height:auto;margin-inline:auto;
   filter:drop-shadow(0 16px 32px rgb(0 0 0/.6))
+         drop-shadow(0 0 30px rgba(255,47,47,0.34))/*!f*/;filter:drop-shadow(0 16px 32px rgb(0 0 0/.6))
          drop-shadow(0 0 30px color-mix(in srgb,var(--red-neon) 34%,transparent))}
 .guarantee{align-items:center}
-@media (prefers-reduced-motion:reduce){.band::after{animation:none;translate:-60% 0}}
+@media (prefers-reduced-motion:reduce){.band::after{animation:none;transform:translateX(-60%)}}
 }
+
+/* =============================================================================
+   COMPATIBILIDADE — navegadores anteriores ao Chrome 104 / Safari 14.1
+   As propriedades independentes translate e rotate são recentes. Onde elas
+   fazem posicionamento (e não só enfeite), a falta delas desloca o elemento —
+   os raios do hero têm 190vmax e sem o translate saem inteiros da tela.
+   Este bloco fica FORA de @layer de propósito: estilo sem camada vence
+   qualquer camada, então o fallback ganha sem precisar de !important.
+   Em navegador atual o @supports é falso e nada aqui é aplicado.
+   ============================================================================= */
+@supports not (translate: 0) {
+  .hero__rays{transform:translateX(-50%);animation:none}
+  .step__arrow{transform:translateY(-50%)}
+  @media (max-width:1079px){
+    .step__arrow{transform:translateX(50%) rotate(90deg)}
+  }
+  .faq summary::after{transform:rotate(45deg) translateY(2px);
+    transition:transform .3s var(--ease)}
+  .faq details[open] summary::after{transform:rotate(-135deg) translateY(6px)}
+  .mod summary::after{transform:rotate(45deg) translateY(-2px);
+    transition:transform .3s var(--ease)}
+  .mod[open] summary::after{transform:rotate(-135deg) translateY(2px)}
+  .card--shot__lupa{transform:translateY(6px);
+    transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .card--shot:hover .card--shot__lupa,
+  .card--shot:focus-visible .card--shot__lupa{transform:none}
+}
+
+/* =============================================================================
+   MODO LEVE — máquina fraca
+   Marcado pelo JS com data-lite no elemento raiz quando o PC tem pouca RAM/núcleos ou
+   quando a primeira medição de quadros vem abaixo de 30fps. Desliga o que
+   custa caro numa GPU antiga: desfoque de fundo (o mais pesado de todos),
+   mistura de camadas, recorte por máscara e o giro dos raios do hero.
+
+   O letreiro CONTINUA andando. Ele é animação de transform, que a GPU resolve
+   só recompondo a camada, sem repintar nada — é dos efeitos mais baratos da
+   página. Desligar justo ele deixaria a tarja parada de novo, que é o
+   problema que a gente acabou de corrigir.
+   ============================================================================= */
+[data-lite] .header,
+[data-lite] .dock,
+[data-lite] .card--shot__lupa,
+[data-lite] .lb__close,
+[data-lite] .lb::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
+[data-lite] .header{background:#0b0b0bf2}
+[data-lite] .dock{background:#0b0b0bf7}
+[data-lite] .hero__grain,
+[data-lite] .band::before,
+[data-lite] .band::after,
+[data-lite] .cover__glare{display:none}
+[data-lite] .hero__rays{animation:none}
+[data-lite] .band__palco{mask-image:none;-webkit-mask-image:none}
+[data-lite] .card,[data-lite] .leakcard,[data-lite] .step{transition:none}
 </style>
 </head>
 
@@ -1025,9 +1129,24 @@
 <!-- Faixa de posicionamento -->
 <aside class="band" aria-label="Posicionamento">
   <span class="band__marca" aria-hidden="true"><svg viewBox="0 0 180.79 167.47"><path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/></svg></span>
-  <div class="wrap band__palco">
-    <p class="band__txt">Sua loja não precisa de mais pedidos antes de descobrir <em>onde está perdendo dinheiro.</em></p>
-    <p class="band__txt">Não é o iFood que come o seu lucro. <em>É a loja configurada no escuro.</em></p>
+  <div class="band__palco">
+    <!-- O segundo grupo é a cópia que emenda o loop: a fita anda a largura de
+         um grupo e volta ao zero, e o olho não vê a emenda. Fica aria-hidden
+         para o leitor de tela não repetir as frases. -->
+    <div class="band__fita">
+      <span class="band__grupo">
+        <p class="band__txt">Sua loja não precisa de mais pedidos antes de descobrir <em>onde está perdendo dinheiro.</em></p>
+        <span class="band__ponto" aria-hidden="true"><svg viewBox="0 0 180.79 167.47"><path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/></svg></span>
+        <p class="band__txt">Não é o iFood que come o seu lucro. <em>É a loja configurada no escuro.</em></p>
+        <span class="band__ponto" aria-hidden="true"><svg viewBox="0 0 180.79 167.47"><path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/></svg></span>
+      </span>
+      <span class="band__grupo" aria-hidden="true">
+        <p class="band__txt">Sua loja não precisa de mais pedidos antes de descobrir <em>onde está perdendo dinheiro.</em></p>
+        <span class="band__ponto"><svg viewBox="0 0 180.79 167.47"><path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/></svg></span>
+        <p class="band__txt">Não é o iFood que come o seu lucro. <em>É a loja configurada no escuro.</em></p>
+        <span class="band__ponto"><svg viewBox="0 0 180.79 167.47"><path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/></svg></span>
+      </span>
+    </div>
   </div>
 </aside>
 

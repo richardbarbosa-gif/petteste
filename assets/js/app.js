@@ -11,6 +11,47 @@ const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 /* ---------------------------------------------------------------------------
+   0. Modo leve — PC antigo
+   Desfoque de fundo, mistura de camadas e letreiro contínuo custam caro numa
+   GPU velha: a página trava ao rolar. Aqui a gente decide por hardware quando
+   dá para saber, e por medição de quadros quando não dá. O CSS cuida do resto
+   através do atributo data-lite no elemento raiz.
+--------------------------------------------------------------------------- */
+{
+  const raiz = document.documentElement;
+  const lembra = v => { try { sessionStorage.setItem('d360-leve', v); } catch { /* modo privado */ } };
+  const lembrado = (() => { try { return sessionStorage.getItem('d360-leve'); } catch { return null; } })();
+  const ligaLeve = () => raiz.setAttribute('data-lite', '');
+
+  // navigator.deviceMemory só existe no Chromium; o || cobre quem não informa
+  const nucleos = navigator.hardwareConcurrency || 8;
+  const memoria = navigator.deviceMemory || 8;
+
+  if (lembrado === '1' || nucleos <= 2 || memoria <= 2) {
+    ligaLeve();
+    lembra('1');
+  } else if (lembrado === null && !reduceMotion) {
+    // Mede 1s de quadros depois que a página assentou. Aba em segundo plano
+    // tem rAF estrangulado pelo navegador, o que daria falso positivo.
+    addEventListener('load', () => setTimeout(() => {
+      if (document.hidden) return;
+      let quadros = 0;
+      const t0 = performance.now();
+      const conta = () => {
+        quadros += 1;
+        if (performance.now() - t0 < 1000) { requestAnimationFrame(conta); return; }
+        if (document.hidden) return;                 // trocou de aba no meio
+        // 30fps e não 60: o limite é "trava ao rolar", não "não está perfeito".
+        // Errar para o lado severo custaria efeito em máquina que dava conta.
+        const fps = (quadros * 1000) / (performance.now() - t0);
+        if (fps < 30) { ligaLeve(); lembra('1'); } else { lembra('0'); }
+      };
+      requestAnimationFrame(conta);
+    }, 900), { once: true });
+  }
+}
+
+/* ---------------------------------------------------------------------------
    1. Reveal no scroll — um único observer para a página inteira
 --------------------------------------------------------------------------- */
 const revealables = $$('[data-reveal]');
@@ -72,6 +113,12 @@ const checkScore = $('[data-check-score]');
 if (checkWrap && checkScore) {
   const boxes = $$('input[type="checkbox"]', checkWrap);
   const update = () => {
+    // Espelha :has(input:checked) num atributo, para o item continuar acendendo
+    // em navegador anterior ao Chrome 105 / Safari 15.4, que ignora :has().
+    for (const b of boxes) {
+      const item = b.closest('.check__item');
+      if (item) item.toggleAttribute('data-on', b.checked);
+    }
     const n = boxes.filter(b => b.checked).length;
     checkScore.textContent = n === 0
       ? ''
@@ -215,6 +262,12 @@ if (lb && typeof lb.showModal === 'function') {
   lb.addEventListener('click', ev => { if (ev.target === lb) lb.close(); });
   // libera a memória da imagem grande ao fechar
   lb.addEventListener('close', () => { lbImg.removeAttribute('src'); });
+} else {
+  // Sem <dialog> (Safari anterior ao 15.4, navegadores antigos): o print abre
+  // em outra aba. Perde o requinte, mas o visitante continua conseguindo ler.
+  for (const botao of $$('[data-lightbox]')) {
+    botao.addEventListener('click', () => open(botao.dataset.lightbox, '_blank', 'noopener'));
+  }
 }
 
 /* ---------------------------------------------------------------------------
