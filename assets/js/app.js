@@ -197,7 +197,28 @@ if (track) {
 }
 
 /* ---------------------------------------------------------------------------
-   7. Ano do rodapé
+   7. Lightbox dos prints — <dialog> nativo: foco, Esc e backdrop de graça
+--------------------------------------------------------------------------- */
+const lb = $('[data-lb]');
+if (lb && typeof lb.showModal === 'function') {
+  const lbImg = $('[data-lb-img]', lb);
+  for (const botao of $$('[data-lightbox]')) {
+    botao.addEventListener('click', () => {
+      const img = $('img', botao);
+      lbImg.src = botao.dataset.lightbox;
+      lbImg.alt = img ? img.alt : '';
+      lb.showModal();
+    });
+  }
+  $('[data-lb-close]', lb)?.addEventListener('click', () => lb.close());
+  // clique fora da imagem fecha
+  lb.addEventListener('click', ev => { if (ev.target === lb) lb.close(); });
+  // libera a memória da imagem grande ao fechar
+  lb.addEventListener('close', () => { lbImg.removeAttribute('src'); });
+}
+
+/* ---------------------------------------------------------------------------
+   8. Ano do rodapé
 --------------------------------------------------------------------------- */
 const year = $('[data-year]');
 if (year) year.textContent = new Date().getFullYear();

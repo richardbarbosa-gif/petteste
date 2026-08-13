@@ -188,7 +188,10 @@
   
   
   /* Renderização adiada das dobras longas: ganho direto de LCP/INP */
-  .defer{content-visibility:auto;contain-intrinsic-size:auto 900px}
+  /* content-visibility foi removido de propósito: reservava 900px por seção e,
+     quando a real era menor, sobrava um buraco visível entre as dobras.
+     A página tem 11k px — a economia não pagava o defeito. */
+  .defer{contain:layout paint}
   /* Imagem de fundo da dobra: entra por trás do conteúdo, esmaecida nas bordas
      para o texto nunca disputar leitura com a foto. */
   .fold__bg{position:absolute;inset:0;z-index:-1;width:100%;height:100%;
@@ -269,6 +272,13 @@
   
   
   
+  .card{position:relative;
+    background:var(--metal),linear-gradient(168deg,#232323 0%,var(--ink-700) 45%,#101010 100%);
+    border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:clamp(1.5rem,3vw,2.25rem);
+    box-shadow:var(--shadow-1),inset 0 1px 0 rgb(255 255 255/.07);
+    transition:transform .5s var(--ease-out),border-color .35s var(--ease),box-shadow .35s var(--ease);
+    container-type:inline-size}
   .card:hover{border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
     box-shadow:var(--shadow-2),inset 0 1px 0 rgb(255 255 255/.1),
                0 0 40px -14px var(--red-glow)}
@@ -794,6 +804,126 @@
 /* ---------- Autoridade ---------- */
 .about-fold{background:var(--ink-900)}
 }
+
+@layer sections{
+
+/* ---------- Carrossel: 3 visíveis, todos do mesmo tamanho ---------- */
+.carrossel__track{align-items:start}
+.card--shot{position:relative;flex:0 0 calc((100% - 2*clamp(.8rem,2vw,1.2rem))/3);
+  scroll-snap-align:start;margin:0;padding:0;border:1px solid var(--line);cursor:zoom-in;
+  border-radius:14px;overflow:hidden;background:linear-gradient(168deg,#1e1e1e,#0d0d0d);
+  box-shadow:0 18px 40px -24px #000,inset 0 1px 0 rgb(255 255 255/.07);
+  transition:transform .35s var(--ease-out),border-color .35s,box-shadow .35s}
+.card--shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;
+  object-fit:cover;object-position:top center}
+.card--shot__lupa{position:absolute;right:.6rem;bottom:.6rem;width:34px;height:34px;
+  display:grid;place-items:center;border-radius:999px;color:var(--cream);
+  background:rgb(0 0 0/.55);backdrop-filter:blur(6px);border:1px solid rgb(255 255 255/.16);
+  opacity:0;translate:0 6px;transition:opacity .25s var(--ease),translate .25s var(--ease)}
+.card--shot__lupa svg{width:17px;height:17px}
+.card--shot:hover{transform:translateY(-5px);
+  border-color:color-mix(in srgb,var(--red-neon) 45%,transparent);
+  box-shadow:0 26px 50px -24px #000,0 0 44px -20px var(--red-glow)}
+.card--shot:hover .card--shot__lupa,.card--shot:focus-visible .card--shot__lupa{opacity:1;translate:0 0}
+@media (max-width:760px){
+  .card--shot{flex:0 0 calc((100% - clamp(.8rem,2vw,1.2rem))/2)}
+}
+@media (max-width:480px){.card--shot{flex:0 0 78%}}
+
+/* ---------- Lightbox nativo ---------- */
+.lb{border:0;padding:0;background:transparent;max-width:min(94vw,760px);max-height:92vh;
+  overflow:visible}
+.lb::backdrop{background:rgb(5 5 5/.86);backdrop-filter:blur(6px)}
+.lb img{display:block;width:100%;height:auto;max-height:88vh;object-fit:contain;
+  border-radius:14px;border:1px solid var(--line-strong);
+  box-shadow:0 40px 90px -30px #000,0 0 70px -30px var(--red-glow)}
+.lb__x{position:absolute;top:-14px;right:-14px;width:42px;height:42px;border-radius:999px;
+  display:grid;place-items:center;cursor:pointer;color:var(--cream);border:1px solid var(--line-strong);
+  background:linear-gradient(168deg,#2a2a2a,#111);box-shadow:0 10px 24px rgb(0 0 0/.6)}
+.lb__x svg{width:19px;height:19px}
+.lb__x:hover{border-color:color-mix(in srgb,var(--red-neon) 60%,transparent)}
+
+/* ---------- A conta do vazamento ---------- */
+.conta{max-width:960px;margin-inline:auto;border-radius:var(--r-xl);
+  padding:clamp(1.4rem,3.4vw,2.4rem);
+  background:var(--metal),linear-gradient(168deg,#242424,var(--ink-800) 55%,#0d0d0d);
+  border:1px solid color-mix(in srgb,var(--red-neon) 30%,transparent);
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.07),0 0 70px -30px var(--red-glow)}
+.conta__linha{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;
+  gap:clamp(.5rem,1.6vw,1rem)}
+.conta__cel{flex:1 1 130px;min-width:120px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;gap:.3rem;padding:1rem .8rem;border-radius:14px;
+  background:rgb(255 255 255/.04);border:1px solid var(--line)}
+.conta__cel b{font-family:'Anton',sans-serif;font-size:clamp(1.5rem,1rem + 2vw,2.4rem);
+  line-height:1;color:var(--cream)}
+.conta__cel i{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--fg-mute);line-height:1.35}
+.conta__cel--total{flex:1 1 210px;
+  background:linear-gradient(168deg,color-mix(in srgb,var(--red) 26%,transparent),rgb(255 255 255/.02));
+  border-color:color-mix(in srgb,var(--red-neon) 55%,transparent)}
+.conta__cel--total b{color:#ff8a8a;font-size:clamp(1.8rem,1.1rem + 2.6vw,3rem)}
+.conta__cel--total i{color:color-mix(in srgb,var(--cream) 70%,transparent)}
+.conta__op{display:grid;place-items:center;font-family:'Anton',sans-serif;
+  font-size:clamp(1rem,2.2vw,1.5rem);color:var(--fg-mute);flex:0 0 auto;padding-inline:.1rem}
+.conta__op--eq{color:var(--orange)}
+.conta__nota{margin-top:var(--sp-3);text-align:center;font-size:var(--f-md);color:var(--fg-soft)}
+.conta__nota strong{color:var(--cream);display:block;margin-top:.4rem;
+  font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.05rem,.9rem + 1vw,1.6rem)}
+
+/* ---------- Escala de valor ---------- */
+.stack{max-width:760px;margin:var(--sp-6) auto 0;border-radius:var(--r-xl);overflow:hidden;
+  background:var(--metal),linear-gradient(168deg,#232323,var(--ink-800) 60%,#101010);
+  border:1px solid var(--line);box-shadow:inset 0 1px 0 rgb(255 255 255/.07)}
+.stack__cab{padding:clamp(.9rem,2.2vw,1.15rem) clamp(1.1rem,3vw,1.8rem);
+  font-size:var(--f-xs);font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cream);background:linear-gradient(90deg,var(--red-deep),var(--red-black));
+  border-bottom:1px solid color-mix(in srgb,var(--red-neon) 35%,transparent)}
+.stack__lista{display:grid;padding:clamp(.6rem,2vw,1rem) clamp(1.1rem,3vw,1.8rem)
+  clamp(1.1rem,2.6vw,1.5rem)}
+.stack__lista li{display:flex;gap:.9rem;align-items:flex-start;padding:.75rem 0;
+  font-size:var(--f-sm);line-height:1.5;color:var(--fg-soft);
+  border-bottom:1px solid color-mix(in srgb,var(--cream) 8%,transparent)}
+.stack__lista li:last-child{border-bottom:0}
+.stack__lista b{color:var(--cream)}
+.stack__ck{flex:none;width:22px;height:22px;border-radius:999px;display:grid;place-items:center;
+  margin-top:.1rem;color:#0a5f2b;background:linear-gradient(180deg,#4ade80,#16a34a);
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.5)}
+.stack__ck svg{width:13px;height:13px}
+.stack__bonus{background:linear-gradient(90deg,color-mix(in srgb,var(--orange) 10%,transparent),transparent);
+  margin-inline:calc(-1*clamp(1.1rem,3vw,1.8rem));padding-inline:clamp(1.1rem,3vw,1.8rem)}
+.stack__bonus .stack__ck{color:#7a3300;background:linear-gradient(180deg,#ffc46b,var(--orange))}
+
+/* ---------- Tarja de posicionamento ---------- */
+.band{position:relative;overflow:hidden;padding-block:clamp(1.9rem,4.5vw,3rem);
+  background:
+    radial-gradient(120% 180% at 50% 50%,color-mix(in srgb,var(--red-neon) 26%,transparent),transparent 62%),
+    linear-gradient(100deg,#180404 0%,var(--red-deep) 42%,#8f1a1a 50%,var(--red-deep) 58%,#180404 100%);
+  border-block:1px solid color-mix(in srgb,var(--red-neon) 45%,transparent);
+  box-shadow:0 0 70px -22px var(--red-glow),inset 0 1px 0 rgb(255 255 255/.1)}
+.band::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:var(--grain);opacity:.08;mix-blend-mode:overlay}
+.band::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 38%,rgb(255 255 255/.16) 47%,transparent 56%);
+  translate:-60% 0;animation:varre 7s var(--ease-out) infinite}
+@keyframes varre{0%{translate:-60% 0}55%,100%{translate:60% 0}}
+.band__txt{position:relative;text-align:center;font-family:'Anton',sans-serif;
+  text-transform:uppercase;font-size:clamp(1.05rem,.8rem + 1.45vw,2rem);line-height:1.16;
+  color:var(--cream);text-wrap:balance;
+  text-shadow:0 2px 0 rgb(0 0 0/.35),0 0 30px rgb(0 0 0/.4)}
+.band__txt em{color:#ffd4d4;font-style:normal;
+  text-shadow:0 0 20px color-mix(in srgb,#fff 45%,transparent)}
+.band__marca{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;
+  opacity:.06}
+.band__marca svg{width:min(420px,60%);height:auto;color:var(--cream)}
+
+/* ---------- Selo ---------- */
+.seal{width:clamp(126px,17vw,168px);height:auto;margin-inline:auto;
+  filter:drop-shadow(0 16px 32px rgb(0 0 0/.6))
+         drop-shadow(0 0 30px color-mix(in srgb,var(--red-neon) 34%,transparent))}
+.guarantee{align-items:center}
+@media (prefers-reduced-motion:reduce){.band::after{animation:none;translate:-60% 0}}
+}
 </style>
 <style>
 /* ===================================================================
@@ -880,6 +1010,7 @@
 
 <!-- Faixa de posicionamento -->
 <aside class="band" aria-label="Posicionamento">
+  <span class="band__marca" aria-hidden="true"><svg viewBox="0 0 180.79 167.47"><path fill="currentColor" d="M117.89 28.55C129.05 28.55 139.42 35.08 143.56 45.44C144.03 46.61 144.36 47.7 144.5 48.65C150.55 87.43 106.28 80.84 80.44 80.62L28.55 28.55ZM180.79 167.47L180.79 142.73L143.68 142.73L110.08 105.99L124.75 105.27C144.58 104.29 162.37 91.81 169 73.09C169.83 70.75 170.49 68.35 171 65.92C178.09 31.76 150.83 0 115.94 0L0 0L0 35.21C0 36 127.38 164.33 130.59 167.47Z"/></svg></span>
   <p class="wrap band__txt" data-reveal>Sua loja não precisa de mais pedidos antes de descobrir <em>onde está perdendo dinheiro.</em></p>
 </aside>
 
@@ -1063,12 +1194,32 @@
           <button type="button" class="cbtn" data-car-next aria-label="Próximo print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
         </div>
       </div>
-      <div class="carrossel__track" data-car-track tabindex="0" role="group" aria-label="Carrossel de prints reais">
-        <figure class="card--shot"><img src="fotos/dep1.jpg" alt="Print de operação real no iFood — imagem 1 de 5" loading="lazy" decoding="async" width="900" height="1400"></figure>
-        <figure class="card--shot"><img src="fotos/dep2.jpg" alt="Print de operação real no iFood — imagem 2 de 5" loading="lazy" decoding="async" width="900" height="1400"></figure>
-        <figure class="card--shot"><img src="fotos/dep3.jpg" alt="Print de operação real no iFood — imagem 3 de 5" loading="lazy" decoding="async" width="900" height="1400"></figure>
-        <figure class="card--shot"><img src="fotos/dep4.jpg" alt="Print de operação real no iFood — imagem 4 de 5" loading="lazy" decoding="async" width="900" height="1400"></figure>
-        <figure class="card--shot"><img src="fotos/dep5.jpg" alt="Print de operação real no iFood — imagem 5 de 5" loading="lazy" decoding="async" width="900" height="1400"></figure>
+      <div class="carrossel__track" data-car-track tabindex="0" role="group" aria-label="Prints de operação real">
+        <button type="button" class="card--shot" data-lightbox="fotos/dep1.jpg"
+                aria-label="Ampliar print de operação real 1 de 5">
+          <img src="fotos/dep1.jpg" alt="Print de operação real no iFood — imagem 1 de 5" loading="lazy" decoding="async" width="900" height="1400">
+          <span class="card--shot__lupa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M11 8v6M8 11h6"/></svg></span>
+        </button>
+        <button type="button" class="card--shot" data-lightbox="fotos/dep2.jpg"
+                aria-label="Ampliar print de operação real 2 de 5">
+          <img src="fotos/dep2.jpg" alt="Print de operação real no iFood — imagem 2 de 5" loading="lazy" decoding="async" width="900" height="1400">
+          <span class="card--shot__lupa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M11 8v6M8 11h6"/></svg></span>
+        </button>
+        <button type="button" class="card--shot" data-lightbox="fotos/dep3.jpg"
+                aria-label="Ampliar print de operação real 3 de 5">
+          <img src="fotos/dep3.jpg" alt="Print de operação real no iFood — imagem 3 de 5" loading="lazy" decoding="async" width="900" height="1400">
+          <span class="card--shot__lupa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M11 8v6M8 11h6"/></svg></span>
+        </button>
+        <button type="button" class="card--shot" data-lightbox="fotos/dep4.jpg"
+                aria-label="Ampliar print de operação real 4 de 5">
+          <img src="fotos/dep4.jpg" alt="Print de operação real no iFood — imagem 4 de 5" loading="lazy" decoding="async" width="900" height="1400">
+          <span class="card--shot__lupa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M11 8v6M8 11h6"/></svg></span>
+        </button>
+        <button type="button" class="card--shot" data-lightbox="fotos/dep5.jpg"
+                aria-label="Ampliar print de operação real 5 de 5">
+          <img src="fotos/dep5.jpg" alt="Print de operação real no iFood — imagem 5 de 5" loading="lazy" decoding="async" width="900" height="1400">
+          <span class="card--shot__lupa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M11 8v6M8 11h6"/></svg></span>
+        </button>
       </div>
     </div>
   </div>
@@ -1144,22 +1295,50 @@
 <!-- ============================================================= -->
 <section class="fold offer defer" id="oferta" aria-labelledby="d10">
   <div class="wrap">
-    <div class="anchor" data-reveal>
-      <p class="eyebrow eyebrow--center">A conta que importa</p>
-      <h2 class="h2" id="d10">Faça as <span class="red">contas</span></h2>
-      <p class="lead mt-3">Um único pedido precificado errado pode tirar R$ 5, R$ 10 ou R$ 15 da sua margem.</p>
-      <p>Com apenas dez pedidos por dia, esse erro pode consumir centenas de reais por mês.</p>
-      <p class="anchor__hit">O acesso completo ao Delivery 360° custa <strong>R$ 97</strong>.</p>
+
+    <!-- Ancoragem no custo real, não em preço inventado -->
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow eyebrow--center">A conta que você já paga</p>
+      <h2 class="h2" id="d10">Faça a conta<br>do seu <span class="red">vazamento</span></h2>
+      <p class="lead">Um único pedido precificado errado tira R$ 5, R$ 10 ou R$ 15 da sua margem. Repete isso todo dia:</p>
+    </div>
+
+    <div class="conta" data-reveal>
+      <div class="conta__linha">
+        <span class="conta__cel"><b>R$ 5</b><i>a menos por pedido</i></span>
+        <span class="conta__op" aria-hidden="true">×</span>
+        <span class="conta__cel"><b>10</b><i>pedidos por dia</i></span>
+        <span class="conta__op" aria-hidden="true">×</span>
+        <span class="conta__cel"><b>30</b><i>dias</i></span>
+        <span class="conta__op conta__op--eq" aria-hidden="true">=</span>
+        <span class="conta__cel conta__cel--total"><b>R$ 1.500</b><i>por mês, no cenário mais conservador</i></span>
+      </div>
+      <p class="conta__nota">É o que sai da sua conta todo mês sem você ver. <strong>O Delivery 360° custa R$ 97. Uma única vez.</strong></p>
+    </div>
+
+    <!-- Escala de valor: cada linha é algo concreto que ele leva -->
+    <div class="stack" data-reveal>
+      <p class="stack__cab">Tudo o que entra no seu acesso</p>
+      <ul class="stack__lista">
+        <li><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Método Delivery 360° completo</b> — 5 módulos e 10 aulas gravadas dentro de uma operação real do Grupo 360 Food</span></li>
+        <li><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Módulo inteiro de configuração e logística</b> — 5 aulas só sobre pagamento, entrega, horário, nome e ciclo financeiro</span></li>
+        <li><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Aula de precificação e cardápio</b> — CMV, embalagem, taxas, complementos e margem, com a conta na tela</span></li>
+        <li><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Aulas de portal, Nível Super, promoções e cupons</b> — onde o dinheiro vaza e como travar o vazamento</span></li>
+        <li class="stack__bonus"><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Bônus #1 — Ebook Gestão de Equipe Descomplicada</b></span></li>
+        <li class="stack__bonus"><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Bônus #2 — Kit com 13 documentos</b> trabalhistas e operacionais prontos para usar</span></li>
+        <li><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Acesso vitalício</b>, com todas as atualizações futuras incluídas</span></li>
+        <li><span class="stack__ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Garantia incondicional de 7 dias</b> — o risco é meu, não seu</span></li>
+      </ul>
     </div>
 
     <div class="price" data-reveal>
-      <p class="price__label">Investimento de hoje</p>
+      <p class="price__label">Seu investimento hoje</p>
       <p class="price__big"><sup>R$</sup>97<span class="price__cents">,00</span></p>
       <p class="price__cash">à vista</p>
       <p class="price__inst">(ou <b>12x de R$ 9,68</b> no cartão de crédito)</p>
 
       <a class="btn btn--xl" href="#checkout" data-cta="oferta">
-        <span>Quero configurar minha loja e começar a lucrar com o Delivery 360°</span><svg class="btn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        <span>Quero parar de perder dinheiro e configurar minha loja agora</span><svg class="btn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
       </a>
 
       <p class="price__safe">
@@ -1170,41 +1349,53 @@
     </div>
 
     <div class="guarantee" data-reveal>
-      <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Selo de garantia incondicional de 7 dias">
-        <defs>
-          <linearGradient id="sealRing" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#ff5252"/><stop offset=".5" stop-color="#c62828"/>
-            <stop offset="1" stop-color="#6d1212"/>
-          </linearGradient>
-          <linearGradient id="sealFace" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#2a2a2a"/><stop offset="1" stop-color="#111"/>
-          </linearGradient>
-          <path id="arcTop" d="M100 100 m-74 0 a74 74 0 1 1 148 0" fill="none"/>
-          <path id="arcBot" d="M32 100 A68 68 0 0 0 168 100" fill="none"/>
-        </defs>
-        <circle cx="100" cy="100" r="92" fill="url(#sealRing)"/>
-        <circle cx="100" cy="100" r="92" fill="none" stroke="#ff8a8a" stroke-opacity=".45" stroke-width="1.5"/>
-        <circle cx="100" cy="100" r="79" fill="url(#sealFace)"/>
-        <circle cx="100" cy="100" r="70" fill="none" stroke="#f6f3ec" stroke-opacity=".22"
-                stroke-width="1.5" stroke-dasharray="1.5 7" stroke-linecap="round"/>
-        <text font-family="Archivo,sans-serif" font-size="11.5" font-weight="800"
-              letter-spacing="1.9" fill="#f6f3ec" fill-opacity=".92">
-          <textPath href="#arcTop" startOffset="50%" text-anchor="middle">GARANTIA INCONDICIONAL</textPath>
-        </text>
-        <text font-family="Archivo,sans-serif" font-size="9.5" font-weight="800"
-              letter-spacing="3" fill="#f6f3ec" fill-opacity=".5">
-          <textPath href="#arcBot" startOffset="50%" text-anchor="middle">DELIVERY 360°</textPath>
-        </text>
-        <text x="100" y="108" text-anchor="middle" font-family="Anton,sans-serif"
-              font-size="62" fill="#f6f3ec">7</text>
-        <text x="100" y="130" text-anchor="middle" font-family="Archivo,sans-serif"
-              font-size="14" font-weight="800" letter-spacing="6" fill="#e86a1c">DIAS</text>
-      </svg>
+      <svg class="seal" viewBox="0 0 240 240" role="img" aria-label="Selo de garantia incondicional de 7 dias">
+          <defs>
+            <linearGradient id="sAro" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffd9d9"/><stop offset=".22" stop-color="#e05353"/>
+              <stop offset=".5" stop-color="#8e1b1b"/><stop offset=".78" stop-color="#e05353"/>
+              <stop offset="1" stop-color="#6d1212"/>
+            </linearGradient>
+            <linearGradient id="sFace" x1=".2" y1="0" x2=".8" y2="1">
+              <stop offset="0" stop-color="#2e2e2e"/><stop offset=".55" stop-color="#161616"/>
+              <stop offset="1" stop-color="#0a0a0a"/>
+            </linearGradient>
+            <linearGradient id="sNum" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f6f3ec"/>
+              <stop offset="1" stop-color="#a49c8e"/>
+            </linearGradient>
+            <path id="sTop" d="M120 120 m-88 0 a88 88 0 1 1 176 0" fill="none"/>
+            <path id="sBot" d="M38 120 A82 82 0 0 0 202 120" fill="none"/>
+          </defs>
+          <circle cx="120" cy="120" r="112" fill="url(#sAro)"/>
+          <circle cx="120" cy="120" r="112" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
+          <circle cx="120" cy="120" r="99" fill="none" stroke="#3a0d0d" stroke-opacity=".55" stroke-width="1.5"/>
+          <circle cx="120" cy="120" r="96" fill="url(#sFace)"/>
+          <circle cx="120" cy="120" r="88" fill="none" stroke="#e86a1c" stroke-opacity=".5" stroke-width="1"/>
+          <circle cx="120" cy="120" r="83" fill="none" stroke="#f6f3ec" stroke-opacity=".16"
+                  stroke-width="2" stroke-dasharray="0.5 6" stroke-linecap="round"/>
+          <text font-family="Archivo,sans-serif" font-size="13" font-weight="800"
+                letter-spacing="4.6" fill="#f6f3ec" fill-opacity=".95">
+            <textPath href="#sTop" startOffset="50%" text-anchor="middle">GARANTIA INCONDICIONAL</textPath>
+          </text>
+          <text font-family="Archivo,sans-serif" font-size="10.5" font-weight="800"
+                letter-spacing="5.5" fill="#e86a1c" fill-opacity=".85">
+            <textPath href="#sBot" startOffset="50%" text-anchor="middle">DELIVERY 360</textPath>
+          </text>
+          <text x="120" y="132" text-anchor="middle" font-family="Anton,sans-serif"
+                font-size="86" fill="url(#sNum)">7</text>
+          <text x="120" y="158" text-anchor="middle" font-family="Archivo,sans-serif"
+                font-size="14" font-weight="800" letter-spacing="7.5" fill="#e86a1c">DIAS</text>
+          <g stroke="#f6f3ec" stroke-opacity=".2" stroke-width="1.5" stroke-linecap="round">
+            <path d="M120 47 v9"/><path d="M120 184 v9"/><path d="M47 120 h9"/><path d="M184 120 h9"/>
+          </g>
+        </svg>
       <div>
-        <h3 class="h3">Garantia Incondicional de 7 Dias</h3>
-        <p class="lead mt-3">Teste o método com o seu dinheiro 100% protegido.</p>
+        <h3 class="h3">Aplique. Se não fizer sentido, eu devolvo.</h3>
+        <p class="lead mt-3">Você tem 7 dias para abrir o painel, aplicar e conferir. Se achar que não serve para a sua realidade, devolvo 100% do valor — sem pergunta e sem formulário.</p>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1262,6 +1453,13 @@
   </div>
 </section>
 
+
+<dialog class="lb" data-lb aria-label="Print em tamanho real">
+  <button type="button" class="lb__x" data-lb-close aria-label="Fechar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <img data-lb-img alt="">
+</dialog>
 </main>
 
 <footer class="footer">
@@ -1661,7 +1859,28 @@ if (track) {
 }
 
 /* ---------------------------------------------------------------------------
-   7. Ano do rodapé
+   7. Lightbox dos prints — <dialog> nativo: foco, Esc e backdrop de graça
+--------------------------------------------------------------------------- */
+const lb = $('[data-lb]');
+if (lb && typeof lb.showModal === 'function') {
+  const lbImg = $('[data-lb-img]', lb);
+  for (const botao of $$('[data-lightbox]')) {
+    botao.addEventListener('click', () => {
+      const img = $('img', botao);
+      lbImg.src = botao.dataset.lightbox;
+      lbImg.alt = img ? img.alt : '';
+      lb.showModal();
+    });
+  }
+  $('[data-lb-close]', lb)?.addEventListener('click', () => lb.close());
+  // clique fora da imagem fecha
+  lb.addEventListener('click', ev => { if (ev.target === lb) lb.close(); });
+  // libera a memória da imagem grande ao fechar
+  lb.addEventListener('close', () => { lbImg.removeAttribute('src'); });
+}
+
+/* ---------------------------------------------------------------------------
+   8. Ano do rodapé
 --------------------------------------------------------------------------- */
 const year = $('[data-year]');
 if (year) year.textContent = new Date().getFullYear();
