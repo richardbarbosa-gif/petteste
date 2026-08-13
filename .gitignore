@@ -1,3 +1,5 @@
 # Fotos do cliente: ficam ao lado do HTML, não versionadas aqui.
 # Os arquivos em fotos/ neste ambiente são apenas stand-ins de teste.
 fotos/
+# Prévia é derivada e pesa 1MB por causa das imagens em base64
+preview.html

@@ -37,6 +37,19 @@ WhatsApp/e-mail e testar no PC.
 de novo, senão suas mudanças somem na próxima geração. O que vai para o ar é o
 `index.html` + `/assets`.
 
+## Prévia rápida (link para o cliente)
+
+```bash
+python3 build-preview.py     # gera preview.html
+```
+
+Diferente do standalone, aqui **todas** as imagens entram em base64 — inclusive as
+de `fotos/` — e o arquivo sai sem `<!doctype>`, `<html>`, `<head>` e `<body>`,
+porque o hospedeiro envolve o conteúdo no próprio esqueleto.
+
+Use para mandar link de revisão. O que vai para o ar continua sendo o
+`index.html` + `/assets` + `fotos/`.
+
 ## Como publicar
 
 | Host | O que fazer |
@@ -54,6 +67,7 @@ index.html                  ← página inteira (HTML + CSS crítico inline + JS
 assets/js/app.js            ← ~5KB: reveals, contadores, checklist, carrossel, tilt 3D
 fotos/                      ← imagens do cliente (ver tabela abaixo)
 build-standalone.py         ← gera a versão em arquivo único
+build-preview.py            ← gera a versão para link de prévia
 sync-fotos.py               ← lê as dimensões reais das fotos e evita CLS
 assets/fonts/               ← Anton + Archivo Variable (woff2, subset latin, auto-hospedadas)
 assets/img/                 ← logos em vetor, favicons e imagem de compartilhamento
