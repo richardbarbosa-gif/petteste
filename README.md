@@ -126,7 +126,7 @@ A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado 
 | Arquivo | Onde aparece |
 |---|---|
 | `produto.png` | Capa no hero |
-| `caneta.jpg` | Fundo esmaecido (não usado na v2 — disponível) |
+| `caneta.jpg` | Fundo esmaecido da dobra "Os 4 Vazamentos" |
 | `aula.png` | Bloco de demonstração |
 | `rodrigo.jpg` | Bloco de autoridade |
 | `rodrigoevento.jpg` | Fundo esmaecido do método |
