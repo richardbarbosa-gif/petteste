@@ -1,0 +1,52 @@
+# ============================================================
+# saidafiscal.mrgomesadvogados.com.br — Apache/.htaccess
+# ============================================================
+
+Options -Indexes
+ServerSignature Off
+AddDefaultCharset UTF-8
+
+# --- Tipos de mídia ---
+AddType video/mp4 .mp4
+AddType image/webp .webp
+
+# --- HTTPS obrigatório + /index.html -> / ---
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+</IfModule>
+
+# --- Cabeçalhos de segurança ---
+<IfModule mod_headers.c>
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set X-Frame-Options "DENY"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# --- Compressão ---
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Cache do navegador ---
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType image/jpeg "access plus 6 months"
+ExpiresByType image/png  "access plus 6 months"
+ExpiresByType image/webp "access plus 6 months"
+ExpiresByType image/svg+xml "access plus 6 months"
+ExpiresByType video/mp4  "access plus 6 months"
+ExpiresByType text/css   "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# --- Erro 404 volta pra home (página única) ---
+ErrorDocument 404 /
