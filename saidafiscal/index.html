@@ -8,7 +8,8 @@
 <!-- ============================================================================
      SAÍDA FISCAL — MR GOMES ADVOGADOS | Versão Ultra Moderna
      Arquitetura: Bento Grid + Glassmorphism + Spotlights de Luz.
-     Tipografia: Fraunces (serifada de display) + Hanken Grotesk (corpo).
+     Tipografia: Newsreader (serifada editorial) + Inter (corpo).
+                 Hanken Grotesk fica reservada ao mockup de conversa.
      Paleta: Mantida 100% fiel às variáveis originais.
      ============================================================================ -->
 
@@ -26,23 +27,30 @@
 <meta property="og:description" content="Regularize sua saída fiscal com planejamento tributário e análise completa da sua situação perante a Receita Federal. Atendimento online no mundo todo.">
 <meta property="og:url" content="https://saidafiscal.mrgomesadvogados.com.br/">
 <meta property="og:image" content="https://saidafiscal.mrgomesadvogados.com.br/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Saída fiscal para brasileiros no exterior — MR Gomes Advogados">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Saída Fiscal para Brasileiros no Exterior | MR Gomes Advogados">
 <meta name="twitter:description" content="Planejamento tributário da saída fiscal, análise perante a Receita Federal e conformidade pós-saída. Atendimento 100% online.">
 <meta name="twitter:image" content="https://saidafiscal.mrgomesadvogados.com.br/og-image.jpg">
+<meta name="twitter:image:alt" content="Saída fiscal para brasileiros no exterior — MR Gomes Advogados">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314343b'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Georgia,serif' font-size='15' font-weight='700' letter-spacing='-1' fill='%23d4af60'%3EMR%3C/text%3E%3C/svg%3E">
 
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.unsplash.com https://www.facebook.com https://www.google.com https://www.google.com.br https://googleads.g.doubleclick.net data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.google.com https://www.facebook.com; frame-src https://td.doubleclick.net https://www.googletagmanager.com; media-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests">
+<!-- frame-ancestors não é aplicável em meta (ignorado por especificação):
+     a proteção contra enquadramento vem do header no .htaccess. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.unsplash.com https://www.facebook.com https://connect.facebook.net https://www.google.com https://www.google.com.br https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://connect.facebook.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://ad.doubleclick.net https://www.googleadservices.com https://www.google.com https://www.google.com.br https://www.facebook.com https://connect.facebook.net; frame-src https://td.doubleclick.net https://www.googletagmanager.com https://www.google.com https://www.facebook.com https://connect.facebook.net; media-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Hanken+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<!-- Hanken Grotesk permanece carregada exclusivamente para o mockup de conversa,
+     que por decisão de projeto não muda de tipografia. -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&family=Inter:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -54,8 +62,19 @@
       "name": "MR Gomes Advogados",
       "url": "https://saidafiscal.mrgomesadvogados.com.br/",
       "taxID": "42.943.861/0001-53",
-      "telephone": "+552199781-9900",
+      "telephone": "+5521997819900",
       "description": "Assessoria tributária para brasileiros que vivem no exterior: planejamento e realização da saída fiscal, regularização de pendências perante a Receita Federal e conformidade fiscal do não residente.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "RJ",
+        "addressCountry": "BR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+5521997819900",
+        "availableLanguage": ["pt-BR"]
+      },
       "areaServed": "Worldwide",
       "availableLanguage": "pt-BR",
       "knowsAbout": ["Saída fiscal", "Declaração de Saída Definitiva", "Direito Tributário", "Não residente fiscal", "Receita Federal"],
@@ -68,15 +87,35 @@
       "sameAs": ["https://www.instagram.com/saidafiscaldobr"]
     },
     {
+      "@type": "WebSite",
+      "@id": "https://saidafiscal.mrgomesadvogados.com.br/#site",
+      "url": "https://saidafiscal.mrgomesadvogados.com.br/",
+      "name": "MR Gomes Advogados — Saída Fiscal",
+      "inLanguage": "pt-BR",
+      "publisher": { "@id": "https://saidafiscal.mrgomesadvogados.com.br/#escritorio" }
+    },
+    {
       "@type": "Service",
+      "@id": "https://saidafiscal.mrgomesadvogados.com.br/#servico",
       "name": "Saída fiscal com planejamento tributário",
       "serviceType": "Planejamento e regularização da saída fiscal",
       "provider": { "@id": "https://saidafiscal.mrgomesadvogados.com.br/#escritorio" },
       "areaServed": "Worldwide",
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://saidafiscal.mrgomesadvogados.com.br/",
+        "availableLanguage": ["pt-BR"]
+      },
       "audience": { "@type": "Audience", "audienceType": "Brasileiros residentes no exterior" }
     },
     {
       "@type": "FAQPage",
+      "@id": "https://saidafiscal.mrgomesadvogados.com.br/#pagina",
+      "url": "https://saidafiscal.mrgomesadvogados.com.br/",
+      "name": "Saída Fiscal para Brasileiros no Exterior | MR Gomes Advogados",
+      "inLanguage": "pt-BR",
+      "isPartOf": { "@id": "https://saidafiscal.mrgomesadvogados.com.br/#site" },
+      "about": { "@id": "https://saidafiscal.mrgomesadvogados.com.br/#servico" },
       "mainEntity": [
         { "@type": "Question", "name": "Moro no exterior há muitos anos. Ainda preciso regularizar minha saída fiscal?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. Sem a regularização, você poderá continuar sendo tratado como residente fiscal no Brasil e ter rendimentos do exterior submetidos à tributação brasileira." } },
         { "@type": "Question", "name": "Continuei entregando a Declaração de Imposto de Renda como residente. Isso impede a saída fiscal?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Contudo, as declarações anteriores precisam ser analisadas para identificar eventuais inconsistências e planejar tributariamente a regularização da saída fiscal." } },
@@ -116,8 +155,10 @@
   --line-cream:rgba(22,51,58,.12);
   --line-deep:rgba(212,175,96,.22);
 
-  --serif:'Fraunces',Georgia,'Times New Roman',serif;
-  --sans:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --sans:'Inter','Helvetica Neue',Arial,sans-serif;
+  /* Exclusiva do mockup de conversa — não usar em mais nada. */
+  --sans-chat:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;
 
   --t-hero:clamp(2.5rem, 1.5rem + 4.5vw, 4.5rem);
   --t-h2:clamp(1.9rem, 1.2rem + 2.6vw, 3.2rem);
@@ -170,7 +211,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    =========================================================================== */
 h1,h2,.serif{
   font-family:var(--serif);
-  font-variation-settings:'SOFT' 0,'WONK' 0;
+  font-optical-sizing:auto;
   font-weight:500;
   letter-spacing:-.022em;
   line-height:1.08;
@@ -183,7 +224,7 @@ h3{font-family:var(--sans);font-size:var(--t-h3);font-weight:700;letter-spacing:
 .g{
   font-family:var(--serif);
   font-style:italic;
-  font-variation-settings:'SOFT' 0,'WONK' 1;
+  font-optical-sizing:auto;
   font-weight:400;
   color:var(--gold);
 }
@@ -392,8 +433,11 @@ body.is-locked{overflow:hidden}
   border:1px solid rgba(212,175,96,.3);
   box-shadow:0 30px 70px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.35);
   background:#0b141a;
-  font-family:var(--sans);
+  /* Tipografia congelada: o mockup de conversa mantém a fonte original
+     independentemente da tipografia do restante da página. */
+  font-family:var(--sans-chat);
 }
+.wchat *{font-family:var(--sans-chat)}
 @media (max-width:1139px){ .wchat{margin-top:clamp(2.4rem,1.8rem + 2vw,3.2rem);max-width:380px;margin-inline:0} }
 .wchat__top{
   display:flex;align-items:center;gap:.7rem;
@@ -514,7 +558,7 @@ body.is-locked{overflow:hidden}
 }
 .cred__card p{
   font-family:var(--serif);
-  font-variation-settings:'SOFT' 0,'WONK' 0;
+  font-optical-sizing:auto;
   font-weight:500;
   font-size:clamp(1.08rem,.95rem + .55vw,1.4rem);
   line-height:1.22;letter-spacing:-.016em;
@@ -818,32 +862,61 @@ body.is-locked{overflow:hidden}
 }
 </style>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18123110318"></script>
+<!-- ============================================================
+     CONSENTIMENTO (LGPD) — nada de rastreamento com cookie antes da escolha.
+     Google: carrega com todos os sinais negados (Consent Mode v2), operando
+     em modo cookieless até o aceite.
+     Meta: não possui modo equivalente e grava cookie assim que carrega,
+     por isso o pixel só é injetado depois do aceite.
+     ============================================================ -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  (function(){
+    var aceito = false;
+    try {
+      var v = localStorage.getItem('mrg_ck');
+      aceito = (v === 'ok');   // mantém compatibilidade com a chave já usada
+    } catch (err) {}
+    window.MRG_CONSENTIU = aceito;
+
+    gtag('consent', 'default', {
+      ad_storage:            aceito ? 'granted' : 'denied',
+      ad_user_data:          aceito ? 'granted' : 'denied',
+      ad_personalization:    aceito ? 'granted' : 'denied',
+      analytics_storage:     aceito ? 'granted' : 'denied',
+      functionality_storage: 'granted',
+      security_storage:      'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', !aceito);
+    gtag('set', 'url_passthrough', true);
+  })();
+
   gtag('js', new Date());
   gtag('config', 'AW-18123110318');
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18123110318"></script>
 
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel — injetado somente após o aceite -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '961112286710568');
-fbq('track', 'PageView');
+  window.MRG_carregaPixel = function () {
+    if (window.__mrgPixelOn) { return; }
+    window.__mrgPixelOn = true;
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '961112286710568');
+    fbq('track', 'PageView');
+  };
+  if (window.MRG_CONSENTIU) { window.MRG_carregaPixel(); }
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=961112286710568&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 </head>
 
 <body>
@@ -1417,12 +1490,54 @@ src="https://www.facebook.com/tr?id=961112286710568&ev=PageView&noscript=1"
   var ano = document.getElementById('ano');
   if (ano) ano.textContent = new Date().getFullYear();
 
-  /* --- Cookies --- */
+  /* --- Cookies ---
+     "Recusar" precisa efetivamente interromper o rastreamento, e não apenas
+     fechar o aviso: atualiza o Consent Mode, não injeta o pixel e remove os
+     cookies de mensuração que porventura existam. */
   var ck = document.getElementById('ck'), KEY = 'mrg_ck', stored = null;
   try { stored = localStorage.getItem(KEY); } catch (err) { }
   if (!stored && ck) { setTimeout(function () { ck.classList.add('is-on'); }, 1200); }
+
+  function apagaCookiesDeMedicao() {
+    var prefixos = ['_ga', '_gid', '_gcl', '_gac', '_fbp', '_fbc'];
+    var host = location.hostname;
+    var dominios = ['', host, '.' + host];
+    var partes = host.split('.');
+    if (partes.length > 2) { dominios.push('.' + partes.slice(-3).join('.')); }
+    if (partes.length > 3) { dominios.push('.' + partes.slice(-4).join('.')); }
+    document.cookie.split(';').forEach(function (bruto) {
+      var nome = bruto.split('=')[0].trim();
+      if (!nome) { return; }
+      var casa = prefixos.some(function (p) { return nome.indexOf(p) === 0; });
+      if (!casa) { return; }
+      dominios.forEach(function (d) {
+        document.cookie = nome + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+      });
+    });
+  }
+
+  function aplicaConsentimento(aceito) {
+    try {
+      if (window.gtag) {
+        gtag('consent', 'update', {
+          ad_storage:         aceito ? 'granted' : 'denied',
+          ad_user_data:       aceito ? 'granted' : 'denied',
+          ad_personalization: aceito ? 'granted' : 'denied',
+          analytics_storage:  aceito ? 'granted' : 'denied'
+        });
+        gtag('set', 'ads_data_redaction', !aceito);
+      }
+    } catch (err) {}
+    if (aceito) {
+      if (typeof window.MRG_carregaPixel === 'function') { window.MRG_carregaPixel(); }
+    } else {
+      apagaCookiesDeMedicao();
+    }
+  }
+
   function closeCk(v) {
     try { localStorage.setItem(KEY, v); } catch (err) { }
+    aplicaConsentimento(v === 'ok');
     if (ck) ck.classList.remove('is-on');
   }
   var ok = document.getElementById('ckOk'), no = document.getElementById('ckNo');
