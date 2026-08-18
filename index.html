@@ -852,7 +852,12 @@ fbq('track', 'PageView');
    um bloco de 500px de altura. Prova é apoio, não é o herói da página. */
 .casos{margin-top:var(--sp-5);display:grid;gap:clamp(1.1rem,2.4vw,1.75rem);
   max-width:880px;margin-inline:auto}
-.casos__intro{max-width:60ch;margin-inline:auto;text-align:center;
+/* Anton, como todo título da página. Em Archivo ele destoava de tudo em volta.
+   Fica menor que o h2 da dobra para não disputar a hierarquia com ele. */
+.casos__t{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.35rem,1.05rem + 1.3vw,2.1rem);line-height:1.06;
+  color:var(--cream);margin-bottom:.7rem;text-wrap:balance}
+.casos__intro{max-width:58ch;margin-inline:auto;text-align:center;
   font-size:var(--f-sm);color:var(--fg-soft);line-height:1.6}
 .caso{position:relative;overflow:hidden;border-radius:var(--r-lg);
   padding:clamp(1.15rem,2.6vw,1.9rem);
@@ -870,32 +875,31 @@ fbq('track', 'PageView');
   margin-top:.3rem}
 .caso__txt{margin-top:.6rem;font-size:var(--f-sm);line-height:1.55;color:var(--fg-soft);
   max-width:46ch}
+/* --moldura é a medida única de todo print da seção. Os arquivos chegam cada
+   um com um tamanho, então quem manda no tamanho na tela é o CSS, não o
+   arquivo: a mesma largura e a mesma proporção nas quatro molduras de cada
+   caso. O tamanho real fica a um clique, na lightbox.
+   O teto de 210px também segura a altura da dobra: sem ele a coluna livre
+   esticava cada print e a seção de provas passava da dobra da oferta. */
+.caso{--moldura:clamp(118px,26vw,210px)}
 /* A partir de 860px a conversa vira coluna própria e ocupa as duas linhas */
 @media (min-width:860px){
-  .caso--dupla{grid-template-columns:minmax(180px,240px) minmax(0,1fr)}
+  .caso--dupla{grid-template-columns:var(--moldura) minmax(0,1fr)}
   .caso--dupla .caso__dep{grid-row:1 / span 2}
 }
 @media (max-width:859px){
   .caso__head{order:-1}
-  .caso__dep{max-width:230px;margin-inline:auto}
 }
+/* .caso .caso__dep e não só .caso__dep: a regra base de .card--shot define
+   width:100% e está mais adiante no arquivo, então venceria no empate. */
+.caso .caso__dep{width:var(--moldura);margin-inline:auto}
 .caso--solo{max-width:660px;margin-inline:auto}
 /* Antes e depois lado a lado em qualquer largura: separar os dois quebraria a
-   comparação, que é justamente o que a seção precisa mostrar. */
-/* O print da conversa não é recortado: ali o conteúdo é texto, e cortar
-   comeria justamente a frase que serve de prova. Já o print de faturamento
-   pode ser recortado pelo topo, onde fica o número. */
-.caso__dep img{aspect-ratio:auto}
-/* Teto de 520px no par: sem ele a seção de provas ficava mais alta que a
-   dobra da oferta, e prova pesando mais que o pedido de compra é erro de
-   hierarquia, não de estilo. */
-.caso__ba{display:grid;grid-template-columns:1fr auto 1fr;
-  gap:clamp(.5rem,1.6vw,1rem);align-items:center;max-width:520px}
-/* Precisa vir DEPOIS da regra acima: em coluna única o par pegaria a largura
-   inteira da dobra e cada print passaria de 400px de altura. */
-@media (max-width:859px){
-  .caso__ba{max-width:400px;margin-inline:auto;width:100%}
-}
+   comparação, que é justamente o que a seção precisa mostrar. As colunas usam
+   a mesma --moldura da conversa, e não 1fr, senão cada uma cresceria conforme
+   a sobra da linha e voltaríamos ao mosaico de tamanhos diferentes. */
+.caso__ba{display:grid;grid-template-columns:var(--moldura) auto var(--moldura);
+  justify-content:center;gap:clamp(.5rem,1.6vw,1rem);align-items:center}
 .ba__col{margin:0;display:grid;gap:.5rem}
 .ba__rot{font-size:.62rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
   text-align:center;color:var(--fg-mute)}
@@ -1435,6 +1439,7 @@ alt=""></noscript>
 
     <div class="sec-head sec-head--center mt-4" data-reveal>
       <p class="eyebrow eyebrow--center">Antes e depois</p>
+      <h3 class="h3 casos__t">Histórias do chão de cozinha</h3>
       <p class="casos__intro">Três lojas, o mesmo relatório do iFood em duas datas. Os prints chegaram assim, direto do painel de cada dono. Clique em qualquer um para abrir em tamanho real.</p>
     </div>
 
@@ -1508,7 +1513,7 @@ alt=""></noscript>
         <div class="caso__head">
           <p class="caso__k">Caso 03</p>
           <h3 class="caso__nome">Rodrigo Barros <span>Mermã Marmita</span></h3>
-          <p class="caso__txt">A Mermã Marmita é uma das lojas do Grupo 360 Food. É ela que aparece nas aulas, com o painel aberto, do jeito que é configurada de verdade.</p>
+          <p class="caso__txt">A Mermã Marmita é uma das lojas do Grupo 360 Food, e é ela que o Rodrigo abre dentro do curso. As aulas são gravadas no painel dela, com as configurações reais na tela, incluindo o relatório que gerou estes dois prints.</p>
         </div>
         <div class="caso__ba">
           <figure class="ba__col">
