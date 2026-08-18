@@ -55,6 +55,13 @@ def main() -> None:
 
     html = ORIGEM.read_text(encoding="utf-8")
 
+    # ------------------------------------------------------------- analytics
+    # O arquivo único é para revisar no PC, sem servidor e sem internet. O GTM
+    # e o Meta Pixel saem daqui: teste do dono não pode virar visita no
+    # relatório, e nada externo deve ser carregado neste arquivo.
+    for marca in ("analytics", "analytics-noscript"):
+        html = re.sub(rf"<!-- {marca}:inicio.*?{marca}:fim -->", "", html, flags=re.S)
+
     # ------------------------------------------------------------------ fontes
     fontes = {
         "/assets/fonts/anton-latin-400.woff2": "Anton",

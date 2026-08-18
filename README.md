@@ -90,7 +90,7 @@ adiciona ida e volta de rede sem ganho de cache.
 4. **Demonstração** — `fotos/aula.png` em moldura, com slot pronto para vídeo
 5. **O Método** — ciclo Configura → Precifica → Roda → Protege
 6. **As 10 aulas** — 5 módulos em acordeão
-7. **Provas reais** — números + carrossel de prints (`fotos/dep1..5.jpg`)
+7. **Provas reais** — números + 3 casos, cada um ligando o print da conversa ao faturamento antes e depois
 8. **História e autoridade** — narrativa + foto do Rodrigo
 9. **Bônus** — entregáveis e os 2 bônus
 10. **Oferta + Garantia** — nova ancoragem, preço e selo de 7 dias
@@ -130,7 +130,14 @@ A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado 
 | `aula.png` | Bloco de demonstração |
 | `rodrigo.jpg` | Bloco de autoridade |
 | `rodrigoevento.jpg` | Fundo esmaecido do método |
-| `dep1.jpg` … `dep5.jpg` | Carrossel de prints reais |
+| `dep1.jpg` | Print da conversa do Lucas (caso 01) |
+| `acai1.jpg` · `acai2.jpg` | Faturamento do Lucas, antes e depois |
+| `dep3.jpg` | Print da conversa do Marcos (caso 02) |
+| `madeiro1.jpg` · `madeiro2.jpg` | Faturamento do Marcos, antes e depois |
+| `marmita1.jpg` · `marmita2.jpg` | Faturamento da Mermã Marmita, antes e depois |
+
+Os arquivos `dep2`, `dep4` e `dep5` saíram da página. Os nomes acima precisam bater
+**exatamente**, extensão inclusive: a página busca `.jpg`.
 
 ### 4. Grade do curso (já confirmada)
 
@@ -144,10 +151,31 @@ A página usa caminhos relativos, então a pasta `fotos/` precisa ficar ao lado 
 
 Os 10 títulos vieram do Rodrigo e estão verbatim em `.grade__list`.
 
-### 5. Pixel / GA4 (opcional)
-Adicione antes de `</body>`. Se usar script de terceiro, atualize o `Content-Security-Policy`
-no `<head>` incluindo o domínio em `script-src` e `connect-src` — hoje a política é `'self'`
-e vai bloquear qualquer script externo.
+### 5. Medição (já instalada)
+
+| Ferramenta | Identificador | Onde está |
+|---|---|---|
+| Google Tag Manager | `GTM-KRFC8HWM` | `<head>`, logo abaixo da CSP + `noscript` na abertura do `<body>` |
+| Meta Pixel | `1599446431713463` | `<head>`, depois do GTM + `noscript` na abertura do `<body>` |
+
+**Não suba o Meta Pixel também por dentro do GTM.** Ele já está fixo no HTML; publicar
+de novo pelo contêiner faz cada PageView contar duas vezes e o custo por conversão sai
+pela metade do real, o que leva a decisão errada de verba.
+
+A CSP do `<head>` foi aberta para `www.googletagmanager.com`, `connect.facebook.net`,
+`www.facebook.com`, `www.google-analytics.com` e `analytics.google.com`, e ganhou
+`'unsafe-inline'` em `script-src`, que o GTM exige para injetar as próprias tags.
+Se o modo Preview do GTM não abrir, acrescente `'unsafe-eval'` em `script-src`:
+só a depuração precisa dele.
+
+O bloco fica entre os marcadores `<!-- analytics:inicio -->` e `<!-- analytics:fim -->`.
+Os builds de prévia e de arquivo único apagam esse trecho de propósito: revisão interna
+não pode entrar como visita real no relatório de campanha.
+
+**Pendência de LGPD.** O Pixel e o GTM disparam assim que a página abre, sem pedir
+autorização. A ANPD entende que cookie de marketing depende de consentimento. A política
+de privacidade já declara isso abertamente, mas falta um banner de consentimento que só
+libere as tags depois do aceite.
 
 ### 6. Dados das páginas legais
 `termos-de-uso.html` e `politica-de-privacidade.html` têm campos marcados como

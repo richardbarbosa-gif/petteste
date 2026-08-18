@@ -56,6 +56,12 @@ def main() -> None:
         '<script type="module">\n' + js + "\n</script>",
     )
 
+    # ---- fora: GTM e Meta Pixel ----
+    # Prévia é revisão interna. Se o pixel disparasse daqui, cada abertura do
+    # link entraria como visita real e sujaria o relatório de campanha.
+    for marca in ("analytics", "analytics-noscript"):
+        html = re.sub(rf"<!-- {marca}:inicio.*?{marca}:fim -->", "", html, flags=re.S)
+
     # ---- fora: o hospedeiro fornece o esqueleto e a própria política ----
     html = re.sub(r'\s*<meta http-equiv="Content-Security-Policy"[^>]*>', "", html)
     html = re.sub(r'\s*<link rel="(?:manifest|apple-touch-icon|icon|canonical|preload)"[^>]*>', "", html)
