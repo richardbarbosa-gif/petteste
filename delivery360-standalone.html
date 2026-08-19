@@ -315,6 +315,14 @@
     font-size:var(--f-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
     color:var(--fg-soft);backdrop-filter:blur(6px)}
   .pill svg{width:16px;height:16px;flex:none;color:var(--orange)}
+  /* Cápsula que virou link. Precisa parecer clicável antes do clique, senão
+     o visitante nunca descobre que ali tem um destino. */
+  .pill--link{text-decoration:none;cursor:pointer;
+    transition:transform .25s var(--ease-out),border-color .25s,box-shadow .25s,color .25s}
+  .pill--link:hover{color:var(--cream);transform:translateY(-2px);
+    border-color:rgba(255,47,47,0.5);
+    border-color:color-mix(in srgb,var(--red-neon) 50%,transparent);
+    box-shadow:inset 0 1px 0 rgb(255 255 255/.08),0 0 26px -10px var(--red-glow)}
 
   /* ---------- Barra de progresso de leitura (CSS puro) ---------- */
   .progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:60;
@@ -1529,9 +1537,9 @@
       <p>Hoje aplico esse processo diariamente nas marcas do Grupo 360 Food. E foi esse processo que organizei dentro do Delivery 360°.</p>
       <p>Sou o fundador do Gestoque 360, sistema utilizado por uma comunidade de mais de 150 donos de restaurantes. E fiz parte do Fórum de Restaurantes do iFood, contribuindo diretamente com discussões e melhorias para o ecossistema de mais de 330 mil restaurantes parceiros.</p>
       <ul class="about__logos">
-        <li class="pill">Grupo 360 Food</li>
-        <li class="pill">Gestoque 360</li>
-        <li class="pill">Fórum de Restaurantes iFood</li>
+        <li><a class="pill pill--link" href="https://www.instagram.com/grupo360food/" target="_blank" rel="noopener noreferrer" aria-label="Grupo 360 Food no Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg><span>Grupo 360 Food</span></a></li>
+        <li><a class="pill pill--link" href="https://www.instagram.com/gestoque360/" target="_blank" rel="noopener noreferrer" aria-label="Gestoque 360 no Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg><span>Gestoque 360</span></a></li>
+        <li><a class="pill pill--link" href="https://www.instagram.com/rodrigobarroxx/" target="_blank" rel="noopener noreferrer" aria-label="Fórum de Restaurantes iFood, no Instagram do Rodrigo Barros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg><span>Fórum de Restaurantes iFood</span></a></li>
       </ul>
     </div>
   </div>
