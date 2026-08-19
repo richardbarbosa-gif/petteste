@@ -101,15 +101,14 @@ adiciona ida e volta de rede sem ganho de cache.
 
 ## O que trocar antes de publicar
 
-### 1. Link do checkout (obrigatório)
-Todos os CTAs apontam para `#checkout`. Troque pela URL da plataforma (Hotmart, Kiwify, Eduzz…):
+### 1. Link do checkout (feito)
+Os cinco CTAs (topo, hero, oferta, chamada final e barra fixa do celular) apontam para
+`https://pay.hotmart.com/S106632080Q?checkoutMode=10&bid=1787103675533`.
+No HTML o `&` aparece como `&amp;`, que é a forma válida dentro de atributo; o navegador
+entrega a URL original.
 
-```bash
-sed -i 's|href="#checkout"|href="https://pay.suaplataforma.com/xxxxx"|g' index.html
-```
-
-Os botões já têm `data-cta="hero|oferta|final|dock|header"`, então dá pra saber qual posição
-converteu quando você plugar analytics.
+Cada botão mantém `data-cta="hero|oferta|final|dock|header"`, então dá para saber qual
+posição converteu quando plugar o relatório.
 
 ### 2. Domínio (obrigatório para o SEO funcionar)
 Troque `https://delivery360.com.br/` pela URL real em `index.html` (canonical, Open Graph e

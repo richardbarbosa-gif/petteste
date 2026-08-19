@@ -58,7 +58,7 @@ original, geométrica — o ambiente de desenvolvimento bloqueia bancos de image
 Motivos objetivos:
 
 - A Copy 1 tem dois `[PENDENTE]` que travariam a publicação. A Copy 2 resolve os dois:
-  **12x de R$ 9,68** e **acesso vitalício**.
+  **12x de R$ 10,03** e **acesso vitalício**.
 - Nome final do ebook do Bônus #1: **"Gestão de Equipe Descomplicada"** (a Copy 1
   assume nome provisório).
 - FAQ completa com 7 perguntas e checklist de sintomas já formatado.
