@@ -847,20 +847,20 @@
                 border-radius:0;border:0;
                 box-shadow:none;
             }
+            /* Fundo sólido em vez de backdrop-filter: o desfoque de fundo é
+               caro em aparelho fraco e aqui o resultado visual é o mesmo. */
             .lightbox-close{
                 position:fixed;top:14px;right:14px;
                 width:56px;height:56px;
-                background:rgba(0,0,0,.8);
-                border-color:rgba(212,175,55,.5);
-                backdrop-filter:blur(8px);
+                background:#111;
+                border-color:rgba(212,175,55,.55);
             }
             .lightbox-nav{
                 position:fixed;top:auto;bottom:20px;
                 transform:none;
                 width:62px;height:62px;
-                background:rgba(0,0,0,.8);
-                border-color:rgba(212,175,55,.5);
-                backdrop-filter:blur(8px);
+                background:#111;
+                border-color:rgba(212,175,55,.55);
             }
             .lightbox-prev{left:calc(50% - 76px)}
             .lightbox-next{right:calc(50% - 76px)}
@@ -1387,9 +1387,67 @@ if (!localStorage.getItem('lgpd')) {
     const prev = document.getElementById('carouselPrev');
     const next = document.getElementById('carouselNext');
     if (carousel&&prev&&next) {
-        const w = () => (carousel.querySelector('.testimonial-thumb')?.offsetWidth||300)+24;
-        next.addEventListener('click',()=>carousel.scrollBy({left:w(),behavior:'smooth'}));
-        prev.addEventListener('click',()=>carousel.scrollBy({left:-w(),behavior:'smooth'}));
+        /* Em vez de rolar uma distância calculada, mira direto na posição em
+           que o próximo cartão fica centralizado — que é exatamente onde o
+           scroll-snap iria parar. Assim não sobra correção no fim do
+           movimento, que era o que fazia a troca parecer travada. */
+        function posicaoCentralizada(item) {
+            const base = carousel.getBoundingClientRect().left;
+            const centro = item.getBoundingClientRect().left - base
+                         + carousel.scrollLeft + item.offsetWidth / 2;
+            const max = carousel.scrollWidth - carousel.clientWidth;
+            return Math.max(0, Math.min(centro - carousel.clientWidth / 2, max));
+        }
+        function alvo(direcao) {
+            const itens = [].slice.call(carousel.querySelectorAll('.testimonial-thumb'));
+            if (!itens.length) return null;
+            const meio = carousel.scrollLeft + carousel.clientWidth / 2;
+            const base = carousel.getBoundingClientRect().left;
+            let atual = 0, menor = Infinity;
+            itens.forEach(function (it, i) {
+                const c = it.getBoundingClientRect().left - base
+                        + carousel.scrollLeft + it.offsetWidth / 2;
+                const d = Math.abs(c - meio);
+                if (d < menor) { menor = d; atual = i; }
+            });
+            const i = Math.max(0, Math.min(atual + direcao, itens.length - 1));
+            return posicaoCentralizada(itens[i]);
+        }
+
+        /* Duração fixa: o deslizar nativo demora proporcionalmente à distância,
+           e como o cartão ficou maior no celular a troca havia ficado lenta. */
+        const DURACAO = 260;
+        let animando = 0;
+        const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function desliza(direcao) {
+            const destino = alvo(direcao);
+            if (destino === null) return;
+            const inicio = carousel.scrollLeft;
+            const delta = destino - inicio;
+            if (Math.abs(delta) < 1) return;
+            if (semMovimento) { carousel.scrollLeft = destino; return; }
+            cancelAnimationFrame(animando);
+            const t0 = performance.now();
+            const snapAntes = carousel.style.scrollSnapType;
+            carousel.style.scrollBehavior = 'auto';
+            carousel.style.scrollSnapType = 'none';
+            const passo = function (agora) {
+                const t = Math.min((agora - t0) / DURACAO, 1);
+                const e = 1 - Math.pow(1 - t, 3);          // desacelera no fim
+                carousel.scrollLeft = inicio + delta * e;
+                if (t < 1) { animando = requestAnimationFrame(passo); }
+                else {
+                    carousel.scrollLeft = destino;
+                    carousel.style.scrollSnapType = snapAntes;
+                    carousel.style.scrollBehavior = '';
+                }
+            };
+            animando = requestAnimationFrame(passo);
+        }
+
+        next.addEventListener('click',function(){desliza(1);});
+        prev.addEventListener('click',function(){desliza(-1);});
     }
 
     // FAQ
