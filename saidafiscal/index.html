@@ -288,8 +288,9 @@ h3{font-family:var(--sans);font-size:var(--t-h3);font-weight:700;letter-spacing:
   border:1px solid transparent;
   transition:all .4s var(--ease);
 }
-.btn svg{width:18px;height:18px;flex:none;transition:transform .35s var(--ease)}
-.btn:hover svg{transform:translateX(5px)}
+/* Ícone do WhatsApp à esquerda do rótulo. Sem deslocamento no hover:
+   o ícone identifica o canal, não indica direção. */
+.btn svg{width:19px;height:19px;flex:none}
 
 .btn--action{
   background:var(--action);
@@ -835,15 +836,33 @@ body.is-locked{overflow:hidden}
   font-size:var(--t-micro);letter-spacing:.05em;color:rgba(240,236,226,.65);
 }
 
-.fab{position:fixed;right:1.25rem;bottom:1.25rem;z-index:70;width:54px;height:54px;display:grid;place-items:center;border-radius:50%;background:var(--action);color:#fff;box-shadow:0 10px 28px rgba(0,0,0,.35);transition:all .35s var(--ease)}
-.fab:hover{transform:scale(1.08);background:var(--action-deep)}
+/* Botão flutuante de WhatsApp — único CTA fixo da página, em qualquer
+   largura. z-index 50 o mantém abaixo do overlay do menu (55), para não
+   vazar por cima quando o menu mobile estiver aberto. */
+.fab{
+  position:fixed;
+  right:clamp(1rem,3vw,1.5rem);
+  bottom:calc(clamp(1rem,3vw,1.5rem) + env(safe-area-inset-bottom));
+  z-index:50;
+  width:52px;height:52px;
+  display:grid;place-items:center;border-radius:50%;
+  background:var(--action);color:#fff;
+  border:1px solid rgba(240,236,226,.18);
+  box-shadow:0 6px 18px rgba(11,102,53,.34), 0 2px 6px rgba(0,0,0,.2);
+  opacity:0;transform:translateY(10px) scale(.92);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),
+             background .3s var(--ease),box-shadow .3s var(--ease);
+}
+.fab.is-on{opacity:1;transform:none;pointer-events:auto}
+.fab:hover{background:var(--action-deep);box-shadow:0 10px 26px rgba(11,102,53,.44)}
+.fab:active{transform:scale(.95)}
 .fab svg{width:26px;height:26px}
-@media (max-width:760px){ .fab{display:none} }
-
-.mbar{position:fixed;inset-inline:0;bottom:0;z-index:70;display:none;background:rgba(13,36,41,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(212,175,96,.28);padding:.6rem var(--edge) calc(.6rem + env(safe-area-inset-bottom));transform:translateY(115%);transition:transform .4s var(--ease)}
-.mbar.is-on{transform:none}
-.mbar .btn{width:100%;padding:1rem;font-size:.85rem}
-@media (max-width:760px){ .mbar{display:block} }
+/* redundância proposital: se o overlay do menu falhar, o botão some assim mesmo */
+body.is-locked .fab{opacity:0;pointer-events:none;transform:translateY(10px) scale(.92)}
+@media (max-width:760px){
+  .fab{width:50px;height:50px}
+  .fab svg{width:24px;height:24px}
+}
 
 .ck{position:fixed;left:1.2rem;right:1.2rem;bottom:1.2rem;z-index:80;max-width:420px;background:rgba(13,36,41,.96);backdrop-filter:blur(16px);color:var(--on-deep);border:1px solid rgba(212,175,96,.35);border-radius:var(--r);padding:1.3rem;font-size:.84rem;line-height:1.58;display:none}
 .ck.is-on{display:block}
@@ -852,7 +871,12 @@ body.is-locked{overflow:hidden}
 .ck button{padding:.65rem 1.1rem;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px}
 .ck__ok{background:var(--gold);color:var(--deep-3)}
 .ck__no{border:1px solid rgba(240,236,226,.3);color:var(--on-deep)}
-@media (max-width:760px){ .ck{bottom:5.2rem} }
+/* No mobile o aviso ocupa quase toda a largura: sobe para não cobrir o
+   botão flutuante (50px + respiro + área segura do aparelho). */
+@media (max-width:760px){ .ck{bottom:calc(4.7rem + env(safe-area-inset-bottom))} }
+/* Com o menu aberto, o aviso sai de cena: são duas camadas sobrepostas, e
+   o aviso cobria o último item de navegação. Ele reaparece ao fechar. */
+body.is-locked .ck{display:none}
 
 .rv{opacity:0;transform:translateY(20px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
 .rv.is-in{opacity:1;transform:none}
@@ -956,6 +980,7 @@ body.is-locked{overflow:hidden}
     <div class="hdr__end">
       <a class="btn btn--action hdr__cta" data-wa data-wa-msg="Olá! Quero analisar minha saída fiscal."
          href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
+        <svg aria-hidden="true"><use href="#i-wpp"/></svg>
         Quero analisar minha saída fiscal
       </a>
       <button class="burger" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
@@ -974,10 +999,6 @@ body.is-locked{overflow:hidden}
       <li><a href="#sobre">Sobre</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a class="btn btn--action menu__cta" data-wa data-wa-msg="Olá! Quero analisar minha saída fiscal."
-       href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
-      Quero analisar minha saída fiscal
-    </a>
   </nav>
 </div>
 
@@ -999,6 +1020,7 @@ body.is-locked{overflow:hidden}
       <div class="heroF__actions rv">
         <a class="btn btn--action" data-wa data-wa-msg="Olá! Quero analisar minha saída fiscal."
            href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
+          <svg aria-hidden="true"><use href="#i-wpp"/></svg>
           Quero analisar minha saída fiscal
         </a>
       </div>
@@ -1069,6 +1091,7 @@ body.is-locked{overflow:hidden}
       <div class="cta-row rv" style="justify-content:flex-start">
         <a class="btn btn--action" data-wa data-wa-msg="Olá! Quero analisar minha saída fiscal."
            href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
+          <svg aria-hidden="true"><use href="#i-wpp"/></svg>
           Quero analisar minha saída fiscal
         </a>
       </div>
@@ -1108,6 +1131,7 @@ body.is-locked{overflow:hidden}
     <div class="cta-row rv">
       <a class="btn btn--action" data-wa data-wa-msg="Olá! Quero analisar minha saída fiscal."
          href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
+        <svg aria-hidden="true"><use href="#i-wpp"/></svg>
         Quero analisar minha saída fiscal
       </a>
     </div>
@@ -1170,6 +1194,7 @@ body.is-locked{overflow:hidden}
     <div class="cta-row rv">
       <a class="btn btn--action" data-wa data-wa-msg="Olá! Quero uma assessoria completa de saída fiscal."
          href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
+        <svg aria-hidden="true"><use href="#i-wpp"/></svg>
         Quero uma assessoria completa
       </a>
     </div>
@@ -1261,6 +1286,7 @@ body.is-locked{overflow:hidden}
     <div class="cta-row rv" style="display:flex;justify-content:center">
       <a class="btn btn--action" data-wa data-wa-msg="Olá! Quero falar com a equipe sobre minha saída fiscal."
          href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
+        <svg aria-hidden="true"><use href="#i-wpp"/></svg>
         Quero falar com a equipe
       </a>
     </div>
@@ -1338,17 +1364,10 @@ body.is-locked{overflow:hidden}
   </div>
 </footer>
 
-<a class="fab" data-wa data-wa-msg="Olá! Vim pela página de saída fiscal."
+<a class="fab" id="fab" data-wa data-wa-msg="Olá! Vim pela página de saída fiscal."
    href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank" aria-label="Falar no WhatsApp">
   <svg aria-hidden="true"><use href="#i-wpp"/></svg>
 </a>
-
-<div class="mbar" id="mbar">
-  <a class="btn btn--action" data-wa data-wa-msg="Olá! Quero analisar minha saída fiscal."
-     href="https://wa.me/5521997819900" rel="noopener noreferrer" target="_blank">
-    Quero analisar minha saída fiscal
-  </a>
-</div>
 
 <aside class="ck" id="ck" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
   <p>Utilizamos cookies essenciais para o funcionamento da página. Ao continuar, você concorda com a nossa <a href="/politica-de-privacidade.html">Política de Privacidade</a>.</p>
@@ -1372,12 +1391,14 @@ body.is-locked{overflow:hidden}
     });
   });
 
-  /* --- Header ao rolar + barra fixa mobile --- */
-  var hdr = document.getElementById('hdr'), mbar = document.getElementById('mbar'), ticking = false;
+  /* --- Header ao rolar + botão flutuante de WhatsApp ---
+     O botão só entra depois da primeira dobra, para não cobrir o hero
+     nem o mockup de conversa logo na abertura. */
+  var hdr = document.getElementById('hdr'), fab = document.getElementById('fab'), ticking = false;
   function onScroll() {
     var y = window.scrollY;
     hdr.classList.toggle('is-stuck', y > 20);
-    if (mbar) mbar.classList.toggle('is-on', y > window.innerHeight * 0.6);
+    if (fab) fab.classList.toggle('is-on', y > window.innerHeight * 0.55);
     ticking = false;
   }
   window.addEventListener('scroll', function () {
