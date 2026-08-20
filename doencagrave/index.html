@@ -615,6 +615,8 @@
         .testimonial-thumb:hover img{transform:scale(1.02)}
         .testimonial-zoom-icon{position:absolute;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;z-index:2;opacity:0;transform:translateY(15px);transition:all .4s cubic-bezier(.175,.885,.32,1.275)}
         .testimonial-thumb:hover .testimonial-zoom-icon{opacity:1;transform:translateY(0)}
+        /* O rótulo fica oculto por padrão; só aparece em tela sem mouse. */
+        .zoom-label{display:none}
         .carousel-arrow{flex-shrink:0;width:54px;height:54px;border-radius:50%;background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.3);color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
         .carousel-arrow:hover{background:var(--gold);color:#000;transform:scale(1.08);border-color:var(--gold)}
         .carousel-arrow svg{width:24px;height:24px}
@@ -766,6 +768,103 @@
             .hero-pills li{font-size:13.5px;padding:10px 16px}
             /* Hero proof — ajuste */
             .hero-proof{flex-direction:column;align-items:flex-start;gap:14px}
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           DEPOIMENTOS EM CELULAR — LEITURA PARA PÚBLICO IDOSO
+           Bloco isolado de propósito: mexe apenas na seção de depoimentos
+           e apenas em telas pequenas ou sem mouse. O desktop não é afetado.
+           ═══════════════════════════════════════════════════════════════ */
+
+        /* Em aparelho sem mouse o :hover nunca dispara — a lupa ficava
+           invisível e ninguém descobria que dava para ampliar. */
+        @media (hover:none){
+            .testimonial-zoom-icon{
+                opacity:1;transform:none;
+                width:auto;height:auto;
+                padding:13px 20px;
+                gap:9px;
+                border-radius:999px;
+                box-shadow:0 6px 20px rgba(0,0,0,.45), 0 0 0 2px rgba(0,0,0,.25);
+            }
+            /* o ícone encolhe só aqui, para caber ao lado da palavra */
+            .testimonial-zoom-icon svg{width:22px;height:22px;flex:none}
+            .zoom-label{display:inline;font-size:15px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+            /* sem mouse, o realce de hover no cartão só atrapalha */
+            .testimonial-thumb:hover{transform:none}
+            .testimonial-thumb:hover img{transform:none}
+        }
+
+        @media (max-width:980px){
+            /* As setas saíam da lateral consumindo ~120px dos 390px da tela.
+               Descem para baixo do carrossel e devolvem essa largura à imagem. */
+            .testimonials-wrapper{flex-wrap:wrap;justify-content:center;column-gap:24px;row-gap:22px}
+            .testimonials-carousel{flex:1 1 100%;order:1;gap:16px;padding:6px 2px 6px}
+            .carousel-arrow{order:2;width:60px;height:60px}
+            .carousel-arrow svg{width:28px;height:28px}
+
+            /* O cartão passa a ocupar a largura toda. A imagem preenche o
+               quadro pelo topo, onde a conversa começa, em vez de encolher
+               inteira até ficar ilegível. O resto se lê no botão Ampliar. */
+            .testimonial-thumb{
+                flex:0 0 100%;
+                height:auto;
+                aspect-ratio:4/5;
+                /* trava para o cartão não tomar a tela inteira em tablet */
+                max-height:min(72vh,620px);
+                padding:7px;
+                border-color:rgba(212,175,55,.35);
+            }
+            .testimonial-thumb img{
+                object-fit:cover;
+                object-position:top center;
+                border-radius:10px;
+            }
+            /* Sobe para o topo do cartão: no rodapé ele era coberto pelo aviso
+               de cookies e disputava espaço com o botão flutuante do WhatsApp. */
+            .testimonial-zoom-icon{top:16px;right:16px;bottom:auto}
+        }
+
+        @media (max-width:560px){
+            .testimonials-section{padding:70px 0 60px}
+            .testimonials-header{margin-bottom:38px}
+            .testimonial-thumb{aspect-ratio:5/7;padding:6px}
+            .carousel-arrow{width:58px;height:58px}
+
+            /* Ampliada: o print ocupa a largura inteira da tela e se lê
+               rolando, em vez de caber espremido num quadro. */
+            .testimonial-lightbox{padding:0;display:none}
+            .testimonial-lightbox.is-open{
+                display:block;
+                overflow-y:auto;
+                -webkit-overflow-scrolling:touch;
+                overscroll-behavior:contain;
+            }
+            .lightbox-img{
+                width:100%;max-width:100%;max-height:none;
+                display:block;
+                margin:72px 0 104px;
+                border-radius:0;border:0;
+                box-shadow:none;
+            }
+            .lightbox-close{
+                position:fixed;top:14px;right:14px;
+                width:56px;height:56px;
+                background:rgba(0,0,0,.8);
+                border-color:rgba(212,175,55,.5);
+                backdrop-filter:blur(8px);
+            }
+            .lightbox-nav{
+                position:fixed;top:auto;bottom:20px;
+                transform:none;
+                width:62px;height:62px;
+                background:rgba(0,0,0,.8);
+                border-color:rgba(212,175,55,.5);
+                backdrop-filter:blur(8px);
+            }
+            .lightbox-prev{left:calc(50% - 76px)}
+            .lightbox-next{right:calc(50% - 76px)}
+            .lightbox-close svg,.lightbox-nav svg{width:26px;height:26px}
         }
     </style>
 </head>
@@ -1038,14 +1137,14 @@
         <div class="testimonials-wrapper">
             <button class="carousel-arrow" id="carouselPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
             <div class="testimonials-carousel" id="testimonialsCarousel">
-                <button class="testimonial-thumb" data-img="fotos/depoimento1.webp" aria-label="Ver depoimento 1"><img src="fotos/depoimento1.webp" alt="Depoimento 1" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento2.webp" aria-label="Ver depoimento 2"><img src="fotos/depoimento2.webp" alt="Depoimento 2" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento3.webp" aria-label="Ver depoimento 3"><img src="fotos/depoimento3.webp" alt="Depoimento 3" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento4.webp" aria-label="Ver depoimento 4"><img src="fotos/depoimento4.webp" alt="Depoimento 4" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento5.webp" aria-label="Ver depoimento 5"><img src="fotos/depoimento5.webp" alt="Depoimento 5" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento6.webp" aria-label="Ver depoimento 6"><img src="fotos/depoimento6.webp" alt="Depoimento 6" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento7.webp" aria-label="Ver depoimento 7"><img src="fotos/depoimento7.webp" alt="Depoimento 7" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
-                <button class="testimonial-thumb" data-img="fotos/depoimento8.webp" aria-label="Ver depoimento 8"><img src="fotos/depoimento8.webp" alt="Depoimento 8" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento1.webp" aria-label="Ver depoimento 1"><img src="fotos/depoimento1.webp" alt="Depoimento 1" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento2.webp" aria-label="Ver depoimento 2"><img src="fotos/depoimento2.webp" alt="Depoimento 2" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento3.webp" aria-label="Ver depoimento 3"><img src="fotos/depoimento3.webp" alt="Depoimento 3" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento4.webp" aria-label="Ver depoimento 4"><img src="fotos/depoimento4.webp" alt="Depoimento 4" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento5.webp" aria-label="Ver depoimento 5"><img src="fotos/depoimento5.webp" alt="Depoimento 5" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento6.webp" aria-label="Ver depoimento 6"><img src="fotos/depoimento6.webp" alt="Depoimento 6" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento7.webp" aria-label="Ver depoimento 7"><img src="fotos/depoimento7.webp" alt="Depoimento 7" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
+                <button class="testimonial-thumb" data-img="fotos/depoimento8.webp" aria-label="Ver depoimento 8"><img src="fotos/depoimento8.webp" alt="Depoimento 8" loading="lazy"><span class="testimonial-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg><span class="zoom-label">Ampliar</span></span></button>
     </div>
 
        <button class="carousel-arrow" id="carouselNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
