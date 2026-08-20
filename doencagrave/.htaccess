@@ -1,0 +1,72 @@
+# ============================================================
+# doencagrave.mrgomesadvogados.com.br — Apache/.htaccess
+#
+# ATENÇÃO: este site já está no ar. Se a pasta public_html já tiver um
+# .htaccess, NÃO substitua sem olhar o conteúdo antigo primeiro — pode haver
+# regra de e-mail, redirecionamento ou certificado que não está aqui.
+# ============================================================
+
+Options -Indexes
+ServerSignature Off
+AddDefaultCharset UTF-8
+
+# --- Tipos de mídia ---
+AddType image/webp .webp
+
+# --- Bloqueia arquivos ocultos, backups e dumps ---
+# (não afeta /.well-known/, usado por certificados SSL)
+<IfModule mod_authz_core.c>
+<FilesMatch "^\.|~$|\.(bak|old|orig|save|swp|log|sql|ini|env|dist)$">
+Require all denied
+</FilesMatch>
+</IfModule>
+
+# --- HTTPS obrigatório + /index.html -> / ---
+# O segundo bloco evita que a mesma página seja indexada em dois endereços.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+</IfModule>
+
+# --- Cabeçalhos de segurança ---
+# Strict-Transport-Security só depois de confirmar que o HTTPS funciona:
+# uma vez enviado, o navegador se recusa a abrir o site em HTTP por 1 ano.
+<IfModule mod_headers.c>
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+</IfModule>
+
+# --- Compressão ---
+<IfModule mod_brotli.c>
+AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Cache do navegador (conta ponto no Core Web Vitals) ---
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType text/xml "access plus 1 day"
+ExpiresByType application/xml "access plus 1 day"
+ExpiresByType text/plain "access plus 1 day"
+ExpiresByType image/jpeg "access plus 6 months"
+ExpiresByType image/png  "access plus 6 months"
+ExpiresByType image/webp "access plus 6 months"
+ExpiresByType image/svg+xml "access plus 6 months"
+ExpiresByType image/x-icon "access plus 6 months"
+ExpiresByType text/css   "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# --- Erro 404 volta pra home (página única) ---
+ErrorDocument 404 /
