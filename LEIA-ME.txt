@@ -1,0 +1,57 @@
+DELIVERY 360°: PÁGINA DE VENDAS
+================================
+
+COMO SUBIR NA HOSTINGER
+-----------------------
+1. Abra o Gerenciador de Arquivos da Hostinger.
+2. Entre na pasta  public_html
+3. Envie TODO o conteúdo desta pasta para dentro de public_html
+   (o index.html precisa ficar na raiz de public_html, não numa subpasta).
+4. Pronto. A página já responde no domínio.
+
+O .htaccess vai junto e configura sozinho os cabeçalhos de segurança,
+o cache das imagens e das fontes, e a compressão.
+
+
+ANTES DE DIVULGAR: 3 COISAS OBRIGATÓRIAS
+-----------------------------------------
+1. LINK DO CHECKOUT
+   Os 5 botões apontam para  #checkout
+   Abra o index.html, procure por  href="#checkout"  e troque pela URL
+   da Hotmart / Kiwify / Eduzz.
+
+2. DOMÍNIO
+   Procure por  https://delivery360.com.br  no index.html, no sitemap.xml
+   e no robots.txt e troque pelo domínio real. Isso vale para o Google.
+
+3. DADOS NAS PÁGINAS LEGAIS
+   Abra termos-de-uso.html e politica-de-privacidade.html e preencha os
+   campos marcados como [informar ...]: CNPJ, endereço e cidade/UF.
+   Depois apague as caixas laranja de aviso.
+   (A plataforma de checkout já está preenchida como Hotmart.)
+
+
+A PASTA FOTOS
+-------------
+As imagens que estão aqui são de TESTE (aparece "DEP1.JPG" escrito nelas).
+Troque pelos arquivos reais mantendo exatamente os mesmos nomes:
+
+   produto.png           capa do curso, no topo
+   aula.png              print da aula, no bloco de demonstração
+   rodrigo.jpg           foto do Rodrigo
+   rodrigoevento.jpg     fundo esmaecido do bloco do método
+   dep1.jpg .. dep5.jpg  prints do carrossel de provas
+
+Depois de trocar as fotos, rode no computador:  python3 sync-fotos.py
+Isso relê o tamanho real de cada arquivo e evita que a página "pule"
+enquanto as imagens carregam. Se não tiver Python, funciona do mesmo
+jeito, só perde esse ajuste fino.
+
+
+GARANTIA E SUPORTE
+------------------
+O cancelamento nos 7 dias é feito direto na Hotmart, em "Minhas compras".
+A página, a FAQ e as duas páginas legais já dizem isso.
+
+Dúvidas sobre conteúdo vão para o Instagram @rodrigobarroxx.
+Problemas de acesso, login ou pagamento vão para o suporte da Hotmart.
