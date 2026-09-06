@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ============================================================
+     SEO — título e descrição pensados para busca real:
+     quem procura isso digita "loja objetos anos 90", "vintage retrô".
+     ============================================================ -->
+<title>Portal do Tempo | Objetos originais dos anos 90 — peças únicas</title>
+<meta name="description" content="Loja de objetos originais dos anos 90: TV de tubo, videocassete, Walkman, fliperama, vinil e móveis retrô. Cada peça é única, testada e restaurada. Frete para todo o Brasil.">
+<link rel="canonical" href="https://www.portaldotempo.com.br/">
+<meta name="theme-color" content="#08080B">
+
+<!-- Open Graph / compartilhamento -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Portal do Tempo">
+<meta property="og:title" content="Portal do Tempo — a sua infância não sumiu, só está com outro dono">
+<meta property="og:description" content="Objetos originais dos anos 90, garimpados, restaurados e testados. Peça única: quando vende, acabou.">
+<meta property="og:url" content="https://www.portaldotempo.com.br/">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Fontes: preconnect + display=swap para não bloquear a primeira pintura.
+     Archivo Black = cartaz de videolocadora. Barlow = leitura.
+     VT323 = HUD de câmera / tela de CRT. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=VT323&display=swap">
+
+<!-- Dados estruturados: ajuda o Google a entender que é loja + FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Portal do Tempo",
+  "description": "Loja de objetos originais dos anos 90: eletrônicos, móveis, música, brinquedos e decoração retrô.",
+  "url": "https://www.portaldotempo.com.br/",
+  "telephone": "+55-11-90000-0000",
+  "priceRange": "R$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Galpão 3 — Rua das Fitas, 1990",
+    "addressLocality": "Santo André",
+    "addressRegion": "SP",
+    "postalCode": "09000-000",
+    "addressCountry": "BR"
+  },
+  "openingHours": "Mo-Fr 10:00-19:00, Sa 10:00-14:00"
+}
+</script>
+<style>
+/* ================================================================
+   PORTAL DO TEMPO — folha de estilo única
+   ----------------------------------------------------------------
+   Sumário:
+   1. Tokens (cor, tipo, espaço)
+   2. Reset e base
+   3. Texturas do "portal" (scanline, grão, tracking VHS)
+   4. Componentes utilitários (botão, selo, eyebrow, janela 95)
+   5. Header + HUD de fita
+   6. Hero
+   7. Categorias
+   8. Produtos (capa de VHS)
+   9. Garantias
+   10. Depoimentos
+   11. Sobre
+   12. CTA final + newsletter
+   13. Rodapé
+   14. Responsivo e acessibilidade
+   ================================================================ */
+
+/* ---------- 1. TOKENS ------------------------------------------ */
+:root{
+  /* Dominantes — 80% da tela. Preto com viés arroxeado, não preto puro. */
+  --ink:        #08080B;
+  --ink-2:      #101018;
+  --ink-3:      #1A1A26;
+  --ink-line:   #2A2A3A;
+
+  /* Apoio — estrutura, blocos e texto */
+  --paper:      #F3F0E7;   /* branco quente de encarte de fita */
+  --paper-dim:  #A9A6B8;   /* texto secundário */
+  --roxo:       #7A3FBF;
+  --roxo-deep:  #2E1450;
+  --azul:       #2F6BF0;
+  --azul-deep:  #0E2A6B;
+
+  /* Acento — só selo, CTA e sinalização. Nunca em bloco grande. */
+  --laranja:    #FF6A18;
+  --fluor:      #E9FF3D;
+  --verde:      #00D66B;
+  --vermelho:   #E63A2B;
+  --rosa:       #FF3D9E;
+
+  /* Tipografia */
+  --display: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --body:    "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --hud:     "VT323", "Courier New", monospace;
+
+  /* Escala de tipo — mantida em todo o site */
+  --t-hero:  clamp(2.6rem, 7.2vw, 5.2rem);
+  --t-h2:    clamp(1.9rem, 4.2vw, 3.1rem);
+  --t-h3:    clamp(1.15rem, 2.2vw, 1.45rem);
+  --t-body:  clamp(1rem, 1.15vw, 1.075rem);
+  --t-small: 0.875rem;
+
+  /* Espaço */
+  --gap:     clamp(1rem, 2.4vw, 1.75rem);
+  --section: clamp(4rem, 9vw, 7.5rem);
+  --wrap:    1180px;
+  --radius:  4px;   /* quina quase reta: caixa de fita, não app 2024 */
+}
+
+/* ---------- 2. RESET E BASE ------------------------------------ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--ink);          /* obrigatório: o host pinta o fundo dele atrás */
+  color:var(--paper);
+  font-family:var(--body);
+  font-size:var(--t-body);
+  line-height:1.62;
+  overflow-x:hidden;
+}
+
+h1,h2,h3{ font-family:var(--display); font-weight:400; line-height:1.02; text-wrap:balance; margin:0; letter-spacing:-0.015em; }
+h1{ font-size:var(--t-hero); }
+h2{ font-size:var(--t-h2); }
+h3{ font-size:var(--t-h3); line-height:1.15; }
+p{ margin:0; }
+a{ color:inherit; }
+img,svg{ max-width:100%; display:block; }
+ul{ margin:0; padding:0; list-style:none; }
+button,input{ font:inherit; color:inherit; }
+
+.wrap{ width:min(var(--wrap), 92vw); margin-inline:auto; }
+.section{ padding-block:var(--section); position:relative; }
+.stack{ display:flex; flex-direction:column; gap:var(--gap); }
+.lede{ color:var(--paper-dim); max-width:62ch; font-size:1.06rem; }
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* ---------- 3. TEXTURAS DO PORTAL ------------------------------ */
+/* Scanline de CRT sobre a página inteira. Sutil de propósito:
+   textura se sente, não se lê. pointer-events:none para não roubar clique. */
+.crt-overlay{
+  position:fixed; inset:0; z-index:90; pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,.22) 3px,
+    rgba(0,0,0,0) 4px
+  );
+  mix-blend-mode:multiply;
+  opacity:.55;
+}
+/* Vinheta: escurece os cantos como tubo de imagem curvo */
+.crt-vignette{
+  position:fixed; inset:0; z-index:89; pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(0,0,0,.62) 100%);
+}
+
+/* Barra de "tracking" que separa seções — o chiado da fita mal rebobinada */
+.tracking-bar{
+  height:14px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--roxo) 0 18px, var(--azul) 18px 30px,
+      var(--ink-3) 30px 52px, var(--laranja) 52px 60px,
+      var(--ink-3) 60px 96px);
+  opacity:.5;
+  filter:saturate(1.2);
+}
+
+/* ---------- 4. UTILITÁRIOS ------------------------------------- */
+
+/* Eyebrow: etiqueta de canal/HUD acima de cada título */
+.eyebrow{
+  font-family:var(--hud);
+  font-size:1.32rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--fluor);
+  display:flex; align-items:center; gap:.6rem;
+  margin-bottom:.4rem;
+}
+.eyebrow::before{
+  content:""; width:9px; height:9px; border-radius:50%;
+  background:var(--vermelho); box-shadow:0 0 12px var(--vermelho);
+  animation:rec 1.8s steps(1) infinite;
+}
+@keyframes rec{ 0%,60%{opacity:1} 61%,100%{opacity:.15} }
+
+/* Botões */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
+  padding:.95rem 1.7rem;
+  font-family:var(--display); font-size:.95rem; letter-spacing:.02em;
+  text-decoration:none; border:2px solid transparent; border-radius:var(--radius);
+  cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+  text-transform:uppercase;
+}
+.btn--primary{
+  background:var(--laranja); color:#180800;
+  box-shadow:5px 5px 0 var(--roxo-deep);
+}
+.btn--primary:hover{ transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--roxo-deep); }
+.btn--primary:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--roxo-deep); }
+.btn--ghost{
+  background:transparent; color:var(--paper); border-color:var(--ink-line);
+}
+.btn--ghost:hover{ border-color:var(--fluor); color:var(--fluor); }
+.btn--fluor{
+  background:var(--fluor); color:#141800;
+  box-shadow:5px 5px 0 var(--azul-deep);
+}
+.btn--fluor:hover{ transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--azul-deep); }
+
+/* Selo diagonal de peça única */
+.seal{
+  font-family:var(--display); font-size:.62rem; letter-spacing:.09em;
+  text-transform:uppercase; padding:.32rem .55rem; border-radius:2px;
+  display:inline-block; white-space:nowrap;
+}
+.seal--unica{ background:var(--vermelho); color:#fff; }
+.seal--testado{ background:var(--verde); color:#04200F; }
+/* Selo secundário: contorno, sem preencher. Só um selo colorido por card. */
+.seal--line{
+  background:rgba(8,8,11,.72); color:var(--paper);
+  border:1px solid rgba(255,255,255,.38); backdrop-filter:blur(2px);
+}
+.seal--raro{ background:var(--rosa); color:#2A0014; }
+.seal--restaurado{ background:var(--azul); color:#fff; }
+
+/* Janela Windows 95 — usada em depoimentos e no "Sobre" */
+.win95{
+  background:#C6C6C6;
+  border:2px solid;
+  border-color:#FFFFFF #4A4A4A #4A4A4A #FFFFFF;
+  box-shadow:4px 4px 0 rgba(0,0,0,.55);
+  color:#101010;
+}
+.win95__bar{
+  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+  background:linear-gradient(90deg, var(--azul-deep), var(--roxo));
+  color:#fff; padding:.3rem .45rem;
+  font-family:var(--body); font-weight:700; font-size:.78rem;
+  letter-spacing:.02em;
+}
+.win95__btns{ display:flex; gap:3px; }
+.win95__btns i{
+  width:15px; height:14px; background:#C6C6C6; display:block;
+  border:1px solid; border-color:#FFF #4A4A4A #4A4A4A #FFF;
+}
+.win95__body{ padding:1.05rem 1.1rem 1.15rem; }
+
+/* ---------- 5. HEADER + HUD DA FITA ---------------------------- */
+.topbar{
+  background:var(--roxo-deep);
+  border-bottom:1px solid var(--ink-line);
+  font-family:var(--hud); font-size:1.15rem; letter-spacing:.08em;
+  color:var(--fluor); text-align:center; padding:.32rem 1rem;
+}
+.topbar b{ color:var(--paper); font-weight:400; }
+
+.header{
+  position:sticky; top:0; z-index:80;
+  background:rgba(8,8,11,.92);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--ink-line);
+}
+.header__in{
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.85rem 0;
+}
+.brand{ display:flex; align-items:center; gap:.65rem; text-decoration:none; }
+.brand__mark{
+  width:38px; height:38px; flex:none;
+  background:linear-gradient(140deg, var(--roxo), var(--azul));
+  border:2px solid var(--fluor); border-radius:50%;
+  display:grid; place-items:center;
+  font-family:var(--display); font-size:.95rem; color:var(--fluor);
+  box-shadow:0 0 18px rgba(122,63,191,.55);
+}
+.brand__name{ font-family:var(--display); font-size:1.05rem; line-height:1; letter-spacing:-.01em; }
+.brand__sub{ font-family:var(--hud); font-size:.95rem; color:var(--paper-dim); letter-spacing:.16em; line-height:1; }
+
+.nav{ display:flex; align-items:center; gap:1.6rem; }
+.nav a{
+  text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.02em;
+  color:var(--paper-dim); padding:.25rem 0; border-bottom:2px solid transparent;
+  transition:color .15s ease, border-color .15s ease;
+}
+.nav a:hover, .nav a:focus-visible{ color:var(--fluor); border-color:var(--fluor); }
+.nav .btn--fluor{ box-shadow:3px 3px 0 var(--azul-deep); margin-right:4px; }
+.nav .btn--fluor:hover{ box-shadow:5px 5px 0 var(--azul-deep); }
+
+/* HUD de câmera: mostra em que "ano da fita" o visitante está.
+   É o indicador de progresso da página, disfarçado de camcorder. */
+.hud{
+  position:fixed; left:14px; bottom:14px; z-index:88;
+  font-family:var(--hud); font-size:1.15rem; letter-spacing:.1em;
+  color:var(--fluor); background:rgba(8,8,11,.72);
+  border:1px solid var(--ink-line); border-radius:3px;
+  padding:.3rem .6rem; display:flex; align-items:center; gap:.55rem;
+  text-shadow:0 0 8px rgba(233,255,61,.45);
+  pointer-events:none;
+}
+.hud__dot{
+  width:8px; height:8px; border-radius:50%; background:var(--vermelho);
+  box-shadow:0 0 10px var(--vermelho); animation:rec 1.8s steps(1) infinite;
+}
+.progress{
+  position:fixed; top:0; left:0; height:3px; z-index:95;
+  width:0%;
+  background:linear-gradient(90deg, var(--roxo), var(--azul), var(--fluor));
+}
+
+/* ---------- 6. HERO -------------------------------------------- */
+.hero{
+  position:relative; overflow:hidden;
+  padding-block:clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 8vw, 6rem);
+  background:
+    radial-gradient(90% 120% at 12% 0%, rgba(122,63,191,.30), transparent 58%),
+    radial-gradient(70% 100% at 92% 18%, rgba(47,107,240,.24), transparent 62%),
+    var(--ink);
+}
+/* Grade de horizonte estilo abertura de programa dos anos 90 */
+.hero::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:38%;
+  background-image:
+    linear-gradient(rgba(122,63,191,.42) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122,63,191,.42) 1px, transparent 1px);
+  background-size:44px 44px;
+  transform:perspective(340px) rotateX(62deg);
+  transform-origin:bottom;
+  -webkit-mask-image:linear-gradient(to top, #000 5%, transparent 88%);
+  mask-image:linear-gradient(to top, #000 5%, transparent 88%);
+  opacity:.55; pointer-events:none;
+}
+.hero__grid{
+  display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(2rem,4vw,3.5rem);
+  align-items:center; position:relative; z-index:2;
+}
+.hero h1 em{
+  font-style:normal; color:var(--fluor);
+  /* efeito de aberração cromática: nome do site em RGB desalinhado */
+  text-shadow:3px 0 0 rgba(255,61,158,.85), -3px 0 0 rgba(47,107,240,.85);
+}
+.hero__lede{ font-size:clamp(1.05rem,1.6vw,1.2rem); color:var(--paper-dim); max-width:52ch; }
+.hero__cta{ display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; }
+.hero__micro{
+  font-family:var(--hud); font-size:1.1rem; color:var(--paper-dim); letter-spacing:.06em;
+}
+
+/* Faixa de números — prova de escala, não decoração */
+.stats{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--ink-line); margin-top:.6rem; padding-top:1.1rem; gap:1rem;
+}
+.stats dt{ font-family:var(--display); font-size:1.6rem; color:var(--paper); font-variant-numeric:tabular-nums; }
+.stats dd{ margin:0; font-size:.82rem; color:var(--paper-dim); line-height:1.3; }
+
+/* --- TV de tubo desenhada só com CSS (nenhuma imagem carregada) --- */
+.tv{
+  position:relative;
+  background:linear-gradient(160deg,#3A3A44,#1C1C22 60%,#111117);
+  border-radius:22px 22px 14px 14px;
+  padding:20px 20px 54px;
+  box-shadow:0 28px 60px rgba(0,0,0,.65), inset 0 2px 0 rgba(255,255,255,.14);
+  border:1px solid #45454F;
+}
+.tv__screen{
+  position:relative; aspect-ratio:4/3; border-radius:22px/16px; overflow:hidden;
+  background:
+    radial-gradient(140% 120% at 50% 40%, #2A1A55 0%, #120B26 55%, #05040C 100%);
+  border:6px solid #0A0A0E;
+  box-shadow:inset 0 0 60px rgba(0,0,0,.9);
+  display:grid; place-items:center; text-align:center;
+}
+/* Brilho de vidro curvo no canto superior */
+.tv__screen::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(118deg, rgba(255,255,255,.16) 0 16%, transparent 42%);
+  pointer-events:none;
+}
+.tv__screen::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,.30) 0 1px, transparent 1px 3px);
+}
+.tv__ch{
+  position:absolute; top:12px; left:14px; z-index:3;
+  font-family:var(--hud); font-size:1.35rem; color:var(--fluor); letter-spacing:.12em;
+  text-shadow:0 0 10px rgba(233,255,61,.6);
+}
+.tv__play{
+  position:absolute; top:12px; right:14px; z-index:3;
+  font-family:var(--hud); font-size:1.3rem; color:var(--paper); letter-spacing:.1em;
+}
+.tv__content{ position:relative; z-index:3; padding:1.4rem; }
+.tv__word{
+  font-family:var(--display); line-height:.95;
+  font-size:clamp(1.5rem,3.6vw,2.5rem);
+  color:var(--paper);
+  text-shadow:2px 0 0 rgba(255,61,158,.8), -2px 0 0 rgba(0,214,107,.8);
+}
+.tv__sub{
+  font-family:var(--hud); font-size:1.2rem; letter-spacing:.16em;
+  color:var(--fluor); margin-top:.5rem;
+}
+/* Botões e alto-falante do gabinete */
+.tv__panel{
+  position:absolute; left:20px; right:20px; bottom:14px; height:30px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.tv__speaker{
+  flex:1; height:18px; border-radius:3px;
+  background:repeating-linear-gradient(90deg,#26262E 0 3px,#15151B 3px 6px);
+  border:1px solid #0C0C10;
+}
+.tv__knobs{ display:flex; gap:8px; }
+.tv__knobs span{
+  width:16px; height:16px; border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, #55555F, #1B1B22);
+  border:1px solid #0C0C10;
+}
+.tv__brand{
+  font-family:var(--hud); font-size:1rem; color:#6A6A78; letter-spacing:.2em;
+}
+
+/* ---------- 7. CATEGORIAS -------------------------------------- */
+.cats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.9rem; }
+.cat{
+  position:relative; text-decoration:none;
+  background:var(--ink-2); border:1px solid var(--ink-line); border-radius:var(--radius);
+  padding:1.4rem 1.1rem 1.2rem;
+  transition:transform .18s ease, border-color .18s ease, background .18s ease;
+  overflow:hidden; min-height:190px;
+  display:flex; flex-direction:column; justify-content:space-between; gap:1rem;
+}
+/* Cada categoria tem UMA cor fixa — a cor identifica a seção, não enfeita */
+.cat::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
+  background:var(--c);
+}
+.cat:hover{ transform:translateY(-4px); border-color:var(--c); background:var(--ink-3); }
+.cat:focus-visible{ border-color:var(--c); }
+.cat__icon{ width:44px; height:44px; color:var(--c); }
+.cat__name{ font-family:var(--display); font-size:1.1rem; }
+.cat__desc{ font-size:.86rem; color:var(--paper-dim); line-height:1.4; }
+.cat__count{
+  font-family:var(--hud); font-size:1.05rem; letter-spacing:.1em; color:var(--c);
+}
+
+/* ---------- 8. PRODUTOS (capa de VHS) -------------------------- */
+.grid-prod{ display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:1.4rem; }
+.prod{
+  display:flex; flex-direction:column;
+  background:var(--ink-2); border:1px solid var(--ink-line); border-radius:var(--radius);
+  overflow:hidden; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.prod:hover{ transform:translateY(-6px); border-color:var(--c); box-shadow:0 18px 40px rgba(0,0,0,.55); }
+
+/* A "capa": proporção de caixa de VHS, lombada colorida à esquerda */
+.prod__cover{
+  position:relative; aspect-ratio:4/3; overflow:hidden;
+  background:
+    radial-gradient(105% 105% at 22% 8%, var(--c2), transparent 55%),
+    linear-gradient(148deg, var(--c) -25%, #0C0C14 58%, #08080B 100%);
+  display:grid; place-items:center;
+  border-bottom:1px solid var(--ink-line);
+}
+.prod__cover::before{  /* lombada */
+  content:""; position:absolute; left:0; top:0; bottom:0; width:26px;
+  background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.15));
+  border-right:1px solid rgba(255,255,255,.14);
+}
+.prod__cover::after{   /* trama de meio-tom + vinheta: textura de impressão barata */
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px),
+    radial-gradient(130% 90% at 50% 0%, transparent 42%, rgba(4,4,8,.72) 100%);
+  background-size:5px 5px, 100% 100%;
+}
+.prod__art{ width:52%; max-width:138px; color:rgba(255,255,255,.90); filter:drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
+.prod__seals{ position:absolute; top:.6rem; right:.6rem; z-index:3; display:flex; flex-direction:column; gap:.32rem; align-items:flex-end; }
+.prod__year{
+  position:absolute; left:34px; bottom:.6rem; z-index:3;
+  font-family:var(--hud); font-size:1.15rem; letter-spacing:.14em; color:rgba(255,255,255,.9);
+}
+.prod__body{ padding:1rem 1.05rem 1.15rem; display:flex; flex-direction:column; gap:.55rem; flex:1; }
+.prod__name{ font-family:var(--display); font-size:1.02rem; line-height:1.16; }
+.prod__desc{ font-size:.87rem; color:var(--paper-dim); line-height:1.45; flex:1; }
+.prod__meta{
+  display:flex; align-items:baseline; justify-content:space-between; gap:.6rem;
+  border-top:1px solid var(--ink-line); padding-top:.7rem; margin-top:.2rem;
+}
+.prod__price{ font-family:var(--display); font-size:1.28rem; color:var(--fluor); font-variant-numeric:tabular-nums; }
+.prod__price s{ display:block; font-family:var(--body); font-size:.78rem; color:#6E6B7C; text-decoration-color:var(--vermelho); }
+.prod__buy{
+  font-family:var(--display); font-size:.72rem; text-transform:uppercase;
+  background:var(--ink-3); color:var(--paper); border:1px solid var(--ink-line);
+  padding:.55rem .85rem; border-radius:2px; cursor:pointer;
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.prod__buy:hover{ background:var(--laranja); color:#180800; border-color:var(--laranja); }
+.prod__stock{ font-family:var(--hud); font-size:1.05rem; color:var(--vermelho); letter-spacing:.08em; }
+
+/* ---------- 9. GARANTIAS --------------------------------------- */
+.guards{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1px; background:var(--ink-line);
+  border-block:1px solid var(--ink-line);
+}
+.guard{ background:var(--ink); padding:1.35rem 1.2rem; display:flex; gap:.8rem; align-items:flex-start; }
+.guard svg{ width:26px; height:26px; flex:none; color:var(--verde); margin-top:2px; }
+.guard b{ display:block; font-family:var(--display); font-size:.95rem; margin-bottom:.28rem; }
+.guard span{ font-size:.88rem; color:#BDBACA; line-height:1.45; }
+
+/* ---------- 10. DEPOIMENTOS ------------------------------------ */
+.deps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+.dep__text{ font-size:.95rem; line-height:1.55; }
+.dep__text b{ background:var(--fluor); padding:0 .18em; }
+.dep__who{
+  display:flex; align-items:center; gap:.6rem; margin-top:.9rem;
+  border-top:1px solid #9A9A9A; padding-top:.7rem;
+}
+.dep__av{
+  width:36px; height:36px; flex:none; border-radius:2px;
+  display:grid; place-items:center; font-family:var(--display); font-size:.9rem; color:#fff;
+}
+.dep__name{ font-weight:700; font-size:.86rem; line-height:1.2; }
+.dep__meta{ font-size:.76rem; color:#4A4A4A; line-height:1.2; }
+.dep__stars{ color:var(--laranja); font-size:.9rem; letter-spacing:.1em; }
+
+/* ---------- 11. SOBRE ------------------------------------------ */
+.about{
+  background:
+    linear-gradient(180deg, var(--ink) 0%, #0C0A16 100%);
+  border-block:1px solid var(--ink-line);
+}
+.about__grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(2rem,4vw,3.4rem); align-items:center; }
+.about p + p{ margin-top:.9rem; }
+.about__quote{
+  font-family:var(--display); font-size:clamp(1.15rem,2vw,1.5rem); line-height:1.2;
+  color:var(--fluor); border-left:4px solid var(--laranja); padding-left:1rem; margin-top:1.4rem;
+}
+.timeline{ display:flex; flex-direction:column; gap:0; }
+.tl{
+  display:grid; grid-template-columns:76px 1fr; gap:1rem; padding:1rem 0;
+  border-bottom:1px dashed var(--ink-line);
+}
+.tl:last-child{ border-bottom:0; }
+.tl__year{ font-family:var(--hud); font-size:1.5rem; color:var(--rosa); letter-spacing:.06em; }
+.tl__txt{ font-size:.92rem; color:var(--paper-dim); }
+.tl__txt b{ color:var(--paper); font-weight:600; }
+
+/* ---------- 12. CTA FINAL + NEWSLETTER ------------------------- */
+.final{
+  background:
+    radial-gradient(80% 130% at 50% 0%, rgba(122,63,191,.42), transparent 60%),
+    var(--ink);
+  text-align:center;
+}
+.final h2{ max-width:22ch; margin-inline:auto; }
+.final .lede{ margin-inline:auto; text-align:center; }
+.news{
+  display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center;
+  margin-top:1.6rem; width:min(560px,100%); margin-inline:auto;
+}
+.news input{
+  flex:1 1 260px; min-width:0;
+  background:var(--ink-2); border:2px solid var(--ink-line); border-radius:var(--radius);
+  padding:.9rem 1rem; color:var(--paper);
+}
+.news input::placeholder{ color:#6E6B7C; }
+.news input:focus{ outline:none; border-color:var(--fluor); }
+.news__note{ font-size:.78rem; color:#6E6B7C; margin-top:.75rem; }
+.news__ok{
+  font-family:var(--hud); font-size:1.25rem; color:var(--verde);
+  letter-spacing:.08em; margin-top:.9rem; min-height:1.5rem;
+}
+.countdown{
+  font-family:var(--hud); font-size:1.5rem; color:var(--fluor);
+  letter-spacing:.14em; font-variant-numeric:tabular-nums;
+}
+
+/* ---------- 13. RODAPÉ ----------------------------------------- */
+.footer{ background:#050508; border-top:1px solid var(--ink-line); padding-block:3rem 2rem; }
+.footer__grid{
+  display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:2rem;
+}
+.footer h4{
+  font-family:var(--display); font-size:.82rem; text-transform:uppercase;
+  letter-spacing:.06em; margin:0 0 .8rem; color:var(--paper);
+}
+.footer li{ margin-bottom:.42rem; }
+.footer a{ color:var(--paper-dim); text-decoration:none; font-size:.88rem; }
+.footer a:hover{ color:var(--fluor); text-decoration:underline; }
+.social{ display:flex; gap:.5rem; margin-top:.9rem; }
+.social a{
+  width:34px; height:34px; display:grid; place-items:center;
+  border:1px solid var(--ink-line); border-radius:2px; color:var(--paper-dim);
+  transition:color .15s, border-color .15s;
+}
+.social a:hover{ color:var(--fluor); border-color:var(--fluor); }
+.social svg{ width:17px; height:17px; }
+.footer__bottom{
+  margin-top:2.4rem; padding-top:1.2rem; border-top:1px solid var(--ink-line);
+  display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; justify-content:space-between;
+  font-size:.78rem; color:#5E5B6C;
+}
+
+/* ---------- 14. RESPONSIVO E ACESSIBILIDADE -------------------- */
+@media (max-width:900px){
+  .hero__grid{ grid-template-columns:1fr; }
+  .tv{ order:-1; }
+  .about__grid{ grid-template-columns:1fr; }
+  .footer__grid{ grid-template-columns:1fr 1fr; }
+  .nav{ display:none; }           /* navegação vira âncora no rodapé no mobile */
+}
+@media (max-width:520px){
+  .stats{ grid-template-columns:1fr; gap:.6rem; text-align:left; }
+  .stats > div{ display:flex; align-items:baseline; gap:.6rem; }
+  .footer__grid{ grid-template-columns:1fr; }
+  .hud{ display:none; }           /* HUD atrapalha em tela pequena */
+  .btn{ width:100%; }
+  .hero__cta{ flex-direction:column; align-items:stretch; }
+}
+
+/* Foco sempre visível — teclado tem que enxergar onde está */
+a:focus-visible, button:focus-visible, input:focus-visible{
+  outline:3px solid var(--fluor); outline-offset:3px; border-radius:2px;
+}
+
+/* Quem pediu menos movimento, recebe menos movimento */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Texturas do portal: ficam por cima de tudo, mas não capturam clique -->
+<div class="crt-overlay" aria-hidden="true"></div>
+<div class="crt-vignette" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="hud" aria-hidden="true"><span class="hud__dot"></span><span id="hudDate">REC 00:00 1990</span></div>
+
+<!-- ============================================================
+     BIBLIOTECA DE ÍCONES
+     Desenhados em SVG (nada de imagem externa: carrega instantâneo,
+     nunca quebra e acompanha a cor do bloco).
+     Para trocar por foto real, substitua o <svg class="prod__art">
+     do card por: <img src="sua-foto.webp" alt="descrição da peça" loading="lazy">
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- TV de tubo -->
+    <symbol id="i-tv" viewBox="0 0 64 64">
+      <rect x="4" y="12" width="44" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="9" y="17" width="34" height="24" rx="3" fill="currentColor" opacity=".28"/>
+      <circle cx="54" cy="22" r="3" fill="currentColor"/><circle cx="54" cy="31" r="3" fill="currentColor"/>
+      <rect x="50" y="37" width="9" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M18 12 8 4M34 12l10-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M14 46v6h26v-6" stroke="currentColor" stroke-width="3" fill="none"/>
+    </symbol>
+    <!-- Fita VHS -->
+    <symbol id="i-vhs" viewBox="0 0 64 64">
+      <rect x="4" y="14" width="56" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="11" y="21" width="42" height="16" rx="2" fill="currentColor" opacity=".25"/>
+      <circle cx="23" cy="29" r="6" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="41" cy="29" r="6" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="11" y="41" width="42" height="4" rx="1" fill="currentColor"/>
+    </symbol>
+    <!-- Walkman / toca-fitas -->
+    <symbol id="i-walkman" viewBox="0 0 64 64">
+      <rect x="8" y="12" width="48" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="14" y="18" width="36" height="18" rx="2" fill="currentColor" opacity=".25"/>
+      <circle cx="24" cy="27" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      <circle cx="40" cy="27" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      <rect x="14" y="41" width="7" height="5" fill="currentColor"/>
+      <rect x="24" y="41" width="7" height="5" fill="currentColor"/>
+      <rect x="34" y="41" width="16" height="5" fill="currentColor" opacity=".5"/>
+    </symbol>
+    <!-- Disco de vinil -->
+    <symbol id="i-vinil" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="32" cy="32" r="16" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".6"/>
+      <circle cx="32" cy="32" r="10" fill="currentColor" opacity=".3"/>
+      <circle cx="32" cy="32" r="3" fill="currentColor"/>
+    </symbol>
+    <!-- Fliperama / arcade -->
+    <symbol id="i-arcade" viewBox="0 0 64 64">
+      <path d="M16 6h32a4 4 0 0 1 4 4v44a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4z" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="18" y="12" width="28" height="18" rx="2" fill="currentColor" opacity=".28"/>
+      <circle cx="24" cy="39" r="3.4" fill="currentColor"/>
+      <circle cx="34" cy="39" r="3.4" fill="currentColor"/>
+      <circle cx="42" cy="39" r="3.4" fill="currentColor"/>
+      <rect x="18" y="46" width="28" height="4" rx="2" fill="currentColor" opacity=".5"/>
+    </symbol>
+    <!-- Telefone de disco -->
+    <symbol id="i-fone" viewBox="0 0 64 64">
+      <rect x="8" y="26" width="48" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="32" cy="39" r="9" fill="none" stroke="currentColor" stroke-width="2.6"/>
+      <circle cx="32" cy="39" r="2.4" fill="currentColor"/>
+      <path d="M14 26c0-6 8-10 18-10s18 4 18 10" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="12" y="14" width="9" height="7" rx="2" fill="currentColor"/>
+      <rect x="43" y="14" width="9" height="7" rx="2" fill="currentColor"/>
+    </symbol>
+    <!-- Sofá -->
+    <symbol id="i-sofa" viewBox="0 0 64 64">
+      <path d="M10 34V22a5 5 0 0 1 5-5h34a5 5 0 0 1 5 5v12" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="4" y="32" width="56" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <path d="M18 32V22M46 32V22" stroke="currentColor" stroke-width="2.4" opacity=".6"/>
+      <path d="M12 48v5M52 48v5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <!-- Disquete -->
+    <symbol id="i-disquete" viewBox="0 0 64 64">
+      <path d="M10 8h34l10 10v38a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="19" y="8" width="20" height="16" fill="currentColor" opacity=".35"/>
+      <rect x="30" y="10" width="5" height="11" fill="currentColor"/>
+      <rect x="17" y="34" width="30" height="18" fill="none" stroke="currentColor" stroke-width="2.6"/>
+    </symbol>
+    <!-- Brinquedo / bichinho virtual -->
+    <symbol id="i-toy" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="34" rx="20" ry="22" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="21" y="24" width="22" height="17" rx="3" fill="currentColor" opacity=".28"/>
+      <circle cx="27" cy="32" r="2.2" fill="currentColor"/><circle cx="37" cy="32" r="2.2" fill="currentColor"/>
+      <circle cx="24" cy="48" r="3" fill="currentColor"/><circle cx="32" cy="49" r="3" fill="currentColor"/><circle cx="40" cy="48" r="3" fill="currentColor"/>
+      <path d="M22 14l6 6M42 14l-6 6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <!-- Abajur / decoração -->
+    <symbol id="i-deco" viewBox="0 0 64 64">
+      <path d="M18 10h28l7 22H11z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M32 32v18" stroke="currentColor" stroke-width="3"/>
+      <path d="M18 56h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M22 50h20l4 6H18z" fill="currentColor" opacity=".35"/>
+    </symbol>
+    <!-- Ícones de garantia -->
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 18v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 8l9 5 9-5M12 13v8" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 4v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="7" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <!-- Redes sociais -->
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.6-4.5A8.5 8.5 0 1 1 8 20.2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9c0 4 2 6 6 6 1-1 1-2 0-2.4l-1.4-.5-.9 1c-1-.4-1.8-1.2-2.2-2.2l1-.9-.5-1.4C10.6 8 9.7 8 9 9z" fill="currentColor"/></symbol>
+    <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9l6 3-6 3z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================ HEADER -->
+<div class="topbar">FRETE GRÁTIS ACIMA DE R$ 500 <b>·</b> 12 PEÇAS NOVAS TODA QUINTA, 20H <b>·</b> QUANDO VENDE, ACABOU</div>
+
+<header class="header">
+  <div class="wrap header__in">
+    <a class="brand" href="#topo" aria-label="Portal do Tempo — início">
+      <span class="brand__mark" aria-hidden="true">PT</span>
+      <span>
+        <span class="brand__name">PORTAL DO TEMPO</span><br>
+        <span class="brand__sub">CH 03 · 1990—1999</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#colecoes">Coleções</a>
+      <a href="#acervo">Acervo</a>
+      <a href="#depoimentos">Quem já voltou</a>
+      <a href="#sobre">O Portal</a>
+      <a href="#fita" class="btn btn--fluor" style="padding:.55rem 1rem;font-size:.78rem;">A Fita Semanal</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================ 1. HERO -->
+<main id="topo">
+<section class="hero">
+  <div class="wrap hero__grid">
+
+    <div class="stack">
+      <span class="eyebrow">REC · GRAVANDO DESDE 1990</span>
+      <h1>A sua infância não sumiu.<br>Ela só está com <em>outro dono</em>.</h1>
+      <p class="hero__lede">
+        Todo dia a gente entra numa casa que está sendo desmontada e encontra o rádio,
+        o sofá, a fita e o brinquedo que você jurava que só existiam na sua memória.
+        Lavamos, restauramos, ligamos na tomada — e colocamos aqui. Uma unidade de cada.
+        Quando vende, acabou de verdade.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#acervo">▶ Entrar no Portal</a>
+        <a class="btn btn--ghost" href="#colecoes">Ver coleções</a>
+      </div>
+      <p class="hero__micro">◀◀ 1.284 PEÇAS RESGATADAS · 41 DISPONÍVEIS AGORA ▶▶</p>
+
+      <dl class="stats">
+        <div><dt>1.284</dt><dd>peças resgatadas de casas, galpões e desmanches desde 2016</dd></div>
+        <div><dt>97%</dt><dd>dos eletrônicos saem daqui ligando e funcionando</dd></div>
+        <div><dt>72h</dt><dd>é o tempo médio que uma peça rara fica no site</dd></div>
+      </dl>
+    </div>
+
+    <!-- TV de tubo: 100% CSS. É o "portal" propriamente dito. -->
+    <div class="tv" role="img" aria-label="Televisão de tubo dos anos 90 exibindo a chamada do Portal do Tempo">
+      <div class="tv__screen">
+        <span class="tv__ch">CH 03</span>
+        <span class="tv__play">▶ PLAY</span>
+        <div class="tv__content">
+          <p class="tv__word">VOCÊ<br>ESTÁ<br>ENTRANDO<br>EM 1994</p>
+          <p class="tv__sub">NÃO REBOBINE</p>
+        </div>
+      </div>
+      <div class="tv__panel">
+        <span class="tv__brand">TRINITRÔNICA</span>
+        <span class="tv__speaker"></span>
+        <span class="tv__knobs"><span></span><span></span></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+<div class="tracking-bar" aria-hidden="true"></div>
+
+<!-- ============================================================ 2. COLEÇÕES -->
+<section class="section" id="colecoes">
+  <div class="wrap stack">
+    <div>
+      <span class="eyebrow">SELECIONE O CANAL</span>
+      <h2>Cinco portas. Cada uma abre num pedaço diferente da década.</h2>
+      <p class="lede" style="margin-top:.7rem">
+        A gente não organiza por categoria de loja. Organiza por lembrança: onde a peça ficava na sua casa.
+      </p>
+    </div>
+
+    <div class="cats">
+      <a class="cat" href="#acervo" style="--c:var(--laranja)">
+        <svg class="cat__icon" aria-hidden="true"><use href="#i-tv"></use></svg>
+        <div>
+          <p class="cat__name">Eletrônicos</p>
+          <p class="cat__desc">TV de tubo, videocassete, Walkman, Discman, rádio-relógio e o videogame que era do vizinho.</p>
+        </div>
+        <span class="cat__count">14 PEÇAS ▸</span>
+      </a>
+
+      <a class="cat" href="#acervo" style="--c:var(--azul)">
+        <svg class="cat__icon" aria-hidden="true"><use href="#i-sofa"></use></svg>
+        <div>
+          <p class="cat__name">Móveis</p>
+          <p class="cat__desc">O sofá de courvin da vó, a estante do som, a cadeira de fórmica e a mesinha de canto com toalha de crochê.</p>
+        </div>
+        <span class="cat__count">9 PEÇAS ▸</span>
+      </a>
+
+      <a class="cat" href="#acervo" style="--c:var(--rosa)">
+        <svg class="cat__icon" aria-hidden="true"><use href="#i-vinil"></use></svg>
+        <div>
+          <p class="cat__name">Música</p>
+          <p class="cat__desc">Vinil de sofrência, fita K7 gravada do rádio, CD de coletânea e o toca-discos que ainda gira certinho.</p>
+        </div>
+        <span class="cat__count">62 PEÇAS ▸</span>
+      </a>
+
+      <a class="cat" href="#acervo" style="--c:var(--verde)">
+        <svg class="cat__icon" aria-hidden="true"><use href="#i-toy"></use></svg>
+        <div>
+          <p class="cat__name">Brinquedos</p>
+          <p class="cat__desc">Bichinho virtual, álbum de figurinha, fliperama de mesa, boneco de vinil e aquele carrinho de fricção.</p>
+        </div>
+        <span class="cat__count">23 PEÇAS ▸</span>
+      </a>
+
+      <a class="cat" href="#acervo" style="--c:var(--fluor)">
+        <svg class="cat__icon" aria-hidden="true"><use href="#i-deco"></use></svg>
+        <div>
+          <p class="cat__name">Decoração</p>
+          <p class="cat__desc">Abajur de vidro fumê, relógio de parede da padaria, quadro de gatinho e a garrafa de guaraná vazia que ninguém jogou fora.</p>
+        </div>
+        <span class="cat__count">31 PEÇAS ▸</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 3. ACERVO -->
+<section class="section" id="acervo" style="background:var(--ink-2); border-block:1px solid var(--ink-line)">
+  <div class="wrap stack">
+    <div>
+      <span class="eyebrow">ACERVO DA SEMANA · ATUALIZADO QUINTA, 20H</span>
+      <h2>Sete peças que provavelmente você não vê há 25 anos.</h2>
+      <p class="lede" style="margin-top:.7rem">
+        Cada uma tem <strong style="color:var(--paper)">uma unidade só</strong> — não é estoque, é achado.
+        O preço já inclui limpeza, revisão elétrica e teste. O que está aqui, funciona.
+      </p>
+    </div>
+
+    <div class="grid-prod">
+
+      <!-- Card 1 -->
+      <article class="prod" style="--c:#6E2AA0; --c2:rgba(255,106,24,.55)">
+        <div class="prod__cover">
+          <!-- Troque este SVG por <img src="..." alt="..." loading="lazy"> se usar foto real -->
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-tv"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--unica">Peça única</span>
+            <span class="seal seal--line">Liga e funciona</span>
+          </div>
+          <span class="prod__year">1994</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">TV de Tubo 20" — a que segurava a antena</h3>
+          <p class="prod__desc">Tela convexa, botão giratório de canal e aquele estalo ao desligar. Revisada, com entrada AV traseira funcionando para você plugar o videocassete.</p>
+          <span class="prod__stock">RESTA 1 · 6 PESSOAS VENDO</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 890 <s>R$ 1.150</s></span>
+            <button class="prod__buy" type="button" data-produto='TV de Tubo 20"'>Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="prod" style="--c:#1F4FBF; --c2:rgba(233,255,61,.45)">
+        <div class="prod__cover">
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-vhs"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--unica">Peça única</span>
+            <span class="seal seal--line">Restaurada</span>
+          </div>
+          <span class="prod__year">1997</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">Videocassete 4 Cabeças + 3 fitas gravadas</h3>
+          <p class="prod__desc">Cabeçote limpo, bandeja suave, controle original. Vai com três fitas de família gravadas da TV aberta — sim, com o intervalo comercial inteiro.</p>
+          <span class="prod__stock">RESTA 1 · SAIU 2× ESTE MÊS</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 640</span>
+            <button class="prod__buy" type="button" data-produto="Videocassete 4 Cabeças">Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="prod" style="--c:#B8263F; --c2:rgba(255,61,158,.5)">
+        <div class="prod__cover">
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-walkman"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--raro">Raridade</span>
+            <span class="seal seal--line">Liga e funciona</span>
+          </div>
+          <span class="prod__year">1992</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">Walkman amarelo à prova d'água</h3>
+          <p class="prod__desc">O da praia, o do ônibus, o que ficava no elástico da bermuda. Auto-reverse funcionando, correia trocada, espuma do fone nova.</p>
+          <span class="prod__stock">RESTA 1 · ÚLTIMO DESSA COR</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 380</span>
+            <button class="prod__buy" type="button" data-produto="Walkman amarelo">Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="prod" style="--c:#0F7A46; --c2:rgba(47,107,240,.5)">
+        <div class="prod__cover">
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-arcade"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--unica">Peça única</span>
+            <span class="seal seal--line">Restaurada</span>
+          </div>
+          <span class="prod__year">1991</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">Fliperama de mesa — o do bar da esquina</h3>
+          <p class="prod__desc">Gabinete de madeira maciça recuperado, monitor de tubo original, botões e manche novos. Aceita ficha ou joga no modo livre.</p>
+          <span class="prod__stock">RESTA 1 · ENTREGA AGENDADA</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 2.450</span>
+            <button class="prod__buy" type="button" data-produto="Fliperama de mesa">Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="prod" style="--c:#C25412; --c2:rgba(233,255,61,.4)">
+        <div class="prod__cover">
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-fone"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--testado">Liga e funciona</span>
+          </div>
+          <span class="prod__year">1990</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">Telefone de disco laranja</h3>
+          <p class="prod__desc">Aquele que ficava no corredor com o fio esticado até o quarto. Disco macio, campainha de sino de verdade. Funciona em linha fixa analógica.</p>
+          <span class="prod__stock">RESTAM 2 · CORES DIFERENTES</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 290</span>
+            <button class="prod__buy" type="button" data-produto="Telefone de disco laranja">Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="prod" style="--c:#5B2F86; --c2:rgba(0,214,107,.45)">
+        <div class="prod__cover">
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-sofa"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--unica">Peça única</span>
+            <span class="seal seal--line">Reestofado</span>
+          </div>
+          <span class="prod__year">1993</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">Sofá da vó, courvin caramelo, 3 lugares</h3>
+          <p class="prod__desc">Estrutura de madeira sem cupim, espuma nova, courvin original higienizado. Gruda na perna no calor exatamente como você lembra.</p>
+          <span class="prod__stock">RESTA 1 · RETIRADA OU FRETE</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 1.780</span>
+            <button class="prod__buy" type="button" data-produto="Sofá da vó">Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 7 -->
+      <article class="prod" style="--c:#8A1E5C; --c2:rgba(255,106,24,.45)">
+        <div class="prod__cover">
+          <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-vinil"></use></svg>
+          <div class="prod__seals">
+            <span class="seal seal--raro">Raridade</span>
+          </div>
+          <span class="prod__year">1995</span>
+        </div>
+        <div class="prod__body">
+          <h3 class="prod__name">Caixa com 40 vinis de sertanejo e brega</h3>
+          <p class="prod__desc">Garimpo de uma casa em Ribeirão. Capas amareladas, discos limpos em máquina, sem chiado grosseiro. Vai a caixa inteira, sem escolher.</p>
+          <span class="prod__stock">RESTA 1 CAIXA</span>
+          <div class="prod__meta">
+            <span class="prod__price">R$ 520</span>
+            <button class="prod__buy" type="button" data-produto="Caixa com 40 vinis">Quero essa</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="hero__micro" style="text-align:center;margin-top:.6rem">
+      ◀◀ O ACERVO COMPLETO TEM 41 PEÇAS · A FITA SEMANAL VÊ TUDO 24H ANTES ▶▶
+    </p>
+    <div style="text-align:center"><a class="btn btn--primary" href="#fita">Quero ver antes de todo mundo</a></div>
+  </div>
+</section>
+
+<!-- ============================================================ GARANTIAS -->
+<section class="guards" aria-label="Nossas garantias">
+  <div class="guard"><svg aria-hidden="true"><use href="#i-plug"></use></svg><div><b>Testado na tomada</b><span>Nenhum eletrônico sai daqui sem ser ligado e usado por 48 horas.</span></div></div>
+  <div class="guard"><svg aria-hidden="true"><use href="#i-box"></use></svg><div><b>Embalagem de múmia</b><span>Plástico-bolha, canto reforçado e caixa sob medida. Peça antiga não aguenta tombo.</span></div></div>
+  <div class="guard"><svg aria-hidden="true"><use href="#i-back"></use></svg><div><b>7 dias para desistir</b><span>Chegou e não era o que você lembrava? Devolve. A gente paga a volta.</span></div></div>
+  <div class="guard"><svg aria-hidden="true"><use href="#i-truck"></use></svg><div><b>Brasil inteiro</b><span>Frete calculado no carrinho. Móvel grande vai de transportadora com agendamento.</span></div></div>
+</section>
+
+<!-- ============================================================ 4. PROVA SOCIAL -->
+<section class="section" id="depoimentos">
+  <div class="wrap stack">
+    <div>
+      <span class="eyebrow">CARTAS DE QUEM JÁ VOLTOU</span>
+      <h2>Ninguém compra um objeto aqui. Compra o dia que ele lembra.</h2>
+    </div>
+
+    <div class="deps">
+
+      <figure class="win95" style="margin:0">
+        <div class="win95__bar"><span>depoimento_marcia.txt</span><span class="win95__btns"><i></i><i></i><i></i></span></div>
+        <div class="win95__body">
+          <blockquote class="dep__text" style="margin:0">
+            "Achei o rádio-relógio que tinha na cabeceira da minha avó. O <b>mesmo modelo, a mesma cor</b>.
+            Liguei ele na cozinha e chorei igual criança. Minha mãe não acreditou quando viu."
+          </blockquote>
+          <figcaption class="dep__who">
+            <span class="dep__av" style="background:var(--roxo)">MS</span>
+            <span>
+              <span class="dep__name">Márcia S.</span>
+              <span class="dep__meta">Belo Horizonte · comprou rádio-relógio 1991</span>
+            </span>
+            <span class="dep__stars" style="margin-left:auto" aria-label="5 de 5 estrelas">★★★★★</span>
+          </figcaption>
+        </div>
+      </figure>
+
+      <figure class="win95" style="margin:0">
+        <div class="win95__bar"><span>depoimento_rogerio.txt</span><span class="win95__btns"><i></i><i></i><i></i></span></div>
+        <div class="win95__body">
+          <blockquote class="dep__text" style="margin:0">
+            "Comprei o fliperama pro escritório achando que ia ser enfeite. Virou o motivo de todo mundo
+            chegar mais cedo. <b>Chegou funcionando</b>, sem uma tecla dura. Já indiquei pra três amigos."
+          </blockquote>
+          <figcaption class="dep__who">
+            <span class="dep__av" style="background:var(--azul)">RA</span>
+            <span>
+              <span class="dep__name">Rogério A.</span>
+              <span class="dep__meta">Curitiba · comprou fliperama de mesa</span>
+            </span>
+            <span class="dep__stars" style="margin-left:auto" aria-label="5 de 5 estrelas">★★★★★</span>
+          </figcaption>
+        </div>
+      </figure>
+
+      <figure class="win95" style="margin:0">
+        <div class="win95__bar"><span>depoimento_juliana.txt</span><span class="win95__btns"><i></i><i></i><i></i></span></div>
+        <div class="win95__body">
+          <blockquote class="dep__text" style="margin:0">
+            "Dei o Walkman de presente pro meu marido no aniversário de 40. Ele passou a noite inteira
+            gravando fita pra mim, igual em 96. <b>Melhor presente que já dei</b>, e olha que eu já dei viagem."
+          </blockquote>
+          <figcaption class="dep__who">
+            <span class="dep__av" style="background:var(--vermelho)">JP</span>
+            <span>
+              <span class="dep__name">Juliana P.</span>
+              <span class="dep__meta">Recife · comprou Walkman + 10 fitas K7</span>
+            </span>
+            <span class="dep__stars" style="margin-left:auto" aria-label="5 de 5 estrelas">★★★★★</span>
+          </figcaption>
+        </div>
+      </figure>
+
+    </div>
+  </div>
+</section>
+<div class="tracking-bar" aria-hidden="true"></div>
+
+<!-- ============================================================ 5. SOBRE -->
+<section class="section about" id="sobre">
+  <div class="wrap about__grid">
+    <div>
+      <span class="eyebrow">O PORTAL DO TEMPO</span>
+      <h2>Começou porque jogaram o som do meu pai no lixo.</h2>
+      <p class="lede" style="margin-top:1rem">
+        Em 2016 eu ajudei a esvaziar a casa do meu avô. No meio do entulho estava o system de três torres
+        que tocou a minha infância inteira — e o caminhão de entulho já tinha levado metade.
+        Eu resgatei o que deu, consertei numa oficina de bairro e liguei. Funcionou.
+      </p>
+      <p class="lede">
+        Foi aí que caiu a ficha: <strong style="color:var(--paper)">todo dia uma casa é desmontada no Brasil
+        e a memória de alguém vai pro ferro-velho.</strong> Hoje somos quatro pessoas, um galpão em Santo André
+        e uma bancada de reparo. A gente compra de inventário, de mudança, de desmanche e de quem simplesmente
+        não tem mais onde guardar.
+      </p>
+      <p class="lede">
+        Cada peça passa por limpeza, revisão elétrica quando é o caso, e um teste real de uso.
+        O que não recupera, a gente não vende — vira peça de reposição pra salvar a próxima.
+      </p>
+      <p class="about__quote">"Objeto velho é lixo. Objeto com história é acervo. A diferença é quem cuida."</p>
+    </div>
+
+    <!-- Linha do tempo: aqui a numeração é informação de verdade (a ordem importa),
+         não enfeite de "01 / 02 / 03". -->
+    <div class="timeline win95" style="padding:1.2rem 1.3rem; color:var(--paper); background:var(--ink-2); border-color:var(--ink-line); box-shadow:6px 6px 0 rgba(122,63,191,.35)">
+      <div class="tl"><span class="tl__year">2016</span><span class="tl__txt">Primeiro resgate: <b>o system de três torres do meu avô.</b> Voltou a tocar depois de 11 anos desligado.</span></div>
+      <div class="tl"><span class="tl__year">2018</span><span class="tl__txt">Galpão alugado em Santo André e a primeira <b>bancada de reparo</b> de verdade, com osciloscópio de segunda mão.</span></div>
+      <div class="tl"><span class="tl__year">2021</span><span class="tl__txt">Chegamos a <b>500 peças resgatadas</b>. Começamos a comprar acervos inteiros de inventário.</span></div>
+      <div class="tl"><span class="tl__year">2024</span><span class="tl__txt">Nasce a <b>Fita Semanal</b>: toda quinta, 20h, 12 peças novas — e quem assina vê 24 horas antes.</span></div>
+      <div class="tl"><span class="tl__year">Hoje</span><span class="tl__txt"><b>1.284 peças</b> devolvidas pra circulação. Nenhuma delas foi pro entulho.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 6. CTA FINAL -->
+<section class="section final" id="fita">
+  <div class="wrap stack" style="align-items:center">
+    <span class="eyebrow">A FITA SEMANAL</span>
+    <h2>Quinta, 20h. Doze peças. Vinte e quatro horas de vantagem.</h2>
+    <p class="lede">
+      Toda semana chegam 12 peças novas ao acervo. Quem está na Fita Semanal recebe o link
+      na quarta às 20h — <strong style="color:var(--paper)">um dia inteiro antes do site abrir pro público.</strong>
+      É assim que as pessoas conseguem as raridades: não é sorte, é ordem de chegada.
+    </p>
+    <p class="countdown" id="countdown">CARREGANDO CONTAGEM…</p>
+
+    <!-- Formulário sem coleta real: nada é enviado a lugar nenhum nesta demonstração.
+         Ao plugar num backend, valide o e-mail também no servidor e use HTTPS + CSRF. -->
+    <form class="news" id="newsForm" novalidate>
+      <label class="sr-only" for="email">Seu melhor e-mail</label>
+      <input type="email" id="email" name="email" required autocomplete="email"
+             placeholder="seu melhor e-mail" aria-describedby="newsNote">
+      <button class="btn btn--fluor" type="submit">Entrar na fita</button>
+    </form>
+    <p class="news__ok" id="newsOk" role="status" aria-live="polite"></p>
+    <p class="news__note" id="newsNote">
+      Um e-mail por semana. Sem corrente, sem promoção de coisa que você não pediu. Sai quando quiser em um clique.
+    </p>
+
+    <div class="hero__cta" style="justify-content:center;margin-top:1.4rem">
+      <a class="btn btn--primary" href="#acervo">▶ Ver o acervo agora</a>
+      <a class="btn btn--ghost" href="https://wa.me/5511900000000" rel="noopener noreferrer" target="_blank">Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================ 7. RODAPÉ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="#topo" style="margin-bottom:.8rem">
+          <span class="brand__mark" aria-hidden="true">PT</span>
+          <span>
+            <span class="brand__name">PORTAL DO TEMPO</span><br>
+            <span class="brand__sub">GARIMPO · REPARO · ACERVO</span>
+          </span>
+        </a>
+        <p style="font-size:.86rem;color:var(--paper-dim);max-width:34ch">
+          Objetos originais dos anos 90, resgatados de casas reais e devolvidos funcionando.
+          Galpão 3 — Rua das Fitas, 1990 · Santo André, SP.
+        </p>
+        <div class="social">
+          <a href="https://instagram.com/" rel="noopener noreferrer" target="_blank" aria-label="Instagram do Portal do Tempo"><svg aria-hidden="true"><use href="#i-ig"></use></svg></a>
+          <a href="https://wa.me/5511900000000" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp do Portal do Tempo"><svg aria-hidden="true"><use href="#i-wa"></use></svg></a>
+          <a href="https://youtube.com/" rel="noopener noreferrer" target="_blank" aria-label="Canal do Portal do Tempo no YouTube"><svg aria-hidden="true"><use href="#i-yt"></use></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Coleções</h4>
+        <ul>
+          <li><a href="#acervo">Eletrônicos</a></li>
+          <li><a href="#acervo">Móveis</a></li>
+          <li><a href="#acervo">Música</a></li>
+          <li><a href="#acervo">Brinquedos</a></li>
+          <li><a href="#acervo">Decoração</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Atendimento</h4>
+        <ul>
+          <li><a href="https://wa.me/5511900000000" rel="noopener noreferrer" target="_blank">WhatsApp (11) 90000-0000</a></li>
+          <li><a href="mailto:oi@portaldotempo.com.br">oi@portaldotempo.com.br</a></li>
+          <li><a href="#acervo">Rastrear pedido</a></li>
+          <li><a href="#acervo">Vender minha peça</a></li>
+          <li><a href="#sobre">Visita ao galpão</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#sobre">Sobre o Portal</a></li>
+          <li><a href="#acervo">Trocas e devoluções</a></li>
+          <li><a href="#acervo">Formas de pagamento</a></li>
+          <li><a href="#acervo">Política de privacidade</a></li>
+          <li><a href="#acervo">Termos de uso</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 1990—<span id="ano">2026</span> Portal do Tempo · CNPJ 00.000.000/0001-00 · Todos os direitos rebobinados.</span>
+      <span style="font-family:var(--hud);letter-spacing:.12em;color:var(--paper-dim)">FIM DA FITA ▮ REBOBINE ANTES DE DEVOLVER</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ================================================================
+   JS do Portal — 3 comportamentos, nada além disso.
+   Sem biblioteca externa: a página inteira roda com o que já veio.
+   ================================================================ */
+(function () {
+  "use strict";
+
+  var reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- 1. HUD: a "fita" avança de 1990 a 1999 conforme você desce.
+        É o indicador de progresso da página, vestido de camcorder. ---- */
+  var barra = document.getElementById("progress");
+  var hud   = document.getElementById("hudDate");
+  var ticking = false;
+
+  function atualizaFita() {
+    var alturaRolavel = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = alturaRolavel > 0 ? Math.min(window.scrollY / alturaRolavel, 1) : 0;
+
+    barra.style.width = (pct * 100).toFixed(2) + "%";
+
+    var ano = 1990 + Math.floor(pct * 9);            // 1990 → 1999
+    var minutos = Math.floor(pct * 118);             // duração de uma fita
+    var mm = String(Math.floor(minutos / 60)).padStart(2, "0");
+    var ss = String(minutos % 60).padStart(2, "0");
+    hud.textContent = "REC " + mm + ":" + ss + " " + ano;
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", function () {
+    if (!ticking) { window.requestAnimationFrame(atualizaFita); ticking = true; }
+  }, { passive: true });
+  atualizaFita();
+
+  /* ---- 2. Contagem para a próxima quinta, 20h (horário de Brasília) ---- */
+  var alvo = document.getElementById("countdown");
+
+  function proximaQuinta() {
+    var agora = new Date();
+    var d = new Date(agora);
+    d.setHours(20, 0, 0, 0);
+    var diasAte = (4 - d.getDay() + 7) % 7;          // 4 = quinta-feira
+    if (diasAte === 0 && agora >= d) { diasAte = 7; }
+    d.setDate(d.getDate() + diasAte);
+    return d;
+  }
+
+  function tique() {
+    var falta = proximaQuinta() - new Date();
+    if (falta < 0) { falta = 0; }
+    var s = Math.floor(falta / 1000);
+    var dias = Math.floor(s / 86400);
+    var h = String(Math.floor((s % 86400) / 3600)).padStart(2, "0");
+    var m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+    var seg = String(s % 60).padStart(2, "0");
+    alvo.textContent = "PRÓXIMA FITA EM " + dias + "D " + h + ":" + m + ":" + seg;
+  }
+  tique();
+  setInterval(tique, 1000);
+
+  /* ---- 3. Newsletter e botões de compra.
+        Demonstração: nada é enviado para servidor nenhum.
+        Uso de textContent (nunca innerHTML) para não abrir brecha de XSS
+        com o que a pessoa digita. ---- */
+  var form = document.getElementById("newsForm");
+  var ok   = document.getElementById("newsOk");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var campo = document.getElementById("email");
+    var valor = campo.value.trim();
+    var valido = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(valor);
+
+    if (!valido) {
+      ok.style.color = "var(--vermelho)";
+      ok.textContent = "▲ ESSE E-MAIL NÃO PARECE CERTO. CONFIRA E TENTE DE NOVO.";
+      campo.focus();
+      return;
+    }
+    ok.style.color = "var(--verde)";
+    ok.textContent = "✔ GRAVADO. QUARTA ÀS 20H VOCÊ RECEBE A FITA ANTES DE TODO MUNDO.";
+    form.reset();
+  });
+
+  document.querySelectorAll(".prod__buy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var nome = btn.getAttribute("data-produto") || "essa peça";
+      btn.textContent = "reservado ✓";
+      btn.style.background = "var(--verde)";
+      btn.style.color = "#04200F";
+      btn.style.borderColor = "var(--verde)";
+      btn.disabled = true;
+      /* Em produção: aqui entra o carrinho / checkout.
+         Ex.: window.location.href = "/carrinho?item=" + encodeURIComponent(nome); */
+    });
+  });
+
+  /* Ano no rodapé sempre correto, sem precisar editar HTML todo ano */
+  document.getElementById("ano").textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
