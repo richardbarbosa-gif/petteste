@@ -4,16 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ============================================================
-     SEO — título e descrição pensados para busca real:
-     quem procura isso digita "loja objetos anos 90", "vintage retrô".
-     ============================================================ -->
 <title>Portal do Tempo | Objetos originais dos anos 90 — peças únicas</title>
 <meta name="description" content="Loja de objetos originais dos anos 90: TV de tubo, videocassete, Walkman, fliperama, vinil e móveis retrô. Cada peça é única, testada e restaurada. Frete para todo o Brasil.">
 <link rel="canonical" href="https://www.portaldotempo.com.br/">
-<meta name="theme-color" content="#08080B">
+<meta name="theme-color" content="#14110C">
 
-<!-- Open Graph / compartilhamento -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Portal do Tempo">
@@ -22,14 +17,14 @@
 <meta property="og:url" content="https://www.portaldotempo.com.br/">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- Fontes: preconnect + display=swap para não bloquear a primeira pintura.
-     Archivo Black = cartaz de videolocadora. Barlow = leitura.
-     VT323 = HUD de câmera / tela de CRT. -->
+<!-- Archivo Black: cartaz de videolocadora (títulos).
+     Karla: leitura quente, sem cara de app (corpo).
+     VT323: HUD de câmera e tela de tubo.
+     Permanent Marker: a etiqueta da fita e a assinatura dos bilhetes. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=VT323&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=Permanent+Marker&family=VT323&display=swap">
 
-<!-- Dados estruturados: ajuda o Google a entender que é loja + FAQ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,65 +47,81 @@
 </script>
 <style>
 /* ================================================================
-   PORTAL DO TEMPO — folha de estilo única
+   PORTAL DO TEMPO
    ----------------------------------------------------------------
+   DIREÇÃO: "sala de estar brasileira, dez da noite, TV ligada".
+   Não é synthwave neon (isso é Miami, não é a nossa memória).
+   O chão é madeira escura, a luz é âmbar de abajur, o papel é
+   envelhecido. Neon existe SÓ dentro da tela — que é onde ele
+   existia de verdade na casa da gente.
+
    Sumário:
-   1. Tokens (cor, tipo, espaço)
+   1. Tokens
    2. Reset e base
-   3. Texturas do "portal" (scanline, grão, tracking VHS)
-   4. Componentes utilitários (botão, selo, eyebrow, janela 95)
-   5. Header + HUD de fita
-   6. Hero
-   7. Categorias
-   8. Produtos (capa de VHS)
-   9. Garantias
-   10. Depoimentos
-   11. Sobre
-   12. CTA final + newsletter
-   13. Rodapé
-   14. Responsivo e acessibilidade
+   3. Texturas (grão, madeira, vinheta) — sem scanline global
+   4. Utilitários (botão, selo, eyebrow, fita crepe)
+   5. Header e HUD
+   6. Hero + televisão que liga
+   7. Faixa de garantias (papel)
+   8. Coleções
+   9. Acervo
+   10. Depoimentos (bilhetes de papel)
+   11. Mixtape (a assinatura da página)
+   12. Sobre
+   13. CTA final
+   14. Rodapé
+   15. Responsivo e acessibilidade
    ================================================================ */
 
 /* ---------- 1. TOKENS ------------------------------------------ */
 :root{
-  /* Dominantes — 80% da tela. Preto com viés arroxeado, não preto puro. */
-  --ink:        #08080B;
-  --ink-2:      #101018;
-  --ink-3:      #1A1A26;
-  --ink-line:   #2A2A3A;
+  /* Base: madeira escura, não preto. É o que dá conforto. */
+  --noite:      #14110C;
+  --noite-2:    #1C1811;
+  --noite-3:    #29231A;
+  --linha:      #3B3226;   /* borda quente — nunca cinza azulado */
 
-  /* Apoio — estrutura, blocos e texto */
-  --paper:      #F3F0E7;   /* branco quente de encarte de fita */
-  --paper-dim:  #A9A6B8;   /* texto secundário */
-  --roxo:       #7A3FBF;
-  --roxo-deep:  #2E1450;
-  --azul:       #2F6BF0;
-  --azul-deep:  #0E2A6B;
+  /* Papel: seções claras, texto sobre escuro */
+  --papel:      #EFE3CC;
+  --papel-2:    #E2D3B6;
+  --papel-3:    #F7F0E1;
+  --tinta:      #241D14;   /* texto sobre papel */
+  --tinta-2:    #5C4E3C;
+  --papel-dim:  #AFA189;   /* texto secundário sobre escuro */
 
-  /* Acento — só selo, CTA e sinalização. Nunca em bloco grande. */
-  --laranja:    #FF6A18;
-  --fluor:      #E9FF3D;
-  --verde:      #00D66B;
-  --vermelho:   #E63A2B;
-  --rosa:       #FF3D9E;
+  /* Acentos quentes — cada um com uma função fixa */
+  --ambar:      #E8A33D;   /* luz, preço, marca */
+  --laranja:    #F2661C;   /* AÇÃO: só CTA */
+  --abacate:    #85A247;   /* garantia, confirmação */
+  --bordo:      #A33846;   /* escassez, urgência */
+  --formica:    #4A7EA6;   /* estrutura, informação */
+  --uva:        #6B3550;   /* apoio */
+
+  /* Neon: proibido fora da tela da TV e do player da fita */
+  --neon-verde: #C9F24A;
+  --neon-rosa:  #FF6FB1;
+  --neon-ciano: #6FE3FF;
 
   /* Tipografia */
   --display: "Archivo Black", "Arial Black", Impact, sans-serif;
-  --body:    "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --body:    "Karla", "Helvetica Neue", Arial, sans-serif;
   --hud:     "VT323", "Courier New", monospace;
+  --mao:     "Permanent Marker", "Comic Sans MS", cursive;
 
-  /* Escala de tipo — mantida em todo o site */
-  --t-hero:  clamp(2.6rem, 7.2vw, 5.2rem);
-  --t-h2:    clamp(1.9rem, 4.2vw, 3.1rem);
-  --t-h3:    clamp(1.15rem, 2.2vw, 1.45rem);
-  --t-body:  clamp(1rem, 1.15vw, 1.075rem);
-  --t-small: 0.875rem;
+  --t-hero:  clamp(2.5rem, 6.6vw, 4.9rem);
+  --t-h2:    clamp(1.85rem, 4vw, 2.95rem);
+  --t-h3:    clamp(1.1rem, 2vw, 1.35rem);
+  --t-body:  clamp(1rem, 1.1vw, 1.08rem);
 
-  /* Espaço */
-  --gap:     clamp(1rem, 2.4vw, 1.75rem);
-  --section: clamp(4rem, 9vw, 7.5rem);
+  /* Espaço: escala 4/8/16/24/40/64 — respiro maior que a v1 */
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem;
+  --gap:     clamp(1.1rem, 2.4vw, 1.9rem);
+  --section: clamp(4.5rem, 9vw, 8rem);
   --wrap:    1180px;
-  --radius:  4px;   /* quina quase reta: caixa de fita, não app 2024 */
+  --radius:  8px;    /* mais macio que a v1: conforto, não app */
+  --radius-s:3px;
+  --sombra:  0 18px 44px rgba(8,5,2,.55);
+  --sombra-q:0 10px 26px rgba(8,5,2,.42);
 }
 
 /* ---------- 2. RESET E BASE ------------------------------------ */
@@ -119,529 +130,517 @@ html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
 
 body{
   margin:0;
-  background:var(--ink);          /* obrigatório: o host pinta o fundo dele atrás */
-  color:var(--paper);
+  background:var(--noite);
+  color:var(--papel);
   font-family:var(--body);
   font-size:var(--t-body);
-  line-height:1.62;
+  line-height:1.7;              /* respiro maior = leitura confortável */
   overflow-x:hidden;
 }
 
-h1,h2,h3{ font-family:var(--display); font-weight:400; line-height:1.02; text-wrap:balance; margin:0; letter-spacing:-0.015em; }
+h1,h2,h3{ font-family:var(--display); font-weight:400; line-height:1.04; text-wrap:balance; margin:0; letter-spacing:-.018em; }
 h1{ font-size:var(--t-hero); }
 h2{ font-size:var(--t-h2); }
-h3{ font-size:var(--t-h3); line-height:1.15; }
+h3{ font-size:var(--t-h3); line-height:1.18; }
 p{ margin:0; }
 a{ color:inherit; }
 img,svg{ max-width:100%; display:block; }
 ul{ margin:0; padding:0; list-style:none; }
 button,input{ font:inherit; color:inherit; }
 
-.wrap{ width:min(var(--wrap), 92vw); margin-inline:auto; }
+.wrap{ width:min(var(--wrap), 90vw); margin-inline:auto; }
 .section{ padding-block:var(--section); position:relative; }
 .stack{ display:flex; flex-direction:column; gap:var(--gap); }
-.lede{ color:var(--paper-dim); max-width:62ch; font-size:1.06rem; }
+.lede{ color:var(--papel-dim); max-width:60ch; font-size:1.06rem; }
 .sr-only{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
 }
 
-/* ---------- 3. TEXTURAS DO PORTAL ------------------------------ */
-/* Scanline de CRT sobre a página inteira. Sutil de propósito:
-   textura se sente, não se lê. pointer-events:none para não roubar clique. */
-.crt-overlay{
-  position:fixed; inset:0; z-index:90; pointer-events:none;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 0px,
-    rgba(0,0,0,0) 2px,
-    rgba(0,0,0,.22) 3px,
-    rgba(0,0,0,0) 4px
-  );
-  mix-blend-mode:multiply;
-  opacity:.55;
-}
-/* Vinheta: escurece os cantos como tubo de imagem curvo */
-.crt-vignette{
-  position:fixed; inset:0; z-index:89; pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(0,0,0,.62) 100%);
-}
+/* Seções de papel: invertem o mundo e dão descanso ao olho */
+.paper{ background:var(--papel); color:var(--tinta); }
+.paper .lede{ color:var(--tinta-2); }
+.paper h2{ color:var(--tinta); }
 
-/* Barra de "tracking" que separa seções — o chiado da fita mal rebobinada */
-.tracking-bar{
-  height:14px;
-  background:
-    repeating-linear-gradient(90deg,
-      var(--roxo) 0 18px, var(--azul) 18px 30px,
-      var(--ink-3) 30px 52px, var(--laranja) 52px 60px,
-      var(--ink-3) 60px 96px);
-  opacity:.5;
-  filter:saturate(1.2);
+/* ---------- 3. TEXTURAS ---------------------------------------- */
+/* Grão de papel — quente e discreto. Substitui a scanline global da v1:
+   scanline cobrindo a página inteira vira filtro barato; ela pertence
+   à TELA, não ao mundo. */
+.grain{
+  position:fixed; inset:0; z-index:92; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+}
+/* Vinheta quente: a luz cai nos cantos, como abajur num canto da sala */
+.vinheta{
+  position:fixed; inset:0; z-index:91; pointer-events:none;
+  background:radial-gradient(125% 95% at 50% 42%, transparent 52%, rgba(10,6,2,.55) 100%);
+}
+/* Veio de madeira: linhas verticais quase invisíveis nas seções escuras */
+.madeira{
+  position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background-image:repeating-linear-gradient(90deg,
+    rgba(255,225,180,.030) 0 1px, transparent 1px 5px,
+    rgba(255,225,180,.018) 5px 6px, transparent 6px 17px);
 }
 
 /* ---------- 4. UTILITÁRIOS ------------------------------------- */
-
-/* Eyebrow: etiqueta de canal/HUD acima de cada título */
 .eyebrow{
-  font-family:var(--hud);
-  font-size:1.32rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--fluor);
-  display:flex; align-items:center; gap:.6rem;
-  margin-bottom:.4rem;
+  font-family:var(--hud); font-size:1.3rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ambar);
+  display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem;
 }
 .eyebrow::before{
-  content:""; width:9px; height:9px; border-radius:50%;
-  background:var(--vermelho); box-shadow:0 0 12px var(--vermelho);
-  animation:rec 1.8s steps(1) infinite;
+  content:""; width:8px; height:8px; border-radius:50%; flex:none;
+  background:var(--bordo); box-shadow:0 0 10px rgba(163,56,70,.9);
+  animation:rec 2s steps(1) infinite;
 }
-@keyframes rec{ 0%,60%{opacity:1} 61%,100%{opacity:.15} }
+.paper .eyebrow{ color:var(--bordo); }
+@keyframes rec{ 0%,62%{opacity:1} 63%,100%{opacity:.2} }
 
-/* Botões */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
-  padding:.95rem 1.7rem;
-  font-family:var(--display); font-size:.95rem; letter-spacing:.02em;
-  text-decoration:none; border:2px solid transparent; border-radius:var(--radius);
-  cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
-  text-transform:uppercase;
+  padding:1rem 1.8rem; font-family:var(--display); font-size:.92rem;
+  letter-spacing:.015em; text-decoration:none; border:2px solid transparent;
+  border-radius:var(--radius); cursor:pointer; text-transform:uppercase;
+  transition:transform .18s cubic-bezier(.2,.7,.3,1), box-shadow .18s ease, background .18s ease, color .18s ease;
 }
-.btn--primary{
-  background:var(--laranja); color:#180800;
-  box-shadow:5px 5px 0 var(--roxo-deep);
-}
-.btn--primary:hover{ transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--roxo-deep); }
-.btn--primary:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--roxo-deep); }
-.btn--ghost{
-  background:transparent; color:var(--paper); border-color:var(--ink-line);
-}
-.btn--ghost:hover{ border-color:var(--fluor); color:var(--fluor); }
-.btn--fluor{
-  background:var(--fluor); color:#141800;
-  box-shadow:5px 5px 0 var(--azul-deep);
-}
-.btn--fluor:hover{ transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--azul-deep); }
+/* Laranja é ação. Nenhum outro elemento da página usa laranja cheio. */
+.btn--primary{ background:var(--laranja); color:#1B0A02; box-shadow:0 6px 0 #8F340B, var(--sombra-q); }
+.btn--primary:hover{ transform:translateY(-3px); box-shadow:0 9px 0 #8F340B, var(--sombra); }
+.btn--primary:active{ transform:translateY(3px); box-shadow:0 2px 0 #8F340B; }
+.btn--ghost{ background:transparent; color:var(--papel); border-color:var(--linha); }
+.btn--ghost:hover{ border-color:var(--ambar); color:var(--ambar); }
+.btn--ambar{ background:var(--ambar); color:#241804; box-shadow:0 6px 0 #A76F19, var(--sombra-q); }
+.btn--ambar:hover{ transform:translateY(-3px); box-shadow:0 9px 0 #A76F19, var(--sombra); }
+.paper .btn--ghost{ color:var(--tinta); border-color:rgba(36,29,20,.28); }
+.paper .btn--ghost:hover{ border-color:var(--bordo); color:var(--bordo); }
 
-/* Selo diagonal de peça única */
 .seal{
-  font-family:var(--display); font-size:.62rem; letter-spacing:.09em;
-  text-transform:uppercase; padding:.32rem .55rem; border-radius:2px;
+  font-family:var(--display); font-size:.6rem; letter-spacing:.09em;
+  text-transform:uppercase; padding:.34rem .55rem; border-radius:var(--radius-s);
   display:inline-block; white-space:nowrap;
 }
-.seal--unica{ background:var(--vermelho); color:#fff; }
-.seal--testado{ background:var(--verde); color:#04200F; }
-/* Selo secundário: contorno, sem preencher. Só um selo colorido por card. */
+.seal--unica{ background:var(--bordo); color:#FFF1F1; }
 .seal--line{
-  background:rgba(8,8,11,.72); color:var(--paper);
-  border:1px solid rgba(255,255,255,.38); backdrop-filter:blur(2px);
+  background:rgba(20,17,12,.78); color:var(--papel);
+  border:1px solid rgba(239,227,204,.34);
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
 }
-.seal--raro{ background:var(--rosa); color:#2A0014; }
-.seal--restaurado{ background:var(--azul); color:#fff; }
 
-/* Janela Windows 95 — usada em depoimentos e no "Sobre" */
-.win95{
-  background:#C6C6C6;
-  border:2px solid;
-  border-color:#FFFFFF #4A4A4A #4A4A4A #FFFFFF;
-  box-shadow:4px 4px 0 rgba(0,0,0,.55);
-  color:#101010;
+/* Fita crepe: pedaço de durex/fita segurando o papel. Usada nos bilhetes. */
+.tape{
+  position:absolute; width:94px; height:26px; left:50%; top:-13px;
+  transform:translateX(-50%) rotate(-2.2deg);
+  background:linear-gradient(180deg, rgba(232,214,170,.92), rgba(214,192,148,.86));
+  box-shadow:0 2px 6px rgba(60,40,18,.28);
+  border-left:1px dashed rgba(120,96,58,.35); border-right:1px dashed rgba(120,96,58,.35);
 }
-.win95__bar{
-  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
-  background:linear-gradient(90deg, var(--azul-deep), var(--roxo));
-  color:#fff; padding:.3rem .45rem;
-  font-family:var(--body); font-weight:700; font-size:.78rem;
-  letter-spacing:.02em;
-}
-.win95__btns{ display:flex; gap:3px; }
-.win95__btns i{
-  width:15px; height:14px; background:#C6C6C6; display:block;
-  border:1px solid; border-color:#FFF #4A4A4A #4A4A4A #FFF;
-}
-.win95__body{ padding:1.05rem 1.1rem 1.15rem; }
 
-/* ---------- 5. HEADER + HUD DA FITA ---------------------------- */
+/* ---------- 5. HEADER E HUD ------------------------------------ */
 .topbar{
-  background:var(--roxo-deep);
-  border-bottom:1px solid var(--ink-line);
-  font-family:var(--hud); font-size:1.15rem; letter-spacing:.08em;
-  color:var(--fluor); text-align:center; padding:.32rem 1rem;
+  background:linear-gradient(90deg, #3A1D12, #4A2415 55%, #3A1D12);
+  border-bottom:1px solid var(--linha);
+  font-family:var(--hud); font-size:1.16rem; letter-spacing:.1em;
+  color:var(--ambar); text-align:center; padding:.4rem 1rem;
 }
-.topbar b{ color:var(--paper); font-weight:400; }
+.topbar b{ color:var(--papel); font-weight:400; }
 
 .header{
   position:sticky; top:0; z-index:80;
-  background:rgba(8,8,11,.92);
-  -webkit-backdrop-filter:blur(8px);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--ink-line);
+  background:rgba(20,17,12,.93);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--linha);
 }
-.header__in{
-  display:flex; align-items:center; justify-content:space-between; gap:1rem;
-  padding:.85rem 0;
-}
-.brand{ display:flex; align-items:center; gap:.65rem; text-decoration:none; }
+.header__in{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem 0; }
+.brand{ display:flex; align-items:center; gap:.7rem; text-decoration:none; }
 .brand__mark{
-  width:38px; height:38px; flex:none;
-  background:linear-gradient(140deg, var(--roxo), var(--azul));
-  border:2px solid var(--fluor); border-radius:50%;
-  display:grid; place-items:center;
-  font-family:var(--display); font-size:.95rem; color:var(--fluor);
-  box-shadow:0 0 18px rgba(122,63,191,.55);
+  width:40px; height:40px; flex:none; border-radius:50%;
+  background:radial-gradient(circle at 34% 28%, #F6C171, var(--ambar) 42%, #9A671A);
+  border:2px solid #6E4610; display:grid; place-items:center;
+  font-family:var(--display); font-size:.92rem; color:#2A1A03;
+  box-shadow:0 0 22px rgba(232,163,61,.35);
 }
-.brand__name{ font-family:var(--display); font-size:1.05rem; line-height:1; letter-spacing:-.01em; }
-.brand__sub{ font-family:var(--hud); font-size:.95rem; color:var(--paper-dim); letter-spacing:.16em; line-height:1; }
+.brand__name{ font-family:var(--display); font-size:1.02rem; line-height:1.1; }
+.brand__sub{ font-family:var(--hud); font-size:.98rem; color:var(--papel-dim); letter-spacing:.18em; line-height:1; }
 
-.nav{ display:flex; align-items:center; gap:1.6rem; }
+.nav{ display:flex; align-items:center; gap:1.7rem; }
 .nav a{
-  text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.02em;
-  color:var(--paper-dim); padding:.25rem 0; border-bottom:2px solid transparent;
-  transition:color .15s ease, border-color .15s ease;
+  text-decoration:none; font-size:.92rem; font-weight:700; color:var(--papel-dim);
+  padding:.3rem 0; border-bottom:2px solid transparent;
+  transition:color .16s ease, border-color .16s ease;
 }
-.nav a:hover, .nav a:focus-visible{ color:var(--fluor); border-color:var(--fluor); }
-.nav .btn--fluor{ box-shadow:3px 3px 0 var(--azul-deep); margin-right:4px; }
-.nav .btn--fluor:hover{ box-shadow:5px 5px 0 var(--azul-deep); }
+.nav a:hover, .nav a:focus-visible{ color:var(--ambar); border-color:var(--ambar); }
+.nav .btn--ambar{ padding:.55rem 1rem; font-size:.75rem; box-shadow:0 4px 0 #A76F19; margin-right:3px; }
+.nav .btn--ambar:hover{ box-shadow:0 6px 0 #A76F19; }
 
-/* HUD de câmera: mostra em que "ano da fita" o visitante está.
-   É o indicador de progresso da página, disfarçado de camcorder. */
 .hud{
   position:fixed; left:14px; bottom:14px; z-index:88;
-  font-family:var(--hud); font-size:1.15rem; letter-spacing:.1em;
-  color:var(--fluor); background:rgba(8,8,11,.72);
-  border:1px solid var(--ink-line); border-radius:3px;
-  padding:.3rem .6rem; display:flex; align-items:center; gap:.55rem;
-  text-shadow:0 0 8px rgba(233,255,61,.45);
+  font-family:var(--hud); font-size:1.12rem; letter-spacing:.1em;
+  color:var(--ambar); background:rgba(20,17,12,.8);
+  border:1px solid var(--linha); border-radius:var(--radius-s);
+  padding:.3rem .62rem; display:flex; align-items:center; gap:.55rem;
   pointer-events:none;
 }
-.hud__dot{
-  width:8px; height:8px; border-radius:50%; background:var(--vermelho);
-  box-shadow:0 0 10px var(--vermelho); animation:rec 1.8s steps(1) infinite;
-}
+.hud__dot{ width:7px; height:7px; border-radius:50%; background:var(--bordo); animation:rec 2s steps(1) infinite; }
 .progress{
-  position:fixed; top:0; left:0; height:3px; z-index:95;
-  width:0%;
-  background:linear-gradient(90deg, var(--roxo), var(--azul), var(--fluor));
+  position:fixed; top:0; left:0; height:3px; z-index:95; width:0%;
+  background:linear-gradient(90deg, #8F340B, var(--laranja), var(--ambar));
 }
 
-/* ---------- 6. HERO -------------------------------------------- */
+/* ---------- 6. HERO + TELEVISÃO -------------------------------- */
 .hero{
   position:relative; overflow:hidden;
-  padding-block:clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 8vw, 6rem);
+  padding-block:clamp(3.2rem,7vw,5.5rem) clamp(3.5rem,8vw,6rem);
+  /* A luz vem da TV (direita) e de um abajur fora de quadro (esquerda baixa).
+     Sem grid em perspectiva: aquilo é retrowave de banco de imagem. */
   background:
-    radial-gradient(90% 120% at 12% 0%, rgba(122,63,191,.30), transparent 58%),
-    radial-gradient(70% 100% at 92% 18%, rgba(47,107,240,.24), transparent 62%),
-    var(--ink);
-}
-/* Grade de horizonte estilo abertura de programa dos anos 90 */
-.hero::after{
-  content:""; position:absolute; inset:auto 0 0 0; height:38%;
-  background-image:
-    linear-gradient(rgba(122,63,191,.42) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(122,63,191,.42) 1px, transparent 1px);
-  background-size:44px 44px;
-  transform:perspective(340px) rotateX(62deg);
-  transform-origin:bottom;
-  -webkit-mask-image:linear-gradient(to top, #000 5%, transparent 88%);
-  mask-image:linear-gradient(to top, #000 5%, transparent 88%);
-  opacity:.55; pointer-events:none;
+    radial-gradient(62% 78% at 76% 24%, rgba(232,163,61,.20), transparent 62%),
+    radial-gradient(70% 80% at 4% 92%, rgba(163,56,70,.16), transparent 60%),
+    linear-gradient(180deg, #191510 0%, var(--noite) 70%);
 }
 .hero__grid{
-  display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(2rem,4vw,3.5rem);
+  display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(2rem,4.5vw,3.8rem);
   align-items:center; position:relative; z-index:2;
 }
+/* Só duas palavras recebem a aberração de tubo. Ousadia gasta num lugar só. */
 .hero h1 em{
-  font-style:normal; color:var(--fluor);
-  /* efeito de aberração cromática: nome do site em RGB desalinhado */
-  text-shadow:3px 0 0 rgba(255,61,158,.85), -3px 0 0 rgba(47,107,240,.85);
+  font-style:normal; color:var(--ambar);
+  text-shadow:2px 0 0 rgba(255,111,177,.55), -2px 0 0 rgba(111,227,255,.45);
 }
-.hero__lede{ font-size:clamp(1.05rem,1.6vw,1.2rem); color:var(--paper-dim); max-width:52ch; }
-.hero__cta{ display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; }
-.hero__micro{
-  font-family:var(--hud); font-size:1.1rem; color:var(--paper-dim); letter-spacing:.06em;
-}
+.hero__lede{ font-size:clamp(1.06rem,1.5vw,1.18rem); color:var(--papel-dim); max-width:50ch; }
+.hero__cta{ display:flex; flex-wrap:wrap; gap:.85rem; align-items:center; }
+.hero__micro{ font-family:var(--hud); font-size:1.12rem; color:var(--papel-dim); letter-spacing:.08em; }
 
-/* Faixa de números — prova de escala, não decoração */
-.stats{
-  display:grid; grid-template-columns:repeat(3,1fr);
-  border-top:1px solid var(--ink-line); margin-top:.6rem; padding-top:1.1rem; gap:1rem;
-}
-.stats dt{ font-family:var(--display); font-size:1.6rem; color:var(--paper); font-variant-numeric:tabular-nums; }
-.stats dd{ margin:0; font-size:.82rem; color:var(--paper-dim); line-height:1.3; }
+.stats{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--linha); margin-top:.5rem; padding-top:1.3rem; gap:1.1rem; }
+.stats dt{ font-family:var(--display); font-size:1.55rem; color:var(--ambar); font-variant-numeric:tabular-nums; }
+.stats dd{ margin:0; font-size:.83rem; color:var(--papel-dim); line-height:1.42; }
 
-/* --- TV de tubo desenhada só com CSS (nenhuma imagem carregada) --- */
+/* --- A televisão. Gabinete de plástico quente, e a luz dela vaza
+       pra sala (o glow âmbar embaixo). É o conforto da cena. --- */
+.tv-wrap{ position:relative; }
+.tv-wrap::after{  /* luz da TV batendo no chão */
+  content:""; position:absolute; left:8%; right:8%; bottom:-26px; height:60px;
+  background:radial-gradient(60% 100% at 50% 0%, rgba(232,163,61,.30), transparent 72%);
+  filter:blur(10px); pointer-events:none;
+}
 .tv{
   position:relative;
-  background:linear-gradient(160deg,#3A3A44,#1C1C22 60%,#111117);
-  border-radius:22px 22px 14px 14px;
-  padding:20px 20px 54px;
-  box-shadow:0 28px 60px rgba(0,0,0,.65), inset 0 2px 0 rgba(255,255,255,.14);
-  border:1px solid #45454F;
+  background:linear-gradient(158deg,#453A2E 0%,#2A231A 46%,#191510 100%);
+  border-radius:20px 20px 12px 12px;
+  padding:18px 18px 52px;
+  box-shadow:0 30px 64px rgba(6,3,1,.7), inset 0 2px 0 rgba(255,226,180,.16);
+  border:1px solid #4E4234;
 }
 .tv__screen{
-  position:relative; aspect-ratio:4/3; border-radius:22px/16px; overflow:hidden;
-  background:
-    radial-gradient(140% 120% at 50% 40%, #2A1A55 0%, #120B26 55%, #05040C 100%);
-  border:6px solid #0A0A0E;
-  box-shadow:inset 0 0 60px rgba(0,0,0,.9);
+  position:relative; aspect-ratio:4/3; border-radius:20px/14px; overflow:hidden;
+  background:radial-gradient(140% 118% at 50% 42%, #1B2A3C 0%, #0D1420 56%, #05070C 100%);
+  border:7px solid #100D09;
+  box-shadow:inset 0 0 64px rgba(0,0,0,.92);
   display:grid; place-items:center; text-align:center;
+  transition:background .3s ease;
 }
-/* Brilho de vidro curvo no canto superior */
-.tv__screen::after{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(118deg, rgba(255,255,255,.16) 0 16%, transparent 42%);
-  pointer-events:none;
-}
+/* Scanline: existe SÓ aqui e no player da fita. */
 .tv__screen::before{
   content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
-  background:repeating-linear-gradient(to bottom, rgba(0,0,0,.30) 0 1px, transparent 1px 3px);
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,.34) 0 1px, transparent 1px 3px);
 }
-.tv__ch{
-  position:absolute; top:12px; left:14px; z-index:3;
-  font-family:var(--hud); font-size:1.35rem; color:var(--fluor); letter-spacing:.12em;
-  text-shadow:0 0 10px rgba(233,255,61,.6);
+.tv__screen::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:4;
+  background:linear-gradient(116deg, rgba(255,255,255,.14) 0 15%, transparent 40%);
 }
-.tv__play{
-  position:absolute; top:12px; right:14px; z-index:3;
-  font-family:var(--hud); font-size:1.3rem; color:var(--paper); letter-spacing:.1em;
-}
-.tv__content{ position:relative; z-index:3; padding:1.4rem; }
+.tv__ch{ position:absolute; top:12px; left:15px; z-index:3; font-family:var(--hud); font-size:1.3rem; color:var(--neon-verde); letter-spacing:.12em; text-shadow:0 0 10px rgba(201,242,74,.55); }
+.tv__play{ position:absolute; top:12px; right:15px; z-index:3; font-family:var(--hud); font-size:1.26rem; color:var(--papel); letter-spacing:.1em; }
+.tv__content{ position:relative; z-index:3; padding:1.5rem; }
 .tv__word{
-  font-family:var(--display); line-height:.95;
-  font-size:clamp(1.5rem,3.6vw,2.5rem);
-  color:var(--paper);
-  text-shadow:2px 0 0 rgba(255,61,158,.8), -2px 0 0 rgba(0,214,107,.8);
+  font-family:var(--display); line-height:.98; font-size:clamp(1.45rem,3.4vw,2.35rem);
+  color:var(--papel);
+  text-shadow:2px 0 0 rgba(255,111,177,.7), -2px 0 0 rgba(111,227,255,.6);
 }
-.tv__sub{
-  font-family:var(--hud); font-size:1.2rem; letter-spacing:.16em;
-  color:var(--fluor); margin-top:.5rem;
+.tv__sub{ font-family:var(--hud); font-size:1.18rem; letter-spacing:.18em; color:var(--neon-verde); margin-top:.55rem; }
+/* Chuvisco: aparece só no instante da troca de canal */
+.tv__static{
+  position:absolute; inset:0; z-index:5; opacity:0; pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='s'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='140' height='140' filter='url(%23s)' opacity='.85'/></svg>");
+  transition:opacity .12s linear;
 }
-/* Botões e alto-falante do gabinete */
-.tv__panel{
-  position:absolute; left:20px; right:20px; bottom:14px; height:30px;
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-}
-.tv__speaker{
-  flex:1; height:18px; border-radius:3px;
-  background:repeating-linear-gradient(90deg,#26262E 0 3px,#15151B 3px 6px);
-  border:1px solid #0C0C10;
-}
+.tv__screen.is-trocando .tv__static{ opacity:.85; }
+
+.tv__panel{ position:absolute; left:20px; right:20px; bottom:13px; height:30px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.tv__speaker{ flex:1; height:17px; border-radius:2px; background:repeating-linear-gradient(90deg,#302719 0 3px,#1B160F 3px 6px); border:1px solid #0E0B07; }
 .tv__knobs{ display:flex; gap:8px; }
-.tv__knobs span{
-  width:16px; height:16px; border-radius:50%;
-  background:radial-gradient(circle at 32% 30%, #55555F, #1B1B22);
-  border:1px solid #0C0C10;
-}
-.tv__brand{
-  font-family:var(--hud); font-size:1rem; color:#6A6A78; letter-spacing:.2em;
-}
+.tv__knobs span{ width:15px; height:15px; border-radius:50%; background:radial-gradient(circle at 32% 30%, #6B5B45, #241D14); border:1px solid #0E0B07; }
+.tv__brand{ font-family:var(--hud); font-size:1rem; color:#7A6A52; letter-spacing:.22em; }
 
-/* ---------- 7. CATEGORIAS -------------------------------------- */
-.cats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.9rem; }
+/* Botão de ligar a TV: fica FORA da tela, porque som precisa de gesto
+   explícito. Autoplay com som é bloqueado em todo navegador — e irrita. */
+.tv-liga{
+  display:flex; align-items:center; justify-content:center; gap:.7rem;
+  margin-top:1.5rem; flex-wrap:wrap;
+}
+.tv-liga__btn{
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:var(--noite-3); color:var(--papel);
+  border:1px solid var(--linha); border-radius:999px;
+  padding:.6rem 1.15rem; cursor:pointer; font-size:.86rem; font-weight:700;
+  transition:border-color .16s, color .16s, background .16s;
+}
+.tv-liga__btn:hover{ border-color:var(--ambar); color:var(--ambar); }
+.tv-liga__btn[aria-pressed="true"]{ background:#3A2A10; border-color:var(--ambar); color:var(--ambar); }
+.tv-liga__nota{ font-family:var(--hud); font-size:1.05rem; color:var(--papel-dim); letter-spacing:.06em; }
+
+/* ---------- 7. GARANTIAS (faixa de papel, logo após o hero) ----- */
+.guards{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:1px; background:rgba(36,29,20,.16);
+  border-block:1px solid rgba(36,29,20,.2);
+}
+.guard{ background:var(--papel); padding:1.5rem 1.3rem; display:flex; gap:.85rem; align-items:flex-start; }
+.guard svg{ width:26px; height:26px; flex:none; color:#5A7A28; margin-top:3px; }
+.guard b{ display:block; font-family:var(--display); font-size:.94rem; margin-bottom:.3rem; color:var(--tinta); }
+.guard span{ font-size:.88rem; color:var(--tinta-2); line-height:1.5; }
+
+/* ---------- 8. COLEÇÕES ---------------------------------------- */
+.cats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
 .cat{
-  position:relative; text-decoration:none;
-  background:var(--ink-2); border:1px solid var(--ink-line); border-radius:var(--radius);
-  padding:1.4rem 1.1rem 1.2rem;
-  transition:transform .18s ease, border-color .18s ease, background .18s ease;
-  overflow:hidden; min-height:190px;
-  display:flex; flex-direction:column; justify-content:space-between; gap:1rem;
+  position:relative; text-decoration:none; overflow:hidden; min-height:200px;
+  background:linear-gradient(168deg, #332B20 0%, var(--noite-2) 62%);
+  border:1px solid var(--linha); border-radius:var(--radius);
+  box-shadow:inset 0 1px 0 rgba(255,232,190,.09);
+  padding:1.5rem 1.2rem 1.3rem;
+  display:flex; flex-direction:column; justify-content:space-between; gap:1.1rem;
+  transition:transform .2s cubic-bezier(.2,.7,.3,1), border-color .2s ease, box-shadow .2s ease;
 }
-/* Cada categoria tem UMA cor fixa — a cor identifica a seção, não enfeita */
-.cat::before{
-  content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
-  background:var(--c);
-}
-.cat:hover{ transform:translateY(-4px); border-color:var(--c); background:var(--ink-3); }
-.cat:focus-visible{ border-color:var(--c); }
+.cat::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--c); }
+.cat:hover{ transform:translateY(-5px); border-color:var(--c); box-shadow:var(--sombra-q); }
 .cat__icon{ width:44px; height:44px; color:var(--c); }
-.cat__name{ font-family:var(--display); font-size:1.1rem; }
-.cat__desc{ font-size:.86rem; color:var(--paper-dim); line-height:1.4; }
-.cat__count{
-  font-family:var(--hud); font-size:1.05rem; letter-spacing:.1em; color:var(--c);
-}
+.cat__name{ font-family:var(--display); font-size:1.06rem; }
+.cat__desc{ font-size:.87rem; color:var(--papel-dim); line-height:1.5; }
+.cat__count{ font-family:var(--hud); font-size:1.06rem; letter-spacing:.1em; color:var(--c); }
 
-/* ---------- 8. PRODUTOS (capa de VHS) -------------------------- */
-.grid-prod{ display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:1.4rem; }
+/* ---------- 9. ACERVO ------------------------------------------ */
+.grid-prod{ display:grid; grid-template-columns:repeat(auto-fill,minmax(272px,1fr)); gap:1.5rem; }
 .prod{
-  display:flex; flex-direction:column;
-  background:var(--ink-2); border:1px solid var(--ink-line); border-radius:var(--radius);
-  overflow:hidden; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  display:flex; flex-direction:column; overflow:hidden;
+  background:var(--noite-2); border:1px solid var(--linha); border-radius:var(--radius);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, border-color .22s ease;
 }
-.prod:hover{ transform:translateY(-6px); border-color:var(--c); box-shadow:0 18px 40px rgba(0,0,0,.55); }
-
-/* A "capa": proporção de caixa de VHS, lombada colorida à esquerda */
+.prod:hover{ transform:translateY(-6px); border-color:var(--c); box-shadow:var(--sombra); }
 .prod__cover{
-  position:relative; aspect-ratio:4/3; overflow:hidden;
+  position:relative; aspect-ratio:4/3; overflow:hidden; display:grid; place-items:center;
   background:
-    radial-gradient(105% 105% at 22% 8%, var(--c2), transparent 55%),
-    linear-gradient(148deg, var(--c) -25%, #0C0C14 58%, #08080B 100%);
-  display:grid; place-items:center;
-  border-bottom:1px solid var(--ink-line);
+    radial-gradient(96% 96% at 26% 4%, rgba(255,222,168,.42), transparent 58%),
+    linear-gradient(152deg, var(--c) -6%, #1D1710 66%, #120D07 100%);
+  border-bottom:1px solid var(--linha);
 }
-.prod__cover::before{  /* lombada */
-  content:""; position:absolute; left:0; top:0; bottom:0; width:26px;
-  background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.15));
-  border-right:1px solid rgba(255,255,255,.14);
-}
-.prod__cover::after{   /* trama de meio-tom + vinheta: textura de impressão barata */
+.prod__cover::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:26px; background:linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.12)); border-right:1px solid rgba(255,225,180,.16); }
+.prod__cover::after{
   content:""; position:absolute; inset:0; pointer-events:none;
   background-image:
-    radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px),
-    radial-gradient(130% 90% at 50% 0%, transparent 42%, rgba(4,4,8,.72) 100%);
+    radial-gradient(rgba(255,235,205,.10) 1px, transparent 1px),
+    radial-gradient(126% 88% at 50% 0%, transparent 40%, rgba(10,7,3,.72) 100%);
   background-size:5px 5px, 100% 100%;
 }
-.prod__art{ width:52%; max-width:138px; color:rgba(255,255,255,.90); filter:drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
-.prod__seals{ position:absolute; top:.6rem; right:.6rem; z-index:3; display:flex; flex-direction:column; gap:.32rem; align-items:flex-end; }
-.prod__year{
-  position:absolute; left:34px; bottom:.6rem; z-index:3;
-  font-family:var(--hud); font-size:1.15rem; letter-spacing:.14em; color:rgba(255,255,255,.9);
-}
-.prod__body{ padding:1rem 1.05rem 1.15rem; display:flex; flex-direction:column; gap:.55rem; flex:1; }
-.prod__name{ font-family:var(--display); font-size:1.02rem; line-height:1.16; }
-.prod__desc{ font-size:.87rem; color:var(--paper-dim); line-height:1.45; flex:1; }
-.prod__meta{
-  display:flex; align-items:baseline; justify-content:space-between; gap:.6rem;
-  border-top:1px solid var(--ink-line); padding-top:.7rem; margin-top:.2rem;
-}
-.prod__price{ font-family:var(--display); font-size:1.28rem; color:var(--fluor); font-variant-numeric:tabular-nums; }
-.prod__price s{ display:block; font-family:var(--body); font-size:.78rem; color:#6E6B7C; text-decoration-color:var(--vermelho); }
+.prod__art{ width:54%; max-width:144px; color:rgba(255,246,230,.96); filter:drop-shadow(0 6px 14px rgba(0,0,0,.55)); }
+.prod__seals{ position:absolute; top:.65rem; right:.65rem; z-index:3; display:flex; flex-direction:column; gap:.35rem; align-items:flex-end; }
+.prod__year{ position:absolute; left:34px; bottom:.6rem; z-index:3; font-family:var(--hud); font-size:1.14rem; letter-spacing:.14em; color:rgba(255,244,224,.88); }
+.prod__body{ padding:1.1rem 1.1rem 1.2rem; display:flex; flex-direction:column; gap:.6rem; flex:1; }
+.prod__name{ font-family:var(--display); font-size:1rem; line-height:1.2; }
+.prod__desc{ font-size:.88rem; color:var(--papel-dim); line-height:1.55; flex:1; }
+.prod__meta{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; border-top:1px solid var(--linha); padding-top:.8rem; }
+.prod__price{ font-family:var(--display); font-size:1.26rem; color:var(--ambar); font-variant-numeric:tabular-nums; }
+.prod__price s{ display:block; font-family:var(--body); font-size:.78rem; color:#7A6A52; text-decoration-color:var(--bordo); }
 .prod__buy{
-  font-family:var(--display); font-size:.72rem; text-transform:uppercase;
-  background:var(--ink-3); color:var(--paper); border:1px solid var(--ink-line);
-  padding:.55rem .85rem; border-radius:2px; cursor:pointer;
-  transition:background .15s ease, color .15s ease, border-color .15s ease;
+  font-family:var(--display); font-size:.7rem; text-transform:uppercase;
+  background:var(--noite-3); color:var(--papel); border:1px solid var(--linha);
+  padding:.6rem .9rem; border-radius:var(--radius-s); cursor:pointer;
+  transition:background .16s, color .16s, border-color .16s;
 }
-.prod__buy:hover{ background:var(--laranja); color:#180800; border-color:var(--laranja); }
-.prod__stock{ font-family:var(--hud); font-size:1.05rem; color:var(--vermelho); letter-spacing:.08em; }
+.prod__buy:hover{ background:var(--laranja); color:#1B0A02; border-color:var(--laranja); }
+.prod__stock{ font-family:var(--hud); font-size:1.05rem; color:var(--bordo); letter-spacing:.08em; }
 
-/* ---------- 9. GARANTIAS --------------------------------------- */
-.guards{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:1px; background:var(--ink-line);
-  border-block:1px solid var(--ink-line);
+/* ---------- 10. DEPOIMENTOS (bilhetes de papel) ---------------- */
+/* A janela do Windows 95 saiu daqui de propósito: é o clichê mais
+   previsível de "site retrô". Bilhete de papel com fita crepe e
+   assinatura à mão é mais quente e mais nosso. */
+.deps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(285px,1fr)); gap:2rem; }
+.dep{
+  position:relative; background:var(--papel-3); color:var(--tinta);
+  padding:1.7rem 1.4rem 1.3rem; border-radius:2px;
+  box-shadow:0 12px 26px rgba(60,40,18,.20), 0 2px 0 rgba(255,255,255,.7) inset;
+  border:1px solid rgba(120,96,58,.22);
+  margin:0;
 }
-.guard{ background:var(--ink); padding:1.35rem 1.2rem; display:flex; gap:.8rem; align-items:flex-start; }
-.guard svg{ width:26px; height:26px; flex:none; color:var(--verde); margin-top:2px; }
-.guard b{ display:block; font-family:var(--display); font-size:.95rem; margin-bottom:.28rem; }
-.guard span{ font-size:.88rem; color:#BDBACA; line-height:1.45; }
+/* Cada bilhete cai numa inclinação diferente — papel na mesa não fica reto */
+.deps > .dep:nth-child(1){ transform:rotate(-1.1deg); }
+.deps > .dep:nth-child(2){ transform:rotate(.7deg); }
+.deps > .dep:nth-child(3){ transform:rotate(-.5deg); }
+.dep__text{ font-size:.97rem; line-height:1.65; margin:0; }
+.dep__text b{ background:linear-gradient(180deg, transparent 58%, rgba(232,163,61,.55) 58%); font-weight:700; }
+.dep__who{ display:flex; align-items:center; gap:.7rem; margin-top:1.1rem; padding-top:.85rem; border-top:1px dashed rgba(120,96,58,.4); }
+.dep__sign{ font-family:var(--mao); font-size:1.15rem; color:var(--tinta); line-height:1.1; }
+.dep__meta{ font-size:.78rem; color:var(--tinta-2); line-height:1.3; }
+.dep__stars{ margin-left:auto; color:#C57A15; font-size:.92rem; letter-spacing:.08em; }
 
-/* ---------- 10. DEPOIMENTOS ------------------------------------ */
-.deps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
-.dep__text{ font-size:.95rem; line-height:1.55; }
-.dep__text b{ background:var(--fluor); padding:0 .18em; }
-.dep__who{
-  display:flex; align-items:center; gap:.6rem; margin-top:.9rem;
-  border-top:1px solid #9A9A9A; padding-top:.7rem;
-}
-.dep__av{
-  width:36px; height:36px; flex:none; border-radius:2px;
-  display:grid; place-items:center; font-family:var(--display); font-size:.9rem; color:#fff;
-}
-.dep__name{ font-weight:700; font-size:.86rem; line-height:1.2; }
-.dep__meta{ font-size:.76rem; color:#4A4A4A; line-height:1.2; }
-.dep__stars{ color:var(--laranja); font-size:.9rem; letter-spacing:.1em; }
+/* ---------- 11. MIXTAPE (a assinatura da página) --------------- */
+.mix{ background:linear-gradient(180deg, #191510, var(--noite-2)); border-block:1px solid var(--linha); position:relative; overflow:hidden; }
+.mix__grid{ display:grid; grid-template-columns:.95fr 1.05fr; gap:clamp(2rem,4vw,3.4rem); align-items:center; position:relative; z-index:2; }
 
-/* ---------- 11. SOBRE ------------------------------------------ */
-.about{
+/* A fita cassete, desenhada em CSS. Nenhuma imagem carregada. */
+.k7{
+  position:relative; aspect-ratio:1.62; width:100%; max-width:460px;
+  background:linear-gradient(158deg,#544838 0%,#332B21 48%,#1D1811 100%);
+  border-radius:10px; border:1px solid #6B5B45;
+  box-shadow:0 26px 54px rgba(6,3,1,.7), inset 0 2px 0 rgba(255,232,190,.24), inset 0 -2px 0 rgba(0,0,0,.5);
+  padding:5.5% 6%;
+  transform:rotate(-1.6deg);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1);
+}
+.k7:hover{ transform:rotate(0deg) translateY(-4px); }
+.k7__label{
+  position:relative; height:52%; border-radius:3px;
+  background:linear-gradient(180deg,#F6EEDC,#E7DAC0);
+  border:1px solid rgba(120,96,58,.35);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+  padding:.55rem .8rem; display:flex; flex-direction:column; justify-content:center; gap:.15rem;
+  overflow:hidden;
+}
+/* As duas linhas pautadas da etiqueta original */
+.k7__label::after{
+  content:""; position:absolute; left:.8rem; right:.8rem; top:38%; height:1px;
+  background:rgba(120,96,58,.28); box-shadow:0 14px 0 rgba(120,96,58,.28);
+}
+.k7__marca{ font-family:var(--hud); font-size:.95rem; letter-spacing:.2em; color:#8A7350; }
+.k7__nome{ font-family:var(--mao); font-size:clamp(1.05rem,2.2vw,1.5rem); color:#22201C; line-height:1.05; position:relative; z-index:2; }
+.k7__lado{ font-family:var(--mao); font-size:.95rem; color:#A33846; position:relative; z-index:2; }
+.k7__janela{
+  margin-top:6%; height:34%; border-radius:5px;
+  background:linear-gradient(180deg,#0E0B08,#181310);
+  border:1px solid #4B4034; box-shadow:inset 0 2px 8px rgba(0,0,0,.85);
+  display:flex; align-items:center; justify-content:space-around; padding:0 8%;
+}
+.k7__roda{
+  width:26%; aspect-ratio:1; border-radius:50%;
   background:
-    linear-gradient(180deg, var(--ink) 0%, #0C0A16 100%);
-  border-block:1px solid var(--ink-line);
+    radial-gradient(circle at 50% 50%, #2A241B 0 26%, transparent 27%),
+    conic-gradient(from 0deg, #6B5B45 0 6deg, #241D14 6deg 30deg, #6B5B45 30deg 36deg, #241D14 36deg 60deg, #6B5B45 60deg 66deg, #241D14 66deg 90deg, #6B5B45 90deg 96deg, #241D14 96deg 120deg, #6B5B45 120deg 126deg, #241D14 126deg 150deg, #6B5B45 150deg 156deg, #241D14 156deg 180deg, #6B5B45 180deg 186deg, #241D14 186deg 210deg, #6B5B45 210deg 216deg, #241D14 216deg 240deg, #6B5B45 240deg 246deg, #241D14 246deg 270deg, #6B5B45 270deg 276deg, #241D14 276deg 300deg, #6B5B45 300deg 306deg, #241D14 306deg 330deg, #6B5B45 330deg 336deg, #241D14 336deg 360deg);
+  border:2px solid #3A322A;
 }
-.about__grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(2rem,4vw,3.4rem); align-items:center; }
-.about p + p{ margin-top:.9rem; }
-.about__quote{
-  font-family:var(--display); font-size:clamp(1.15rem,2vw,1.5rem); line-height:1.2;
-  color:var(--fluor); border-left:4px solid var(--laranja); padding-left:1rem; margin-top:1.4rem;
-}
-.timeline{ display:flex; flex-direction:column; gap:0; }
-.tl{
-  display:grid; grid-template-columns:76px 1fr; gap:1rem; padding:1rem 0;
-  border-bottom:1px dashed var(--ink-line);
-}
-.tl:last-child{ border-bottom:0; }
-.tl__year{ font-family:var(--hud); font-size:1.5rem; color:var(--rosa); letter-spacing:.06em; }
-.tl__txt{ font-size:.92rem; color:var(--paper-dim); }
-.tl__txt b{ color:var(--paper); font-weight:600; }
+.k7:hover .k7__roda{ animation:gira 3.2s linear infinite; }
+@keyframes gira{ to{ transform:rotate(360deg); } }
+.k7__parafusos{ position:absolute; inset:2.5% 3%; pointer-events:none; }
+.k7__parafusos i{ position:absolute; width:7px; height:7px; border-radius:50%; background:radial-gradient(circle at 34% 30%, #5C5142, #1A150F); }
+.k7__parafusos i:nth-child(1){ left:0; top:0; }
+.k7__parafusos i:nth-child(2){ right:0; top:0; }
+.k7__parafusos i:nth-child(3){ left:0; bottom:0; }
+.k7__parafusos i:nth-child(4){ right:0; bottom:0; }
 
-/* ---------- 12. CTA FINAL + NEWSLETTER ------------------------- */
+/* Lista de faixas: escrita como a gente escrevia atrás da capa */
+.faixas{ display:grid; grid-template-columns:1fr 1fr; gap:1.4rem 2rem; margin-top:.4rem; }
+.faixas h4{ font-family:var(--mao); font-size:1.15rem; color:var(--ambar); margin:0 0 .5rem; letter-spacing:.02em; }
+.faixas li{ font-size:.9rem; color:var(--papel-dim); line-height:1.6; display:flex; gap:.5rem; }
+.faixas li span{ font-family:var(--hud); color:#7A6A52; font-size:1rem; flex:none; }
+.faixas li b{ color:var(--papel); font-weight:700; }
+
+/* Facade do player: o iframe do YouTube só entra depois do clique.
+   Assim a página não carrega ~1MB de JS de terceiro no primeiro acesso. */
+.player{
+  position:relative; margin-top:1.4rem; aspect-ratio:16/9; width:100%;
+  border-radius:var(--radius); overflow:hidden; cursor:pointer;
+  background:radial-gradient(120% 110% at 50% 40%, #1B2A3C, #0A0F17 70%);
+  border:1px solid var(--linha);
+  display:grid; place-items:center; text-align:center; padding:1.2rem;
+}
+.player::before{ /* a scanline mora aqui também: é uma tela */
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,.3) 0 1px, transparent 1px 3px);
+}
+.player iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.player__play{
+  width:64px; height:64px; border-radius:50%; display:grid; place-items:center;
+  background:var(--laranja); color:#1B0A02; font-size:1.5rem; margin:0 auto .7rem;
+  box-shadow:0 8px 26px rgba(242,102,28,.4); transition:transform .18s ease;
+}
+.player:hover .player__play{ transform:scale(1.08); }
+.player__txt{ position:relative; z-index:2; font-family:var(--hud); font-size:1.2rem; letter-spacing:.1em; color:var(--neon-verde); }
+.player__aviso{ position:relative; z-index:2; font-size:.8rem; color:var(--papel-dim); margin-top:.4rem; max-width:44ch; }
+
+/* ---------- 12. SOBRE ------------------------------------------ */
+.about{ background:linear-gradient(180deg, var(--noite) 0%, #17130D 100%); border-block:1px solid var(--linha); position:relative; overflow:hidden; }
+.about__grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(2rem,4vw,3.4rem); align-items:center; position:relative; z-index:2; }
+.about p + p{ margin-top:1rem; }
+.about__quote{
+  font-family:var(--display); font-size:clamp(1.1rem,1.9vw,1.42rem); line-height:1.28;
+  color:var(--ambar); border-left:4px solid var(--laranja); padding-left:1.1rem; margin-top:1.6rem;
+}
+.timeline{
+  background:var(--noite-2); border:1px solid var(--linha); border-radius:var(--radius);
+  padding:1.4rem 1.5rem; box-shadow:var(--sombra-q);
+}
+.tl{ display:grid; grid-template-columns:78px 1fr; gap:1.1rem; padding:1rem 0; border-bottom:1px dashed var(--linha); }
+.tl:last-child{ border-bottom:0; padding-bottom:0; }
+.tl:first-child{ padding-top:0; }
+.tl__year{ font-family:var(--hud); font-size:1.5rem; color:var(--laranja); letter-spacing:.06em; }
+.tl__txt{ font-size:.92rem; color:var(--papel-dim); line-height:1.6; }
+.tl__txt b{ color:var(--papel); font-weight:700; }
+
+/* ---------- 13. CTA FINAL -------------------------------------- */
 .final{
   background:
-    radial-gradient(80% 130% at 50% 0%, rgba(122,63,191,.42), transparent 60%),
-    var(--ink);
+    radial-gradient(70% 120% at 50% 0%, rgba(232,163,61,.24), transparent 62%),
+    var(--noite);
   text-align:center;
 }
 .final h2{ max-width:22ch; margin-inline:auto; }
 .final .lede{ margin-inline:auto; text-align:center; }
-.news{
-  display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center;
-  margin-top:1.6rem; width:min(560px,100%); margin-inline:auto;
-}
+.news{ display:flex; gap:.65rem; flex-wrap:wrap; justify-content:center; margin-top:1.7rem; width:min(560px,100%); margin-inline:auto; }
 .news input{
-  flex:1 1 260px; min-width:0;
-  background:var(--ink-2); border:2px solid var(--ink-line); border-radius:var(--radius);
-  padding:.9rem 1rem; color:var(--paper);
+  flex:1 1 260px; min-width:0; background:var(--noite-2);
+  border:2px solid var(--linha); border-radius:var(--radius);
+  padding:.95rem 1.05rem; color:var(--papel);
 }
-.news input::placeholder{ color:#6E6B7C; }
-.news input:focus{ outline:none; border-color:var(--fluor); }
-.news__note{ font-size:.78rem; color:#6E6B7C; margin-top:.75rem; }
-.news__ok{
-  font-family:var(--hud); font-size:1.25rem; color:var(--verde);
-  letter-spacing:.08em; margin-top:.9rem; min-height:1.5rem;
-}
-.countdown{
-  font-family:var(--hud); font-size:1.5rem; color:var(--fluor);
-  letter-spacing:.14em; font-variant-numeric:tabular-nums;
-}
+.news input::placeholder{ color:#7A6A52; }
+.news input:focus{ outline:none; border-color:var(--ambar); }
+.news__note{ font-size:.8rem; color:#7A6A52; margin-top:.8rem; }
+.news__ok{ font-family:var(--hud); font-size:1.24rem; letter-spacing:.08em; margin-top:.9rem; min-height:1.6rem; color:var(--abacate); }
+.countdown{ font-family:var(--hud); font-size:1.5rem; color:var(--ambar); letter-spacing:.14em; font-variant-numeric:tabular-nums; }
 
-/* ---------- 13. RODAPÉ ----------------------------------------- */
-.footer{ background:#050508; border-top:1px solid var(--ink-line); padding-block:3rem 2rem; }
-.footer__grid{
-  display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:2rem;
-}
-.footer h4{
-  font-family:var(--display); font-size:.82rem; text-transform:uppercase;
-  letter-spacing:.06em; margin:0 0 .8rem; color:var(--paper);
-}
-.footer li{ margin-bottom:.42rem; }
-.footer a{ color:var(--paper-dim); text-decoration:none; font-size:.88rem; }
-.footer a:hover{ color:var(--fluor); text-decoration:underline; }
-.social{ display:flex; gap:.5rem; margin-top:.9rem; }
-.social a{
-  width:34px; height:34px; display:grid; place-items:center;
-  border:1px solid var(--ink-line); border-radius:2px; color:var(--paper-dim);
-  transition:color .15s, border-color .15s;
-}
-.social a:hover{ color:var(--fluor); border-color:var(--fluor); }
+/* ---------- 14. RODAPÉ ----------------------------------------- */
+.footer{ background:#0F0C08; border-top:1px solid var(--linha); padding-block:3.4rem 2rem; position:relative; overflow:hidden; }
+.footer__grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:2.2rem; position:relative; z-index:2; }
+.footer h4{ font-family:var(--display); font-size:.8rem; text-transform:uppercase; letter-spacing:.07em; margin:0 0 .9rem; color:var(--papel); }
+.footer li{ margin-bottom:.48rem; }
+.footer a{ color:var(--papel-dim); text-decoration:none; font-size:.89rem; }
+.footer a:hover{ color:var(--ambar); text-decoration:underline; }
+.social{ display:flex; gap:.55rem; margin-top:1rem; }
+.social a{ width:35px; height:35px; display:grid; place-items:center; border:1px solid var(--linha); border-radius:var(--radius-s); color:var(--papel-dim); transition:color .16s, border-color .16s; }
+.social a:hover{ color:var(--ambar); border-color:var(--ambar); }
 .social svg{ width:17px; height:17px; }
-.footer__bottom{
-  margin-top:2.4rem; padding-top:1.2rem; border-top:1px solid var(--ink-line);
-  display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; justify-content:space-between;
-  font-size:.78rem; color:#5E5B6C;
-}
+.footer__bottom{ margin-top:2.6rem; padding-top:1.3rem; border-top:1px solid var(--linha); display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; justify-content:space-between; font-size:.79rem; color:#6E6047; position:relative; z-index:2; }
 
-/* ---------- 14. RESPONSIVO E ACESSIBILIDADE -------------------- */
-@media (max-width:900px){
+/* ---------- 15. RESPONSIVO E ACESSIBILIDADE -------------------- */
+@media (max-width:920px){
   .hero__grid{ grid-template-columns:1fr; }
-  .tv{ order:-1; }
-  .about__grid{ grid-template-columns:1fr; }
+  .tv-wrap{ order:-1; }
+  .about__grid, .mix__grid{ grid-template-columns:1fr; }
+  .k7{ margin-inline:auto; }
   .footer__grid{ grid-template-columns:1fr 1fr; }
-  .nav{ display:none; }           /* navegação vira âncora no rodapé no mobile */
+  .nav{ display:none; }
 }
-@media (max-width:520px){
-  .stats{ grid-template-columns:1fr; gap:.6rem; text-align:left; }
-  .stats > div{ display:flex; align-items:baseline; gap:.6rem; }
+@media (max-width:540px){
+  .stats{ grid-template-columns:1fr; gap:.7rem; }
+  .stats > div{ display:flex; align-items:baseline; gap:.7rem; }
+  .faixas{ grid-template-columns:1fr; }
   .footer__grid{ grid-template-columns:1fr; }
-  .hud{ display:none; }           /* HUD atrapalha em tela pequena */
+  .hud{ display:none; }
   .btn{ width:100%; }
   .hero__cta{ flex-direction:column; align-items:stretch; }
+  .deps > .dep{ transform:none !important; }
 }
 
-/* Foco sempre visível — teclado tem que enxergar onde está */
 a:focus-visible, button:focus-visible, input:focus-visible{
-  outline:3px solid var(--fluor); outline-offset:3px; border-radius:2px;
+  outline:3px solid var(--ambar); outline-offset:3px; border-radius:var(--radius-s);
 }
 
-/* Quem pediu menos movimento, recebe menos movimento */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.001ms !important; animation-iteration-count:1 !important;
@@ -652,19 +651,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 </head>
 <body>
 
-<!-- Texturas do portal: ficam por cima de tudo, mas não capturam clique -->
-<div class="crt-overlay" aria-hidden="true"></div>
-<div class="crt-vignette" aria-hidden="true"></div>
+<!-- Texturas: grão de papel + vinheta quente. A scanline NÃO está aqui —
+     ela pertence à tela da TV e ao player, não à página inteira. -->
+<div class="grain" aria-hidden="true"></div>
+<div class="vinheta" aria-hidden="true"></div>
 <div class="progress" id="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__dot"></span><span id="hudDate">REC 00:00 1990</span></div>
-
-<!-- ============================================================
-     BIBLIOTECA DE ÍCONES
-     Desenhados em SVG (nada de imagem externa: carrega instantâneo,
-     nunca quebra e acompanha a cor do bloco).
-     Para trocar por foto real, substitua o <svg class="prod__art">
-     do card por: <img src="sua-foto.webp" alt="descrição da peça" loading="lazy">
-     ============================================================ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <!-- TV de tubo -->
@@ -759,7 +751,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9l6 3-6 3z" fill="currentColor"/></symbol>
   </defs>
 </svg>
-
 <!-- ============================================================ HEADER -->
 <div class="topbar">FRETE GRÁTIS ACIMA DE R$ 500 <b>·</b> 12 PEÇAS NOVAS TODA QUINTA, 20H <b>·</b> QUANDO VENDE, ACABOU</div>
 
@@ -776,15 +767,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       <a href="#colecoes">Coleções</a>
       <a href="#acervo">Acervo</a>
       <a href="#depoimentos">Quem já voltou</a>
+      <a href="#mixtape">Mixtape</a>
       <a href="#sobre">O Portal</a>
-      <a href="#fita" class="btn btn--fluor" style="padding:.55rem 1rem;font-size:.78rem;">A Fita Semanal</a>
+      <a href="#fita" class="btn btn--ambar">A Fita Semanal</a>
     </nav>
   </div>
 </header>
 
-<!-- ============================================================ 1. HERO -->
 <main id="topo">
+<!-- ============================================================ 1. HERO -->
 <section class="hero">
+  <div class="madeira" aria-hidden="true"></div>
   <div class="wrap hero__grid">
 
     <div class="stack">
@@ -810,29 +803,51 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </dl>
     </div>
 
-    <!-- TV de tubo: 100% CSS. É o "portal" propriamente dito. -->
-    <div class="tv" role="img" aria-label="Televisão de tubo dos anos 90 exibindo a chamada do Portal do Tempo">
-      <div class="tv__screen">
-        <span class="tv__ch">CH 03</span>
-        <span class="tv__play">▶ PLAY</span>
-        <div class="tv__content">
-          <p class="tv__word">VOCÊ<br>ESTÁ<br>ENTRANDO<br>EM 1994</p>
-          <p class="tv__sub">NÃO REBOBINE</p>
+    <!-- A televisão: 100% CSS, e a luz dela vaza pro chão da seção.
+         O som só toca depois do clique — autoplay com áudio é bloqueado
+         em todo navegador moderno, e com razão. -->
+    <div class="tv-wrap">
+      <div class="tv">
+        <div class="tv__screen" id="tvScreen" role="img" aria-label="Televisão de tubo dos anos 90 exibindo a chamada do Portal do Tempo">
+          <span class="tv__static" aria-hidden="true"></span>
+          <span class="tv__ch" id="tvCh">CH 03</span>
+          <span class="tv__play" id="tvPlay">■ STOP</span>
+          <div class="tv__content">
+            <p class="tv__word" id="tvWord">VOCÊ<br>ESTÁ<br>ENTRANDO<br>EM 1994</p>
+            <p class="tv__sub" id="tvSub">NÃO REBOBINE</p>
+          </div>
+        </div>
+        <div class="tv__panel">
+          <span class="tv__brand">TRINITRÔNICA</span>
+          <span class="tv__speaker"></span>
+          <span class="tv__knobs"><span></span><span></span></span>
         </div>
       </div>
-      <div class="tv__panel">
-        <span class="tv__brand">TRINITRÔNICA</span>
-        <span class="tv__speaker"></span>
-        <span class="tv__knobs"><span></span><span></span></span>
+
+      <div class="tv-liga">
+        <button class="tv-liga__btn" type="button" id="btnTv" aria-pressed="false">
+          <span aria-hidden="true">🔊</span> Ligar a TV (com som)
+        </button>
+        <span class="tv-liga__nota" id="tvNota">CHIADO DE FITA · 2 SEGUNDOS</span>
       </div>
     </div>
 
   </div>
 </section>
-<div class="tracking-bar" aria-hidden="true"></div>
+
+<!-- ============================================================ GARANTIAS
+     Faixa clara logo após o hero: derruba o risco cedo (bom pra conversão)
+     e quebra a parede de escuro (bom pro conforto de leitura). -->
+<section class="guards" aria-label="Nossas garantias">
+  <div class="guard"><svg aria-hidden="true"><use href="#i-plug"></use></svg><div><b>Testado na tomada</b><span>Nenhum eletrônico sai daqui sem ser ligado e usado por 48 horas.</span></div></div>
+  <div class="guard"><svg aria-hidden="true"><use href="#i-box"></use></svg><div><b>Embalagem de múmia</b><span>Plástico-bolha, canto reforçado e caixa sob medida. Peça antiga não aguenta tombo.</span></div></div>
+  <div class="guard"><svg aria-hidden="true"><use href="#i-back"></use></svg><div><b>7 dias para desistir</b><span>Chegou e não era o que você lembrava? Devolve. A gente paga a volta.</span></div></div>
+  <div class="guard"><svg aria-hidden="true"><use href="#i-truck"></use></svg><div><b>Brasil inteiro</b><span>Frete calculado no carrinho. Móvel grande vai de transportadora com agendamento.</span></div></div>
+</section>
 
 <!-- ============================================================ 2. COLEÇÕES -->
 <section class="section" id="colecoes">
+  <div class="madeira" aria-hidden="true"></div>
   <div class="wrap stack">
     <div>
       <span class="eyebrow">SELECIONE O CANAL</span>
@@ -843,7 +858,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     </div>
 
     <div class="cats">
-      <a class="cat" href="#acervo" style="--c:var(--laranja)">
+      <a class="cat" href="#acervo" style="--c:var(--formica)">
         <svg class="cat__icon" aria-hidden="true"><use href="#i-tv"></use></svg>
         <div>
           <p class="cat__name">Eletrônicos</p>
@@ -852,7 +867,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
         <span class="cat__count">14 PEÇAS ▸</span>
       </a>
 
-      <a class="cat" href="#acervo" style="--c:var(--azul)">
+      <a class="cat" href="#acervo" style="--c:#A9713C">
         <svg class="cat__icon" aria-hidden="true"><use href="#i-sofa"></use></svg>
         <div>
           <p class="cat__name">Móveis</p>
@@ -861,7 +876,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
         <span class="cat__count">9 PEÇAS ▸</span>
       </a>
 
-      <a class="cat" href="#acervo" style="--c:var(--rosa)">
+      <a class="cat" href="#acervo" style="--c:var(--uva)">
         <svg class="cat__icon" aria-hidden="true"><use href="#i-vinil"></use></svg>
         <div>
           <p class="cat__name">Música</p>
@@ -870,7 +885,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
         <span class="cat__count">62 PEÇAS ▸</span>
       </a>
 
-      <a class="cat" href="#acervo" style="--c:var(--verde)">
+      <a class="cat" href="#acervo" style="--c:var(--abacate)">
         <svg class="cat__icon" aria-hidden="true"><use href="#i-toy"></use></svg>
         <div>
           <p class="cat__name">Brinquedos</p>
@@ -879,7 +894,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
         <span class="cat__count">23 PEÇAS ▸</span>
       </a>
 
-      <a class="cat" href="#acervo" style="--c:var(--fluor)">
+      <a class="cat" href="#acervo" style="--c:var(--bordo)">
         <svg class="cat__icon" aria-hidden="true"><use href="#i-deco"></use></svg>
         <div>
           <p class="cat__name">Decoração</p>
@@ -892,13 +907,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 </section>
 
 <!-- ============================================================ 3. ACERVO -->
-<section class="section" id="acervo" style="background:var(--ink-2); border-block:1px solid var(--ink-line)">
+<section class="section" id="acervo" style="background:var(--noite-2); border-block:1px solid var(--linha)">
+  <div class="madeira" aria-hidden="true"></div>
   <div class="wrap stack">
     <div>
       <span class="eyebrow">ACERVO DA SEMANA · ATUALIZADO QUINTA, 20H</span>
       <h2>Sete peças que provavelmente você não vê há 25 anos.</h2>
       <p class="lede" style="margin-top:.7rem">
-        Cada uma tem <strong style="color:var(--paper)">uma unidade só</strong> — não é estoque, é achado.
+        Cada uma tem <strong style="color:var(--papel)">uma unidade só</strong> — não é estoque, é achado.
         O preço já inclui limpeza, revisão elétrica e teste. O que está aqui, funciona.
       </p>
     </div>
@@ -906,7 +922,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     <div class="grid-prod">
 
       <!-- Card 1 -->
-      <article class="prod" style="--c:#6E2AA0; --c2:rgba(255,106,24,.55)">
+      <article class="prod" style="--c:#3A5F80">
         <div class="prod__cover">
           <!-- Troque este SVG por <img src="..." alt="..." loading="lazy"> se usar foto real -->
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-tv"></use></svg>
@@ -928,7 +944,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </article>
 
       <!-- Card 2 -->
-      <article class="prod" style="--c:#1F4FBF; --c2:rgba(233,255,61,.45)">
+      <article class="prod" style="--c:#8C3340">
         <div class="prod__cover">
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-vhs"></use></svg>
           <div class="prod__seals">
@@ -949,11 +965,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </article>
 
       <!-- Card 3 -->
-      <article class="prod" style="--c:#B8263F; --c2:rgba(255,61,158,.5)">
+      <article class="prod" style="--c:#B0761E">
         <div class="prod__cover">
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-walkman"></use></svg>
           <div class="prod__seals">
-            <span class="seal seal--raro">Raridade</span>
+            <span class="seal seal--unica">Raridade</span>
             <span class="seal seal--line">Liga e funciona</span>
           </div>
           <span class="prod__year">1992</span>
@@ -970,7 +986,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </article>
 
       <!-- Card 4 -->
-      <article class="prod" style="--c:#0F7A46; --c2:rgba(47,107,240,.5)">
+      <article class="prod" style="--c:#62802F">
         <div class="prod__cover">
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-arcade"></use></svg>
           <div class="prod__seals">
@@ -991,11 +1007,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </article>
 
       <!-- Card 5 -->
-      <article class="prod" style="--c:#C25412; --c2:rgba(233,255,61,.4)">
+      <article class="prod" style="--c:#A8501C">
         <div class="prod__cover">
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-fone"></use></svg>
           <div class="prod__seals">
-            <span class="seal seal--testado">Liga e funciona</span>
+            <span class="seal seal--line">Liga e funciona</span>
           </div>
           <span class="prod__year">1990</span>
         </div>
@@ -1011,7 +1027,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </article>
 
       <!-- Card 6 -->
-      <article class="prod" style="--c:#5B2F86; --c2:rgba(0,214,107,.45)">
+      <article class="prod" style="--c:#7A4B2A">
         <div class="prod__cover">
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-sofa"></use></svg>
           <div class="prod__seals">
@@ -1032,11 +1048,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       </article>
 
       <!-- Card 7 -->
-      <article class="prod" style="--c:#8A1E5C; --c2:rgba(255,106,24,.45)">
+      <article class="prod" style="--c:#5E3049">
         <div class="prod__cover">
           <svg class="prod__art" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-vinil"></use></svg>
           <div class="prod__seals">
-            <span class="seal seal--raro">Raridade</span>
+            <span class="seal seal--unica">Raridade</span>
           </div>
           <span class="prod__year">1995</span>
         </div>
@@ -1060,96 +1076,160 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   </div>
 </section>
 
-<!-- ============================================================ GARANTIAS -->
-<section class="guards" aria-label="Nossas garantias">
-  <div class="guard"><svg aria-hidden="true"><use href="#i-plug"></use></svg><div><b>Testado na tomada</b><span>Nenhum eletrônico sai daqui sem ser ligado e usado por 48 horas.</span></div></div>
-  <div class="guard"><svg aria-hidden="true"><use href="#i-box"></use></svg><div><b>Embalagem de múmia</b><span>Plástico-bolha, canto reforçado e caixa sob medida. Peça antiga não aguenta tombo.</span></div></div>
-  <div class="guard"><svg aria-hidden="true"><use href="#i-back"></use></svg><div><b>7 dias para desistir</b><span>Chegou e não era o que você lembrava? Devolve. A gente paga a volta.</span></div></div>
-  <div class="guard"><svg aria-hidden="true"><use href="#i-truck"></use></svg><div><b>Brasil inteiro</b><span>Frete calculado no carrinho. Móvel grande vai de transportadora com agendamento.</span></div></div>
-</section>
-
 <!-- ============================================================ 4. PROVA SOCIAL -->
-<section class="section" id="depoimentos">
+<section class="section paper" id="depoimentos">
   <div class="wrap stack">
     <div>
       <span class="eyebrow">CARTAS DE QUEM JÁ VOLTOU</span>
-      <h2>Ninguém compra um objeto aqui. Compra o dia que ele lembra.</h2>
+      <h2>Ninguém compra um objeto aqui.<br>Compra o dia que ele lembra.</h2>
     </div>
 
     <div class="deps">
 
-      <figure class="win95" style="margin:0">
-        <div class="win95__bar"><span>depoimento_marcia.txt</span><span class="win95__btns"><i></i><i></i><i></i></span></div>
-        <div class="win95__body">
-          <blockquote class="dep__text" style="margin:0">
-            "Achei o rádio-relógio que tinha na cabeceira da minha avó. O <b>mesmo modelo, a mesma cor</b>.
-            Liguei ele na cozinha e chorei igual criança. Minha mãe não acreditou quando viu."
-          </blockquote>
-          <figcaption class="dep__who">
-            <span class="dep__av" style="background:var(--roxo)">MS</span>
-            <span>
-              <span class="dep__name">Márcia S.</span>
-              <span class="dep__meta">Belo Horizonte · comprou rádio-relógio 1991</span>
-            </span>
-            <span class="dep__stars" style="margin-left:auto" aria-label="5 de 5 estrelas">★★★★★</span>
-          </figcaption>
-        </div>
+      <figure class="dep">
+        <span class="tape" aria-hidden="true"></span>
+        <blockquote class="dep__text">
+          "Achei o rádio-relógio que tinha na cabeceira da minha avó. O <b>mesmo modelo, a mesma cor</b>.
+          Liguei ele na cozinha e chorei igual criança. Minha mãe não acreditou quando viu."
+        </blockquote>
+        <figcaption class="dep__who">
+          <span>
+            <span class="dep__sign">Márcia S.</span><br>
+            <span class="dep__meta">Belo Horizonte · rádio-relógio 1991</span>
+          </span>
+          <span class="dep__stars" aria-label="5 de 5 estrelas">★★★★★</span>
+        </figcaption>
       </figure>
 
-      <figure class="win95" style="margin:0">
-        <div class="win95__bar"><span>depoimento_rogerio.txt</span><span class="win95__btns"><i></i><i></i><i></i></span></div>
-        <div class="win95__body">
-          <blockquote class="dep__text" style="margin:0">
-            "Comprei o fliperama pro escritório achando que ia ser enfeite. Virou o motivo de todo mundo
-            chegar mais cedo. <b>Chegou funcionando</b>, sem uma tecla dura. Já indiquei pra três amigos."
-          </blockquote>
-          <figcaption class="dep__who">
-            <span class="dep__av" style="background:var(--azul)">RA</span>
-            <span>
-              <span class="dep__name">Rogério A.</span>
-              <span class="dep__meta">Curitiba · comprou fliperama de mesa</span>
-            </span>
-            <span class="dep__stars" style="margin-left:auto" aria-label="5 de 5 estrelas">★★★★★</span>
-          </figcaption>
-        </div>
+      <figure class="dep">
+        <span class="tape" aria-hidden="true"></span>
+        <blockquote class="dep__text">
+          "Comprei o fliperama pro escritório achando que ia ser enfeite. Virou o motivo de todo mundo
+          chegar mais cedo. <b>Chegou funcionando</b>, sem uma tecla dura. Já indiquei pra três amigos."
+        </blockquote>
+        <figcaption class="dep__who">
+          <span>
+            <span class="dep__sign">Rogério A.</span><br>
+            <span class="dep__meta">Curitiba · fliperama de mesa</span>
+          </span>
+          <span class="dep__stars" aria-label="5 de 5 estrelas">★★★★★</span>
+        </figcaption>
       </figure>
 
-      <figure class="win95" style="margin:0">
-        <div class="win95__bar"><span>depoimento_juliana.txt</span><span class="win95__btns"><i></i><i></i><i></i></span></div>
-        <div class="win95__body">
-          <blockquote class="dep__text" style="margin:0">
-            "Dei o Walkman de presente pro meu marido no aniversário de 40. Ele passou a noite inteira
-            gravando fita pra mim, igual em 96. <b>Melhor presente que já dei</b>, e olha que eu já dei viagem."
-          </blockquote>
-          <figcaption class="dep__who">
-            <span class="dep__av" style="background:var(--vermelho)">JP</span>
-            <span>
-              <span class="dep__name">Juliana P.</span>
-              <span class="dep__meta">Recife · comprou Walkman + 10 fitas K7</span>
-            </span>
-            <span class="dep__stars" style="margin-left:auto" aria-label="5 de 5 estrelas">★★★★★</span>
-          </figcaption>
-        </div>
+      <figure class="dep">
+        <span class="tape" aria-hidden="true"></span>
+        <blockquote class="dep__text">
+          "Dei o Walkman de presente pro meu marido no aniversário de 40. Ele passou a noite inteira
+          gravando fita pra mim, igual em 96. <b>Melhor presente que já dei</b>, e olha que eu já dei viagem."
+        </blockquote>
+        <figcaption class="dep__who">
+          <span>
+            <span class="dep__sign">Juliana P.</span><br>
+            <span class="dep__meta">Recife · Walkman + 10 fitas K7</span>
+          </span>
+          <span class="dep__stars" aria-label="5 de 5 estrelas">★★★★★</span>
+        </figcaption>
       </figure>
 
     </div>
   </div>
 </section>
-<div class="tracking-bar" aria-hidden="true"></div>
 
-<!-- ============================================================ 5. SOBRE -->
+<!-- ============================================================ 5. MIXTAPE
+     A assinatura da página. Música é o gatilho de memória mais rápido que
+     existe pra quem tem 30-50 hoje: as faixas que ficam gravadas pra sempre
+     são as dos 10 aos 25 anos — exatamente os anos 90 desse público.
+     O player entra só no clique (facade), pra não carregar ~1MB de JS
+     de terceiro em quem nem vai ouvir. -->
+<section class="section mix" id="mixtape">
+  <div class="madeira" aria-hidden="true"></div>
+  <div class="wrap mix__grid">
+
+    <div class="k7" role="img" aria-label="Fita cassete com etiqueta escrita à mão: A Mixtape do Portal, Lado A">
+      <span class="k7__parafusos" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <div class="k7__label">
+        <span class="k7__marca">PORTAL DO TEMPO · 60 MIN</span>
+        <span class="k7__nome">A Mixtape do Portal</span>
+        <span class="k7__lado">LADO A — pra ouvir garimpando</span>
+      </div>
+      <div class="k7__janela" aria-hidden="true">
+        <span class="k7__roda"></span>
+        <span class="k7__roda"></span>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div>
+        <span class="eyebrow">A MIXTAPE DO PORTAL</span>
+        <h2>Dá play e escolhe suas peças com a trilha certa.</h2>
+        <p class="lede" style="margin-top:.8rem">
+          A gente montou a fita que tocava no rádio do carro, no som da sala e no Walkman do ônibus.
+          Aperta o play, deixa rolando e continua olhando o acervo — é assim que a peça certa
+          encontra você. <strong style="color:var(--papel)">Atualizada toda quinta, junto com as peças novas.</strong>
+        </p>
+      </div>
+
+      <div class="faixas">
+        <div>
+          <h4>Lado A</h4>
+          <ul>
+            <li><span>1</span><span><b>Pare</b> — Zezé Di Camargo &amp; Luciano</span></li>
+            <li><span>2</span><span><b>Evidências</b> — Chitãozinho &amp; Xororó</span></li>
+            <li><span>3</span><span><b>Pelados em Santos</b> — Mamonas Assassinas</span></li>
+            <li><span>4</span><span><b>Cigana</b> — Raça Negra</span></li>
+            <li><span>5</span><span><b>É uma Partida de Futebol</b> — Skank</span></li>
+            <li><span>6</span><span><b>Que Se Chama Amor</b> — Só Pra Contrariar</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Lado B</h4>
+          <ul>
+            <li><span>1</span><span><b>Vento no Litoral</b> — Legião Urbana</span></li>
+            <li><span>2</span><span><b>Beija Eu</b> — Marisa Monte</span></li>
+            <li><span>3</span><span><b>Malandragem</b> — Cássia Eller</span></li>
+            <li><span>4</span><span><b>Tic Tic Tac</b> — Carrapicho</span></li>
+            <li><span>5</span><span><b>Sozinho</b> — Caetano Veloso</span></li>
+            <li><span>6</span><span><b>Você Me Vira a Cabeça</b> — Banda Eva</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ▼▼▼ AQUI: troque COLE_O_ID_DA_SUA_PLAYLIST pelo ID da sua playlist
+           do YouTube (a parte depois de "list=" na URL, começa com PL...).
+           Nada mais precisa ser mexido. O player só carrega depois do clique. -->
+      <div class="player" id="player" role="button" tabindex="0"
+           data-playlist="COLE_O_ID_DA_SUA_PLAYLIST"
+           aria-label="Tocar A Mixtape do Portal no YouTube">
+        <div>
+          <span class="player__play" aria-hidden="true">▶</span>
+          <p class="player__txt">TOCAR A MIXTAPE</p>
+          <p class="player__aviso" id="playerAviso">Abre no player oficial do YouTube, aqui dentro da página.</p>
+        </div>
+      </div>
+
+      <div class="hero__cta">
+        <button class="btn btn--primary" type="button" data-goto-fita>Quero a fita toda quinta</button>
+        <a class="btn btn--ghost" href="https://open.spotify.com/" rel="noopener noreferrer" target="_blank">Ouvir no Spotify</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ 6. SOBRE -->
 <section class="section about" id="sobre">
+  <div class="madeira" aria-hidden="true"></div>
   <div class="wrap about__grid">
     <div>
       <span class="eyebrow">O PORTAL DO TEMPO</span>
       <h2>Começou porque jogaram o som do meu pai no lixo.</h2>
-      <p class="lede" style="margin-top:1rem">
+      <p class="lede" style="margin-top:1.1rem">
         Em 2016 eu ajudei a esvaziar a casa do meu avô. No meio do entulho estava o system de três torres
         que tocou a minha infância inteira — e o caminhão de entulho já tinha levado metade.
         Eu resgatei o que deu, consertei numa oficina de bairro e liguei. Funcionou.
       </p>
       <p class="lede">
-        Foi aí que caiu a ficha: <strong style="color:var(--paper)">todo dia uma casa é desmontada no Brasil
+        Foi aí que caiu a ficha: <strong style="color:var(--papel)">todo dia uma casa é desmontada no Brasil
         e a memória de alguém vai pro ferro-velho.</strong> Hoje somos quatro pessoas, um galpão em Santo André
         e uma bancada de reparo. A gente compra de inventário, de mudança, de desmanche e de quem simplesmente
         não tem mais onde guardar.
@@ -1161,9 +1241,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       <p class="about__quote">"Objeto velho é lixo. Objeto com história é acervo. A diferença é quem cuida."</p>
     </div>
 
-    <!-- Linha do tempo: aqui a numeração é informação de verdade (a ordem importa),
-         não enfeite de "01 / 02 / 03". -->
-    <div class="timeline win95" style="padding:1.2rem 1.3rem; color:var(--paper); background:var(--ink-2); border-color:var(--ink-line); box-shadow:6px 6px 0 rgba(122,63,191,.35)">
+    <!-- A numeração aqui é informação real: a ordem dos anos importa.
+         Não é "01 / 02 / 03" decorativo. -->
+    <div class="timeline">
       <div class="tl"><span class="tl__year">2016</span><span class="tl__txt">Primeiro resgate: <b>o system de três torres do meu avô.</b> Voltou a tocar depois de 11 anos desligado.</span></div>
       <div class="tl"><span class="tl__year">2018</span><span class="tl__txt">Galpão alugado em Santo André e a primeira <b>bancada de reparo</b> de verdade, com osciloscópio de segunda mão.</span></div>
       <div class="tl"><span class="tl__year">2021</span><span class="tl__txt">Chegamos a <b>500 peças resgatadas</b>. Começamos a comprar acervos inteiros de inventário.</span></div>
@@ -1173,52 +1253,53 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   </div>
 </section>
 
-<!-- ============================================================ 6. CTA FINAL -->
+<!-- ============================================================ 7. CTA FINAL -->
 <section class="section final" id="fita">
   <div class="wrap stack" style="align-items:center">
     <span class="eyebrow">A FITA SEMANAL</span>
     <h2>Quinta, 20h. Doze peças. Vinte e quatro horas de vantagem.</h2>
     <p class="lede">
       Toda semana chegam 12 peças novas ao acervo. Quem está na Fita Semanal recebe o link
-      na quarta às 20h — <strong style="color:var(--paper)">um dia inteiro antes do site abrir pro público.</strong>
+      na quarta às 20h — <strong style="color:var(--papel)">um dia inteiro antes do site abrir pro público.</strong>
       É assim que as pessoas conseguem as raridades: não é sorte, é ordem de chegada.
     </p>
     <p class="countdown" id="countdown">CARREGANDO CONTAGEM…</p>
 
-    <!-- Formulário sem coleta real: nada é enviado a lugar nenhum nesta demonstração.
-         Ao plugar num backend, valide o e-mail também no servidor e use HTTPS + CSRF. -->
+    <!-- Demonstração: nada é enviado a servidor nenhum. Ao plugar num backend,
+         valide o e-mail TAMBÉM no servidor e use HTTPS. -->
     <form class="news" id="newsForm" novalidate>
       <label class="sr-only" for="email">Seu melhor e-mail</label>
       <input type="email" id="email" name="email" required autocomplete="email"
              placeholder="seu melhor e-mail" aria-describedby="newsNote">
-      <button class="btn btn--fluor" type="submit">Entrar na fita</button>
+      <button class="btn btn--primary" type="submit">Entrar na fita</button>
     </form>
     <p class="news__ok" id="newsOk" role="status" aria-live="polite"></p>
     <p class="news__note" id="newsNote">
       Um e-mail por semana. Sem corrente, sem promoção de coisa que você não pediu. Sai quando quiser em um clique.
     </p>
 
-    <div class="hero__cta" style="justify-content:center;margin-top:1.4rem">
-      <a class="btn btn--primary" href="#acervo">▶ Ver o acervo agora</a>
+    <div class="hero__cta" style="justify-content:center;margin-top:1.5rem">
+      <a class="btn btn--ambar" href="#acervo">▶ Ver o acervo agora</a>
       <a class="btn btn--ghost" href="https://wa.me/5511900000000" rel="noopener noreferrer" target="_blank">Falar no WhatsApp</a>
     </div>
   </div>
 </section>
 </main>
 
-<!-- ============================================================ 7. RODAPÉ -->
+<!-- ============================================================ RODAPÉ -->
 <footer class="footer">
+  <div class="madeira" aria-hidden="true"></div>
   <div class="wrap">
     <div class="footer__grid">
       <div>
-        <a class="brand" href="#topo" style="margin-bottom:.8rem">
+        <a class="brand" href="#topo" style="margin-bottom:.9rem">
           <span class="brand__mark" aria-hidden="true">PT</span>
           <span>
             <span class="brand__name">PORTAL DO TEMPO</span><br>
             <span class="brand__sub">GARIMPO · REPARO · ACERVO</span>
           </span>
         </a>
-        <p style="font-size:.86rem;color:var(--paper-dim);max-width:34ch">
+        <p style="font-size:.87rem;color:var(--papel-dim);max-width:34ch">
           Objetos originais dos anos 90, resgatados de casas reais e devolvidos funcionando.
           Galpão 3 — Rua das Fitas, 1990 · Santo André, SP.
         </p>
@@ -1255,8 +1336,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
         <h4>Institucional</h4>
         <ul>
           <li><a href="#sobre">Sobre o Portal</a></li>
+          <li><a href="#mixtape">A Mixtape</a></li>
           <li><a href="#acervo">Trocas e devoluções</a></li>
-          <li><a href="#acervo">Formas de pagamento</a></li>
           <li><a href="#acervo">Política de privacidade</a></li>
           <li><a href="#acervo">Termos de uso</a></li>
         </ul>
@@ -1265,110 +1346,267 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
     <div class="footer__bottom">
       <span>© 1990—<span id="ano">2026</span> Portal do Tempo · CNPJ 00.000.000/0001-00 · Todos os direitos rebobinados.</span>
-      <span style="font-family:var(--hud);letter-spacing:.12em;color:var(--paper-dim)">FIM DA FITA ▮ REBOBINE ANTES DE DEVOLVER</span>
+      <span style="font-family:var(--hud);letter-spacing:.12em;color:var(--papel-dim)">FIM DA FITA ▮ REBOBINE ANTES DE DEVOLVER</span>
     </div>
   </div>
 </footer>
 
 <script>
 /* ================================================================
-   JS do Portal — 3 comportamentos, nada além disso.
-   Sem biblioteca externa: a página inteira roda com o que já veio.
+   Portal do Tempo — comportamento
+   Sem biblioteca externa. Tudo o que roda aqui veio junto com a página.
    ================================================================ */
 (function () {
   "use strict";
 
-  var reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- 1. HUD: a "fita" avança de 1990 a 1999 conforme você desce.
-        É o indicador de progresso da página, vestido de camcorder. ---- */
+  /* ============================================================
+     1. HUD — a fita avança de 1990 a 1999 conforme a rolagem.
+        É o indicador de progresso da página vestido de camcorder.
+     ============================================================ */
   var barra = document.getElementById("progress");
-  var hud   = document.getElementById("hudDate");
-  var ticking = false;
+  var hud = document.getElementById("hudDate");
+  var pendente = false;
 
   function atualizaFita() {
-    var alturaRolavel = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = alturaRolavel > 0 ? Math.min(window.scrollY / alturaRolavel, 1) : 0;
-
+    var rolavel = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = rolavel > 0 ? Math.min(window.scrollY / rolavel, 1) : 0;
     barra.style.width = (pct * 100).toFixed(2) + "%";
-
-    var ano = 1990 + Math.floor(pct * 9);            // 1990 → 1999
-    var minutos = Math.floor(pct * 118);             // duração de uma fita
-    var mm = String(Math.floor(minutos / 60)).padStart(2, "0");
-    var ss = String(minutos % 60).padStart(2, "0");
-    hud.textContent = "REC " + mm + ":" + ss + " " + ano;
-    ticking = false;
+    var ano = 1990 + Math.floor(pct * 9);
+    var min = Math.floor(pct * 118);
+    hud.textContent = "REC " + String(Math.floor(min / 60)).padStart(2, "0") +
+                      ":" + String(min % 60).padStart(2, "0") + " " + ano;
+    pendente = false;
   }
-
   window.addEventListener("scroll", function () {
-    if (!ticking) { window.requestAnimationFrame(atualizaFita); ticking = true; }
+    if (!pendente) { window.requestAnimationFrame(atualizaFita); pendente = true; }
   }, { passive: true });
   atualizaFita();
 
-  /* ---- 2. Contagem para a próxima quinta, 20h (horário de Brasília) ---- */
-  var alvo = document.getElementById("countdown");
+  /* ============================================================
+     2. A TELEVISÃO LIGA — vinheta de VHS sintetizada na hora.
+        Nenhum arquivo de áudio é carregado e não há direito autoral
+        envolvido: o som é gerado por osciladores e ruído no próprio
+        navegador. Só dispara no clique, porque autoplay com som é
+        bloqueado em todos os navegadores modernos — e com razão.
+     ============================================================ */
+  var ctx = null;
+  var btnTv = document.getElementById("btnTv");
+  var nota = document.getElementById("tvNota");
+  var tela = document.getElementById("tvScreen");
+  var elCh = document.getElementById("tvCh");
+  var elPlay = document.getElementById("tvPlay");
+  var elWord = document.getElementById("tvWord");
+  var elSub = document.getElementById("tvSub");
 
+  var canais = [
+    { ch: "CH 03", word: "VOCÊ<br>ESTÁ<br>ENTRANDO<br>EM 1994", sub: "NÃO REBOBINE" },
+    { ch: "CH 05", word: "SESSÃO<br>DA<br>TARDE", sub: "COMEÇA JÁ JÁ" },
+    { ch: "CH 07", word: "AGUARDE<br>UM<br>INSTANTE", sub: "ESTAMOS COM PROBLEMAS TÉCNICOS" },
+    { ch: "CH 11", word: "NÃO<br>SAIA<br>DAÍ", sub: "JÁ VOLTAMOS" }
+  ];
+  var canalAtual = 0;
+  var ligada = false;
+
+  /* Buffer de ruído branco: matéria-prima do chiado de fita */
+  function ruido(seg) {
+    var n = Math.floor(ctx.sampleRate * seg);
+    var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+    var d = buf.getChannelData(0);
+    for (var i = 0; i < n; i++) { d[i] = Math.random() * 2 - 1; }
+    return buf;
+  }
+
+  function vinheta() {
+    var t = ctx.currentTime;
+    var mestre = ctx.createGain();
+    mestre.gain.value = 0.55;
+    mestre.connect(ctx.destination);
+
+    /* (a) o CLIQUE do botão mecânico */
+    var cli = ctx.createBufferSource(); cli.buffer = ruido(0.05);
+    var cliF = ctx.createBiquadFilter(); cliF.type = "highpass"; cliF.frequency.value = 3800;
+    var cliG = ctx.createGain();
+    cliG.gain.setValueAtTime(0.30, t);
+    cliG.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+    cli.connect(cliF).connect(cliG).connect(mestre); cli.start(t);
+
+    /* (b) o THUMP grave do tubo desmagnetizando ao ligar */
+    var th = ctx.createOscillator(); th.type = "sine";
+    th.frequency.setValueAtTime(92, t + 0.03);
+    th.frequency.exponentialRampToValueAtTime(38, t + 0.34);
+    var thG = ctx.createGain();
+    thG.gain.setValueAtTime(0.0001, t + 0.03);
+    thG.gain.exponentialRampToValueAtTime(0.34, t + 0.07);
+    thG.gain.exponentialRampToValueAtTime(0.0001, t + 0.40);
+    th.connect(thG).connect(mestre); th.start(t + 0.03); th.stop(t + 0.45);
+
+    /* (c) o APITO agudo do flyback — o barulho que só criança escutava */
+    var ap = ctx.createOscillator(); ap.type = "sine"; ap.frequency.value = 7900;
+    var apG = ctx.createGain();
+    apG.gain.setValueAtTime(0.0001, t + 0.06);
+    apG.gain.exponentialRampToValueAtTime(0.020, t + 0.20);
+    apG.gain.exponentialRampToValueAtTime(0.0001, t + 1.60);
+    ap.connect(apG).connect(mestre); ap.start(t + 0.06); ap.stop(t + 1.7);
+
+    /* (d) o CHIADO da fita rodando */
+    var ch = ctx.createBufferSource(); ch.buffer = ruido(2);
+    var chF = ctx.createBiquadFilter(); chF.type = "bandpass";
+    chF.frequency.value = 3200; chF.Q.value = 0.6;
+    var chG = ctx.createGain();
+    chG.gain.setValueAtTime(0.0001, t + 0.05);
+    chG.gain.exponentialRampToValueAtTime(0.085, t + 0.22);
+    chG.gain.exponentialRampToValueAtTime(0.0001, t + 1.9);
+    ch.connect(chF).connect(chG).connect(mestre); ch.start(t + 0.05); ch.stop(t + 2);
+  }
+
+  function trocaCanal() {
+    canalAtual = (canalAtual + 1) % canais.length;
+    var c = canais[canalAtual];
+    if (semMovimento) { aplicaCanal(c); return; }
+    tela.classList.add("is-trocando");
+    window.setTimeout(function () {
+      aplicaCanal(c);
+      tela.classList.remove("is-trocando");
+    }, 260);
+  }
+  function aplicaCanal(c) {
+    elCh.textContent = c.ch;
+    elWord.innerHTML = c.word;   /* conteúdo nosso, fixo no código — nunca dado de usuário */
+    elSub.textContent = c.sub;
+  }
+
+  btnTv.addEventListener("click", function () {
+    if (!ctx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) { nota.textContent = "SEU NAVEGADOR NÃO TOCA ÁUDIO AQUI"; return; }
+      ctx = new AC();
+    }
+    if (ctx.state === "suspended") { ctx.resume(); }
+    vinheta();
+
+    if (!ligada) {
+      ligada = true;
+      btnTv.setAttribute("aria-pressed", "true");
+      btnTv.innerHTML = '<span aria-hidden="true">↻</span> Trocar de canal';
+      elPlay.textContent = "▶ PLAY";
+      nota.textContent = "TÁ ROLANDO · CLIQUE DE NOVO PRA TROCAR";
+      if (!semMovimento) {
+        tela.classList.add("is-trocando");
+        window.setTimeout(function () { tela.classList.remove("is-trocando"); }, 300);
+      }
+    } else {
+      trocaCanal();
+    }
+  });
+
+  /* ============================================================
+     3. MIXTAPE — o iframe do YouTube só entra depois do clique.
+        Padrão "facade": economiza cerca de 1MB de JS de terceiro
+        para quem nunca vai apertar o play.
+     ============================================================ */
+  var player = document.getElementById("player");
+  var aviso = document.getElementById("playerAviso");
+
+  function tocaMixtape() {
+    var id = (player.getAttribute("data-playlist") || "").trim();
+
+    /* Só aceita o formato real de ID de playlist. Nunca injete na URL
+       algo que não passou por validação. */
+    if (!/^[A-Za-z0-9_-]{12,64}$/.test(id) || id === "COLE_O_ID_DA_SUA_PLAYLIST") {
+      aviso.textContent = "Playlist ainda não configurada: cole o ID da sua playlist do YouTube no atributo data-playlist deste bloco.";
+      aviso.style.color = "var(--ambar)";
+      return;
+    }
+
+    var f = document.createElement("iframe");
+    /* youtube-nocookie: não grava cookie de rastreio antes do play */
+    f.src = "https://www.youtube-nocookie.com/embed/videoseries?list=" +
+            encodeURIComponent(id) + "&autoplay=1&rel=0";
+    f.title = "A Mixtape do Portal do Tempo";
+    f.allow = "accelerometer; autoplay; encrypted-media; picture-in-picture";
+    f.setAttribute("allowfullscreen", "");
+    f.setAttribute("loading", "lazy");
+    player.textContent = "";
+    player.appendChild(f);
+    player.style.cursor = "default";
+    player.removeAttribute("role");
+    player.removeAttribute("tabindex");
+  }
+
+  player.addEventListener("click", tocaMixtape);
+  player.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tocaMixtape(); }
+  });
+
+  /* ============================================================
+     4. Contagem para a próxima quinta, 20h
+     ============================================================ */
+  var alvo = document.getElementById("countdown");
   function proximaQuinta() {
     var agora = new Date();
     var d = new Date(agora);
     d.setHours(20, 0, 0, 0);
-    var diasAte = (4 - d.getDay() + 7) % 7;          // 4 = quinta-feira
-    if (diasAte === 0 && agora >= d) { diasAte = 7; }
-    d.setDate(d.getDate() + diasAte);
+    var dias = (4 - d.getDay() + 7) % 7;     /* 4 = quinta-feira */
+    if (dias === 0 && agora >= d) { dias = 7; }
+    d.setDate(d.getDate() + dias);
     return d;
   }
-
   function tique() {
-    var falta = proximaQuinta() - new Date();
-    if (falta < 0) { falta = 0; }
+    var falta = Math.max(proximaQuinta() - new Date(), 0);
     var s = Math.floor(falta / 1000);
-    var dias = Math.floor(s / 86400);
-    var h = String(Math.floor((s % 86400) / 3600)).padStart(2, "0");
-    var m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
-    var seg = String(s % 60).padStart(2, "0");
-    alvo.textContent = "PRÓXIMA FITA EM " + dias + "D " + h + ":" + m + ":" + seg;
+    alvo.textContent = "PRÓXIMA FITA EM " + Math.floor(s / 86400) + "D " +
+      String(Math.floor((s % 86400) / 3600)).padStart(2, "0") + ":" +
+      String(Math.floor((s % 3600) / 60)).padStart(2, "0") + ":" +
+      String(s % 60).padStart(2, "0");
   }
   tique();
-  setInterval(tique, 1000);
+  window.setInterval(tique, 1000);
 
-  /* ---- 3. Newsletter e botões de compra.
-        Demonstração: nada é enviado para servidor nenhum.
-        Uso de textContent (nunca innerHTML) para não abrir brecha de XSS
-        com o que a pessoa digita. ---- */
+  /* ============================================================
+     5. Newsletter e botões de compra
+        textContent (nunca innerHTML) com o que a pessoa digitou.
+     ============================================================ */
   var form = document.getElementById("newsForm");
-  var ok   = document.getElementById("newsOk");
+  var ok = document.getElementById("newsOk");
+  var campo = document.getElementById("email");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var campo = document.getElementById("email");
     var valor = campo.value.trim();
-    var valido = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(valor);
-
-    if (!valido) {
-      ok.style.color = "var(--vermelho)";
+    if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(valor)) {
+      ok.style.color = "var(--bordo)";
       ok.textContent = "▲ ESSE E-MAIL NÃO PARECE CERTO. CONFIRA E TENTE DE NOVO.";
       campo.focus();
       return;
     }
-    ok.style.color = "var(--verde)";
+    ok.style.color = "var(--abacate)";
     ok.textContent = "✔ GRAVADO. QUARTA ÀS 20H VOCÊ RECEBE A FITA ANTES DE TODO MUNDO.";
     form.reset();
   });
 
-  document.querySelectorAll(".prod__buy").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var nome = btn.getAttribute("data-produto") || "essa peça";
-      btn.textContent = "reservado ✓";
-      btn.style.background = "var(--verde)";
-      btn.style.color = "#04200F";
-      btn.style.borderColor = "var(--verde)";
-      btn.disabled = true;
-      /* Em produção: aqui entra o carrinho / checkout.
-         Ex.: window.location.href = "/carrinho?item=" + encodeURIComponent(nome); */
+  /* O CTA da Mixtape leva ao formulário e já deixa o cursor no campo:
+     é o melhor momento do site pra pedir o e-mail. */
+  document.querySelectorAll("[data-goto-fita]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.getElementById("fita").scrollIntoView({ behavior: semMovimento ? "auto" : "smooth" });
+      window.setTimeout(function () { campo.focus({ preventScroll: true }); }, semMovimento ? 0 : 700);
     });
   });
 
-  /* Ano no rodapé sempre correto, sem precisar editar HTML todo ano */
+  document.querySelectorAll(".prod__buy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      btn.textContent = "reservado ✓";
+      btn.style.background = "var(--abacate)";
+      btn.style.color = "#12200A";
+      btn.style.borderColor = "var(--abacate)";
+      btn.disabled = true;
+      /* Em produção, aqui entra o carrinho:
+         window.location.href = "/carrinho?item=" + encodeURIComponent(btn.dataset.produto); */
+    });
+  });
+
   document.getElementById("ano").textContent = new Date().getFullYear();
 })();
 </script>

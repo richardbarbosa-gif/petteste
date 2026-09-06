@@ -31,6 +31,42 @@ Regras para não perder performance nem SEO:
 - `width`/`height` sempre preenchidos, para não causar deslocamento de layout (CLS);
 - `alt` descrevendo a peça de verdade — é o que o Google lê e o leitor de tela fala.
 
+## A Mixtape do Portal (playlist do YouTube)
+
+Uma linha só. Procure no `index.html`:
+
+```html
+<div class="player" id="player" ... data-playlist="COLE_O_ID_DA_SUA_PLAYLIST"
+```
+
+Troque `COLE_O_ID_DA_SUA_PLAYLIST` pelo ID da sua playlist — é o trecho depois de
+`list=` na URL do YouTube, começa com `PL`. Exemplo:
+
+`https://www.youtube.com/playlist?list=PLabc123XYZ` → `data-playlist="PLabc123XYZ"`
+
+Três coisas já resolvidas no código:
+
+- **O player só carrega no clique** (padrão *facade*). Sem isso, o iframe do YouTube
+  puxaria cerca de 1MB de JavaScript de terceiro em todo mundo que abre a página,
+  inclusive quem nunca vai ouvir.
+- **Usa `youtube-nocookie.com`**, que não grava cookie de rastreio antes do play.
+- **O ID passa por validação de formato** antes de entrar na URL do iframe.
+
+Atualize a lista de faixas na seção `.faixas` para bater com a playlist de verdade —
+e se você não for atualizar a fita toda semana, apague a frase
+"Atualizada toda quinta". Promessa de recorrência não cumprida custa mais confiança
+do que promessa nenhuma.
+
+## O som da TV
+
+O botão "Ligar a TV (com som)" sintetiza a vinheta no próprio navegador com a
+Web Audio API: clique do botão, o *thump* grave do tubo desmagnetizando, o apito
+agudo do flyback e o chiado da fita. **Nenhum arquivo de áudio é carregado e não há
+direito autoral envolvido** — o som é gerado por osciladores e ruído.
+
+Só dispara no clique, de propósito: autoplay com som é bloqueado em todos os
+navegadores modernos, e som inesperado é o que mais faz fechar aba.
+
 ## Antes de ir para produção
 
 - [ ] Trocar `https://www.portaldotempo.com.br/` no `canonical` e no Open Graph pelo domínio real.
