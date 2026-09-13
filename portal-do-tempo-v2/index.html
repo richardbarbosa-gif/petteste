@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Tempo — O E-Commerce dos Anos 90</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Press+Start+2P&family=Space+Grotesk:wght@500;700;900&family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07070a', surface: '#101018', cardBg: '#151522',
+                        winGray: '#c0c0c0', winBlue: '#000080',
+                        neonYellow: '#fef000', neonPink: '#ff007f', neonCyan: '#00f0ff',
+                        neonGreen: '#39ff14', neonPurple: '#8b5cf6', neonOrange: '#ff6b00',
+                        crtGreen: '#00ff66',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        retro: ['VT323', 'monospace'],
+                        pixel: ['"Press Start 2P"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-yellow': '0 0 20px rgba(254, 240, 0, 0.45)',
+                        'neon-pink': '0 0 20px rgba(255, 0, 127, 0.45)',
+                        'neon-cyan': '0 0 20px rgba(0, 240, 255, 0.45)',
+                        'retro-black': '4px 4px 0px #000000',
+                        'retro-yellow': '4px 4px 0px #fef000',
+                        'retro-pink': '4px 4px 0px #ff007f',
+                        'win-border': 'inset -2px -2px #404040, inset 2px 2px #dfdfdf, inset -1px -1px #0a0a0a, inset 1px 1px #ffffff',
+                        'win-button': 'inset -2px -2px #0a0a0a, inset 2px 2px #ffffff, inset -1px -1px #808080, inset 1px 1px #dfdfdf',
+                        'win-pressed': 'inset 2px 2px #0a0a0a, inset -1px -1px #ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #0d0d14; border-left: 1px solid #222235; }
+        ::-webkit-scrollbar-thumb { background: #28283e; border-radius: 4px; border: 2px solid #0d0d14; }
+        ::-webkit-scrollbar-thumb:hover { background: #fef000; }
+        .crt-scanlines {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.32) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 4px 100%;
+            opacity: 0.85; transition: opacity 0.3s ease;
+        }
+        .crt-disabled .crt-scanlines { display: none !important; }
+        .tape-gear { animation: spinGear 3.6s linear infinite; }
+        .tape-paused .tape-gear { animation-play-state: paused; }
+        @keyframes spinGear { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .win95-box {
+            background-color: #c0c0c0;
+            box-shadow: inset -2px -2px #0a0a0a, inset 2px 2px #ffffff, inset -1px -1px #808080, inset 1px 1px #dfdfdf;
+        }
+        .win95-titlebar { background: linear-gradient(90deg, #000080, #1084d0); }
+        @keyframes marqueeScroll { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .marquee-track { display: flex; width: 200%; animation: marqueeScroll 32s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+        .thermal-paper {
+            background: #faf8ef; color: #1f1f1f;
+            background-image: radial-gradient(#d3cbb5 10%, transparent 11%);
+            background-size: 10px 10px;
+        }
+    </style>
+</head>
+<body class="bg-void text-gray-100 font-sans antialiased overflow-x-hidden selection:bg-neonYellow selection:text-black">
+
+    <div id="crtOverlay" class="crt-scanlines"></div>
+
+    <aside class="bg-neonYellow text-black font-display font-bold text-xs py-1.5 px-4 overflow-hidden border-b-2 border-black sticky top-0 z-50 shadow-md">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <div class="flex items-center gap-3 overflow-hidden whitespace-nowrap">
+                <span class="bg-black text-neonYellow px-2 py-0.5 rounded text-[10px] uppercase font-extrabold tracking-wider animate-pulse flex items-center gap-1">
+                    <span>⚡</span> PLANTÃO 1994
+                </span>
+                <div class="overflow-hidden w-full max-w-3xl">
+                    <div class="marquee-track font-mono text-[11px]">
+                        <span class="mr-8">📼 ACERVO ATUALIZADO: 12 Walkmans Sony calibrados • Mega Drive III Tec Toy lacrado • Fitas VHS do Rei Leão • Rádios Boombox com gravador duplo!</span>
+                        <span class="mr-8">🚀 CONEXÃO DISCADA LIVRE APÓS MEIA-NOITE • PAGUE VIA PIX OU 12x NO CARTÃO • GARANTIA DE BANCADA ANALÓGICA • CUPOM: TETRA94</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center gap-4 text-[11px] font-mono shrink-0 pl-4 border-l border-black/30">
+                <span>📦 SEDEX COM PLÁSTICO BOLHA TRIPLO</span>
+                <span class="text-neonPink font-black">CUPOM R$ 30 OFF: TETRA94</span>
+            </div>
+        </div>
+    </aside>
+
+    <header class="bg-surface/95 backdrop-blur-md border-b-2 border-gray-800 sticky top-7 z-40 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <a href="#" class="flex items-center gap-3 group shrink-0" onclick="playRetroSound('click')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-neonYellow via-neonOrange to-neonPink p-0.5 shadow-neon-yellow transition group-hover:scale-105 group-hover:rotate-1">
+                    <div class="w-full h-full bg-void rounded-[14px] flex items-center justify-center text-2xl relative overflow-hidden">
+                        <span>📼</span>
+                        <span class="absolute -bottom-1 text-[8px] font-retro text-neonYellow">AV-1</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-display font-black text-xl sm:text-2xl tracking-wider text-white group-hover:text-neonYellow transition">PORTAL DO TEMPO</span>
+                        <span class="bg-neonPink/20 text-neonPink text-[10px] font-retro px-1.5 py-0.5 rounded border border-neonPink uppercase">ED. 1994</span>
+                    </div>
+                    <p class="text-[11px] font-mono text-gray-400 -mt-1 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-neonGreen inline-block"></span>
+                        O Maior Garimpo dos Anos 90 no Brasil
+                    </p>
+                </div>
+            </a>
+            <div class="hidden md:flex flex-1 max-w-md mx-4">
+                <div class="relative w-full">
+                    <input type="text" id="searchInput" oninput="handleInstantSearch(this.value)" placeholder="Buscar no acervo (ex: Walkman, Mega Drive, Vinil, TV)..." class="w-full px-4 py-2.5 pl-10 rounded-xl bg-void border border-gray-700 text-xs font-mono text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow focus:shadow-neon-yellow transition">
+                    <span class="absolute left-3.5 top-3 text-gray-500 text-xs">🔍</span>
+                    <button onclick="clearSearch()" id="clearSearchBtn" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-white text-xs font-mono">✕</button>
+                </div>
+            </div>
+            <nav class="hidden xl:flex items-center gap-6 text-xs font-mono uppercase tracking-wider text-gray-300">
+                <a href="#garimpos" class="hover:text-neonYellow transition flex items-center gap-1.5"><span>🕹️</span> Garimpo</a>
+                <a href="#oraculo-ia" class="text-neonCyan hover:text-cyan-300 transition flex items-center gap-1.5 font-bold"><span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span> Balcão Seu Wilson (IA)</a>
+                <a href="#tocador-k7" class="hover:text-neonGreen transition flex items-center gap-1.5"><span>📻</span> Toca-Fitas</a>
+                <a href="#depoimentos" class="hover:text-neonYellow transition">Caderno de Recados</a>
+            </nav>
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <button onclick="toggleAudio()" id="soundToggleBtn" title="Ativar/Desativar Efeitos Sonoros Retrô" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono text-gray-300 flex items-center gap-1.5 transition active:scale-95 shadow-sm">
+                    <span id="soundIcon">🔊</span><span class="hidden sm:inline" id="soundLabel">Sons ON</span>
+                </button>
+                <button onclick="toggleCrt()" id="crtToggleBtn" title="Ligar/Desligar Efeito de TV de Tubo" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono text-neonGreen flex items-center gap-1.5 transition active:scale-95 shadow-sm">
+                    <span>📺</span><span class="hidden sm:inline" id="crtLabel">CRT ON</span>
+                </button>
+                <button onclick="toggleCartDrawer()" class="relative px-3.5 py-2 sm:px-4 sm:py-2.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center gap-2 shadow-retro-black active:translate-x-0.5 active:translate-y-0.5">
+                    <span class="text-base">🛒</span><span class="hidden sm:inline">Cesto</span>
+                    <span id="cartBadgeCount" class="bg-black text-neonYellow text-[11px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+        <div class="md:hidden px-4 pb-3">
+            <div class="relative w-full">
+                <input type="text" oninput="handleInstantSearch(this.value)" placeholder="Buscar no acervo (Walkman, Mega Drive...)" class="w-full px-4 py-2 pl-9 rounded-xl bg-void border border-gray-700 text-xs font-mono text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow">
+                <span class="absolute left-3 top-2.5 text-gray-500 text-xs">🔍</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden border-b-2 border-gray-800 bg-gradient-to-b from-void via-surface to-void">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-purple-900/30 via-neonPink/20 to-neonYellow/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/80 border border-purple-500/40 text-xs font-mono text-purple-300 shadow-sm">
+                        <span class="w-2.5 h-2.5 rounded-full bg-neonGreen animate-pulse"></span>
+                        SINTONIZANDO CANAL 3 • LINHA ANALÓGICA NACIONAL
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl xl:text-7xl font-display font-black text-white tracking-tight leading-[1.08]">
+                        A máquina do tempo existe. E tem cheiro de <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonYellow via-neonCyan to-neonPink">fita VHS rebobinada</span>.
+                    </h1>
+                    <p class="text-base sm:text-lg text-gray-300 max-w-2xl font-normal leading-relaxed">
+                        Videocassetes Hi-Fi 4 cabeças, Walkmans originais calibrados, cartuchos de 16-bit com bateria de save nova e TVs de tubo com estalo inconfundível. Não vendemos cópias plásticas: são <strong>relíquias originais dos anos 90</strong>, revisadas em bancada analógica e embaladas com proteção antichoque para a sua sala.
+                    </p>
+                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#garimpos" onclick="playRetroSound('coin')" class="w-full sm:w-auto px-8 py-4 bg-neonYellow text-black font-display font-black text-base rounded-2xl hover:bg-yellow-300 transition duration-200 transform hover:-translate-y-0.5 shadow-retro-black text-center flex items-center justify-center gap-2.5">
+                            <span>ENTRAR NO PORTAL AGORA</span><span class="text-xl">➔</span>
+                        </a>
+                        <a href="#oraculo-ia" onclick="playRetroSound('click')" class="w-full sm:w-auto px-7 py-4 bg-cardBg hover:bg-gray-800 text-neonCyan font-display font-bold text-base rounded-2xl border-2 border-neonCyan/50 transition text-center flex items-center justify-center gap-2.5 shadow-neon-cyan">
+                            <span>👨🏻‍🦳</span><span>Balcão do Seu Wilson (IA)</span>
+                        </a>
+                    </div>
+                    <div class="pt-6 border-t border-gray-800">
+                        <span class="text-[11px] font-mono text-neonYellow uppercase font-bold tracking-wider block mb-2.5">🔊 Toque para reviver sons inesquecíveis:</span>
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                            <button onclick="playRetroSound('blow')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonYellow transition active:scale-95 flex items-center gap-1.5">💨 Soprar Cartucho</button>
+                            <button onclick="playRetroSound('bic')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonCyan transition active:scale-95 flex items-center gap-1.5">📼 Caneta na Fita K7</button>
+                            <button onclick="playRetroSound('coin')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonGreen transition active:scale-95 flex items-center gap-1.5">🕹️ Ficha no Fliperama</button>
+                            <button onclick="playRetroSound('modem')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonPink transition active:scale-95 flex items-center gap-1.5">🌐 Modem Discado 28.8k</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5">
+                    <div class="relative bg-cardBg border-2 border-gray-700 rounded-3xl p-5 shadow-2xl overflow-hidden">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-700 font-mono text-xs text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                <span class="ml-2 text-white font-retro text-sm" id="tvChannelLabel">CANAL 03 • VIDEOCASSETE</span>
+                            </div>
+                            <span class="text-neonGreen font-bold font-retro text-sm animate-pulse" id="tvStatusLabel">REC ● HI-FI</span>
+                        </div>
+                        <div class="relative rounded-2xl overflow-hidden bg-black border-2 border-gray-800 aspect-[4/3] flex items-center justify-center group shadow-inner">
+                            <img id="tvScreenImage" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80" alt="TV de Tubo Anos 90" class="w-full h-full object-cover transition duration-300 opacity-90 group-hover:scale-105">
+                            <div class="absolute top-3 left-3 bg-neonPink text-white font-retro text-sm px-2 py-0.5 rounded shadow-retro-black">REBOBINE AO FINAL</div>
+                            <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md border border-gray-700 text-neonYellow font-mono text-xs px-2.5 py-1 rounded">SONY TRINITRON 14" ORIGINAL</div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between">
+                            <span class="text-[11px] font-mono text-gray-400">Sintonizar Canal:</span>
+                            <div class="flex gap-1.5">
+                                <button onclick="changeTvChannel(3)" id="btnCh3" class="px-2.5 py-1 bg-neonYellow text-black font-retro text-sm rounded border border-black font-bold transition">CH 03</button>
+                                <button onclick="changeTvChannel(4)" id="btnCh4" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition">CH 04</button>
+                                <button onclick="changeTvChannel('av1')" id="btnAv1" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition">AV-1</button>
+                                <button onclick="changeTvChannel('av2')" id="btnAv2" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition">AV-2</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tocador-k7" class="py-12 bg-surface border-b-2 border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-cardBg border-2 border-gray-700 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div id="cassetteTape" class="w-full max-w-sm bg-zinc-900 border-4 border-zinc-700 rounded-2xl p-4 shadow-2xl relative font-mono text-xs tape-paused">
+                            <div class="bg-neonYellow/90 text-black p-3 rounded-lg border-2 border-black mb-3">
+                                <div class="flex justify-between items-center text-[10px] font-bold">
+                                    <span>TDK CASSETTE D-60</span><span>NORMAL POSITION TYPE I</span>
+                                </div>
+                                <div class="text-center font-retro text-lg font-bold tracking-wider my-1" id="tapeTitleCurrent">[ SELEÇÃO RADICAL 1994 ]</div>
+                                <div class="text-[9px] text-center font-mono">GRAVADO DIRETO DA TRANSAMÉRICA FM</div>
+                            </div>
+                            <div class="bg-black/90 rounded-xl p-3 border-2 border-zinc-600 flex items-center justify-around">
+                                <div class="w-12 h-12 rounded-full border-4 border-dashed border-white flex items-center justify-center tape-gear"><div class="w-4 h-4 bg-zinc-700 rounded-full"></div></div>
+                                <div class="w-24 h-4 bg-red-900/60 rounded-full relative overflow-hidden border border-red-500"><div class="absolute left-0 top-0 bottom-0 bg-red-600 w-2/3"></div></div>
+                                <div class="w-12 h-12 rounded-full border-4 border-dashed border-white flex items-center justify-center tape-gear"><div class="w-4 h-4 bg-zinc-700 rounded-full"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-950/60 border border-neonYellow/50 text-[11px] font-mono text-neonYellow">
+                            <span>📻</span> REPRODUTOR ANALÓGICO SINTETIZADO (WEB AUDIO API)
+                        </div>
+                        <h3 class="text-2xl font-display font-bold text-white">Aperte o Play na Nostalgia</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Ligue o sintetizador de áudio 90s do Portal para ouvir melodias e arpeggios inspirados nas trilhas clássicas de videogame e rádios FM da época enquanto você garimpa seus itens favoritos!
+                        </p>
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <button onclick="toggleChiptuneMusic()" id="chiptunePlayBtn" class="px-6 py-3 bg-neonGreen hover:bg-green-400 text-black font-display font-extrabold text-xs uppercase rounded-xl transition shadow-retro-black flex items-center gap-2">
+                                <span id="chiptuneIcon">▶</span><span id="chiptuneLabel">TOCAR FITA K7</span>
+                            </button>
+                            <button onclick="cycleMelodyTrack()" class="px-4 py-3 bg-void hover:bg-surface border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-white transition">⏭️ Trocar Faixa</button>
+                            <span class="text-xs font-mono text-gray-400" id="melodyTrackName">Faixa 1: Aventura 16-Bit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="corredores" class="py-12 bg-void border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-mono uppercase text-neonYellow tracking-wider block mb-1">// MAPA DA LOCADORA</span>
+                    <h2 class="text-2xl sm:text-4xl font-display font-extrabold text-white">Navegue pelos Corredores</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label for="sortFilter" class="text-xs font-mono text-gray-400">Ordenar por:</label>
+                    <select id="sortFilter" onchange="applySorting(this.value)" class="bg-cardBg border border-gray-700 text-xs font-mono rounded-xl px-3 py-2 text-white focus:outline-none focus:border-neonYellow">
+                        <option value="default">Destaques do Garimpo</option>
+                        <option value="price-asc">Menor Preço (R$)</option>
+                        <option value="price-desc">Maior Preço (R$)</option>
+                        <option value="year-asc">Ano de Lançamento (Mais antigo)</option>
+                        <option value="year-desc">Ano de Lançamento (Mais recente)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                <button onclick="filterCategory('todos')" id="cat-todos" class="category-btn p-4 rounded-2xl bg-cardBg border-2 border-neonYellow text-left transition hover:-translate-y-1 shadow-retro-black">
+                    <div class="text-3xl mb-2">🏷️</div>
+                    <h4 class="font-display font-bold text-white text-sm sm:text-base">Todo o Garimpo</h4>
+                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Ver catálogo completo</p>
+                </button>
+                <button onclick="filterCategory('eletronicos')" id="cat-eletronicos" class="category-btn p-4 rounded-2xl bg-cardBg border border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonCyan">
+                    <div class="text-3xl mb-2">📻</div>
+                    <h4 class="font-display font-bold text-white text-sm sm:text-base">Eletrônicos & Áudio</h4>
+                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Walkman, TV tubo, VCR</p>
+                </button>
+                <button onclick="filterCategory('games')" id="cat-games" class="category-btn p-4 rounded-2xl bg-cardBg border border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonPink">
+                    <div class="text-3xl mb-2">🕹️</div>
+                    <h4 class="font-display font-bold text-white text-sm sm:text-base">Games & Fliperama</h4>
+                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Consoles 16-bit e cartuchos</p>
+                </button>
+                <button onclick="filterCategory('midia')" id="cat-midia" class="category-btn p-4 rounded-2xl bg-cardBg border border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonGreen">
+                    <div class="text-3xl mb-2">📼</div>
+                    <h4 class="font-display font-bold text-white text-sm sm:text-base">Fitas, VHS & Vinil</h4>
+                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Estojos originais e álbuns</p>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="garimpos" class="py-14 md:py-20 bg-surface/50 border-b-2 border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <div>
+                    <span class="text-xs font-mono uppercase text-neonPink tracking-wider block mb-1">● PEÇAS FÍSICAS COM TESTE DE BANCADA</span>
+                    <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white">Prateleiras de Relíquias</h3>
+                </div>
+                <div class="flex items-center gap-2 font-mono text-xs text-gray-400 bg-void px-4 py-2 rounded-xl border border-gray-800">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neonGreen animate-pulse"></span>
+                    <span id="productCounterText">Exibindo 8 relíquias únicas</span>
+                </div>
+            </div>
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <div id="emptySearchState" class="hidden text-center py-16 space-y-4">
+                <div class="text-5xl">🔍</div>
+                <h4 class="font-display font-bold text-xl text-white">Nenhuma relíquia encontrada com esse termo</h4>
+                <p class="text-xs text-gray-400 max-w-sm mx-auto">Tente buscar por "Walkman", "Mega Drive", "Vinil", "TV" ou veja o acervo completo.</p>
+                <button onclick="clearSearch()" class="px-5 py-2.5 bg-neonYellow text-black font-display font-bold text-xs uppercase rounded-xl">Ver Todas as Relíquias</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="oraculo-ia" class="py-16 md:py-24 bg-gradient-to-b from-void via-surface to-void border-b-2 border-gray-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-neonCyan text-xs font-mono text-neonCyan mb-3 shadow-neon-cyan">
+                    <span class="animate-pulse">●</span> INTELIGÊNCIA ARTIFICIAL DIRETO DE 1994 (GEMINI 3 FLASH)
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
+                    O Balcão do <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonYellow via-neonCyan to-neonPink">Seu Wilson</span>
+                </h2>
+                <p class="text-sm sm:text-base text-gray-300 mt-3 leading-relaxed">
+                    Converse com o lendário atendente de videolocadora dos anos 90. Ele indica fitas e cartuchos, gera crônicas nostálgicas sob medida, grava mixtapes em fita K7 e avalia qualquer objeto antigo que você encontrou em casa!
+                </p>
+            </div>
+            <div class="win95-box rounded-2xl p-2 sm:p-3 max-w-5xl mx-auto border-2 border-gray-300 shadow-2xl">
+                <div class="win95-titlebar px-3 py-1.5 rounded-t-xl flex items-center justify-between text-white font-mono text-xs select-none">
+                    <div class="flex items-center gap-2"><span class="text-base">📼</span><span class="font-bold tracking-wider">SEU_WILSON_LOCADORA.EXE — REDE 56.6K</span></div>
+                    <div class="flex items-center gap-1 font-bold">
+                        <button class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" title="Minimizar">_</button>
+                        <button class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" title="Maximizar">□</button>
+                        <button class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" title="Fechar">✕</button>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-4 sm:p-6 rounded-b-xl border-t border-gray-700 text-gray-100">
+                    <div class="flex flex-wrap gap-2 mb-6 border-b border-gray-800 pb-4">
+                        <button onclick="switchAiTab('chat')" id="tabBtn-chat" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-neonYellow text-black shadow-retro-black"><span>💬</span> Balcão da Locadora</button>
+                        <button onclick="switchAiTab('capsule')" id="tabBtn-capsule" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><span>⏳</span> Máquina de Crônicas</button>
+                        <button onclick="switchAiTab('mixtape')" id="tabBtn-mixtape" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><span>📼</span> Gerador de Mixtape K7</button>
+                        <button onclick="switchAiTab('appraise')" id="tabBtn-appraise" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><span>🔍</span> Avaliador de Sótão</button>
+                    </div>
+                    <div id="aiTabContent-chat" class="space-y-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div class="lg:col-span-4 bg-void p-5 rounded-2xl border border-gray-800 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-14 h-14 rounded-2xl bg-neonYellow/20 border-2 border-neonYellow flex items-center justify-center text-3xl shadow-neon-yellow">👨🏻‍🦳</div>
+                                        <div>
+                                            <h4 class="font-display font-bold text-white text-base">Seu Wilson</h4>
+                                            <span class="text-[11px] font-retro text-neonGreen">STATUS: REBOBINANDO FITAS</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">"Pode entrar, meu camarada! Eu trabalhei 25 anos atrás do balcão de locadora. Sei de cor as trilhas sonoras, as trapaças dos jogos e os lançamentos de sexta-feira. Manda sua dúvida!"</p>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-800 space-y-2">
+                                    <span class="text-[10px] uppercase font-mono text-gray-400 font-bold block">Perguntas frequentes no balcão:</span>
+                                    <button onclick="fillChatPrompt('Qual presente comprar para quem jogava Super Nintendo em 1994?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-xl border border-gray-700/80 text-gray-300 transition line-clamp-1">🎮 "Presente pra quem jogava em 1994"</button>
+                                    <button onclick="fillChatPrompt('Como conservar fita cassete para não embolar no toca-fitas?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-xl border border-gray-700/80 text-gray-300 transition line-clamp-1">📼 "Dicas para fita K7 não embolar"</button>
+                                    <button onclick="fillChatPrompt('Lembra daqueles chicletes com figurinhas e da TV Colosso?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-xl border border-gray-700/80 text-gray-300 transition line-clamp-1">📺 "Lembranças da TV Colosso e figurinhas"</button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-8 flex flex-col justify-between bg-void rounded-2xl border border-gray-800 p-4 sm:p-5 h-[440px]">
+                                <div id="chatHistory" class="flex-1 overflow-y-auto space-y-3.5 pr-2 font-sans text-sm">
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-2xl mt-0.5">📼</span>
+                                        <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-gray-200 leading-relaxed shadow">
+                                            <span class="text-xs font-retro text-neonYellow block mb-1">SEU WILSON DA LOCADORA:</span>
+                                            Opa, bicho! Seja bem-vindo à locadora. Procura uma fita lançada na sexta-feira, quer indicação de videogame 16-bit ou quer puxar papo sobre como era gostoso o domingo de 1994? Manda a bronca aí no teclado!
+                                        </div>
+                                    </div>
+                                </div>
+                                <form id="chatForm" onsubmit="handleChatSubmit(event)" class="mt-4 pt-3 border-t border-gray-800 flex items-center gap-2">
+                                    <input type="text" id="chatInput" placeholder="Pergunte ao Seu Wilson..." required class="flex-1 px-4 py-3 bg-surface border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm font-sans">
+                                    <button type="submit" id="chatSubmitBtn" class="px-5 py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase rounded-xl transition flex items-center gap-2 shadow-retro-black active:scale-95"><span>ENVIAR</span><span class="text-base">➔</span></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="aiTabContent-capsule" class="hidden space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-neonYellow mb-2 font-bold">1. Escolha o Ano:</label>
+                                <select id="capsuleYear" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonYellow focus:outline-none">
+                                    <option value="1991">1991 - Fita K7, Rock in Rio II e Guaraná</option>
+                                    <option value="1993">1993 - Super Nintendo e Jurassic Park</option>
+                                    <option value="1994" selected>1994 - Tetra na Copa, Real e TV Colosso</option>
+                                    <option value="1995">1995 - Mamonas Assassinas e Pagers</option>
+                                    <option value="1997">1997 - Tamagotchi e Domingo Legal</option>
+                                    <option value="1999">1999 - Bug do Milênio e Internet Discada</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-neonCyan mb-2 font-bold">2. O Cenário:</label>
+                                <select id="capsuleScene" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonCyan focus:outline-none">
+                                    <option value="domingo">Domingo de tarde na casa da vó com TV ligada</option>
+                                    <option value="recreio">Recreio da escola: tazo, lanche e bate-papo</option>
+                                    <option value="locadora">Sexta-feira à noite escolhendo 3 fitas VHS</option>
+                                    <option value="matine">Matinê de sábado e fliperama da rodoviária</option>
+                                    <option value="quarto">Gravando fita K7 do rádio no quarto trancado</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-neonPink mb-2 font-bold">3. Seu Nome ou Apelido:</label>
+                                <input type="text" id="capsuleName" placeholder="Ex: Juninho, Paulinha..." value="Viajante dos Anos 90" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonPink focus:outline-none">
+                            </div>
+                        </div>
+                        <div class="text-center pt-2">
+                            <button onclick="generateMemoryCapsule()" id="generateCapsuleBtn" class="px-8 py-3.5 bg-gradient-to-r from-neonYellow via-neonOrange to-neonPink text-black font-display font-extrabold text-sm rounded-xl hover:opacity-95 transition shadow-retro-black flex items-center gap-2 mx-auto active:scale-95"><span>⏳ SINTONIZAR NESTE ANO E GERAR CRÔNICA</span></button>
+                        </div>
+                        <div id="capsuleResult" class="hidden mt-6 p-6 rounded-2xl bg-void border-2 border-dashed border-neonYellow/60 text-gray-200 space-y-4">
+                            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                                <span class="font-retro text-lg text-neonYellow" id="capsuleHeading">CÁPSULA SINTONIZADA</span>
+                                <button onclick="copyCapsuleText()" class="text-xs text-neonCyan hover:underline font-mono">📋 Copiar Crônica</button>
+                            </div>
+                            <div id="capsuleContent" class="text-sm leading-relaxed font-sans space-y-3"></div>
+                        </div>
+                    </div>
+                    <div id="aiTabContent-mixtape" class="hidden space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                            <div>
+                                <h4 class="font-display font-bold text-white text-lg mb-2">Grave sua Fita K7 TDK de 60 Minutos</h4>
+                                <p class="text-xs text-gray-400 mb-4 leading-relaxed">Escolha o estilo musical e a IA montará uma fita com Lado A e Lado B cronometrados para caber na fita magnética, incluindo anotações escritas à caneta esferográfica no encarte.</p>
+                                <label class="block text-xs font-mono uppercase text-neonYellow mb-2 font-bold">Estilo da Fita:</label>
+                                <select id="mixtapeGenre" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonYellow focus:outline-none mb-4">
+                                    <option value="rock-nacional">Rock Nacional 90s (Legião, Raimundos, Skank, Charlie Brown)</option>
+                                    <option value="eurodance">Eurodance das Baladas (Corona, Culture Beat, Haddaway)</option>
+                                    <option value="pagode-90">Pagode Romântico 90s (Raça Negra, SPC, Katinguelê)</option>
+                                    <option value="trilhas-tv">Trilhas de Tokusatsu &amp; Animes (Cavaleiros, Yu Yu Hakusho)</option>
+                                    <option value="radio-fm">Lentas Internacionais do Disk MTV</option>
+                                </select>
+                                <button onclick="generateMixtape()" id="generateMixtapeBtn" class="w-full py-3.5 bg-neonGreen hover:bg-green-400 text-black font-display font-extrabold text-sm rounded-xl transition shadow-retro-black flex items-center justify-center gap-2 active:scale-95"><span>📼 GRAVAR MIXTAPE NO GEMINI</span></button>
+                            </div>
+                            <div class="bg-void p-6 rounded-2xl border-2 border-gray-700">
+                                <div class="border-2 border-neonYellow p-4 rounded-xl bg-cardBg font-mono text-xs">
+                                    <div class="flex justify-between items-center pb-2 border-b border-gray-700 text-[10px] text-gray-400">
+                                        <span>TDK CASSETTE • TYPE I</span><span class="text-neonYellow font-bold font-retro text-base">60 MIN</span>
+                                    </div>
+                                    <div class="my-4 text-center">
+                                        <div class="inline-block bg-black px-4 py-2 rounded-lg border border-gray-600 text-white font-retro text-lg tracking-widest" id="mixtapeTitleDisplay">[ SELEÇÃO RADICAL 1994 ]</div>
+                                    </div>
+                                    <div class="flex justify-around items-center py-2 text-gray-400 text-[11px]">
+                                        <span>( LADO A : 30 MIN )</span><span>● REBOBINADA ●</span><span>( LADO B : 30 MIN )</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mixtapeResult" class="hidden mt-6 p-6 rounded-2xl bg-void border border-gray-700 text-gray-200">
+                            <div id="mixtapeContent" class="space-y-4 text-sm font-sans"></div>
+                        </div>
+                    </div>
+                    <div id="aiTabContent-appraise" class="hidden space-y-6">
+                        <div class="max-w-2xl mx-auto text-center">
+                            <h4 class="font-display font-bold text-white text-xl mb-2">Achou um Objeto Antigo no Fundo do Armário?</h4>
+                            <p class="text-xs sm:text-sm text-gray-400 mb-6">Descreva o aparelho, fita, brinquedo ou disco que você encontrou na casa da família. O Seu Wilson emitirá um laudo com raridade nostálgica e dicas de conservação!</p>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="text" id="appraiseInput" placeholder="Ex: Achei um Walkman cinza da CCE com rádio AM/FM e uma fita do Mamonas..." class="flex-1 px-4 py-3 bg-void border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm">
+                                <button onclick="appraiseRelic()" id="appraiseBtn" class="px-6 py-3 bg-neonCyan hover:bg-cyan-300 text-black font-display font-extrabold text-xs uppercase rounded-xl transition shadow-neon-cyan active:scale-95">AVALIAR RELÍQUIA</button>
+                            </div>
+                        </div>
+                        <div id="appraiseResult" class="hidden mt-6 p-6 rounded-2xl bg-void border border-neonCyan/60 text-gray-200 space-y-3">
+                            <h5 class="font-retro text-lg text-neonCyan">// LAUDO TÉCNICO E NOSTÁLGICO DO SEU WILSON</h5>
+                            <div id="appraiseContent" class="text-sm leading-relaxed font-sans"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-surface/80 border-b-2 border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-mono uppercase text-neonYellow tracking-wider block mb-2">// GARANTIA ANALÓGICA DE BANCADA</span>
+                <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white">Não vendemos réplicas plásticas. Resgatamos histórias de família.</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonYellow/50 transition">
+                    <div class="w-12 h-12 rounded-xl bg-neonYellow/10 text-neonYellow flex items-center justify-center text-2xl mb-4 font-mono">⚙️</div>
+                    <h4 class="font-display font-bold text-white text-base mb-2">Revisão Mecânica</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Troca de correias de borracha ressecadas, desmagnetização de cabeçotes e lubrificação de engrenagens originais.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonCyan/50 transition">
+                    <div class="w-12 h-12 rounded-xl bg-neonCyan/10 text-neonCyan flex items-center justify-center text-2xl mb-4 font-mono">🧼</div>
+                    <h4 class="font-display font-bold text-white text-base mb-2">Higienização Profunda</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Tratamento isopropílico para retirar mofo de décadas sem danificar a pátina e os decalques de época.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonPink/50 transition">
+                    <div class="w-12 h-12 rounded-xl bg-neonPink/10 text-neonPink flex items-center justify-center text-2xl mb-4 font-mono">📦</div>
+                    <h4 class="font-display font-bold text-white text-base mb-2">Embalagem Bolha Tripla</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Proteção antichoque reforçada com isopor e fitas de alta densidade para suportar o transporte rodoviário nacional.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonGreen/50 transition">
+                    <div class="w-12 h-12 rounded-xl bg-neonGreen/10 text-neonGreen flex items-center justify-center text-2xl mb-4 font-mono">📜</div>
+                    <h4 class="font-display font-bold text-white text-base mb-2">Certificado de Garimpo</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Cada peça acompanha ficha impressa com ano de lançamento, ficha técnica e o histórico de onde foi encontrada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos" class="py-16 md:py-24 bg-void border-b-2 border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-mono uppercase text-neonCyan tracking-wider block mb-2">// CADERNO DE RECADOS DA LOCADORA</span>
+                <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white">Quem já viajou no tempo com a gente</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonYellow/40 transition">
+                    <div>
+                        <div class="flex items-center gap-1 text-neonYellow mb-3">★★★★★</div>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">"Comprei a TV Trinitron de 14 polegadas pro meu quarto. Quando liguei meu Super Nintendo e ouvi o estalo característico do tubo de imagem ligando, chorei de emoção. Veio tão bem embalada que parecia saída da fábrica em 1995!"</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-900 flex items-center justify-center text-sm font-bold text-neonYellow">MR</div>
+                        <div>
+                            <h5 class="text-xs font-display font-bold text-white">Marcelo Ramos (41 anos)</h5>
+                            <span class="text-[10px] font-mono text-gray-400">Curitiba, PR • Comprou TV Tubo Sony</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonPink/40 transition">
+                    <div>
+                        <div class="flex items-center gap-1 text-neonYellow mb-3">★★★★★</div>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">"O Walkman Sony chegou com a correia trocada e som cristalino. Coloquei uma fita do Skank que estava guardada há 25 anos na gaveta da minha mãe. O cheiro de fita e o botão clicando não têm preço."</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-pink-900 flex items-center justify-center text-sm font-bold text-neonPink">CS</div>
+                        <div>
+                            <h5 class="text-xs font-display font-bold text-white">Camila Silveira (38 anos)</h5>
+                            <span class="text-[10px] font-mono text-gray-400">São Paulo, SP • Comprou Walkman Sony</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonCyan/40 transition">
+                    <div>
+                        <div class="flex items-center gap-1 text-neonYellow mb-3">★★★★★</div>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">"Achei o telefone de disco tijolo exatamente igual ao que ficava na mesinha de fórmica da minha avó. Funciona até hoje na linha fixa! Meus filhos pequenos ficaram fascinados girando o disco com o dedo."</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-800 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-900 flex items-center justify-center text-sm font-bold text-neonCyan">FA</div>
+                        <div>
+                            <h5 class="text-xs font-display font-bold text-white">Fábio Alcantara (46 anos)</h5>
+                            <span class="text-[10px] font-mono text-gray-400">Belo Horizonte, MG • Comprou Telefone Tijolo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-gradient-to-b from-void via-surface to-void border-b-2 border-gray-800 text-center relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="inline-block p-4 rounded-3xl bg-neonYellow/10 border border-neonYellow/30 text-3xl mb-4">⏳</div>
+            <h3 class="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">Peças únicas não voltam para a estante.</h3>
+            <p class="text-sm sm:text-base text-gray-300 mt-4 max-w-xl mx-auto leading-relaxed">Diferente de lojas convencionais, nosso estoque depende de garimpos difíceis pelo interior do Brasil. Quando uma unidade é vendida, pode levar anos até encontrarmos outra igual.</p>
+            <form onsubmit="handleNewsletter(event)" class="mt-8 flex flex-col sm:flex-row gap-2.5 max-w-md mx-auto">
+                <input type="email" id="newsletterEmail" placeholder="Digite seu e-mail para receber alertas..." required class="flex-1 px-4 py-3.5 bg-void border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm">
+                <button type="submit" class="px-6 py-3.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase rounded-xl transition shadow-retro-black active:scale-95">ASSINAR MALA DIRETA</button>
+            </form>
+            <span class="text-[11px] font-mono text-gray-400 mt-3 block">Ganhe R$ 30 de desconto no primeiro garimpo com o cupom <strong class="text-neonYellow">TETRA94</strong></span>
+        </div>
+    </section>
+
+    <footer class="bg-void py-12 text-xs font-mono text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-gray-800">
+                <div class="space-y-3">
+                    <span class="font-display font-bold text-white text-base block">PORTAL DO TEMPO</span>
+                    <p class="text-gray-400 text-xs leading-relaxed">Preservando a cultura analógica, o áudio magnético e as memórias da década mais divertida da história brasileira.</p>
+                    <div class="text-[11px] text-neonGreen font-bold">TELE-ATENDIMENTO: SEG A SEX, 09H ÀS 18H</div>
+                </div>
+                <div>
+                    <h5 class="font-display font-bold text-xs uppercase mb-3 text-neonYellow">Corredores</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#corredores" onclick="filterCategory('eletronicos')" class="hover:text-white transition">Eletrônicos &amp; Áudio</a></li>
+                        <li><a href="#corredores" onclick="filterCategory('games')" class="hover:text-white transition">Consoles &amp; Cartuchos</a></li>
+                        <li><a href="#corredores" onclick="filterCategory('midia')" class="hover:text-white transition">Fitas VHS &amp; K7</a></li>
+                        <li><a href="#tocador-k7" class="hover:text-white transition">Toca-Fitas K7 Online</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-display font-bold text-xs uppercase mb-3 text-neonCyan">Recursos IA</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#oraculo-ia" onclick="switchAiTab('chat')" class="hover:text-white transition">Balcão do Seu Wilson</a></li>
+                        <li><a href="#oraculo-ia" onclick="switchAiTab('capsule')" class="hover:text-white transition">Máquina de Crônicas</a></li>
+                        <li><a href="#oraculo-ia" onclick="switchAiTab('mixtape')" class="hover:text-white transition">Gerador de Mixtapes</a></li>
+                        <li><a href="#oraculo-ia" onclick="switchAiTab('appraise')" class="hover:text-white transition">Avaliador de Sótão</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-3">
+                    <h5 class="font-display font-bold text-xs uppercase mb-3 text-neonPink">Selos de Época</h5>
+                    <div class="p-3 bg-cardBg rounded-xl border border-gray-800 space-y-1.5 text-[11px]">
+                        <div>📺 OTIMIZADO PARA RESOLUÇÃO 800x600</div>
+                        <div>🌐 COMPATÍVEL NETSCAPE &amp; IE 3.0</div>
+                        <div>🔒 PAGAMENTO 100% PROTEGIDO (PIX &amp; CARTÃO)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
+                <div>© 1994–2026 Portal do Tempo Ltda. Todos os direitos reservados. Feito com amor pela memória analógica.</div>
+                <div class="flex gap-4">
+                    <span class="hover:text-gray-300">Privacidade</span>
+                    <span class="hover:text-gray-300">Termos de Troca</span>
+                    <span class="hover:text-gray-300">Garantia de Bancada</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/75 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-cardBg border-l-2 border-neonYellow flex flex-col shadow-2xl">
+                <div class="p-5 border-b border-gray-800 flex items-center justify-between bg-void">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">🛒</span>
+                        <h4 class="font-display font-bold text-white text-base">Cesto de Compras Nostálgico</h4>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="p-2 text-gray-400 hover:text-white font-mono text-sm">✕ FECHAR</button>
+                </div>
+                <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-3 font-sans text-sm"></div>
+                <div class="p-5 border-t border-gray-800 bg-void space-y-4">
+                    <div class="flex gap-2">
+                        <input type="text" id="couponInput" placeholder="Cupom (ex: TETRA94)" class="flex-1 px-3 py-2 bg-surface border border-gray-700 rounded-xl text-white font-mono text-xs uppercase focus:border-neonYellow focus:outline-none">
+                        <button onclick="applyCoupon()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-xs font-mono text-neonYellow rounded-xl">APLICAR</button>
+                    </div>
+                    <div class="space-y-1.5 font-mono text-xs text-gray-300">
+                        <div class="flex justify-between"><span>Subtotal:</span><span id="cartSubtotal" class="font-bold text-white">R$ 0,00</span></div>
+                        <div class="flex justify-between text-neonGreen" id="discountRow" style="display: none;"><span>Desconto Cupom TETRA94:</span><span id="cartDiscount">- R$ 0,00</span></div>
+                        <div class="flex justify-between"><span>Embalagem Antichoque Bolha:</span><span class="text-neonCyan font-bold">GRÁTIS</span></div>
+                        <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-gray-800 font-display"><span>TOTAL:</span><span id="cartTotal" class="text-neonYellow text-lg">R$ 0,00</span></div>
+                    </div>
+                    <button onclick="openCheckoutModal()" id="checkoutBtn" class="w-full py-4 bg-neonYellow hover:bg-yellow-300 text-black font-display font-black text-sm uppercase rounded-xl transition shadow-retro-black flex items-center justify-center gap-2 active:scale-95"><span>FINALIZAR NO BALCÃO</span><span>➔</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="productModal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeProductModal()"></div>
+        <div class="relative bg-cardBg border-2 border-gray-700 rounded-3xl max-w-2xl w-full p-6 shadow-2xl z-10 space-y-5">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                <span class="text-xs font-mono text-neonYellow" id="modalProductCategory">// CATEGORIA</span>
+                <button onclick="closeProductModal()" class="text-gray-400 hover:text-white font-mono text-sm">✕ FECHAR</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="aspect-square rounded-2xl overflow-hidden bg-black border border-gray-800">
+                    <img id="modalProductImage" src="" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-3">
+                    <span class="inline-block bg-neonPink/20 text-neonPink text-[10px] font-mono px-2 py-0.5 rounded border border-neonPink" id="modalProductYear">ANO 1994</span>
+                    <h3 class="text-xl font-display font-bold text-white" id="modalProductTitle">Nome do Produto</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed" id="modalProductDesc">Descrição do item.</p>
+                    <div class="text-2xl font-display font-black text-neonYellow" id="modalProductPrice">R$ 0,00</div>
+                    <button id="modalAddToCartBtn" class="w-full py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-xs uppercase rounded-xl transition shadow-retro-black active:scale-95">COLOCAR NO CESTO</button>
+                </div>
+            </div>
+            <div class="pt-2 border-t border-gray-800">
+                <button onclick="askWilsonAboutCurrentModalProduct()" id="modalAskAiBtn" class="w-full py-2.5 px-4 bg-void hover:bg-surface border border-neonCyan/50 rounded-xl text-xs font-mono text-neonCyan flex items-center justify-center gap-2 transition active:scale-95"><span>✨</span> Ouvir Memória do Seu Wilson sobre esta relíquia</button>
+                <div id="modalAiStoryBox" class="hidden mt-3 p-4 bg-void rounded-xl border border-gray-800 text-xs text-gray-300 leading-relaxed space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkoutSuccessModal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
+        <div class="relative max-w-md w-full z-10">
+            <div class="thermal-paper p-6 rounded-2xl border-4 border-dashed border-gray-800 shadow-2xl font-mono text-xs space-y-3">
+                <div class="text-center border-b-2 border-dashed border-gray-800 pb-3">
+                    <h4 class="font-bold text-base tracking-wider">PORTAL DO TEMPO LTDA</h4>
+                    <p class="text-[10px]">C.G.C. 94.199.400/0001-90 • INSCR. EST. 199.494.110</p>
+                    <p class="text-[10px]">RUA DA VIDEOLOCADORA, 1994 — SÃO PAULO - SP</p>
+                    <p class="font-bold mt-1 text-[11px]">CUPOM FISCAL / NOTA DE BALCÃO</p>
+                </div>
+                <div class="flex justify-between text-[11px] text-gray-700"><span>DATA: 17/07/1994 16:30</span><span>CCF: 019940</span></div>
+                <div class="border-t border-b border-gray-600 py-2 space-y-1.5" id="receiptItems"></div>
+                <div class="space-y-1 text-right">
+                    <div class="flex justify-between font-bold text-sm"><span>TOTAL PAGO:</span><span id="receiptTotal">R$ 0,00</span></div>
+                    <div class="text-[10px] text-gray-600">FORMA DE PAGAMENTO: PIX / CARTÃO</div>
+                </div>
+                <div class="border-2 border-red-700 text-red-700 font-black text-center py-1 rounded rotate-[-2deg] tracking-widest text-sm uppercase">★ PAGO NO BALCÃO DO SEU WILSON ★</div>
+                <div class="text-[10px] text-center text-gray-600 pt-2 border-t border-dashed border-gray-800">Obrigado pela preferência! Rebobine antes de devolver.</div>
+                <button onclick="closeCheckoutModal()" class="w-full py-3 bg-black text-white font-display font-bold text-xs uppercase rounded-xl transition hover:bg-gray-800">VOLTAR PARA A LOCADORA</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+    <script>
+        /* ==========================================================================
+           BANCO DE DADOS DE PRODUTOS GARIMPADOS
+           ========================================================================== */
+        const PRODUCTS = [
+            { id: 'prod-walkman-sony', category: 'eletronicos', title: 'Walkman Sony WM-FX10 com Rádio AM/FM', year: 1993, price: 490.00, rarity: 'Raridade 9/10', image: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?w=800&auto=format&fit=crop&q=80', desc: 'Original japonês com correia de borracha nova, mecanismo suave e fones de espuma laranja inclusos.', story: 'Encontrado no quarto de um ex-radialista em Campinas/SP. Guardado com sílica desde 1996.' },
+            { id: 'prod-tv-trinitron', category: 'eletronicos', title: 'TV de Tubo Sony Trinitron 14" Colorida', year: 1995, price: 680.00, rarity: 'Peça Única', image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80', desc: 'A rainha dos consoles 16-bit. Tubo fosfórico nítido sem manchas, som estéreo frontal e entrada AV calibrada.', story: 'Pertenceu à sala de jogos de uma chácara em Petrópolis/RJ. Menos de 400 horas de uso originais.' },
+            { id: 'prod-megadrive-tectoy', category: 'games', title: 'Mega Drive III Tec Toy com Sonic The Hedgehog', year: 1993, price: 790.00, rarity: 'Item de Colecionador', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80', desc: 'Modelo original nacional da Tec Toy com saída de áudio pura e controle original de 3 botões.', story: 'Guardado na caixa por uma família em Santos/SP após a chegada do PlayStation em 1998.' },
+            { id: 'prod-vinil-legiao', category: 'midia', title: 'LP Vinil Duplo Acústico MTV Original', year: 1992, price: 240.00, rarity: 'Prensagem de Época', image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&auto=format&fit=crop&q=80', desc: 'Capa dupla conservada com encarte de letras manuscritas e encarte original sem rasgos.', story: 'Garimpado no acervo particular de uma loja desativada na Galeria do Rock em São Paulo.' },
+            { id: 'prod-videocassete-gradiente', category: 'eletronicos', title: 'Videocassete Gradiente 4 Cabeças Hi-Fi', year: 1996, price: 520.00, rarity: 'Revisado', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80', desc: 'Auto-tracking digital dinâmico. Cabeçotes desmagnetizados e controle remoto original incluído.', story: 'Revisado pelo técnico Seu Agenor (71 anos), mestre em eletrônica analógica na Santa Ifigênia.' },
+            { id: 'prod-console-snes', category: 'games', title: 'Console Super Nintendo Gradiente Nacional', year: 1993, price: 890.00, rarity: 'Lendário', image: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=800&auto=format&fit=crop&q=80', desc: 'Placa revisada com capacitores novos e dois controles originais com botões concavos intactos.', story: 'Acompanha cartucho de Super Mario World com bateria de save recém-trocada para 25 anos.' },
+            { id: 'prod-telefone-disco', category: 'eletronicos', title: 'Telefone Tijolo de Disco Cinza Telebrás', year: 1991, price: 290.00, rarity: 'Funcional', image: 'https://images.unsplash.com/photo-1520923642038-b4259aceafd7?w=800&auto=format&fit=crop&q=80', desc: 'Campainha mecânica dupla de bronze ("pim-pom"). Adaptado para conector telefônico moderno RJ11.', story: 'Retirado intacto de uma agência postal no interior de Minas Gerais.' },
+            { id: 'prod-boombox-cce', category: 'eletronicos', title: 'Boombox Rádio CCE Duplo Deck com Equalizador', year: 1994, price: 590.00, rarity: 'Relíquia Sonora', image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&auto=format&fit=crop&q=80', desc: 'Duplo deck com recurso de gravação rápida (High Speed Dubbing) e equalizador gráfico de 5 bandas.', story: 'O clássico companheiro dos churrascos de domingo nos anos 90.' }
+        ];
+
+        let cart = [];
+        let currentFilterCategory = 'todos';
+        let searchQuery = '';
+        let currentSort = 'default';
+        let isSoundEnabled = true;
+        let isCrtEnabled = true;
+        let audioCtx = null;
+        let appliedDiscount = 0;
+        let currentModalProductId = null;
+        let isChiptunePlaying = false;
+        let chiptuneInterval = null;
+        let currentTrackIndex = 0;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) { audioCtx = new AudioContext(); }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+        }
+
+        function playRetroSound(type) {
+            if (!isSoundEnabled) return;
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                if (type === 'click') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(220, now + 0.04);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.04);
+                    osc.start(now); osc.stop(now + 0.04);
+                } else if (type === 'coin') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(987.77, now);
+                    osc.frequency.setValueAtTime(1318.51, now + 0.08);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now); osc.stop(now + 0.35);
+                } else if (type === 'blow') {
+                    const bufferSize = audioCtx.sampleRate * 0.22;
+                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+                    const noise = audioCtx.createBufferSource();
+                    noise.buffer = buffer;
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(800, now);
+                    filter.frequency.linearRampToValueAtTime(300, now + 0.22);
+                    noise.connect(filter); filter.connect(gain);
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.22);
+                    noise.start(now);
+                } else if (type === 'bic') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(350, now);
+                    osc.frequency.linearRampToValueAtTime(1100, now + 0.25);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now); osc.stop(now + 0.25);
+                } else if (type === 'modem') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(1200, now);
+                    osc.frequency.setValueAtTime(2400, now + 0.07);
+                    osc.frequency.setValueAtTime(1800, now + 0.14);
+                    gain.gain.setValueAtTime(0.09, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now); osc.stop(now + 0.3);
+                }
+            } catch (e) { }
+        }
+
+        const MELODY_TRACKS = [
+            { name: "Faixa 1: Aventura 16-Bit", notes: [261.63, 329.63, 392.00, 523.25, 392.00, 329.63] },
+            { name: "Faixa 2: Transamérica FM 94", notes: [392.00, 440.00, 493.88, 587.33, 440.00, 392.00] },
+            { name: "Faixa 3: Fliperama da Rodoviária", notes: [220.00, 277.18, 329.63, 440.00, 329.63, 277.18] }
+        ];
+
+        function toggleChiptuneMusic() {
+            initAudio();
+            const icon = document.getElementById('chiptuneIcon');
+            const label = document.getElementById('chiptuneLabel');
+            const tape = document.getElementById('cassetteTape');
+            if (isChiptunePlaying) {
+                clearInterval(chiptuneInterval);
+                isChiptunePlaying = false;
+                icon.textContent = '▶';
+                label.textContent = 'TOCAR FITA K7';
+                tape.classList.add('tape-paused');
+                playRetroSound('click');
+                showToast('Toca-Fitas Pausado', 'Aperte o Play quando quiser mais som.', '⏸️');
+            } else {
+                isChiptunePlaying = true;
+                icon.textContent = '⏸';
+                label.textContent = 'PAUSAR FITA K7';
+                tape.classList.remove('tape-paused');
+                playRetroSound('click');
+                showToast('Toca-Fitas Rodando!', 'Música sintetizada 16-bit ativa!', '📻');
+                let noteIdx = 0;
+                chiptuneInterval = setInterval(() => {
+                    if (!isSoundEnabled || !audioCtx) return;
+                    try {
+                        const track = MELODY_TRACKS[currentTrackIndex];
+                        const freq = track.notes[noteIdx % track.notes.length];
+                        const now = audioCtx.currentTime;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.04, now);
+                        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.22);
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.start(now); osc.stop(now + 0.22);
+                        noteIdx++;
+                    } catch (err) {}
+                }, 240);
+            }
+        }
+
+        function cycleMelodyTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % MELODY_TRACKS.length;
+            const track = MELODY_TRACKS[currentTrackIndex];
+            document.getElementById('melodyTrackName').textContent = track.name;
+            document.getElementById('tapeTitleCurrent').textContent = `[ ${track.name.toUpperCase()} ]`;
+            playRetroSound('click');
+            showToast('Faixa Trocada', track.name, '🎵');
+        }
+
+        function toggleAudio() {
+            isSoundEnabled = !isSoundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const label = document.getElementById('soundLabel');
+            if (isSoundEnabled) {
+                icon.textContent = '🔊'; label.textContent = 'Sons ON';
+                playRetroSound('click');
+                showToast('Áudio Ativado', 'Efeitos analógicos de 8-bit ligados!', '🔊');
+            } else {
+                icon.textContent = '🔇'; label.textContent = 'Sons OFF';
+                if (isChiptunePlaying) toggleChiptuneMusic();
+                showToast('Áudio Mudo', 'Efeitos sonoros desativados.', '🔇');
+            }
+        }
+
+        function toggleCrt() {
+            isCrtEnabled = !isCrtEnabled;
+            const body = document.body;
+            const label = document.getElementById('crtLabel');
+            if (isCrtEnabled) {
+                body.classList.remove('crt-disabled'); label.textContent = 'CRT ON';
+                playRetroSound('click');
+                showToast('Filtro CRT Ligado', 'Scanlines de TV de tubo ativadas!', '📺');
+            } else {
+                body.classList.add('crt-disabled'); label.textContent = 'CRT OFF';
+                playRetroSound('click');
+                showToast('Filtro CRT Desligado', 'Visual limpo de alta definição.', '✨');
+            }
+        }
+
+        const TV_CHANNELS = {
+            3: { label: 'CANAL 03 • VIDEOCASSETE', status: 'REC ● HI-FI', img: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80' },
+            4: { label: 'CANAL 04 • MEGA DRIVE 16-BIT', status: 'SINAL 60Hz OK', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80' },
+            'av1': { label: 'AV-1 • SESSÃO DA TARDE', status: 'ESTÉREO NICAM', img: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?w=800&auto=format&fit=crop&q=80' },
+            'av2': { label: 'AV-2 • DISCO VINIL MTV', status: 'PHONO PRE-AMP', img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&auto=format&fit=crop&q=80' }
+        };
+
+        function changeTvChannel(ch) {
+            playRetroSound('click');
+            const data = TV_CHANNELS[ch];
+            if (!data) return;
+            document.getElementById('tvChannelLabel').textContent = data.label;
+            document.getElementById('tvStatusLabel').textContent = data.status;
+            const screen = document.getElementById('tvScreenImage');
+            screen.style.opacity = '0.3';
+            setTimeout(() => { screen.src = data.img; screen.style.opacity = '0.9'; }, 120);
+            ['btnCh3', 'btnCh4', 'btnAv1', 'btnAv2'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.className = "px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition";
+            });
+            const activeBtn = ch === 3 ? 'btnCh3' : ch === 4 ? 'btnCh4' : ch === 'av1' ? 'btnAv1' : 'btnAv2';
+            document.getElementById(activeBtn).className = "px-2.5 py-1 bg-neonYellow text-black font-retro text-sm rounded border border-black font-bold transition";
+        }
+
+        const GEMINI_MODEL = "gemini-3-flash-preview";
+        const apiKey = "";
+
+        async function callGeminiApi(promptText, systemInstructionText = "", maxRetries = 3) {
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+            const payload = { contents: [ { role: "user", parts: [{ text: promptText }] } ] };
+            if (systemInstructionText) { payload.systemInstruction = { parts: [{ text: systemInstructionText }] }; }
+            let delay = 1000;
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!response.ok) {
+                        if (response.status === 429 && attempt < maxRetries) { await new Promise(r => setTimeout(r, delay)); delay *= 2; continue; }
+                        throw new Error(`HTTP Error: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) { return text; } else { throw new Error("Resposta vazia da API"); }
+                } catch (err) {
+                    if (attempt < maxRetries) { await new Promise(r => setTimeout(r, delay)); delay *= 2; } else { throw err; }
+                }
+            }
+        }
+
+        const SEU_WILSON_SYSTEM_PROMPT = `Você é o Seu Wilson da Silva, atendente experiente e afetuoso de uma locadora de bairro nos anos 90 no Brasil chamada "Portal do Tempo".
+Você tem cerca de 55 anos, fala com calor humano, nostalgia acolhedora e autenticidade cultural brasileira de 1990 a 1999.
+Use expressões da época: "da hora", "chuchu beleza", "fita firmeza", "meu camarada", "bicho", "rebobinar na caneta BIC", "alugar na sexta e devolver na segunda", "TV de tubo", "recreio com tazo", "pastel com tubaína".
+Responda em português brasileiro com riqueza de detalhes sensoriais e bom humor em 2 parágrafos curtos.`;
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const submitBtn = document.getElementById('chatSubmitBtn');
+            const history = document.getElementById('chatHistory');
+            const query = input.value.trim();
+            if (!query) return;
+            playRetroSound('click');
+            history.innerHTML += `
+                <div class="flex items-start gap-3 justify-end">
+                    <div class="bg-purple-950/70 border border-neonPurple/50 rounded-2xl rounded-tr-none p-3.5 max-w-[85%] text-gray-100 leading-relaxed shadow">
+                        <span class="text-xs font-retro text-neonPink block mb-1">VOCÊ:</span>
+                        ${escapeHtml(query)}
+                    </div>
+                    <span class="text-2xl mt-0.5">👤</span>
+                </div>
+            `;
+            input.value = '';
+            input.disabled = true;
+            submitBtn.disabled = true;
+            const loadingId = 'loading-' + Date.now();
+            history.innerHTML += `
+                <div class="flex items-start gap-3" id="${loadingId}">
+                    <span class="text-2xl mt-0.5 animate-bounce">📼</span>
+                    <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-neonYellow font-mono text-xs flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-neonYellow animate-ping"></span>
+                        Seu Wilson está procurando na prateleira da locadora...
+                    </div>
+                </div>
+            `;
+            history.scrollTop = history.scrollHeight;
+            try {
+                const response = await callGeminiApi(query, SEU_WILSON_SYSTEM_PROMPT);
+                document.getElementById(loadingId)?.remove();
+                history.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl mt-0.5">👨🏻‍🦳</span>
+                        <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-gray-200 leading-relaxed shadow">
+                            <span class="text-xs font-retro text-neonYellow block mb-1">SEU WILSON DA LOCADORA:</span>
+                            <div class="whitespace-pre-line text-sm">${formatMarkdown(response)}</div>
+                        </div>
+                    </div>
+                `;
+                playRetroSound('coin');
+            } catch (err) {
+                document.getElementById(loadingId)?.remove();
+                history.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl mt-0.5">👨🏻‍🦳</span>
+                        <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-gray-200 leading-relaxed shadow">
+                            <span class="text-xs font-retro text-neonYellow block mb-1">SEU WILSON DA LOCADORA:</span>
+                            Opa, meu camarada! A linha discada do modem deu um chiado daqueles, mas eu ouvi sua pergunta! O segredo dos anos 90 era ter paciência gostosa para rebobinar a fita e guardar os cartuchos na vertical longe do sol. Dá uma olhada no nosso garimpo aqui embaixo que você vai achar relíquia fina!
+                        </div>
+                    </div>
+                `;
+            } finally {
+                input.disabled = false;
+                submitBtn.disabled = false;
+                input.focus();
+                history.scrollTop = history.scrollHeight;
+            }
+        }
+
+        function fillChatPrompt(text) {
+            const input = document.getElementById('chatInput');
+            if (input) { input.value = text; input.focus(); playRetroSound('click'); }
+        }
+
+        async function generateMemoryCapsule() {
+            const year = document.getElementById('capsuleYear').value;
+            const scene = document.getElementById('capsuleScene').value;
+            const name = document.getElementById('capsuleName').value.trim() || 'Viajante dos Anos 90';
+            const btn = document.getElementById('generateCapsuleBtn');
+            const resultBox = document.getElementById('capsuleResult');
+            const contentBox = document.getElementById('capsuleContent');
+            const heading = document.getElementById('capsuleHeading');
+            btn.disabled = true;
+            btn.innerHTML = `<span>⏳ SINTONIZANDO CANAL 3 E REBOBINANDO...</span>`;
+            playRetroSound('click');
+            const prompt = `Escreva uma crônica memorialística rica, calorosa e cheia de nostalgia brasileira para o leitor "${name}".
+Ano: ${year}.
+Cenário: "${scene}".
+Inclua: sons característicos (tubo da TV estalando, fita K7, barulho de videogame 16-bit), guloseimas da época (Tubaína, chocolate Surpresa, bala soft), marcas de época e o valor do mundo analógico. Em torno de 3 parágrafos.`;
+            try {
+                const chronicle = await callGeminiApi(prompt, "Você é um renomado memorialista da infância e juventude nos anos 1990 no Brasil.");
+                heading.textContent = `CRÔNICA DE ${year}: SINTONIZADA PARA ${name.toUpperCase()}`;
+                contentBox.innerHTML = formatMarkdown(chronicle);
+                resultBox.classList.remove('hidden');
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                playRetroSound('coin');
+                showToast('Crônica Sintonizada!', `Sua memória de ${year} está pronta.`, '✨');
+            } catch (err) {
+                heading.textContent = `CRÔNICA DE ${year}: SINTONIA ANALÓGICA`;
+                contentBox.innerHTML = `
+                    <p>Você acorda num domingo de ${year}. O cheiro de café passado invade o corredor enquanto na sala a TV de tubo estala suavemente sintonizada no Domingo Legal. Não há notificações, não há pressa.</p>
+                    <p>Na mesinha da sala, repousa uma fita K7 recém-gravada com caneta esferográfica azul marcando o Lado A. O refrigerante em garrafa de vidro tilinta na mesa e o telefone de disco toca uma única vez.</p>
+                    <p>O passado nunca foi embora de verdade; ele só estava guardado esperando você apertar o Play.</p>
+                `;
+                resultBox.classList.remove('hidden');
+                showToast('Sintonia Local', 'Crônica carregada do arquivo da locadora!', '📼');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>⏳ SINTONIZAR NESTE ANO E GERAR CRÔNICA</span>`;
+            }
+        }
+
+        function copyCapsuleText() {
+            const content = document.getElementById('capsuleContent')?.innerText;
+            if (!content) return;
+            const temp = document.createElement('textarea');
+            temp.value = content;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            playRetroSound('click');
+            showToast('Copiado!', 'Crônica copiada para a área de transferência.', '📋');
+        }
+
+        async function generateMixtape() {
+            const genre = document.getElementById('mixtapeGenre').value;
+            const btn = document.getElementById('generateMixtapeBtn');
+            const resultBox = document.getElementById('mixtapeResult');
+            const contentBox = document.getElementById('mixtapeContent');
+            const titleDisplay = document.getElementById('mixtapeTitleDisplay');
+            btn.disabled = true;
+            btn.innerHTML = `<span>📼 GRAVANDO FITA COM CABEÇOTE MAGNÉTICO...</span>`;
+            playRetroSound('click');
+            const prompt = `Crie uma seleção de Mixtape em fita K7 TDK de 60 minutos para o tema: "${genre}".
+Estruture com:
+1. Título nostálgico escrito no encarte
+2. LADO A (4 a 5 músicas com Artista e Minutagem somando ~30min)
+3. LADO B (4 a 5 músicas somando ~30min)
+4. Um comentário bem-humorado de quem gravava fita do rádio nos anos 90.`;
+            try {
+                const response = await callGeminiApi(prompt, "Você é um especialista em fitas cassete e rádios FM brasileiras dos anos 90.");
+                titleDisplay.textContent = genre.toUpperCase().replace('-', ' ');
+                contentBox.innerHTML = formatMarkdown(response);
+                resultBox.classList.remove('hidden');
+                playRetroSound('coin');
+                showToast('Mixtape Pronta!', 'Fita rebobinada no Lado A.', '📼');
+            } catch (err) {
+                titleDisplay.textContent = "SELEÇÃO OURO 1994";
+                contentBox.innerHTML = `
+                    <div class="space-y-2">
+                        <strong class="text-neonYellow block">LADO A (30 MIN):</strong>
+                        <p>1. Skank - Garota Nacional (4:12)<br>2. Raimundos - Mulher de Fases (3:32)<br>3. Mamonas Assassinas - Pelados em Santos (3:23)<br>4. Titãs - Domingo (4:05)</p>
+                        <strong class="text-neonCyan block mt-3">LADO B (30 MIN):</strong>
+                        <p>1. Paralamas - Uma Brasileira (3:45)<br>2. Charlie Brown Jr - Proibida pra Mim (3:24)<br>3. Cidade Negra - Onde Você Mora? (4:15)<br>4. Legião Urbana - Vento no Litoral (6:06)</p>
+                    </div>
+                `;
+                resultBox.classList.remove('hidden');
+                showToast('Mixtape Clássica', 'Carregada do encarte físico!', '📼');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>📼 GRAVAR MIXTAPE NO GEMINI</span>`;
+            }
+        }
+
+        async function appraiseRelic() {
+            const input = document.getElementById('appraiseInput');
+            const btn = document.getElementById('appraiseBtn');
+            const resultBox = document.getElementById('appraiseResult');
+            const contentBox = document.getElementById('appraiseContent');
+            const itemDescription = input.value.trim();
+            if (!itemDescription) { showToast('Atenção', 'Digite o item que você achou no armário!', '🔍'); return; }
+            btn.disabled = true;
+            btn.innerHTML = `<span>ANALISANDO...</span>`;
+            playRetroSound('click');
+            const prompt = `O usuário encontrou a seguinte relíquia antiga: "${itemDescription}".
+Como Seu Wilson da locadora:
+1. Avalie a importância histórica no cotidiano brasileiro dos anos 90
+2. Dê uma "Nota de Raridade Nostálgica" de 1 a 10
+3. Dê 2 dicas práticas de conservação
+4. Diga se vale a pena guardar no acervo da família.`;
+            try {
+                const response = await callGeminiApi(prompt, SEU_WILSON_SYSTEM_PROMPT);
+                contentBox.innerHTML = formatMarkdown(response);
+                resultBox.classList.remove('hidden');
+                playRetroSound('coin');
+                showToast('Laudo Concluído!', 'Seu Wilson avaliou a relíquia.', '📜');
+            } catch (err) {
+                contentBox.innerHTML = `
+                    <p class="text-neonYellow font-bold mb-1">Nota de Raridade: 9.5 / 10</p>
+                    <p>Essa peça é um tesouro autêntico da nossa geração! Nos anos 90, ter um desse em casa era motivo de orgulho. Guarde longe da umidade, nunca deixe pilhas dentro do compartimento e preserve essa memória viva!</p>
+                `;
+                resultBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>AVALIAR RELÍQUIA</span>`;
+            }
+        }
+
+        function getFilteredAndSortedProducts() {
+            let list = [...PRODUCTS];
+            if (currentFilterCategory !== 'todos') { list = list.filter(p => p.category === currentFilterCategory); }
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                list = list.filter(p => p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.year.toString().includes(q));
+            }
+            if (currentSort === 'price-asc') { list.sort((a, b) => a.price - b.price); }
+            else if (currentSort === 'price-desc') { list.sort((a, b) => b.price - a.price); }
+            else if (currentSort === 'year-asc') { list.sort((a, b) => a.year - b.year); }
+            else if (currentSort === 'year-desc') { list.sort((a, b) => b.year - a.year); }
+            return list;
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const emptyState = document.getElementById('emptySearchState');
+            const counter = document.getElementById('productCounterText');
+            if (!grid) return;
+            const items = getFilteredAndSortedProducts();
+            if (items.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                counter.textContent = '0 relíquias encontradas';
+                return;
+            }
+            emptyState.classList.add('hidden');
+            counter.textContent = `Exibindo ${items.length} ${items.length === 1 ? 'relíquia única' : 'relíquias únicas'}`;
+            grid.innerHTML = items.map(product => `
+                <div class="group bg-cardBg border border-gray-800 hover:border-neonYellow/70 rounded-2xl p-4 transition duration-300 flex flex-col justify-between hover:shadow-neon-yellow">
+                    <div>
+                        <div class="relative rounded-xl overflow-hidden aspect-square bg-black mb-3 border border-gray-800">
+                            <img src="${product.image}" alt="${product.title}" onerror="this.src='https://placehold.co/600x600/1e1b4b/facc15?text=Reliquia+Anos+90'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-2 left-2 bg-neonPink text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow">${product.rarity}</span>
+                            <span class="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm text-neonYellow font-retro text-xs px-2 py-0.5 rounded border border-gray-700">ANO ${product.year}</span>
+                        </div>
+                        <h4 class="font-display font-bold text-white text-base group-hover:text-neonYellow transition line-clamp-1">${product.title}</h4>
+                        <p class="text-xs text-gray-400 mt-1 line-clamp-2 leading-relaxed">${product.desc}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-800">
+                        <div class="flex items-baseline justify-between mb-3">
+                            <span class="text-[10px] font-mono text-gray-400">VALOR DO GARIMPO:</span>
+                            <span class="font-display font-black text-neonYellow text-lg">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="openProductModal('${product.id}')" class="py-2.5 px-2 bg-surface hover:bg-gray-800 border border-gray-700 text-gray-300 font-mono text-[11px] rounded-xl transition text-center active:scale-95">Detalhes</button>
+                            <button onclick="addToCart('${product.id}')" class="py-2.5 px-2 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-[11px] uppercase rounded-xl transition shadow-retro-black text-center active:scale-95">+ Cesto</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            playRetroSound('click');
+            currentFilterCategory = cat;
+            ['cat-todos', 'cat-eletronicos', 'cat-games', 'cat-midia'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) { btn.classList.remove('border-neonYellow', 'shadow-retro-black'); btn.classList.add('border-gray-800'); }
+            });
+            const activeBtn = document.getElementById(`cat-${cat}`);
+            if (activeBtn) { activeBtn.classList.remove('border-gray-800'); activeBtn.classList.add('border-neonYellow', 'shadow-retro-black'); }
+            renderProducts();
+        }
+
+        function handleInstantSearch(val) {
+            searchQuery = val.trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            if (clearBtn) { if (searchQuery) clearBtn.classList.remove('hidden'); else clearBtn.classList.add('hidden'); }
+            renderProducts();
+        }
+
+        function clearSearch() {
+            searchQuery = '';
+            const input = document.getElementById('searchInput');
+            if (input) input.value = '';
+            const clearBtn = document.getElementById('clearSearchBtn');
+            if (clearBtn) clearBtn.classList.add('hidden');
+            renderProducts();
+        }
+
+        function applySorting(sortVal) { playRetroSound('click'); currentSort = sortVal; renderProducts(); }
+
+        function toggleCartDrawer() {
+            playRetroSound('click');
+            const drawer = document.getElementById('cartDrawer');
+            drawer.classList.toggle('hidden');
+            renderCartItems();
+        }
+
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+            const existing = cart.find(item => item.id === productId);
+            if (existing) { showToast('Peça Única!', 'Este item já está guardado no seu cesto.', '⚠️'); playRetroSound('click'); return; }
+            cart.push({ ...product, quantity: 1 });
+            updateCartBadge();
+            playRetroSound('coin');
+            showToast('Item no Cesto!', `${product.title} adicionado com sucesso.`, '🛒');
+        }
+
+        function removeFromCart(productId) {
+            playRetroSound('click');
+            cart = cart.filter(item => item.id !== productId);
+            updateCartBadge();
+            renderCartItems();
+        }
+
+        function updateCartBadge() {
+            const count = cart.length;
+            const badge = document.getElementById('cartBadgeCount');
+            if (badge) badge.textContent = count;
+        }
+
+        function renderCartItems() {
+            const list = document.getElementById('cartItemsList');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const totalEl = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            if (!list) return;
+            if (cart.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-16 space-y-3">
+                        <div class="text-4xl">📼</div>
+                        <p class="font-display font-bold text-white text-base">Seu cesto está vazio</p>
+                        <p class="text-xs text-gray-400">Garimpe um console, walkman ou fita e guarde aqui!</p>
+                    </div>
+                `;
+                subtotalEl.textContent = 'R$ 0,00';
+                totalEl.textContent = 'R$ 0,00';
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50');
+                return;
+            }
+            checkoutBtn.disabled = false;
+            checkoutBtn.classList.remove('opacity-50');
+            const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
+            const total = Math.max(0, subtotal - appliedDiscount);
+            subtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            totalEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            list.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-void border border-gray-800">
+                    <img src="${item.image}" alt="${item.title}" class="w-14 h-14 object-cover rounded-lg border border-gray-700">
+                    <div class="flex-1 min-w-0">
+                        <h5 class="font-display font-bold text-white text-xs truncate">${item.title}</h5>
+                        <span class="text-[10px] font-mono text-neonPink">Peça Única • Ano ${item.year}</span>
+                        <div class="font-display font-bold text-neonYellow text-sm mt-0.5">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                    </div>
+                    <button onclick="removeFromCart('${item.id}')" class="p-2 text-gray-500 hover:text-red-400 text-xs font-mono">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function applyCoupon() {
+            const input = document.getElementById('couponInput');
+            const code = input.value.trim().toUpperCase();
+            if (code === 'TETRA94') {
+                appliedDiscount = 30.00;
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('cartDiscount').textContent = `- R$ 30,00`;
+                playRetroSound('coin');
+                showToast('Cupom Aplicado!', 'R$ 30,00 de desconto ativado com sucesso!', '🏆');
+                renderCartItems();
+            } else {
+                showToast('Cupom Inválido', 'Tente usar o cupom TETRA94!', '⚠️');
+                playRetroSound('click');
+            }
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) return;
+            toggleCartDrawer();
+            playRetroSound('coin');
+            const modal = document.getElementById('checkoutSuccessModal');
+            const receiptItems = document.getElementById('receiptItems');
+            const receiptTotal = document.getElementById('receiptTotal');
+            receiptItems.innerHTML = cart.map(item => `
+                <div class="flex justify-between text-gray-800">
+                    <span class="truncate pr-2">${item.title}</span>
+                    <span class="font-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                </div>
+            `).join('');
+            const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
+            const total = Math.max(0, subtotal - appliedDiscount);
+            receiptTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            modal.classList.remove('hidden');
+            cart = [];
+            appliedDiscount = 0;
+            updateCartBadge();
+        }
+
+        function closeCheckoutModal() {
+            playRetroSound('click');
+            document.getElementById('checkoutSuccessModal').classList.add('hidden');
+        }
+
+        function openProductModal(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+            currentModalProductId = productId;
+            playRetroSound('click');
+            document.getElementById('modalProductCategory').textContent = `// ${product.category.toUpperCase()} • ${product.rarity}`;
+            document.getElementById('modalProductYear').textContent = `ANO DE LANÇAMENTO: ${product.year}`;
+            document.getElementById('modalProductTitle').textContent = product.title;
+            document.getElementById('modalProductDesc').innerHTML = `
+                ${product.desc}<br><br>
+                <strong class="text-white">Origem do Garimpo:</strong> ${product.story}
+            `;
+            document.getElementById('modalProductPrice').textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+            document.getElementById('modalProductImage').src = product.image;
+            const addBtn = document.getElementById('modalAddToCartBtn');
+            addBtn.onclick = () => { addToCart(productId); closeProductModal(); };
+            const storyBox = document.getElementById('modalAiStoryBox');
+            storyBox.classList.add('hidden');
+            storyBox.innerHTML = '';
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            playRetroSound('click');
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        async function askWilsonAboutCurrentModalProduct() {
+            const product = PRODUCTS.find(p => p.id === currentModalProductId);
+            if (!product) return;
+            const storyBox = document.getElementById('modalAiStoryBox');
+            storyBox.classList.remove('hidden');
+            storyBox.innerHTML = `
+                <div class="flex items-center gap-2 text-neonCyan font-mono">
+                    <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
+                    <span>Seu Wilson está soprando a fita e puxando as memórias de ${product.year}...</span>
+                </div>
+            `;
+            playRetroSound('click');
+            const prompt = `Fale sobre o item "${product.title}" (${product.year}).
+Conte uma história nostálgica de 2 parágrafos sobre como era ter esse aparelho no Brasil nos anos 90, os barulhos inesquecíveis e por que vale a pena guardar no acervo.`;
+            try {
+                const story = await callGeminiApi(prompt, SEU_WILSON_SYSTEM_PROMPT);
+                storyBox.innerHTML = `
+                    <div class="border-l-2 border-neonYellow pl-3">
+                        <span class="text-neonYellow font-retro text-xs block mb-1">MEMÓRIA DO SEU WILSON:</span>
+                        <div class="whitespace-pre-line">${formatMarkdown(story)}</div>
+                    </div>
+                `;
+                playRetroSound('coin');
+            } catch (err) {
+                storyBox.innerHTML = `
+                    <p class="text-gray-300">Esse item aqui marcou época demais! Nos anos 90, quem tinha um desses em casa era o rei da rua. Uma peça que conserva a textura analógica perfeita da nossa década de ouro.</p>
+                `;
+            }
+        }
+
+        function switchAiTab(tabName) {
+            playRetroSound('click');
+            const tabs = ['chat', 'capsule', 'mixtape', 'appraise'];
+            tabs.forEach(t => {
+                const content = document.getElementById(`aiTabContent-${t}`);
+                const btn = document.getElementById(`tabBtn-${t}`);
+                if (t === tabName) {
+                    content?.classList.remove('hidden');
+                    btn?.classList.remove('bg-surface', 'text-gray-300', 'border-gray-700');
+                    btn?.classList.add('bg-neonYellow', 'text-black', 'shadow-retro-black');
+                } else {
+                    content?.classList.add('hidden');
+                    btn?.classList.add('bg-surface', 'text-gray-300', 'border-gray-700');
+                    btn?.classList.remove('bg-neonYellow', 'text-black', 'shadow-retro-black');
+                }
+            });
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
+
+        function formatMarkdown(text) {
+            if (!text) return '';
+            let formatted = escapeHtml(text);
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong class="text-neonYellow font-bold">$1</strong>');
+            formatted = formatted.replace(/\*(.*?)\*/g, '<em class="text-gray-300">$1</em>');
+            formatted = formatted.replace(/^### (.*$)/gim, '<h5 class="text-base font-display font-bold text-white mt-2 mb-1">$1</h5>');
+            formatted = formatted.replace(/^## (.*$)/gim, '<h4 class="text-lg font-display font-bold text-neonCyan mt-3 mb-1">$1</h4>');
+            return formatted;
+        }
+
+        function showToast(title, message, icon = '📼') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'pointer-events-auto bg-cardBg border-2 border-neonYellow p-3.5 rounded-xl shadow-retro-black flex items-center gap-3 text-xs max-w-xs transition transform translate-y-4 opacity-0';
+            toast.innerHTML = `
+                <span class="text-2xl">${icon}</span>
+                <div>
+                    <h6 class="font-display font-bold text-white">${escapeHtml(title)}</h6>
+                    <p class="text-gray-400 text-[11px] leading-tight mt-0.5">${escapeHtml(message)}</p>
+                </div>
+            `;
+            container.appendChild(toast);
+            requestAnimationFrame(() => { toast.classList.remove('translate-y-4', 'opacity-0'); });
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const input = document.getElementById('newsletterEmail');
+            const email = input.value.trim();
+            if (email) {
+                playRetroSound('coin');
+                showToast('Mala Direta Confirmada!', `Cupom TETRA94 registrado para ${email}.`, '💌');
+                input.value = '';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>
