@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal do Tempo — O E-Commerce dos Anos 90</title>
+    <title>Portal do Tempo — Eletrônicos e relíquias originais dos anos 90</title>
+    <meta name="description" content="Walkman, TV de tubo, videocassete, Mega Drive e vinil originais dos anos 90, testados 48h na bancada e revisados peça a peça. Cada item é único. Frete para todo o Brasil.">
+    <meta name="theme-color" content="#07070a">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:title" content="Portal do Tempo — relíquias originais dos anos 90">
+    <meta property="og:description" content="Peças originais dos anos 90, testadas na bancada antes de sair. Cada uma é única: quando vende, acabou.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Press+Start+2P&family=Space+Grotesk:wght@500;700;900&family=VT323&display=swap" rel="stylesheet">
@@ -33,6 +39,8 @@
                         'retro-black': '4px 4px 0px #000000',
                         'retro-yellow': '4px 4px 0px #fef000',
                         'retro-pink': '4px 4px 0px #ff007f',
+                        'retro-cyan': '4px 4px 0px #00f0ff',
+                        'retro-green': '4px 4px 0px #39ff14',
                         'win-border': 'inset -2px -2px #404040, inset 2px 2px #dfdfdf, inset -1px -1px #0a0a0a, inset 1px 1px #ffffff',
                         'win-button': 'inset -2px -2px #0a0a0a, inset 2px 2px #ffffff, inset -1px -1px #808080, inset 1px 1px #dfdfdf',
                         'win-pressed': 'inset 2px 2px #0a0a0a, inset -1px -1px #ffffff',
@@ -42,12 +50,26 @@
         }
     </script>
     <style>
+        /* ===== CSS crítico: a tela já nasce escura, antes do CDN do Tailwind compilar.
+           Sem isto, o primeiro quadro é branco. Não usar visibility:hidden aqui — se o
+           CDN cair, a página ficaria permanentemente em branco. ===== */
+        html, body { background: #07070a; color: #f3f4f6; font-family: Inter, system-ui, sans-serif; }
+
+        /* Âncora da nav não aterrissa mais atrás do cabeçalho fixo */
+        [id] { scroll-margin-top: 6rem; }
+
+        /* Foco de teclado visível: 6 campos usam focus:outline-none e só trocavam a borda */
+        :focus-visible { outline: 2px solid #fef000; outline-offset: 2px; }
+
+        /* <option> herda fundo branco do SO dentro de select escuro */
+        option { background: #101018; color: #f3f4f6; }
+
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: #0d0d14; border-left: 1px solid #222235; }
         ::-webkit-scrollbar-thumb { background: #28283e; border-radius: 4px; border: 2px solid #0d0d14; }
         ::-webkit-scrollbar-thumb:hover { background: #fef000; }
         .crt-scanlines {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; inset: 0;
             pointer-events: none; z-index: 9999;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.32) 50%),
                         linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
@@ -60,7 +82,7 @@
         @keyframes spinGear { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .win95-box {
             background-color: #c0c0c0;
-            box-shadow: inset -2px -2px #0a0a0a, inset 2px 2px #ffffff, inset -1px -1px #808080, inset 1px 1px #dfdfdf;
+            box-: inset -2px -2px #0a0a0a, inset 2px 2px #ffffff, inset -1px -1px #808080, inset 1px 1px #dfdfdf;
         }
         .win95-titlebar { background: linear-gradient(90deg, #000080, #1084d0); }
         @keyframes marqueeScroll { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
@@ -71,142 +93,281 @@
             background-image: radial-gradient(#d3cbb5 10%, transparent 11%);
             background-size: 10px 10px;
         }
+
+        /* ==================================================================
+           SISTEMA VISUAL 1994
+           Nenhum hex novo: tudo abaixo usa cores já declaradas na config,
+           ou preto/branco com alpha. Forma, ritmo e textura — não cor.
+           ================================================================== */
+
+        /* Bisel de plástico moldado: faz o painel ler como faceplate de
+           aparelho de som, não como card de dashboard. */
+        .bevel {
+            box-: inset 1px 1px 0 rgba(255,255,255,.07),
+                        inset -1px -1px 0 rgba(0,0,0,.65);
+        }
+
+        /* Tecla de boombox: afunda quando apertada. */
+        .key {
+            box-: inset 1px 1px 0 rgba(255,255,255,.12),
+                        inset -2px -2px 0 rgba(0,0,0,.75);
+            transition: transform .06s linear, box- .06s linear;
+        }
+        .key:active {
+            transform: translate(1px, 1px);
+            box-: inset -1px -1px 0 rgba(255,255,255,.08),
+                        inset 2px 2px 0 rgba(0,0,0,.8);
+        }
+
+        /* S1 — Carta de teste (color bars) do encerramento da programação.
+           7 bandas de paradas duras, todas com cor que já existe na config. */
+        .colorbars {
+            background: linear-gradient(90deg,
+                #fef000 0 14.2857%, #00f0ff 14.2857% 28.5714%,
+                #39ff14 28.5714% 42.8571%, #ff007f 42.8571% 57.1428%,
+                #8b5cf6 57.1428% 71.4285%, #ff6b00 71.4285% 85.7142%,
+                #ffffff 85.7142% 100%);
+        }
+
+        /* S2 — Transição em dithering 45°, no lugar do fio cinza de framework.
+           É como placa de vídeo de paleta limitada simulava degradê. */
+        .divider-dither {
+            height: 24px;
+            background: repeating-linear-gradient(45deg, #151522 0 2px, transparent 2px 4px);
+            -webkit-mask-image: linear-gradient(to bottom, #000000 0%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000000 0%, transparent 100%);
+        }
+
+        /* Texturas de fundo. pointer-events:none e z-index:0 são obrigatórios:
+           sem eles a camada engole o clique dos botões de categoria. */
+        .tex-phosphor, .tex-halftone { position: relative; isolation: isolate; }
+        .tex-phosphor::before, .tex-halftone::before {
+            content: ""; position: absolute; inset: 0;
+            pointer-events: none; z-index: -1;
+        }
+        .tex-phosphor::before {
+            opacity: .35;
+            background-image:
+                repeating-linear-gradient(0deg,  #222235 0 1px, transparent 1px 32px),
+                repeating-linear-gradient(90deg, #222235 0 1px, transparent 1px 32px);
+        }
+        .tex-halftone::before {
+            opacity: .25;
+            background-image: radial-gradient(#28283e 1px, transparent 1px);
+            background-size: 6px 6px;
+        }
+
+        /* Hachura de advertência — uso raro, só escassez e barra de restauro. */
+        .tex-hazard {
+            background: repeating-linear-gradient(45deg, #fef000 0 8px, #000000 8px 16px);
+        }
+
+        /* Entrada animada de gaveta e modal sem uma linha de JS: a animação
+           reinicia sozinha quando o elemento sai de display:none. */
+        @keyframes drawerIn { from { transform: translateX(20px); opacity: .4 } to { transform: translateX(0); opacity: 1 } }
+        @keyframes modalIn  { from { transform: translateY(10px); opacity: 0 }  to { transform: translateY(0); opacity: 1 } }
+        .drawer-in { animation: drawerIn .18s ease-out; }
+        .modal-in  { animation: modalIn .16s ease-out; }
+
+        /* FAQ com <details> nativo: teclado e JS-off de graça. */
+        summary { list-style: none; cursor: pointer; }
+        summary::-webkit-details-marker { display: none; }
+        .faq-chevron { transition: transform .15s ease; }
+        details[open] .faq-chevron { transform: rotate(90deg); }
+
+        /* Quem pediu menos movimento recebe menos movimento. A página tinha
+           marquee de 32s, 5 animate-pulse, 3 animate-ping e a engrenagem da
+           fita rodando sem nenhum respeito a esta media query. */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-void text-gray-100 font-sans antialiased overflow-x-hidden selection:bg-neonYellow selection:text-black">
+    <!-- ==========================================================================
+         SPRITE DE ÍCONES — pixel-art 16x16, monocromático em currentColor.
+         Substitui o emoji nos pontos funcionais. Três motivos:
+         (1) emoji carrega cor própria e era a ÚNICA coisa da página que injetava
+             cor fora da paleta — o sprite herda a cor do contexto e reforça a regra;
+         (2) emoji muda de desenho em cada sistema operacional;
+         (3) sprite de 16x16 com canto vivo É a linguagem visual de 1994.
+         Zero requisição de rede: funciona mesmo sob CSP restritiva.
+         ========================================================================== -->
+    <svg class="hidden" aria-hidden="true" focusable="false" shape-rendering="crispEdges"
+         xmlns="http://www.w3.org/2000/svg"><defs>
+      <symbol id="i-tape" viewBox="0 0 16 16"><path fill="currentColor" d="M1 3h14v10H1V3zm1 1v8h12V4H2zm2 2h8v4H4V6zm1 1v2h2V7H5zm4 0v2h2V7H9z"/></symbol>
+      <symbol id="i-tv" viewBox="0 0 16 16"><path fill="currentColor" d="M4 1h1v3H4V1zm7 0h1v3h-1V1zM1 4h11v9H1V4zm1 1v7h9V5H2zm11 0h2v2h-2V5zm0 3h2v4h-2V8zM4 13h5v2H4v-2z"/></symbol>
+      <symbol id="i-joystick" viewBox="0 0 16 16"><path fill="currentColor" d="M6 1h4v2H6V1zM7 3h2v6H7V3zM2 9h12v6H2V9zm1 1v4h10v-4H3zm1 1h2v2H4v-2zm6 0h2v2h-2v-2z"/></symbol>
+      <symbol id="i-radio" viewBox="0 0 16 16"><path fill="currentColor" d="M1 4h14v10H1V4zm1 1v8h12V5H2zm1 1h5v6H3V6zm1 1v4h3V7H4zm6 0h3v1h-3V7zm0 2h3v1h-3V9zm0 2h3v1h-3v-1zM9 1h1v3H9V1z"/></symbol>
+      <symbol id="i-vinyl" viewBox="0 0 16 16"><path fill="currentColor" d="M7 1h2v1H7V1zM5 2h6v1H5V2zM3 3h10v1H3V3zM2 4h12v1H2V4zM1 5h14v6H1V5zm6 1v1h2V6H7zM6 7v2h1V7H6zm3 0v2h1V7H9zm-2 3v1h2v-1H7zM2 11h12v1H2v-1zm1 1h10v1H3v-1zm2 1h6v1H5v-1zm2 1h2v1H7v-1z"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 16 16"><path fill="currentColor" d="M0 1h3v2H2l2 7h9v2H3L0 2V1zm4 2h11l-2 6H5.5L4 3zm1 11h2v2H5v-2zm6 0h2v2h-2v-2z"/></symbol>
+      <symbol id="i-search" viewBox="0 0 16 16"><path fill="currentColor" d="M2 1h8v1H2V1zM1 2h1v8H1V2zm9 0h1v8h-1V2zM2 10h8v1H2v-1zm3 1h2v1H5v-1zm6 1h2v2h-2v-2zm2 2h2v2h-2v-2z"/></symbol>
+      <symbol id="i-close" viewBox="0 0 16 16"><path fill="currentColor" d="M2 2h2v2H2V2zm2 2h2v2H4V4zm2 2h4v4H6V6zm4-2h2v2h-2V4zm2-2h2v2h-2V2zM4 10h2v2H4v-2zm-2 2h2v2H2v-2zm8-2h2v2h-2v-2zm2 2h2v2h-2v-2z"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 16 16"><path fill="currentColor" d="M1 7h9v2H1V7zm8-4h2v2H9V3zm2 2h2v2h-2V5zm2 2h2v2h-2V7zm-2 2h2v2h-2V9zm-2 2h2v2H9v-2z"/></symbol>
+      <symbol id="i-play" viewBox="0 0 16 16"><path fill="currentColor" d="M3 2h2v12H3V2zm2 2h2v8H5V4zm2 2h2v4H7V6zm2 1h2v2H9V7zm2 1h2v0h-2V8z"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 16 16"><path fill="currentColor" d="M3 2h4v12H3V2zm6 0h4v12H9V2z"/></symbol>
+      <symbol id="i-next" viewBox="0 0 16 16"><path fill="currentColor" d="M2 2h2v12H2V2zm2 2h2v8H4V4zm2 2h2v4H6V6zm2 1h2v2H8V7zm4-7h2v12h-2V2z"/></symbol>
+      <symbol id="i-sound-on" viewBox="0 0 16 16"><path fill="currentColor" d="M1 6h2v4H1V6zm2-1h2v6H3V5zm2-2h2v10H5V3zM9 5h1v6H9V5zm2-2h1v10h-1V3zm2 2h1v6h-1V5z"/></symbol>
+      <symbol id="i-sound-off" viewBox="0 0 16 16"><path fill="currentColor" d="M1 6h2v4H1V6zm2-1h2v6H3V5zm2-2h2v10H5V3zm5 2h2v2h-2V5zm2 2h2v2h-2V7zm-2 2h2v2h-2V9zm4-4h2v2h-2V5zm-2 2h-2v2h2V7zm2 2h2v2h-2V9z"/></symbol>
+      <symbol id="i-star" viewBox="0 0 16 16"><path fill="currentColor" d="M7 1h2v4H7V1zM6 5h4v2H6V5zM1 5h5v2H1V5zm9 0h5v2h-5V5zM3 7h3v2H3V7zm7 0h3v2h-3V7zM2 9h2v2H2V9zm10 0h2v2h-2V9zM4 11h3v2H4v-2zm5 0h3v2H9v-2zM6 9h4v2H6V9z"/></symbol>
+      <symbol id="i-box" viewBox="0 0 16 16"><path fill="currentColor" d="M1 3h14v3H1V3zm1 4h12v8H2V7zm4 0h4v3H6V7z"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 16 16"><path fill="currentColor" d="M6 1h4v2H6V1zM2 3h2v2H2V3zm10 0h2v2h-2V3zM1 6h2v4H1V6zm12 0h2v4h-2V6zM4 4h8v8H4V4zm2 2v4h4V6H6zM2 11h2v2H2v-2zm10 0h2v2h-2v-2zM6 13h4v2H6v-2z"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 16 16"><path fill="currentColor" d="M2 1h8l4 4v10H2V1zm1 1v12h10V6H9V2H3zm2 5h6v1H5V7zm0 2h6v1H5V9zm0 2h4v1H5v-1z"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 16 16"><path fill="currentColor" d="M5 1h6v1H5V1zM4 2h1v4H4V2zm7 0h1v4h-1V2zM2 6h12v9H2V6zm5 3h2v3H7V9z"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 16 16"><path fill="currentColor" d="M6 1h4v1H6V1zM3 2h10v1H3V2zM2 3h12v1H2V3zM1 4h14v1H1V4zm0 2h14v1H1V6zm0 2h14v1H1V8zm0 2h14v1H1v-1zm1 2h12v1H2v-1zm1 1h10v1H3v-1zm3 1h4v1H6v-1zM7 2h2v13H7V2z"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 16 16"><path fill="currentColor" d="M9 1h4L9 7h4l-7 8 2-6H4L9 1z"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 16 16"><path fill="currentColor" d="M1 2h14v9H1V2zm1 1v7h12V3H2zm2 8h3v3l-3-3z"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 16 16"><path fill="currentColor" d="M6 0h4v1H6V0zM5 2h6v1H5V2zM3 3h10v1H3V3zM2 4h12v1H2V4zM1 5h14v6H1V5zM2 11h12v1H2v-1zm1 1h10v1H3v-1zm2 1h6v1H5v-1zm2 1h2v1H7v-1zM7 5h1v4h4v1H7V5z"/></symbol>
+      <symbol id="i-tag" viewBox="0 0 16 16"><path fill="currentColor" d="M1 1h7l7 7-7 7-7-7V1zm2 2v3h3V3H3z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 16 16"><path fill="currentColor" d="M13 2h2v2h-2V2zm-2 2h2v2h-2V4zM9 6h2v2H9V6zM7 8h2v2H7V8zm-2 2h2v2H5v-2zm-2-2h2v2H3V8zM1 6h2v2H1V6z"/></symbol>
+    </defs></svg>
+
 
     <div id="crtOverlay" class="crt-scanlines"></div>
 
-    <aside class="bg-neonYellow text-black font-display font-bold text-xs py-1.5 px-4 overflow-hidden border-b-2 border-black sticky top-0 z-50 shadow-md">
+    <aside class="bg-neonYellow text-black font-display font-bold text-xs py-1.5 px-4 overflow-hidden border-b-2 border-black relative z-30">
         <div class="flex items-center justify-between max-w-7xl mx-auto">
             <div class="flex items-center gap-3 overflow-hidden whitespace-nowrap">
-                <span class="bg-black text-neonYellow px-2 py-0.5 rounded text-[10px] uppercase font-extrabold tracking-wider animate-pulse flex items-center gap-1">
-                    <span>⚡</span> PLANTÃO 1994
+                <span class="bg-black text-neonYellow px-2 py-0.5 rounded-none text-[10px] uppercase font-extrabold tracking-wider animate-pulse flex items-center gap-1">
+                    <svg class="w-3 h-3" aria-hidden="true"><use href="#i-bolt"></use></svg> PLANTÃO 1994
                 </span>
                 <div class="overflow-hidden w-full max-w-3xl">
-                    <div class="marquee-track font-mono text-[11px]">
-                        <span class="mr-8">📼 ACERVO ATUALIZADO: 12 Walkmans Sony calibrados • Mega Drive III Tec Toy lacrado • Fitas VHS do Rei Leão • Rádios Boombox com gravador duplo!</span>
-                        <span class="mr-8">🚀 CONEXÃO DISCADA LIVRE APÓS MEIA-NOITE • PAGUE VIA PIX OU 12x NO CARTÃO • GARANTIA DE BANCADA ANALÓGICA • CUPOM: TETRA94</span>
+                    <div class="marquee-track font-sans text-[11px]">
+                        <span class="mr-8">ACERVO ATUALIZADO: 12 Walkmans Sony calibrados • Mega Drive III Tec Toy na caixa • Boombox CCE com duplo deck • 8 peças no site agora</span><span class="mr-8">SEDEX COM BOLHA TRIPLO • PIX OU ATÉ 12X NO CARTÃO • TESTADA 48H NA BANCADA ANTES DE SAIR • CUPOM TETRA94</span><span class="mr-8">ACERVO ATUALIZADO: 12 Walkmans Sony calibrados • Mega Drive III Tec Toy na caixa • Boombox CCE com duplo deck • 8 peças no site agora</span><span class="mr-8">SEDEX COM BOLHA TRIPLO • PIX OU ATÉ 12X NO CARTÃO • TESTADA 48H NA BANCADA ANTES DE SAIR • CUPOM TETRA94</span>
                     </div>
                 </div>
             </div>
-            <div class="hidden lg:flex items-center gap-4 text-[11px] font-mono shrink-0 pl-4 border-l border-black/30">
-                <span>📦 SEDEX COM PLÁSTICO BOLHA TRIPLO</span>
+            <div class="hidden lg:flex items-center gap-4 text-[11px] font-sans shrink-0 pl-4 border-l border-black/30">
+                <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-box"></use></svg> SEDEX COM BOLHA TRIPLO</span>
                 <span class="text-neonPink font-black">CUPOM R$ 30 OFF: TETRA94</span>
             </div>
         </div>
     </aside>
 
-    <header class="bg-surface/95 backdrop-blur-md border-b-2 border-gray-800 sticky top-7 z-40 transition-all">
+    <header class="bg-surface/95 backdrop-blur-md border-b-2 border-black sticky top-0 z-40 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-            <a href="#" class="flex items-center gap-3 group shrink-0" onclick="playRetroSound('click')">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-neonYellow via-neonOrange to-neonPink p-0.5 shadow-neon-yellow transition group-hover:scale-105 group-hover:rotate-1">
-                    <div class="w-full h-full bg-void rounded-[14px] flex items-center justify-center text-2xl relative overflow-hidden">
+            <a href="#" class="flex items-center gap-2 sm:gap-3 group min-w-0" onclick="playRetroSound('click')">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-gradient-to-br from-neonYellow via-neonOrange to-neonPink p-0.5 shadow-retro-pink transition group-hover:scale-105 group-hover:rotate-1">
+                    <div class="w-full h-full bg-void flex items-center justify-center text-2xl relative overflow-hidden">
                         <span>📼</span>
                         <span class="absolute -bottom-1 text-[8px] font-retro text-neonYellow">AV-1</span>
                     </div>
                 </div>
-                <div>
-                    <div class="flex items-center gap-1.5">
-                        <span class="font-display font-black text-xl sm:text-2xl tracking-wider text-white group-hover:text-neonYellow transition">PORTAL DO TEMPO</span>
-                        <span class="bg-neonPink/20 text-neonPink text-[10px] font-retro px-1.5 py-0.5 rounded border border-neonPink uppercase">ED. 1994</span>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5 min-w-0">
+                        <span class="font-display font-black text-xs sm:text-xl lg:text-2xl tracking-tight sm:tracking-wider text-white group-hover:text-neonYellow transition whitespace-nowrap">PORTAL DO TEMPO</span>
+                        <span class="hidden lg:inline bg-neonPink/20 text-neonPink text-[15px] font-retro px-1.5 py-0.5 border border-neonPink uppercase shrink-0">ED. 1994</span>
                     </div>
-                    <p class="text-[11px] font-mono text-gray-400 -mt-1 flex items-center gap-1.5">
+                    <p class="hidden sm:flex text-[11px] text-gray-400 -mt-1 items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-neonGreen inline-block"></span>
                         O Maior Garimpo dos Anos 90 no Brasil
                     </p>
                 </div>
             </a>
-            <div class="hidden md:flex flex-1 max-w-md mx-4">
+            <div class="hidden md:flex flex-1 min-w-0 max-w-xs xl:max-w-sm mx-3">
                 <div class="relative w-full">
-                    <input type="text" id="searchInput" oninput="handleInstantSearch(this.value)" placeholder="Buscar no acervo (ex: Walkman, Mega Drive, Vinil, TV)..." class="w-full px-4 py-2.5 pl-10 rounded-xl bg-void border border-gray-700 text-xs font-mono text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow focus:shadow-neon-yellow transition">
-                    <span class="absolute left-3.5 top-3 text-gray-500 text-xs">🔍</span>
-                    <button onclick="clearSearch()" id="clearSearchBtn" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-white text-xs font-mono">✕</button>
+                    <input type="text" id="searchInput" oninput="handleInstantSearch(this.value)" placeholder="Buscar no acervo (ex: Walkman, Mega Drive, Vinil, TV)..." class="w-full px-4 py-2.5 pl-10 rounded-[3px] bg-void border border-gray-700 text-xs font-sans text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow focus:shadow-neon-yellow transition">
+                    <span class="absolute left-3 top-2.5 text-gray-400" aria-hidden="true"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-search"></use></svg></span>
+                    <button onclick="clearSearch()" id="clearSearchBtn" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-white" aria-label="Limpar busca"><svg class="w-3 h-3" aria-hidden="true"><use href="#i-close"></use></svg></button>
                 </div>
             </div>
-            <nav class="hidden xl:flex items-center gap-6 text-xs font-mono uppercase tracking-wider text-gray-300">
-                <a href="#garimpos" class="hover:text-neonYellow transition flex items-center gap-1.5"><span>🕹️</span> Garimpo</a>
-                <a href="#oraculo-ia" class="text-neonCyan hover:text-cyan-300 transition flex items-center gap-1.5 font-bold"><span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span> Balcão Seu Wilson (IA)</a>
-                <a href="#tocador-k7" class="hover:text-neonGreen transition flex items-center gap-1.5"><span>📻</span> Toca-Fitas</a>
-                <a href="#depoimentos" class="hover:text-neonYellow transition">Caderno de Recados</a>
+            <nav class="hidden xl:flex items-center gap-5 text-[11px] font-display uppercase tracking-wide text-gray-300 shrink-0">
+                <a href="#garimpos" class="hover:text-neonYellow transition flex items-center gap-1.5 whitespace-nowrap"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-joystick"></use></svg> Garimpo</a>
+                <a href="#oraculo-ia" class="text-neonCyan hover:text-cyan-300 transition flex items-center gap-1.5 font-bold whitespace-nowrap"><span class="w-2 h-2 bg-neonCyan animate-ping shrink-0"></span> Balcão</a>
+                <a href="#tocador-k7" class="hover:text-neonGreen transition flex items-center gap-1.5 whitespace-nowrap"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-radio"></use></svg> Toca-Fitas</a>
+                <a href="#faq" class="hover:text-neonYellow transition whitespace-nowrap">Manual</a>
             </nav>
-            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <button onclick="toggleAudio()" id="soundToggleBtn" title="Ativar/Desativar Efeitos Sonoros Retrô" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono text-gray-300 flex items-center gap-1.5 transition active:scale-95 shadow-sm">
-                    <span id="soundIcon">🔊</span><span class="hidden sm:inline" id="soundLabel">Sons ON</span>
+            <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+                <button onclick="toggleAudio()" id="soundToggleBtn" title="Ativar/Desativar Efeitos Sonoros Retrô" class="p-2 sm:px-3 sm:py-2 rounded-none bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-sans text-gray-300 flex items-center gap-1.5 transition active:scale-95 ">
+                    <span id="soundIcon" class="inline-flex"><svg class="w-4 h-4" aria-hidden="true"><use id="soundUse" href="#i-sound-on"></use></svg></span><span class="hidden sm:inline" id="soundLabel">Sons ON</span>
                 </button>
-                <button onclick="toggleCrt()" id="crtToggleBtn" title="Ligar/Desligar Efeito de TV de Tubo" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono text-neonGreen flex items-center gap-1.5 transition active:scale-95 shadow-sm">
-                    <span>📺</span><span class="hidden sm:inline" id="crtLabel">CRT ON</span>
+                <button onclick="toggleCrt()" id="crtToggleBtn" title="Ligar/Desligar Efeito de TV de Tubo" class="p-2 sm:px-3 sm:py-2 rounded-none bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-sans text-neonGreen flex items-center gap-1.5 transition active:scale-95 ">
+                    <svg class="w-4 h-4" aria-hidden="true"><use href="#i-tv"></use></svg><span class="hidden sm:inline ml-1.5" id="crtLabel">CRT ON</span>
                 </button>
-                <button onclick="toggleCartDrawer()" class="relative px-3.5 py-2 sm:px-4 sm:py-2.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase tracking-wider rounded-xl transition flex items-center gap-2 shadow-retro-black active:translate-x-0.5 active:translate-y-0.5">
-                    <span class="text-base">🛒</span><span class="hidden sm:inline">Cesto</span>
+                <button onclick="toggleCartDrawer()" class="relative px-3.5 py-2 sm:px-4 sm:py-2.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase tracking-wider rounded-none transition flex items-center gap-2 shadow-retro-black active:translate-x-0.5 active:translate-y-0.5">
+                    <svg class="w-4 h-4" aria-hidden="true"><use href="#i-cart"></use></svg><span class="hidden sm:inline">Cesto</span>
                     <span id="cartBadgeCount" class="bg-black text-neonYellow text-[11px] font-bold px-1.5 py-0.5 rounded-full">0</span>
                 </button>
             </div>
         </div>
         <div class="md:hidden px-4 pb-3">
             <div class="relative w-full">
-                <input type="text" oninput="handleInstantSearch(this.value)" placeholder="Buscar no acervo (Walkman, Mega Drive...)" class="w-full px-4 py-2 pl-9 rounded-xl bg-void border border-gray-700 text-xs font-mono text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow">
-                <span class="absolute left-3 top-2.5 text-gray-500 text-xs">🔍</span>
+                <input type="text" id="searchInputMobile" oninput="handleInstantSearch(this.value)" placeholder="Buscar no acervo (Walkman, Mega Drive...)" class="w-full px-4 py-2 pl-9 rounded-[3px] bg-void border border-gray-700 text-xs font-sans text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow">
+                <span class="absolute left-3 top-2.5 text-gray-400" aria-hidden="true"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-search"></use></svg></span>
             </div>
         </div>
     </header>
 
-    <section class="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden border-b-2 border-gray-800 bg-gradient-to-b from-void via-surface to-void">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-purple-900/30 via-neonPink/20 to-neonYellow/10 rounded-full blur-3xl pointer-events-none"></div>
+    <section class="relative pt-12 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-void via-surface to-void tex-phosphor">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-purple-900/20 via-neonPink/15 to-neonYellow/5 rounded-full blur-3xl pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
                 <div class="lg:col-span-7 text-center lg:text-left space-y-6">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/80 border border-purple-500/40 text-xs font-mono text-purple-300 shadow-sm">
-                        <span class="w-2.5 h-2.5 rounded-full bg-neonGreen animate-pulse"></span>
-                        SINTONIZANDO CANAL 3 • LINHA ANALÓGICA NACIONAL
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-950/80 border border-purple-500/40 text-[10px] font-pixel leading-relaxed text-purple-300 bevel">
+                        <span class="w-2 h-2 bg-neonGreen animate-pulse"></span>
+                        CANAL 3 · LINHA ANALOGICA
                     </div>
-                    <h1 class="text-4xl sm:text-6xl xl:text-7xl font-display font-black text-white tracking-tight leading-[1.08]">
-                        A máquina do tempo existe. E tem cheiro de <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonYellow via-neonCyan to-neonPink">fita VHS rebobinada</span>.
+                    <h1 class="text-4xl sm:text-6xl xl:text-7xl font-display font-black text-white tracking-tight leading-[1.08]" style="text-shadow:3px 3px 0 #000000">
+                        A máquina do tempo existe.<br class="hidden sm:block"> E tem cheiro de <span class="text-neonYellow" style="text-shadow:2px 2px 0 #ff007f">fita VHS rebobinada</span>.
                     </h1>
                     <p class="text-base sm:text-lg text-gray-300 max-w-2xl font-normal leading-relaxed">
                         Videocassetes Hi-Fi 4 cabeças, Walkmans originais calibrados, cartuchos de 16-bit com bateria de save nova e TVs de tubo com estalo inconfundível. Não vendemos cópias plásticas: são <strong>relíquias originais dos anos 90</strong>, revisadas em bancada analógica e embaladas com proteção antichoque para a sua sala.
                     </p>
                     <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <a href="#garimpos" onclick="playRetroSound('coin')" class="w-full sm:w-auto px-8 py-4 bg-neonYellow text-black font-display font-black text-base rounded-2xl hover:bg-yellow-300 transition duration-200 transform hover:-translate-y-0.5 shadow-retro-black text-center flex items-center justify-center gap-2.5">
-                            <span>ENTRAR NO PORTAL AGORA</span><span class="text-xl">➔</span>
+                        <a href="#garimpos" onclick="playRetroSound('coin')" class="w-full sm:w-auto px-8 py-4 bg-neonYellow text-black font-display font-black text-base rounded-none hover:bg-yellow-300 transition duration-200 transform hover:-translate-y-0.5 shadow-retro-black text-center flex items-center justify-center gap-2.5">
+                            <span>ENTRAR NO PORTAL AGORA</span><svg class="w-5 h-5" aria-hidden="true"><use href="#i-arrow"></use></svg>
                         </a>
-                        <a href="#oraculo-ia" onclick="playRetroSound('click')" class="w-full sm:w-auto px-7 py-4 bg-cardBg hover:bg-gray-800 text-neonCyan font-display font-bold text-base rounded-2xl border-2 border-neonCyan/50 transition text-center flex items-center justify-center gap-2.5 shadow-neon-cyan">
-                            <span>👨🏻‍🦳</span><span>Balcão do Seu Wilson (IA)</span>
+                        <a href="#oraculo-ia" onclick="playRetroSound('click')" class="w-full sm:w-auto px-7 py-4 bg-cardBg hover:bg-gray-800 text-neonCyan font-display font-bold text-base rounded-none border-2 border-neonCyan/50 transition text-center flex items-center justify-center gap-2.5 shadow-neon-cyan">
+                            <svg class="w-5 h-5" aria-hidden="true"><use href="#i-chat"></use></svg><span>Balcão do Seu Wilson</span>
                         </a>
                     </div>
                     <div class="pt-6 border-t border-gray-800">
-                        <span class="text-[11px] font-mono text-neonYellow uppercase font-bold tracking-wider block mb-2.5">🔊 Toque para reviver sons inesquecíveis:</span>
+                        <span class="text-[11px] font-sans text-neonYellow uppercase font-bold tracking-wider block mb-2.5">TOQUE PARA OUVIR</span>
                         <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                            <button onclick="playRetroSound('blow')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonYellow transition active:scale-95 flex items-center gap-1.5">💨 Soprar Cartucho</button>
-                            <button onclick="playRetroSound('bic')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonCyan transition active:scale-95 flex items-center gap-1.5">📼 Caneta na Fita K7</button>
-                            <button onclick="playRetroSound('coin')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonGreen transition active:scale-95 flex items-center gap-1.5">🕹️ Ficha no Fliperama</button>
-                            <button onclick="playRetroSound('modem')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-neonPink transition active:scale-95 flex items-center gap-1.5">🌐 Modem Discado 28.8k</button>
+                            <button onclick="playRetroSound('blow')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-sans rounded-none text-gray-300 hover:text-neonYellow transition active:scale-95 flex items-center gap-1.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-bolt"></use></svg> Soprar Cartucho</button>
+                            <button onclick="playRetroSound('bic')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-sans rounded-none text-gray-300 hover:text-neonCyan transition active:scale-95 flex items-center gap-1.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-tape"></use></svg> Caneta na Fita K7</button>
+                            <button onclick="playRetroSound('coin')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-sans rounded-none text-gray-300 hover:text-neonGreen transition active:scale-95 flex items-center gap-1.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-joystick"></use></svg> Ficha no Fliperama</button>
+                            <button onclick="playRetroSound('modem')" class="px-3 py-1.5 bg-cardBg hover:bg-gray-800 border border-gray-700 text-xs font-sans rounded-none text-gray-300 hover:text-neonPink transition active:scale-95 flex items-center gap-1.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-globe"></use></svg> Modem Discado 28.8k</button>
                         </div>
                     </div>
                 </div>
                 <div class="lg:col-span-5">
-                    <div class="relative bg-cardBg border-2 border-gray-700 rounded-3xl p-5 shadow-2xl overflow-hidden">
-                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-700 font-mono text-xs text-gray-400">
+                    <div class="relative bg-cardBg border-2 border-gray-700 rounded-[10px] p-5 shadow-retro-yellow bevel overflow-hidden">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-700 font-sans text-xs text-gray-400">
                             <div class="flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-red-500"></span>
                                 <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                                 <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                                <span class="ml-2 text-white font-retro text-sm" id="tvChannelLabel">CANAL 03 • VIDEOCASSETE</span>
+                                <span class="ml-2 text-white font-retro text-base" id="tvChannelLabel">CANAL 03 • VIDEOCASSETE</span>
                             </div>
-                            <span class="text-neonGreen font-bold font-retro text-sm animate-pulse" id="tvStatusLabel">REC ● HI-FI</span>
+                            <span class="text-neonGreen font-bold font-retro text-base animate-pulse" id="tvStatusLabel">REC HI-FI</span>
                         </div>
-                        <div class="relative rounded-2xl overflow-hidden bg-black border-2 border-gray-800 aspect-[4/3] flex items-center justify-center group shadow-inner">
-                            <img id="tvScreenImage" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80" alt="TV de Tubo Anos 90" class="w-full h-full object-cover transition duration-300 opacity-90 group-hover:scale-105">
-                            <div class="absolute top-3 left-3 bg-neonPink text-white font-retro text-sm px-2 py-0.5 rounded shadow-retro-black">REBOBINE AO FINAL</div>
-                            <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md border border-gray-700 text-neonYellow font-mono text-xs px-2.5 py-1 rounded">SONY TRINITRON 14" ORIGINAL</div>
+                        <div class="relative rounded-none overflow-hidden bg-black border-2 border-gray-800 aspect-[4/3] flex items-center justify-center group shadow-inner">
+                            <!-- Carta de teste atrás da foto: se a imagem não carregar (CSP,
+                                 rede, link morto), a TV mostra as color bars do encerramento
+                                 da programação em vez de um ícone de imagem quebrada. -->
+                            <div class="absolute inset-0 colorbars opacity-80" aria-hidden="true"></div>
+                            <div class="absolute inset-x-0 bottom-0 h-1/4 bg-void" aria-hidden="true"></div>
+                            <img id="tvScreenImage" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80"
+                                 alt="Televisão de tubo dos anos 90 exibindo o canal sintonizado"
+                                 width="800" height="600" decoding="async"
+                                 onerror="this.style.visibility='hidden'"
+                                 class="relative w-full h-full object-cover transition duration-300 opacity-90 group-hover:scale-105">
+                            <div class="absolute top-3 left-3 bg-neonPink text-white font-retro text-base px-2 py-0.5 rounded-none shadow-retro-black">REBOBINE AO FINAL</div>
+                            <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md border border-gray-700 text-neonYellow font-sans text-xs px-2.5 py-1 rounded-none">SONY TRINITRON 14" ORIGINAL</div>
                         </div>
                         <div class="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between">
-                            <span class="text-[11px] font-mono text-gray-400">Sintonizar Canal:</span>
+                            <span class="text-[15px] font-retro text-gray-400">SINTONIZAR CANAL:</span>
                             <div class="flex gap-1.5">
-                                <button onclick="changeTvChannel(3)" id="btnCh3" class="px-2.5 py-1 bg-neonYellow text-black font-retro text-sm rounded border border-black font-bold transition">CH 03</button>
-                                <button onclick="changeTvChannel(4)" id="btnCh4" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition">CH 04</button>
-                                <button onclick="changeTvChannel('av1')" id="btnAv1" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition">AV-1</button>
-                                <button onclick="changeTvChannel('av2')" id="btnAv2" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition">AV-2</button>
+                                <button onclick="changeTvChannel(3)" id="btnCh3" class="px-2.5 py-1 bg-neonYellow text-black font-retro text-base rounded-none border border-black font-bold transition">CH 03</button>
+                                <button onclick="changeTvChannel(4)" id="btnCh4" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-base rounded-none border border-gray-700 hover:border-neonYellow transition">CH 04</button>
+                                <button onclick="changeTvChannel('av1')" id="btnAv1" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-base rounded-none border border-gray-700 hover:border-neonYellow transition">AV-1</button>
+                                <button onclick="changeTvChannel('av2')" id="btnAv2" class="px-2.5 py-1 bg-surface text-gray-300 font-retro text-base rounded-none border border-gray-700 hover:border-neonYellow transition">AV-2</button>
                             </div>
                         </div>
                     </div>
@@ -215,57 +376,102 @@
         </div>
     </section>
 
-    <section id="tocador-k7" class="py-12 bg-surface border-b-2 border-gray-800">
+    <!-- ====================================================================== [A]
+         BARRA DE CONFIANÇA — nível C, logo depois do hero.
+         Fica aqui porque a objeção nasce no instante em que o preço de R$ 890
+         aparece na cabeça de quem leu o hero. Depois da grade seria tarde.
+         ====================================================================== -->
+    <section aria-label="Nossas garantias de bancada" class="py-8 md:py-10 bg-surface tex-halftone border-y-2 border-black">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-cardBg border-2 border-gray-700 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-800 border-2 border-gray-800 bevel">
+                <div class="bg-cardBg p-4 sm:p-5 flex items-start gap-3">
+                    <span class="text-neonGreen shrink-0 mt-0.5"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-gear"></use></svg></span>
+                    <div>
+                        <div class="font-pixel text-[11px] leading-relaxed text-neonGreen mb-1.5">48H</div>
+                        <p class="text-xs text-gray-300 leading-relaxed">ligada e usada na bancada antes de sair daqui</p>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-4 sm:p-5 flex items-start gap-3">
+                    <span class="text-neonYellow shrink-0 mt-0.5"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-doc"></use></svg></span>
+                    <div>
+                        <!-- CONFIRMAR COM O RICHARD: prazo de garantia -->
+                        <div class="font-pixel text-[11px] leading-relaxed text-neonYellow mb-1.5">90 DIAS</div>
+                        <p class="text-xs text-gray-300 leading-relaxed">de garantia de funcionamento, não de aparência</p>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-4 sm:p-5 flex items-start gap-3">
+                    <span class="text-neonCyan shrink-0 mt-0.5"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-box"></use></svg></span>
+                    <div>
+                        <div class="font-pixel text-[11px] leading-relaxed text-neonCyan mb-1.5">3 CAMADAS</div>
+                        <p class="text-xs text-gray-300 leading-relaxed">de bolha, canto reforçado e caixa sob medida</p>
+                    </div>
+                </div>
+                <div class="bg-cardBg p-4 sm:p-5 flex items-start gap-3">
+                    <span class="text-neonPink shrink-0 mt-0.5"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-lock"></use></svg></span>
+                    <div>
+                        <!-- CONFIRMAR COM O RICHARD: número de parcelas -->
+                        <div class="font-pixel text-[11px] leading-relaxed text-neonPink mb-1.5">12X</div>
+                        <p class="text-xs text-gray-300 leading-relaxed">no cartão, ou Pix com confirmação na hora</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider-dither" aria-hidden="true"></div>
+
+    <section id="tocador-k7" class="py-8 md:py-10 bg-surface tex-halftone">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-cardBg border-2 border-gray-700 rounded-none p-6 shadow-retro-yellow relative overflow-hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                     <div class="lg:col-span-5 flex justify-center">
-                        <div id="cassetteTape" class="w-full max-w-sm bg-zinc-900 border-4 border-zinc-700 rounded-2xl p-4 shadow-2xl relative font-mono text-xs tape-paused">
-                            <div class="bg-neonYellow/90 text-black p-3 rounded-lg border-2 border-black mb-3">
+                        <div id="cassetteTape" class="w-full max-w-sm bg-zinc-900 border-4 border-zinc-700 rounded-[6px] p-4 shadow-retro-yellow relative font-retro text-[15px] tape-paused">
+                            <div class="bg-neonYellow/90 text-black p-3 rounded-[3px] border-2 border-black mb-3">
                                 <div class="flex justify-between items-center text-[10px] font-bold">
                                     <span>TDK CASSETTE D-60</span><span>NORMAL POSITION TYPE I</span>
                                 </div>
                                 <div class="text-center font-retro text-lg font-bold tracking-wider my-1" id="tapeTitleCurrent">[ SELEÇÃO RADICAL 1994 ]</div>
-                                <div class="text-[9px] text-center font-mono">GRAVADO DIRETO DA TRANSAMÉRICA FM</div>
+                                <div class="text-[9px] text-center font-sans">GRAVADO DIRETO DA TRANSAMÉRICA FM</div>
                             </div>
-                            <div class="bg-black/90 rounded-xl p-3 border-2 border-zinc-600 flex items-center justify-around">
+                            <div class="bg-black/90 rounded-none p-3 border-2 border-zinc-600 flex items-center justify-around">
                                 <div class="w-12 h-12 rounded-full border-4 border-dashed border-white flex items-center justify-center tape-gear"><div class="w-4 h-4 bg-zinc-700 rounded-full"></div></div>
-                                <div class="w-24 h-4 bg-red-900/60 rounded-full relative overflow-hidden border border-red-500"><div class="absolute left-0 top-0 bottom-0 bg-red-600 w-2/3"></div></div>
+                                <div class="w-24 h-4 bg-red-900/60 relative overflow-hidden border border-red-500"><div class="absolute left-0 top-0 bottom-0 bg-red-600 w-2/3"></div></div>
                                 <div class="w-12 h-12 rounded-full border-4 border-dashed border-white flex items-center justify-center tape-gear"><div class="w-4 h-4 bg-zinc-700 rounded-full"></div></div>
                             </div>
                         </div>
                     </div>
                     <div class="lg:col-span-7 space-y-3">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-950/60 border border-neonYellow/50 text-[11px] font-mono text-neonYellow">
-                            <span>📻</span> REPRODUTOR ANALÓGICO SINTETIZADO (WEB AUDIO API)
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-950/60 border border-neonYellow/50 text-[10px] font-pixel leading-relaxed text-neonYellow bevel">
+                            <svg class="w-3 h-3" aria-hidden="true"><use href="#i-radio"></use></svg> SINTETIZADOR DE BANCADA
                         </div>
                         <h3 class="text-2xl font-display font-bold text-white">Aperte o Play na Nostalgia</h3>
                         <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
                             Ligue o sintetizador de áudio 90s do Portal para ouvir melodias e arpeggios inspirados nas trilhas clássicas de videogame e rádios FM da época enquanto você garimpa seus itens favoritos!
                         </p>
                         <div class="flex flex-wrap items-center gap-3 pt-2">
-                            <button onclick="toggleChiptuneMusic()" id="chiptunePlayBtn" class="px-6 py-3 bg-neonGreen hover:bg-green-400 text-black font-display font-extrabold text-xs uppercase rounded-xl transition shadow-retro-black flex items-center gap-2">
-                                <span id="chiptuneIcon">▶</span><span id="chiptuneLabel">TOCAR FITA K7</span>
+                            <button onclick="toggleChiptuneMusic()" id="chiptunePlayBtn" class="px-6 py-3 bg-neonGreen hover:bg-green-400 text-black font-display font-extrabold text-xs uppercase rounded-none transition shadow-retro-black flex items-center gap-2">
+                                <span id="chiptuneIcon" class="inline-flex"><svg class="w-4 h-4" aria-hidden="true"><use id="chiptuneUse" href="#i-play"></use></svg></span><span id="chiptuneLabel">TOCAR FITA K7</span>
                             </button>
-                            <button onclick="cycleMelodyTrack()" class="px-4 py-3 bg-void hover:bg-surface border border-gray-700 text-xs font-mono rounded-xl text-gray-300 hover:text-white transition">⏭️ Trocar Faixa</button>
-                            <span class="text-xs font-mono text-gray-400" id="melodyTrackName">Faixa 1: Aventura 16-Bit</span>
+                            <button onclick="cycleMelodyTrack()" class="px-4 py-3 bg-void hover:bg-surface border border-gray-700 text-xs font-sans rounded-none text-gray-300 hover:text-white transition"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-next"></use></svg> Trocar Faixa</button>
+                            <span class="text-xs font-sans text-gray-400" id="melodyTrackName">Faixa 1: Aventura 16-Bit</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <div class="divider-dither" aria-hidden="true"></div>
 
-    <section id="corredores" class="py-12 bg-void border-b border-gray-800">
+    <section id="corredores" class="py-14 md:py-20 bg-void tex-phosphor">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <span class="text-xs font-mono uppercase text-neonYellow tracking-wider block mb-1">// MAPA DA LOCADORA</span>
+                    <span class="inline-block bg-neonYellow text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-3 bevel">MAPA DA LOCADORA</span>
                     <h2 class="text-2xl sm:text-4xl font-display font-extrabold text-white">Navegue pelos Corredores</h2>
                 </div>
                 <div class="flex items-center gap-2">
-                    <label for="sortFilter" class="text-xs font-mono text-gray-400">Ordenar por:</label>
-                    <select id="sortFilter" onchange="applySorting(this.value)" class="bg-cardBg border border-gray-700 text-xs font-mono rounded-xl px-3 py-2 text-white focus:outline-none focus:border-neonYellow">
+                    <label for="sortFilter" class="text-xs font-sans text-gray-400">Ordenar por:</label>
+                    <select id="sortFilter" onchange="applySorting(this.value)" class="bg-cardBg border border-gray-700 text-xs font-sans rounded-[3px] px-3 py-2 text-white focus:outline-none focus:border-neonYellow">
                         <option value="default">Destaques do Garimpo</option>
                         <option value="price-asc">Menor Preço (R$)</option>
                         <option value="price-desc">Maior Preço (R$)</option>
@@ -275,87 +481,219 @@
                 </div>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-                <button onclick="filterCategory('todos')" id="cat-todos" class="category-btn p-4 rounded-2xl bg-cardBg border-2 border-neonYellow text-left transition hover:-translate-y-1 shadow-retro-black">
-                    <div class="text-3xl mb-2">🏷️</div>
+                <button onclick="filterCategory('todos')" id="cat-todos" class="category-btn p-4 rounded-none bg-cardBg bevel border-2 border-neonYellow text-left transition hover:-translate-y-1 shadow-retro-black">
+                    <div class="mb-3 text-neonYellow"><svg class="w-8 h-8" aria-hidden="true"><use href="#i-tag"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-sm sm:text-base">Todo o Garimpo</h4>
-                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Ver catálogo completo</p>
+                    <p class="text-[10px] font-sans text-gray-400 mt-0.5">Ver catálogo completo</p>
                 </button>
-                <button onclick="filterCategory('eletronicos')" id="cat-eletronicos" class="category-btn p-4 rounded-2xl bg-cardBg border border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonCyan">
-                    <div class="text-3xl mb-2">📻</div>
+                <button onclick="filterCategory('eletronicos')" id="cat-eletronicos" class="category-btn p-4 rounded-none bg-cardBg bevel border-2 border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonCyan">
+                    <div class="mb-3 text-neonCyan"><svg class="w-8 h-8" aria-hidden="true"><use href="#i-radio"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-sm sm:text-base">Eletrônicos & Áudio</h4>
-                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Walkman, TV tubo, VCR</p>
+                    <p class="text-[10px] font-sans text-gray-400 mt-0.5">Walkman, TV tubo, VCR</p>
                 </button>
-                <button onclick="filterCategory('games')" id="cat-games" class="category-btn p-4 rounded-2xl bg-cardBg border border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonPink">
-                    <div class="text-3xl mb-2">🕹️</div>
+                <button onclick="filterCategory('games')" id="cat-games" class="category-btn p-4 rounded-none bg-cardBg bevel border-2 border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonPink">
+                    <div class="mb-3 text-neonPink"><svg class="w-8 h-8" aria-hidden="true"><use href="#i-joystick"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-sm sm:text-base">Games & Fliperama</h4>
-                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Consoles 16-bit e cartuchos</p>
+                    <p class="text-[10px] font-sans text-gray-400 mt-0.5">Consoles 16-bit e cartuchos</p>
                 </button>
-                <button onclick="filterCategory('midia')" id="cat-midia" class="category-btn p-4 rounded-2xl bg-cardBg border border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonGreen">
-                    <div class="text-3xl mb-2">📼</div>
+                <button onclick="filterCategory('midia')" id="cat-midia" class="category-btn p-4 rounded-none bg-cardBg bevel border-2 border-gray-800 text-left transition hover:-translate-y-1 hover:border-neonGreen">
+                    <div class="mb-3 text-neonGreen"><svg class="w-8 h-8" aria-hidden="true"><use href="#i-tape"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-sm sm:text-base">Fitas, VHS & Vinil</h4>
-                    <p class="text-[10px] font-mono text-gray-400 mt-0.5">Estojos originais e álbuns</p>
+                    <p class="text-[10px] font-sans text-gray-400 mt-0.5">Estojos originais e álbuns</p>
                 </button>
             </div>
         </div>
     </section>
+    <div class="divider-dither" aria-hidden="true"></div>
 
-    <section id="garimpos" class="py-14 md:py-20 bg-surface/50 border-b-2 border-gray-800">
+    <section id="garimpos" class="py-20 md:py-28 bg-surface/50 tex-phosphor">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                 <div>
-                    <span class="text-xs font-mono uppercase text-neonPink tracking-wider block mb-1">● PEÇAS FÍSICAS COM TESTE DE BANCADA</span>
+                    <span class="inline-block bg-neonPink text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-3 bevel">TESTE DE BANCADA</span>
                     <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white">Prateleiras de Relíquias</h3>
                 </div>
-                <div class="flex items-center gap-2 font-mono text-xs text-gray-400 bg-void px-4 py-2 rounded-xl border border-gray-800">
+                <div class="flex items-center gap-2 font-sans text-xs text-gray-400 bg-void px-4 py-2 rounded-none border border-gray-800">
                     <span class="w-2.5 h-2.5 rounded-full bg-neonGreen animate-pulse"></span>
-                    <span id="productCounterText">Exibindo 8 relíquias únicas</span>
+                    <span id="productCounterText" class="font-retro text-[15px]">Exibindo 8 relíquias únicas</span>
                 </div>
             </div>
-            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <div id="productsGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5"></div>
             <div id="emptySearchState" class="hidden text-center py-16 space-y-4">
-                <div class="text-5xl">🔍</div>
+                <div class="text-gray-400 flex justify-center"><svg class="w-10 h-10" aria-hidden="true"><use href="#i-search"></use></svg></div>
                 <h4 class="font-display font-bold text-xl text-white">Nenhuma relíquia encontrada com esse termo</h4>
                 <p class="text-xs text-gray-400 max-w-sm mx-auto">Tente buscar por "Walkman", "Mega Drive", "Vinil", "TV" ou veja o acervo completo.</p>
-                <button onclick="clearSearch()" class="px-5 py-2.5 bg-neonYellow text-black font-display font-bold text-xs uppercase rounded-xl">Ver Todas as Relíquias</button>
+                <button onclick="clearSearch()" class="px-5 py-2.5 bg-neonYellow text-black font-display font-bold text-xs uppercase rounded-none">Ver Todas as Relíquias</button>
+            </div>
+        </div>
+    </section>
+    <div class="divider-dither" aria-hidden="true"></div>
+
+    <!-- ====================================================================== [B]
+         ESTADO DE CONSERVAÇÃO — nível B, logo depois da grade.
+         Vem aqui porque a pessoa acabou de ver 8 selos nos cards e ainda não
+         sabe o que cada um significa. O selo é o próprio ícone: sem enfeite.
+         ====================================================================== -->
+    <section id="estado-conservacao" class="py-14 md:py-20 bg-void tex-phosphor">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 md:mb-14">
+                <span class="inline-block bg-neonCyan text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-4 bevel">COMO LER O SELO</span>
+                <h2 class="text-2xl sm:text-4xl font-display font-extrabold text-white tracking-tight">Quatro estados. Nenhum eufemismo.</h2>
+                <p class="text-sm text-gray-300 mt-3 max-w-[65ch] leading-relaxed">
+                    Todo anúncio de usado diz "estado de novo". A gente prefere dizer exatamente o que a peça é,
+                    porque devolução custa mais caro que venda perdida.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-cardBg border-2 border-gray-800 bevel p-5">
+                    <span class="inline-block bg-neonYellow text-black font-pixel text-[9px] leading-relaxed px-2 py-1 mb-4">LACRADO</span>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Nunca foi aberto. Embalagem original de fábrica, com o plástico ainda selado.</p>
+                    <p class="text-xs text-gray-400 leading-relaxed border-t-2 border-gray-800 pt-3">Não abrimos para testar — o valor está no lacre. Sai como chegou.</p>
+                </div>
+                <div class="bg-cardBg border-2 border-gray-800 bevel p-5">
+                    <span class="inline-block bg-neonCyan text-black font-pixel text-[9px] leading-relaxed px-2 py-1 mb-4">DE GAVETA</span>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Usada pouquíssimo e guardada desde a época. Sem risco, sem amarelado, sem marca de dedo.</p>
+                    <p class="text-xs text-gray-400 leading-relaxed border-t-2 border-gray-800 pt-3">Testada 48h. Se aparecer qualquer defeito na bancada, ela desce para RESTAURADO.</p>
+                </div>
+                <div class="bg-cardBg border-2 border-gray-800 bevel p-5">
+                    <span class="inline-block bg-neonGreen text-black font-pixel text-[9px] leading-relaxed px-2 py-1 mb-4">COM PÁTINA</span>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Funciona perfeitamente e tem as marcas honestas de quem foi usado por vinte anos.</p>
+                    <p class="text-xs text-gray-400 leading-relaxed border-t-2 border-gray-800 pt-3">Fotografamos o risco, não escondemos. Pátina é história, não defeito.</p>
+                </div>
+                <div class="bg-cardBg border-2 border-gray-800 bevel p-5">
+                    <span class="inline-block bg-neonOrange text-black font-pixel text-[9px] leading-relaxed px-2 py-1 mb-4">RESTAURADO</span>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Chegou com defeito e foi refeita na bancada. Correia, capacitor, cabeçote — o que precisou.</p>
+                    <p class="text-xs text-gray-400 leading-relaxed border-t-2 border-gray-800 pt-3">A lista de peças trocadas vai impressa junto. Você sabe o que é original e o que é novo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="divider-dither" aria-hidden="true"></div>
+
+    <!-- ====================================================================== [C]
+         COMBOS DE SALA — "compre junto". Só funciona depois que a peça
+         individual já foi vista e precificada. É o único bloco que sobe ticket.
+         Sem desconto de combo: exigiria motor de preço. A alavanca é o TETRA94.
+         ====================================================================== -->
+    <section id="combos" class="py-14 md:py-20 bg-surface/80 tex-halftone">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 md:mb-14">
+                <span class="inline-block bg-neonPink text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-4 bevel">MONTE A SALA</span>
+                <h2 class="text-2xl sm:text-4xl font-display font-extrabold text-white tracking-tight">Peça sozinha é objeto. Duas peças é uma tarde de domingo.</h2>
+                <p class="text-sm text-gray-300 mt-3 max-w-[65ch] leading-relaxed">
+                    A TV sem o videocassete é enfeite. Junte as duas e você tem de volta a sessão da tarde
+                    inteira, com chiado e tudo. Os combos vão no mesmo frete.
+                </p>
+            </div>
+            <div id="combosGrid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+            <p class="text-xs text-gray-400 mt-6 text-center">
+                Sem desconto automático no combo — use o cupom <strong class="text-neonYellow font-display">TETRA94</strong> no cesto para tirar R$ 30 do total.
+            </p>
+        </div>
+    </section>
+    <div class="divider-dither" aria-hidden="true"></div>
+
+    <!-- ====================================================================== [D]
+         NA BANCADA — prova que a loja está viva e o estoque se renova, sem
+         inventar venda. Descartei o mural de "peças já vendidas": escassez
+         futura é honesta, escassez retroativa inventada é fraude.
+         ====================================================================== -->
+    <section id="na-bancada" class="py-8 md:py-10 bg-void tex-phosphor border-y-2 border-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                    <span class="inline-block bg-neonOrange text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-3 bevel">NA BANCADA AGORA</span>
+                    <h2 class="text-xl sm:text-3xl font-display font-extrabold text-white tracking-tight">O que está aberto na mesa neste momento</h2>
+                </div>
+                <p class="text-xs text-gray-400 max-w-[42ch] leading-relaxed">
+                    Sem preço porque ainda não sabemos se recupera. Se recuperar, quem pediu aviso sabe primeiro.
+                </p>
+            </div>
+            <div id="benchGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+        </div>
+    </section>
+
+    <!-- ====================================================================== [E]
+         LINHA DO TEMPO — rampa de entrada narrativa da Máquina de Crônicas.
+         Exatamente os 6 anos que o seletor da Máquina de Crônicas tem: botão
+         que não muda nada é pior que botão nenhum.
+         ====================================================================== -->
+    <section id="linha-do-tempo" class="py-8 md:py-10 bg-surface tex-halftone">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <span class="inline-block bg-neonYellow text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-3 bevel">SINTONIZE UM ANO</span>
+                <h2 class="text-xl sm:text-3xl font-display font-extrabold text-white tracking-tight">Escolha onde você quer descer</h2>
+                <p class="text-xs sm:text-sm text-gray-300 mt-2 max-w-[52ch] mx-auto leading-relaxed">
+                    Clique no ano e o Seu Wilson escreve a crônica daquele domingo específico.
+                </p>
+            </div>
+            <div class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory md:justify-center" role="group" aria-label="Escolha um ano">
+                <button type="button" onclick="tuneCapsuleYear('1991')" class="snap-start shrink-0 w-36 bg-cardBg border-2 border-gray-800 hover:border-neonYellow bevel key p-4 text-left transition">
+                    <span class="block font-pixel text-[13px] leading-relaxed text-neonYellow mb-2">1991</span>
+                    <span class="block font-retro text-[15px] text-gray-400 leading-tight">ROCK IN RIO II<br>FITA K7</span>
+                </button>
+                <button type="button" onclick="tuneCapsuleYear('1993')" class="snap-start shrink-0 w-36 bg-cardBg border-2 border-gray-800 hover:border-neonCyan bevel key p-4 text-left transition">
+                    <span class="block font-pixel text-[13px] leading-relaxed text-neonCyan mb-2">1993</span>
+                    <span class="block font-retro text-[15px] text-gray-400 leading-tight">SUPER NINTENDO<br>JURASSIC PARK</span>
+                </button>
+                <button type="button" onclick="tuneCapsuleYear('1994')" class="snap-start shrink-0 w-36 bg-cardBg border-2 border-neonGreen hover:border-neonGreen bevel key p-4 text-left transition">
+                    <span class="block font-pixel text-[13px] leading-relaxed text-neonGreen mb-2">1994</span>
+                    <span class="block font-retro text-[15px] text-gray-400 leading-tight">TETRA NA COPA<br>TV COLOSSO</span>
+                </button>
+                <button type="button" onclick="tuneCapsuleYear('1995')" class="snap-start shrink-0 w-36 bg-cardBg border-2 border-gray-800 hover:border-neonPink bevel key p-4 text-left transition">
+                    <span class="block font-pixel text-[13px] leading-relaxed text-neonPink mb-2">1995</span>
+                    <span class="block font-retro text-[15px] text-gray-400 leading-tight">MAMONAS<br>PAGER</span>
+                </button>
+                <button type="button" onclick="tuneCapsuleYear('1997')" class="snap-start shrink-0 w-36 bg-cardBg border-2 border-gray-800 hover:border-neonOrange bevel key p-4 text-left transition">
+                    <span class="block font-pixel text-[13px] leading-relaxed text-neonOrange mb-2">1997</span>
+                    <span class="block font-retro text-[15px] text-gray-400 leading-tight">TAMAGOTCHI<br>DOMINGO LEGAL</span>
+                </button>
+                <button type="button" onclick="tuneCapsuleYear('1999')" class="snap-start shrink-0 w-36 bg-cardBg border-2 border-gray-800 hover:border-neonPurple bevel key p-4 text-left transition">
+                    <span class="block font-pixel text-[13px] leading-relaxed text-neonPurple mb-2">1999</span>
+                    <span class="block font-retro text-[15px] text-gray-400 leading-tight">BUG DO MILÊNIO<br>DISCADA</span>
+                </button>
             </div>
         </div>
     </section>
 
-    <section id="oraculo-ia" class="py-16 md:py-24 bg-gradient-to-b from-void via-surface to-void border-b-2 border-gray-800 relative">
+    <div class="divider-dither" aria-hidden="true"></div>
+
+    <div class="colorbars h-2.5" aria-hidden="true"></div>
+    <section id="oraculo-ia" class="py-20 md:py-28 bg-gradient-to-b from-void via-surface to-void relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-10">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-neonCyan text-xs font-mono text-neonCyan mb-3 shadow-neon-cyan">
-                    <span class="animate-pulse">●</span> INTELIGÊNCIA ARTIFICIAL DIRETO DE 1994 (GEMINI 3 FLASH)
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-950/60 border border-neonCyan text-[10px] font-pixel leading-relaxed text-neonCyan mb-4 bevel">
+                    <svg class="w-3 h-3" aria-hidden="true"><use href="#i-chat"></use></svg> LINHA DIRETA COM O BALCÃO
                 </div>
-                <h2 class="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
-                    O Balcão do <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonYellow via-neonCyan to-neonPink">Seu Wilson</span>
+                <h2 class="text-3xl sm:text-5xl font-display font-black text-white tracking-tight" style="text-shadow:3px 3px 0 #000000">
+                    O Balcão do <span class="text-neonYellow" style="text-shadow:2px 2px 0 #ff007f">Seu Wilson</span>
                 </h2>
                 <p class="text-sm sm:text-base text-gray-300 mt-3 leading-relaxed">
                     Converse com o lendário atendente de videolocadora dos anos 90. Ele indica fitas e cartuchos, gera crônicas nostálgicas sob medida, grava mixtapes em fita K7 e avalia qualquer objeto antigo que você encontrou em casa!
                 </p>
             </div>
-            <div class="win95-box rounded-2xl p-2 sm:p-3 max-w-5xl mx-auto border-2 border-gray-300 shadow-2xl">
-                <div class="win95-titlebar px-3 py-1.5 rounded-t-xl flex items-center justify-between text-white font-mono text-xs select-none">
+            <div class="win95-box p-2 sm:p-3 max-w-5xl mx-auto border-2 border-gray-300 shadow-retro-black">
+                <div class="win95-titlebar px-3 py-1.5 flex items-center justify-between text-white font-sans text-xs select-none">
                     <div class="flex items-center gap-2"><span class="text-base">📼</span><span class="font-bold tracking-wider">SEU_WILSON_LOCADORA.EXE — REDE 56.6K</span></div>
                     <div class="flex items-center gap-1 font-bold">
-                        <button class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" title="Minimizar">_</button>
-                        <button class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" title="Maximizar">□</button>
-                        <button class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" title="Fechar">✕</button>
+                        <span class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" aria-hidden="true">_</span>
+                        <span class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" aria-hidden="true">□</span>
+                        <span class="w-5 h-5 bg-[#c0c0c0] text-black border border-t-white border-l-white border-b-black border-r-black flex items-center justify-center text-[10px]" aria-hidden="true">✕</span>
                     </div>
                 </div>
-                <div class="bg-cardBg p-4 sm:p-6 rounded-b-xl border-t border-gray-700 text-gray-100">
-                    <div class="flex flex-wrap gap-2 mb-6 border-b border-gray-800 pb-4">
-                        <button onclick="switchAiTab('chat')" id="tabBtn-chat" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-neonYellow text-black shadow-retro-black"><span>💬</span> Balcão da Locadora</button>
-                        <button onclick="switchAiTab('capsule')" id="tabBtn-capsule" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><span>⏳</span> Máquina de Crônicas</button>
-                        <button onclick="switchAiTab('mixtape')" id="tabBtn-mixtape" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><span>📼</span> Gerador de Mixtape K7</button>
-                        <button onclick="switchAiTab('appraise')" id="tabBtn-appraise" class="px-4 py-2 rounded-xl font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><span>🔍</span> Avaliador de Sótão</button>
+                <div class="bg-cardBg p-4 sm:p-6 border-t border-gray-700 text-gray-100">
+                    <div class="flex flex-wrap gap-2 mb-6 border-b-0 pb-4">
+                        <button onclick="switchAiTab('chat')" id="tabBtn-chat" class="px-4 py-2 rounded-none font-display font-bold text-xs transition flex items-center gap-2 bg-neonYellow text-black shadow-retro-black"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-chat"></use></svg> Balcão da Locadora</button>
+                        <button onclick="switchAiTab('capsule')" id="tabBtn-capsule" class="px-4 py-2 rounded-none font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-clock"></use></svg> Máquina de Crônicas</button>
+                        <button onclick="switchAiTab('mixtape')" id="tabBtn-mixtape" class="px-4 py-2 rounded-none font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-tape"></use></svg> Gerador de Mixtape K7</button>
+                        <button onclick="switchAiTab('appraise')" id="tabBtn-appraise" class="px-4 py-2 rounded-none font-display font-bold text-xs transition flex items-center gap-2 bg-surface text-gray-300 hover:text-white border border-gray-700"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-search"></use></svg> Avaliador de Sótão</button>
                     </div>
                     <div id="aiTabContent-chat" class="space-y-4">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                            <div class="lg:col-span-4 bg-void p-5 rounded-2xl border border-gray-800 flex flex-col justify-between">
+                            <div class="lg:col-span-4 bg-void p-5 rounded-none border border-gray-800 flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center gap-3 mb-3">
-                                        <div class="w-14 h-14 rounded-2xl bg-neonYellow/20 border-2 border-neonYellow flex items-center justify-center text-3xl shadow-neon-yellow">👨🏻‍🦳</div>
+                                        <div class="w-14 h-14 rounded-none bg-neonYellow/20 border-2 border-neonYellow flex items-center justify-center text-3xl shadow-neon-yellow">👨🏻‍🦳</div>
                                         <div>
                                             <h4 class="font-display font-bold text-white text-base">Seu Wilson</h4>
                                             <span class="text-[11px] font-retro text-neonGreen">STATUS: REBOBINANDO FITAS</span>
@@ -364,25 +702,25 @@
                                     <p class="text-xs text-gray-400 leading-relaxed">"Pode entrar, meu camarada! Eu trabalhei 25 anos atrás do balcão de locadora. Sei de cor as trilhas sonoras, as trapaças dos jogos e os lançamentos de sexta-feira. Manda sua dúvida!"</p>
                                 </div>
                                 <div class="mt-4 pt-4 border-t border-gray-800 space-y-2">
-                                    <span class="text-[10px] uppercase font-mono text-gray-400 font-bold block">Perguntas frequentes no balcão:</span>
-                                    <button onclick="fillChatPrompt('Qual presente comprar para quem jogava Super Nintendo em 1994?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-xl border border-gray-700/80 text-gray-300 transition line-clamp-1">🎮 "Presente pra quem jogava em 1994"</button>
-                                    <button onclick="fillChatPrompt('Como conservar fita cassete para não embolar no toca-fitas?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-xl border border-gray-700/80 text-gray-300 transition line-clamp-1">📼 "Dicas para fita K7 não embolar"</button>
-                                    <button onclick="fillChatPrompt('Lembra daqueles chicletes com figurinhas e da TV Colosso?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-xl border border-gray-700/80 text-gray-300 transition line-clamp-1">📺 "Lembranças da TV Colosso e figurinhas"</button>
+                                    <span class="text-[10px] uppercase font-sans text-gray-400 font-bold block">Perguntas frequentes no balcão:</span>
+                                    <button onclick="fillChatPrompt('Qual presente comprar para quem jogava Super Nintendo em 1994?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-none border border-gray-700/80 text-gray-300 transition line-clamp-1">🎮 "Presente pra quem jogava em 1994"</button>
+                                    <button onclick="fillChatPrompt('Como conservar fita cassete para não embolar no toca-fitas?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-none border border-gray-700/80 text-gray-300 transition line-clamp-1">📼 "Dicas para fita K7 não embolar"</button>
+                                    <button onclick="fillChatPrompt('Lembra daqueles chicletes com figurinhas e da TV Colosso?')" class="w-full text-left text-xs bg-surface hover:bg-gray-800 p-2.5 rounded-none border border-gray-700/80 text-gray-300 transition line-clamp-1">📺 "Lembranças da TV Colosso e figurinhas"</button>
                                 </div>
                             </div>
-                            <div class="lg:col-span-8 flex flex-col justify-between bg-void rounded-2xl border border-gray-800 p-4 sm:p-5 h-[440px]">
+                            <div class="lg:col-span-8 flex flex-col justify-between bg-void rounded-none border border-gray-800 p-4 sm:p-5 h-[440px]">
                                 <div id="chatHistory" class="flex-1 overflow-y-auto space-y-3.5 pr-2 font-sans text-sm">
                                     <div class="flex items-start gap-3">
                                         <span class="text-2xl mt-0.5">📼</span>
-                                        <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-gray-200 leading-relaxed shadow">
+                                        <div class="bg-surface border border-gray-700 rounded-none rounded-tl-none p-4 max-w-[85%] text-gray-200 leading-relaxed ">
                                             <span class="text-xs font-retro text-neonYellow block mb-1">SEU WILSON DA LOCADORA:</span>
                                             Opa, bicho! Seja bem-vindo à locadora. Procura uma fita lançada na sexta-feira, quer indicação de videogame 16-bit ou quer puxar papo sobre como era gostoso o domingo de 1994? Manda a bronca aí no teclado!
                                         </div>
                                     </div>
                                 </div>
                                 <form id="chatForm" onsubmit="handleChatSubmit(event)" class="mt-4 pt-3 border-t border-gray-800 flex items-center gap-2">
-                                    <input type="text" id="chatInput" placeholder="Pergunte ao Seu Wilson..." required class="flex-1 px-4 py-3 bg-surface border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm font-sans">
-                                    <button type="submit" id="chatSubmitBtn" class="px-5 py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase rounded-xl transition flex items-center gap-2 shadow-retro-black active:scale-95"><span>ENVIAR</span><span class="text-base">➔</span></button>
+                                    <input type="text" id="chatInput" placeholder="Pergunte ao Seu Wilson..." required class="flex-1 px-4 py-3 bg-surface border border-gray-700 rounded-[3px] text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm font-sans">
+                                    <button type="submit" id="chatSubmitBtn" class="px-5 py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase rounded-none transition flex items-center gap-2 shadow-retro-black active:scale-95"><span>ENVIAR</span><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
                                 </form>
                             </div>
                         </div>
@@ -390,8 +728,8 @@
                     <div id="aiTabContent-capsule" class="hidden space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label class="block text-xs font-mono uppercase text-neonYellow mb-2 font-bold">1. Escolha o Ano:</label>
-                                <select id="capsuleYear" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonYellow focus:outline-none">
+                                <label class="block text-xs font-sans uppercase text-neonYellow mb-2 font-bold">1. Escolha o Ano:</label>
+                                <select id="capsuleYear" class="w-full bg-void border border-gray-700 rounded-[3px] p-3 text-white text-sm focus:border-neonYellow focus:outline-none">
                                     <option value="1991">1991 - Fita K7, Rock in Rio II e Guaraná</option>
                                     <option value="1993">1993 - Super Nintendo e Jurassic Park</option>
                                     <option value="1994" selected>1994 - Tetra na Copa, Real e TV Colosso</option>
@@ -401,8 +739,8 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-xs font-mono uppercase text-neonCyan mb-2 font-bold">2. O Cenário:</label>
-                                <select id="capsuleScene" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonCyan focus:outline-none">
+                                <label class="block text-xs font-sans uppercase text-neonCyan mb-2 font-bold">2. O Cenário:</label>
+                                <select id="capsuleScene" class="w-full bg-void border border-gray-700 rounded-[3px] p-3 text-white text-sm focus:border-neonCyan focus:outline-none">
                                     <option value="domingo">Domingo de tarde na casa da vó com TV ligada</option>
                                     <option value="recreio">Recreio da escola: tazo, lanche e bate-papo</option>
                                     <option value="locadora">Sexta-feira à noite escolhendo 3 fitas VHS</option>
@@ -411,17 +749,17 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-xs font-mono uppercase text-neonPink mb-2 font-bold">3. Seu Nome ou Apelido:</label>
-                                <input type="text" id="capsuleName" placeholder="Ex: Juninho, Paulinha..." value="Viajante dos Anos 90" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonPink focus:outline-none">
+                                <label class="block text-xs font-sans uppercase text-neonPink mb-2 font-bold">3. Seu Nome ou Apelido:</label>
+                                <input type="text" id="capsuleName" placeholder="Ex: Juninho, Paulinha..." value="Viajante dos Anos 90" class="w-full bg-void border border-gray-700 rounded-[3px] p-3 text-white text-sm focus:border-neonPink focus:outline-none">
                             </div>
                         </div>
                         <div class="text-center pt-2">
-                            <button onclick="generateMemoryCapsule()" id="generateCapsuleBtn" class="px-8 py-3.5 bg-gradient-to-r from-neonYellow via-neonOrange to-neonPink text-black font-display font-extrabold text-sm rounded-xl hover:opacity-95 transition shadow-retro-black flex items-center gap-2 mx-auto active:scale-95"><span>⏳ SINTONIZAR NESTE ANO E GERAR CRÔNICA</span></button>
+                            <button onclick="generateMemoryCapsule()" id="generateCapsuleBtn" class="px-8 py-3.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-sm rounded-none transition shadow-retro-pink flex items-center gap-2 mx-auto active:scale-95"><span>SINTONIZAR ESTE ANO</span></button>
                         </div>
-                        <div id="capsuleResult" class="hidden mt-6 p-6 rounded-2xl bg-void border-2 border-dashed border-neonYellow/60 text-gray-200 space-y-4">
-                            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div id="capsuleResult" class="hidden mt-6 p-6 rounded-none bg-void border-2 border-dashed border-neonYellow/60 text-gray-200 space-y-4">
+                            <div class="flex items-center justify-between border-b-0 pb-3">
                                 <span class="font-retro text-lg text-neonYellow" id="capsuleHeading">CÁPSULA SINTONIZADA</span>
-                                <button onclick="copyCapsuleText()" class="text-xs text-neonCyan hover:underline font-mono">📋 Copiar Crônica</button>
+                                <button onclick="copyCapsuleText()" class="text-xs text-neonCyan hover:underline font-sans">Copiar crônica</button>
                             </div>
                             <div id="capsuleContent" class="text-sm leading-relaxed font-sans space-y-3"></div>
                         </div>
@@ -431,31 +769,31 @@
                             <div>
                                 <h4 class="font-display font-bold text-white text-lg mb-2">Grave sua Fita K7 TDK de 60 Minutos</h4>
                                 <p class="text-xs text-gray-400 mb-4 leading-relaxed">Escolha o estilo musical e a IA montará uma fita com Lado A e Lado B cronometrados para caber na fita magnética, incluindo anotações escritas à caneta esferográfica no encarte.</p>
-                                <label class="block text-xs font-mono uppercase text-neonYellow mb-2 font-bold">Estilo da Fita:</label>
-                                <select id="mixtapeGenre" class="w-full bg-void border border-gray-700 rounded-xl p-3 text-white text-sm focus:border-neonYellow focus:outline-none mb-4">
+                                <label class="block text-xs font-sans uppercase text-neonYellow mb-2 font-bold">Estilo da Fita:</label>
+                                <select id="mixtapeGenre" class="w-full bg-void border border-gray-700 rounded-[3px] p-3 text-white text-sm focus:border-neonYellow focus:outline-none mb-4">
                                     <option value="rock-nacional">Rock Nacional 90s (Legião, Raimundos, Skank, Charlie Brown)</option>
                                     <option value="eurodance">Eurodance das Baladas (Corona, Culture Beat, Haddaway)</option>
                                     <option value="pagode-90">Pagode Romântico 90s (Raça Negra, SPC, Katinguelê)</option>
                                     <option value="trilhas-tv">Trilhas de Tokusatsu &amp; Animes (Cavaleiros, Yu Yu Hakusho)</option>
                                     <option value="radio-fm">Lentas Internacionais do Disk MTV</option>
                                 </select>
-                                <button onclick="generateMixtape()" id="generateMixtapeBtn" class="w-full py-3.5 bg-neonGreen hover:bg-green-400 text-black font-display font-extrabold text-sm rounded-xl transition shadow-retro-black flex items-center justify-center gap-2 active:scale-95"><span>📼 GRAVAR MIXTAPE NO GEMINI</span></button>
+                                <button onclick="generateMixtape()" id="generateMixtapeBtn" class="w-full py-3.5 bg-neonGreen hover:bg-green-400 text-black font-display font-extrabold text-sm rounded-none transition shadow-retro-black flex items-center justify-center gap-2 active:scale-95"><span>GRAVAR A FITA</span></button>
                             </div>
-                            <div class="bg-void p-6 rounded-2xl border-2 border-gray-700">
-                                <div class="border-2 border-neonYellow p-4 rounded-xl bg-cardBg font-mono text-xs">
+                            <div class="bg-void p-6 rounded-none border-2 border-gray-700">
+                                <div class="border-2 border-neonYellow p-4 rounded-none bg-cardBg font-sans text-xs">
                                     <div class="flex justify-between items-center pb-2 border-b border-gray-700 text-[10px] text-gray-400">
                                         <span>TDK CASSETTE • TYPE I</span><span class="text-neonYellow font-bold font-retro text-base">60 MIN</span>
                                     </div>
                                     <div class="my-4 text-center">
-                                        <div class="inline-block bg-black px-4 py-2 rounded-lg border border-gray-600 text-white font-retro text-lg tracking-widest" id="mixtapeTitleDisplay">[ SELEÇÃO RADICAL 1994 ]</div>
+                                        <div class="inline-block bg-black px-4 py-2 rounded-[3px] border border-gray-600 text-white font-retro text-lg tracking-widest" id="mixtapeTitleDisplay">[ SELEÇÃO RADICAL 1994 ]</div>
                                     </div>
                                     <div class="flex justify-around items-center py-2 text-gray-400 text-[11px]">
-                                        <span>( LADO A : 30 MIN )</span><span>● REBOBINADA ●</span><span>( LADO B : 30 MIN )</span>
+                                        <span>( LADO A : 30 MIN )</span><span>REBOBINADA</span><span>( LADO B : 30 MIN )</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="mixtapeResult" class="hidden mt-6 p-6 rounded-2xl bg-void border border-gray-700 text-gray-200">
+                        <div id="mixtapeResult" class="hidden mt-6 p-6 rounded-none bg-void border border-gray-700 text-gray-200">
                             <div id="mixtapeContent" class="space-y-4 text-sm font-sans"></div>
                         </div>
                     </div>
@@ -464,11 +802,11 @@
                             <h4 class="font-display font-bold text-white text-xl mb-2">Achou um Objeto Antigo no Fundo do Armário?</h4>
                             <p class="text-xs sm:text-sm text-gray-400 mb-6">Descreva o aparelho, fita, brinquedo ou disco que você encontrou na casa da família. O Seu Wilson emitirá um laudo com raridade nostálgica e dicas de conservação!</p>
                             <div class="flex flex-col sm:flex-row gap-3">
-                                <input type="text" id="appraiseInput" placeholder="Ex: Achei um Walkman cinza da CCE com rádio AM/FM e uma fita do Mamonas..." class="flex-1 px-4 py-3 bg-void border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm">
-                                <button onclick="appraiseRelic()" id="appraiseBtn" class="px-6 py-3 bg-neonCyan hover:bg-cyan-300 text-black font-display font-extrabold text-xs uppercase rounded-xl transition shadow-neon-cyan active:scale-95">AVALIAR RELÍQUIA</button>
+                                <input type="text" id="appraiseInput" placeholder="Ex: Achei um Walkman cinza da CCE com rádio AM/FM e uma fita do Mamonas..." class="flex-1 px-4 py-3 bg-void border border-gray-700 rounded-[3px] text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm">
+                                <button onclick="appraiseRelic()" id="appraiseBtn" class="px-6 py-3 bg-neonCyan hover:bg-cyan-300 text-black font-display font-extrabold text-xs uppercase rounded-none transition shadow-neon-cyan active:scale-95">AVALIAR RELÍQUIA</button>
                             </div>
                         </div>
-                        <div id="appraiseResult" class="hidden mt-6 p-6 rounded-2xl bg-void border border-neonCyan/60 text-gray-200 space-y-3">
+                        <div id="appraiseResult" class="hidden mt-6 p-6 rounded-none bg-void border border-neonCyan/60 text-gray-200 space-y-3">
                             <h5 class="font-retro text-lg text-neonCyan">// LAUDO TÉCNICO E NOSTÁLGICO DO SEU WILSON</h5>
                             <div id="appraiseContent" class="text-sm leading-relaxed font-sans"></div>
                         </div>
@@ -477,104 +815,237 @@
             </div>
         </div>
     </section>
+    <div class="divider-dither" aria-hidden="true"></div>
 
-    <section class="py-16 bg-surface/80 border-b-2 border-gray-800">
+    <section class="py-14 md:py-20 bg-surface/80 tex-halftone">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-14">
-                <span class="text-xs font-mono uppercase text-neonYellow tracking-wider block mb-2">// GARANTIA ANALÓGICA DE BANCADA</span>
+                <span class="inline-block bg-neonYellow text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-4 bevel">GARANTIA DE BANCADA</span>
                 <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white">Não vendemos réplicas plásticas. Resgatamos histórias de família.</h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonYellow/50 transition">
-                    <div class="w-12 h-12 rounded-xl bg-neonYellow/10 text-neonYellow flex items-center justify-center text-2xl mb-4 font-mono">⚙️</div>
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 hover:border-neonYellow/50 transition">
+                    <div class="w-12 h-12 rounded-none bg-neonYellow/10 text-neonYellow flex items-center justify-center mb-4 font-sans"><svg class="w-6 h-6" aria-hidden="true"><use href="#i-gear"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-base mb-2">Revisão Mecânica</h4>
                     <p class="text-xs text-gray-400 leading-relaxed">Troca de correias de borracha ressecadas, desmagnetização de cabeçotes e lubrificação de engrenagens originais.</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonCyan/50 transition">
-                    <div class="w-12 h-12 rounded-xl bg-neonCyan/10 text-neonCyan flex items-center justify-center text-2xl mb-4 font-mono">🧼</div>
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 hover:border-neonCyan/50 transition">
+                    <div class="w-12 h-12 rounded-none bg-neonCyan/10 text-neonCyan flex items-center justify-center mb-4 font-sans"><svg class="w-6 h-6" aria-hidden="true"><use href="#i-check"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-base mb-2">Higienização Profunda</h4>
                     <p class="text-xs text-gray-400 leading-relaxed">Tratamento isopropílico para retirar mofo de décadas sem danificar a pátina e os decalques de época.</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonPink/50 transition">
-                    <div class="w-12 h-12 rounded-xl bg-neonPink/10 text-neonPink flex items-center justify-center text-2xl mb-4 font-mono">📦</div>
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 hover:border-neonPink/50 transition">
+                    <div class="w-12 h-12 rounded-none bg-neonPink/10 text-neonPink flex items-center justify-center mb-4 font-sans"><svg class="w-6 h-6" aria-hidden="true"><use href="#i-box"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-base mb-2">Embalagem Bolha Tripla</h4>
                     <p class="text-xs text-gray-400 leading-relaxed">Proteção antichoque reforçada com isopor e fitas de alta densidade para suportar o transporte rodoviário nacional.</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 hover:border-neonGreen/50 transition">
-                    <div class="w-12 h-12 rounded-xl bg-neonGreen/10 text-neonGreen flex items-center justify-center text-2xl mb-4 font-mono">📜</div>
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 hover:border-neonGreen/50 transition">
+                    <div class="w-12 h-12 rounded-none bg-neonGreen/10 text-neonGreen flex items-center justify-center mb-4 font-sans"><svg class="w-6 h-6" aria-hidden="true"><use href="#i-doc"></use></svg></div>
                     <h4 class="font-display font-bold text-white text-base mb-2">Certificado de Garimpo</h4>
                     <p class="text-xs text-gray-400 leading-relaxed">Cada peça acompanha ficha impressa com ano de lançamento, ficha técnica e o histórico de onde foi encontrada.</p>
                 </div>
             </div>
         </div>
     </section>
+    <div class="divider-dither" aria-hidden="true"></div>
 
-    <section id="depoimentos" class="py-16 md:py-24 bg-void border-b-2 border-gray-800">
+    <section id="depoimentos" class="py-14 md:py-20 bg-void tex-phosphor">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-14">
-                <span class="text-xs font-mono uppercase text-neonCyan tracking-wider block mb-2">// CADERNO DE RECADOS DA LOCADORA</span>
-                <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white">Quem já viajou no tempo com a gente</h3>
+                <span class="inline-block bg-neonCyan text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-4 bevel">CADERNO DE RECADOS</span>
+                <h3 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">Quem já viajou no tempo com a gente</h3>
+                <p class="text-xs text-gray-400 mt-3">Depoimentos ilustrativos — serão substituídos por avaliações reais de clientes.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonYellow/40 transition">
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonYellow/40 transition">
                     <div>
-                        <div class="flex items-center gap-1 text-neonYellow mb-3">★★★★★</div>
+                        <div class="flex items-center gap-0.5 text-neonYellow mb-3" role="img" aria-label="5 de 5 estrelas"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg></div>
                         <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">"Comprei a TV Trinitron de 14 polegadas pro meu quarto. Quando liguei meu Super Nintendo e ouvi o estalo característico do tubo de imagem ligando, chorei de emoção. Veio tão bem embalada que parecia saída da fábrica em 1995!"</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-800 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-purple-900 flex items-center justify-center text-sm font-bold text-neonYellow">MR</div>
+                        <div class="w-10 h-10 rounded-none bg-purple-900 flex items-center justify-center text-sm font-bold text-neonYellow">MR</div>
                         <div>
                             <h5 class="text-xs font-display font-bold text-white">Marcelo Ramos (41 anos)</h5>
-                            <span class="text-[10px] font-mono text-gray-400">Curitiba, PR • Comprou TV Tubo Sony</span>
+                            <span class="text-[10px] font-sans text-gray-400">Curitiba, PR • Comprou TV Tubo Sony</span>
                         </div>
                     </div>
                 </div>
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonPink/40 transition">
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonPink/40 transition">
                     <div>
-                        <div class="flex items-center gap-1 text-neonYellow mb-3">★★★★★</div>
+                        <div class="flex items-center gap-0.5 text-neonYellow mb-3" role="img" aria-label="5 de 5 estrelas"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg></div>
                         <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">"O Walkman Sony chegou com a correia trocada e som cristalino. Coloquei uma fita do Skank que estava guardada há 25 anos na gaveta da minha mãe. O cheiro de fita e o botão clicando não têm preço."</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-800 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-pink-900 flex items-center justify-center text-sm font-bold text-neonPink">CS</div>
+                        <div class="w-10 h-10 rounded-none bg-pink-900 flex items-center justify-center text-sm font-bold text-neonPink">CS</div>
                         <div>
                             <h5 class="text-xs font-display font-bold text-white">Camila Silveira (38 anos)</h5>
-                            <span class="text-[10px] font-mono text-gray-400">São Paulo, SP • Comprou Walkman Sony</span>
+                            <span class="text-[10px] font-sans text-gray-400">São Paulo, SP • Comprou Walkman Sony</span>
                         </div>
                     </div>
                 </div>
-                <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonCyan/40 transition">
+                <div class="p-6 rounded-none bg-cardBg border border-gray-800 flex flex-col justify-between hover:border-neonCyan/40 transition">
                     <div>
-                        <div class="flex items-center gap-1 text-neonYellow mb-3">★★★★★</div>
+                        <div class="flex items-center gap-0.5 text-neonYellow mb-3" role="img" aria-label="5 de 5 estrelas"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-star"></use></svg></div>
                         <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">"Achei o telefone de disco tijolo exatamente igual ao que ficava na mesinha de fórmica da minha avó. Funciona até hoje na linha fixa! Meus filhos pequenos ficaram fascinados girando o disco com o dedo."</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-800 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-900 flex items-center justify-center text-sm font-bold text-neonCyan">FA</div>
+                        <div class="w-10 h-10 rounded-none bg-cyan-900 flex items-center justify-center text-sm font-bold text-neonCyan">FA</div>
                         <div>
                             <h5 class="text-xs font-display font-bold text-white">Fábio Alcantara (46 anos)</h5>
-                            <span class="text-[10px] font-mono text-gray-400">Belo Horizonte, MG • Comprou Telefone Tijolo</span>
+                            <span class="text-[10px] font-sans text-gray-400">Belo Horizonte, MG • Comprou Telefone Tijolo</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <div class="divider-dither" aria-hidden="true"></div>
 
-    <section class="py-16 md:py-24 bg-gradient-to-b from-void via-surface to-void border-b-2 border-gray-800 text-center relative">
+    <!-- ====================================================================== [F]
+         FAQ "MANUAL DE INSTRUÇÕES" — nível A. É o bloco de maior retorno de
+         conversão da entrega: quem compra eletrônico usado de R$ 500+ tem
+         objeção específica, e a página não respondia a nenhuma.
+         <details>/<summary> nativos: acordeão sem uma linha de JS, funciona
+         com JS desligado e já vem navegável por teclado.
+         ====================================================================== -->
+    <section id="faq" class="py-20 md:py-28 bg-surface/50 tex-halftone">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="inline-block p-4 rounded-3xl bg-neonYellow/10 border border-neonYellow/30 text-3xl mb-4">⏳</div>
-            <h3 class="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">Peças únicas não voltam para a estante.</h3>
-            <p class="text-sm sm:text-base text-gray-300 mt-4 max-w-xl mx-auto leading-relaxed">Diferente de lojas convencionais, nosso estoque depende de garimpos difíceis pelo interior do Brasil. Quando uma unidade é vendida, pode levar anos até encontrarmos outra igual.</p>
-            <form onsubmit="handleNewsletter(event)" class="mt-8 flex flex-col sm:flex-row gap-2.5 max-w-md mx-auto">
-                <input type="email" id="newsletterEmail" placeholder="Digite seu e-mail para receber alertas..." required class="flex-1 px-4 py-3.5 bg-void border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm">
-                <button type="submit" class="px-6 py-3.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase rounded-xl transition shadow-retro-black active:scale-95">ASSINAR MALA DIRETA</button>
-            </form>
-            <span class="text-[11px] font-mono text-gray-400 mt-3 block">Ganhe R$ 30 de desconto no primeiro garimpo com o cupom <strong class="text-neonYellow">TETRA94</strong></span>
+            <div class="mb-10 md:mb-14">
+                <span class="inline-block bg-neonGreen text-black font-pixel text-[10px] leading-relaxed px-2 py-1 mb-4 bevel">MANUAL DE INSTRUÇÕES</span>
+                <h2 class="text-2xl sm:text-4xl font-display font-extrabold text-white tracking-tight">Antes de apertar o play, leia isto</h2>
+                <p class="text-sm text-gray-300 mt-3 max-w-[65ch] leading-relaxed">
+                    As oito perguntas que todo mundo faz no WhatsApp antes de comprar. Respondidas aqui
+                    para você não precisar perguntar.
+                </p>
+            </div>
+
+            <div class="border-2 border-gray-800 bevel bg-cardBg divide-y-2 divide-gray-800">
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">01</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">Vocês testam mesmo antes de enviar?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <p>Sim, e não é uma ligada rápida. Cada eletrônico fica 48 horas ligado na bancada, em uso real: fita rodando de ponta a ponta no videocassete, jogo aberto no console, rádio sintonizado no boombox.</p>
+                        <p>Quem faz é o Seu Agenor, 71 anos, que trabalha com eletrônica analógica na Santa Ifigênia desde antes de a gente nascer. O que não passa no teste não vai pro site — vira peça de reposição pra salvar a próxima.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">02</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">Qual a garantia e o que ela cobre?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <!-- CONFIRMAR COM O RICHARD: prazo de garantia -->
+                        <p><strong class="text-white">90 dias, cobrindo funcionamento.</strong> Se a peça parar de funcionar por defeito que já existia, a gente conserta ou devolve o dinheiro.</p>
+                        <p>O que a garantia <em>não</em> cobre: pátina, risco, amarelado e marca de uso que já estavam descritos e fotografados no anúncio. Isso não é defeito — é a idade da peça, e é justamente o que você está comprando.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">03</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">É 110V ou 220V?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <!-- CONFIRMAR COM O RICHARD: política de voltagem -->
+                        <p>A voltagem vai na ficha de cada peça. Boa parte dos aparelhos dos anos 90 tem chave seletora atrás — nesses, a gente deixa na voltagem da sua cidade antes de despachar e cola um aviso no gabinete.</p>
+                        <p>Nos que são voltagem fixa, está dito no anúncio em letra grande. Ligar TV de tubo de 110V em 220V queima na hora e não tem conserto barato.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">04</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">Dá para ligar videocassete ou console numa TV moderna?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <p>Dá, se a sua TV tiver entrada AV (os três plugues coloridos: amarelo, vermelho e branco). Todo aparelho que sai daqui vai com o cabo RCA incluso.</p>
+                        <p>Se a sua TV só tem HDMI, precisa de um conversor RCA para HDMI — custa pouco e se acha em qualquer loja de informática. Aviso honesto: imagem de 240 linhas esticada numa tela 4K fica borrada. É por isso que a gente também vende TV de tubo.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">05</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">Posso desistir depois de comprar?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <p><strong class="text-white">Pode, em até 7 dias corridos depois de receber.</strong> Não é favor nosso: é o artigo 49 do Código de Defesa do Consumidor, que vale para toda compra feita fora de loja física.</p>
+                        <p>Chegou e não era o que você lembrava? Devolve na embalagem em que veio e o frete da volta é por nossa conta.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">06</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">E se chegar quebrado no transporte?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <!-- CONFIRMAR COM O RICHARD: prazo para abrir chamado de avaria -->
+                        <p>A gente resolve. Toda peça sai com três camadas de plástico-bolha, canto reforçado e caixa cortada sob medida — e mesmo assim transportadora derruba caixa.</p>
+                        <p>Abra a caixa e filme, se puder. O prazo para nos avisar vai informado no fechamento do pedido. Peça única que quebra a gente devolve o valor integral, porque não existe outra igual para trocar.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">07</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">Quanto tempo leva para chegar?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <!-- CONFIRMAR COM O RICHARD: prazos por região -->
+                        <p>O prazo é calculado por CEP e aparece no fechamento do pedido, antes de você pagar. A gente não promete data que não controla.</p>
+                        <p>Móvel grande e fliperama não vão pelos Correios: vão de transportadora, com entrega agendada por telefone. Esses a gente combina caso a caso.</p>
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="flex items-start gap-3 p-4 sm:p-5 hover:bg-surface transition">
+                        <span class="font-pixel text-[10px] leading-relaxed text-neonYellow mt-1 shrink-0">08</span>
+                        <span class="flex-1 font-display font-bold text-white text-sm sm:text-base">A foto é da peça de verdade?</span>
+                        <span class="faq-chevron text-neonYellow shrink-0 mt-0.5"><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+                    </summary>
+                    <div class="px-4 sm:px-5 pb-5 pl-12 sm:pl-14 text-sm text-gray-300 leading-relaxed space-y-2">
+                        <p><strong class="text-white">Ainda não — as imagens desta página são ilustrativas.</strong> Elas mostram o modelo, não a unidade específica que está à venda.</p>
+                        <p>Como cada peça aqui é única, foto genérica não serve: o que você precisa ver é o risco real, o amarelado real e o decalque real da <em>sua</em> peça. Por isso estamos fotografando o acervo inteiro na bancada. Enquanto isso não termina, preferimos avisar em vez de deixar você descobrir sozinho na entrega.</p>
+                    </div>
+                </details>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-void py-12 text-xs font-mono text-gray-400">
+    <div class="divider-dither" aria-hidden="true"></div>
+
+    <section id="alerta-estoque" class="py-14 md:py-20 bg-gradient-to-b from-void via-surface to-void text-center relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="inline-block p-4 rounded-none bg-neonYellow/10 border border-neonYellow/30 text-3xl mb-4">⏳</div>
+            <h3 class="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">Peças únicas não voltam para a estante.</h3>
+            <p class="text-sm sm:text-base text-gray-300 mt-4 max-w-xl mx-auto leading-relaxed">Diferente de lojas convencionais, nosso estoque depende de garimpos difíceis pelo interior do Brasil. Quando uma unidade é vendida, pode levar anos até encontrarmos outra igual.</p>
+            <form onsubmit="handleNewsletter(event)" class="mt-8 flex flex-col sm:flex-row gap-2.5 max-w-md mx-auto">
+                <input type="email" id="newsletterEmail" placeholder="Digite seu e-mail para receber alertas..." required class="flex-1 px-4 py-3.5 bg-void border border-gray-700 rounded-[3px] text-white placeholder-gray-500 focus:outline-none focus:border-neonYellow text-sm">
+                <button type="submit" class="px-6 py-3.5 bg-neonYellow hover:bg-yellow-300 text-black font-display font-extrabold text-xs uppercase rounded-none transition shadow-retro-black active:scale-95">ASSINAR MALA DIRETA</button>
+            </form>
+            <span class="text-[11px] text-gray-300 mt-3 block">Ganhe R$ 30 no primeiro garimpo com o cupom <strong class="text-neonYellow font-display">TETRA94</strong></span>
+            <p class="text-[11px] text-gray-400 mt-2 max-w-[52ch] mx-auto leading-relaxed">
+                Usamos seu e-mail só para avisar quando entra peça nova no acervo, no máximo uma vez por semana.
+                Não repassamos a ninguém e você sai em um clique no rodapé de qualquer e-mail.
+            </p>
+        </div>
+    </section>
+
+    <div class="colorbars h-2.5" aria-hidden="true"></div>
+    <footer class="bg-void py-12 text-xs text-gray-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-gray-800">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b-0">
                 <div class="space-y-3">
                     <span class="font-display font-bold text-white text-base block">PORTAL DO TEMPO</span>
                     <p class="text-gray-400 text-xs leading-relaxed">Preservando a cultura analógica, o áudio magnético e as memórias da década mais divertida da história brasileira.</p>
@@ -587,6 +1058,8 @@
                         <li><a href="#corredores" onclick="filterCategory('games')" class="hover:text-white transition">Consoles &amp; Cartuchos</a></li>
                         <li><a href="#corredores" onclick="filterCategory('midia')" class="hover:text-white transition">Fitas VHS &amp; K7</a></li>
                         <li><a href="#tocador-k7" class="hover:text-white transition">Toca-Fitas K7 Online</a></li>
+                        <li><a href="#combos" class="hover:text-white transition">Combos de Sala</a></li>
+                        <li><a href="#estado-conservacao" class="hover:text-white transition">Estado de Conservação</a></li>
                     </ul>
                 </div>
                 <div>
@@ -596,19 +1069,24 @@
                         <li><a href="#oraculo-ia" onclick="switchAiTab('capsule')" class="hover:text-white transition">Máquina de Crônicas</a></li>
                         <li><a href="#oraculo-ia" onclick="switchAiTab('mixtape')" class="hover:text-white transition">Gerador de Mixtapes</a></li>
                         <li><a href="#oraculo-ia" onclick="switchAiTab('appraise')" class="hover:text-white transition">Avaliador de Sótão</a></li>
+                        <li><a href="#faq" class="hover:text-white transition">Manual de Instruções (FAQ)</a></li>
+                        <li><a href="#na-bancada" class="hover:text-white transition">Na Bancada Agora</a></li>
                     </ul>
                 </div>
                 <div class="space-y-3">
                     <h5 class="font-display font-bold text-xs uppercase mb-3 text-neonPink">Selos de Época</h5>
-                    <div class="p-3 bg-cardBg rounded-xl border border-gray-800 space-y-1.5 text-[11px]">
-                        <div>📺 OTIMIZADO PARA RESOLUÇÃO 800x600</div>
-                        <div>🌐 COMPATÍVEL NETSCAPE &amp; IE 3.0</div>
-                        <div>🔒 PAGAMENTO 100% PROTEGIDO (PIX &amp; CARTÃO)</div>
+                    <div class="p-3 bg-cardBg rounded-none border border-gray-800 space-y-1.5 text-[11px]">
+                        <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-tv"></use></svg> OTIMIZADO PARA 800x600</div>
+                        <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-globe"></use></svg> COMPATÍVEL NETSCAPE &amp; IE 3.0</div>
+                        <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-lock"></use></svg> PAGAMENTO PROTEGIDO (PIX &amp; CARTÃO)</div>
                     </div>
                 </div>
             </div>
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
-                <div>© 1994–2026 Portal do Tempo Ltda. Todos os direitos reservados. Feito com amor pela memória analógica.</div>
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-400">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <span class="inline-block bg-neonOrange text-black font-pixel text-[9px] leading-relaxed px-2 py-1 w-fit">SITE DE DEMONSTRAÇÃO</span>
+                    <span>© 1994–2026 Portal do Tempo · Peça de portfólio: nenhum pedido é processado e nenhuma cobrança é feita.</span>
+                </div>
                 <div class="flex gap-4">
                     <span class="hover:text-gray-300">Privacidade</span>
                     <span class="hover:text-gray-300">Termos de Troca</span>
@@ -621,27 +1099,27 @@
     <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
         <div class="absolute inset-0 bg-black/75 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
         <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-cardBg border-l-2 border-neonYellow flex flex-col shadow-2xl">
-                <div class="p-5 border-b border-gray-800 flex items-center justify-between bg-void">
+            <div class="w-screen max-w-md bg-cardBg border-l-2 border-neonYellow flex flex-col shadow-retro-yellow drawer-in">
+                <div class="p-5 border-b-0 flex items-center justify-between bg-void">
                     <div class="flex items-center gap-2">
-                        <span class="text-2xl">🛒</span>
+                        <span class="text-neonYellow"><svg class="w-5 h-5" aria-hidden="true"><use href="#i-cart"></use></svg></span>
                         <h4 class="font-display font-bold text-white text-base">Cesto de Compras Nostálgico</h4>
                     </div>
-                    <button onclick="toggleCartDrawer()" class="p-2 text-gray-400 hover:text-white font-mono text-sm">✕ FECHAR</button>
+                    <button onclick="toggleCartDrawer()" class="p-2 text-gray-400 hover:text-white font-sans text-sm"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-close"></use></svg> FECHAR</button>
                 </div>
                 <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-3 font-sans text-sm"></div>
                 <div class="p-5 border-t border-gray-800 bg-void space-y-4">
                     <div class="flex gap-2">
-                        <input type="text" id="couponInput" placeholder="Cupom (ex: TETRA94)" class="flex-1 px-3 py-2 bg-surface border border-gray-700 rounded-xl text-white font-mono text-xs uppercase focus:border-neonYellow focus:outline-none">
-                        <button onclick="applyCoupon()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-xs font-mono text-neonYellow rounded-xl">APLICAR</button>
+                        <input type="text" id="couponInput" placeholder="Cupom (ex: TETRA94)" class="flex-1 px-3 py-2 bg-surface border border-gray-700 rounded-[3px] text-white font-sans text-xs uppercase focus:border-neonYellow focus:outline-none">
+                        <button onclick="applyCoupon()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-xs font-sans text-neonYellow rounded-none">APLICAR</button>
                     </div>
-                    <div class="space-y-1.5 font-mono text-xs text-gray-300">
+                    <div class="space-y-1.5 font-retro text-[15px] text-gray-300">
                         <div class="flex justify-between"><span>Subtotal:</span><span id="cartSubtotal" class="font-bold text-white">R$ 0,00</span></div>
                         <div class="flex justify-between text-neonGreen" id="discountRow" style="display: none;"><span>Desconto Cupom TETRA94:</span><span id="cartDiscount">- R$ 0,00</span></div>
                         <div class="flex justify-between"><span>Embalagem Antichoque Bolha:</span><span class="text-neonCyan font-bold">GRÁTIS</span></div>
                         <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-gray-800 font-display"><span>TOTAL:</span><span id="cartTotal" class="text-neonYellow text-lg">R$ 0,00</span></div>
                     </div>
-                    <button onclick="openCheckoutModal()" id="checkoutBtn" class="w-full py-4 bg-neonYellow hover:bg-yellow-300 text-black font-display font-black text-sm uppercase rounded-xl transition shadow-retro-black flex items-center justify-center gap-2 active:scale-95"><span>FINALIZAR NO BALCÃO</span><span>➔</span></button>
+                    <button onclick="openCheckoutModal()" id="checkoutBtn" class="w-full py-4 bg-neonYellow hover:bg-yellow-300 text-black font-display font-black text-sm uppercase rounded-none transition shadow-retro-black flex items-center justify-center gap-2 active:scale-95"><span>FINALIZAR NO BALCÃO</span><svg class="w-4 h-4" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
                 </div>
             </div>
         </div>
@@ -649,49 +1127,51 @@
 
     <div id="productModal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeProductModal()"></div>
-        <div class="relative bg-cardBg border-2 border-gray-700 rounded-3xl max-w-2xl w-full p-6 shadow-2xl z-10 space-y-5">
-            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-                <span class="text-xs font-mono text-neonYellow" id="modalProductCategory">// CATEGORIA</span>
-                <button onclick="closeProductModal()" class="text-gray-400 hover:text-white font-mono text-sm">✕ FECHAR</button>
+        <div class="relative bg-cardBg border-2 border-gray-700 rounded-none max-w-2xl w-full p-6 shadow-retro-yellow z-10 space-y-5 modal-in bevel">
+            <div class="flex items-center justify-between border-b-0 pb-3">
+                <span class="text-xs font-sans text-neonYellow" id="modalProductCategory">// CATEGORIA</span>
+                <button onclick="closeProductModal()" class="text-gray-400 hover:text-white font-sans text-sm"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-close"></use></svg> FECHAR</button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div class="aspect-square rounded-2xl overflow-hidden bg-black border border-gray-800">
-                    <img id="modalProductImage" src="" alt="" class="w-full h-full object-cover">
+                <div class="aspect-square rounded-none overflow-hidden bg-black border border-gray-800">
+                    <img id="modalProductImage" alt="" width="600" height="600" decoding="async"
+                         onerror="posterFallback(this)"
+                         class="w-full h-full object-cover">
                 </div>
                 <div class="space-y-3">
-                    <span class="inline-block bg-neonPink/20 text-neonPink text-[10px] font-mono px-2 py-0.5 rounded border border-neonPink" id="modalProductYear">ANO 1994</span>
+                    <span class="inline-block bg-neonPink/20 text-neonPink text-[10px] font-sans px-2 py-0.5 rounded-none border border-neonPink" id="modalProductYear">ANO 1994</span>
                     <h3 class="text-xl font-display font-bold text-white" id="modalProductTitle">Nome do Produto</h3>
                     <p class="text-xs text-gray-300 leading-relaxed" id="modalProductDesc">Descrição do item.</p>
                     <div class="text-2xl font-display font-black text-neonYellow" id="modalProductPrice">R$ 0,00</div>
-                    <button id="modalAddToCartBtn" class="w-full py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-xs uppercase rounded-xl transition shadow-retro-black active:scale-95">COLOCAR NO CESTO</button>
+                    <button id="modalAddToCartBtn" class="w-full py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-xs uppercase rounded-none transition shadow-retro-black active:scale-95">COLOCAR NO CESTO</button>
                 </div>
             </div>
             <div class="pt-2 border-t border-gray-800">
-                <button onclick="askWilsonAboutCurrentModalProduct()" id="modalAskAiBtn" class="w-full py-2.5 px-4 bg-void hover:bg-surface border border-neonCyan/50 rounded-xl text-xs font-mono text-neonCyan flex items-center justify-center gap-2 transition active:scale-95"><span>✨</span> Ouvir Memória do Seu Wilson sobre esta relíquia</button>
-                <div id="modalAiStoryBox" class="hidden mt-3 p-4 bg-void rounded-xl border border-gray-800 text-xs text-gray-300 leading-relaxed space-y-2"></div>
+                <button onclick="askWilsonAboutCurrentModalProduct()" id="modalAskAiBtn" class="w-full py-2.5 px-4 bg-void hover:bg-surface border border-neonCyan/50 rounded-none text-xs font-sans text-neonCyan flex items-center justify-center gap-2 transition active:scale-95"><svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-chat"></use></svg> Ouvir a memória do Seu Wilson sobre esta peça</button>
+                <div id="modalAiStoryBox" class="hidden mt-3 p-4 bg-void rounded-none border border-gray-800 text-xs text-gray-300 leading-relaxed space-y-2"></div>
             </div>
         </div>
     </div>
 
     <div id="checkoutSuccessModal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
-        <div class="relative max-w-md w-full z-10">
-            <div class="thermal-paper p-6 rounded-2xl border-4 border-dashed border-gray-800 shadow-2xl font-mono text-xs space-y-3">
+        <div class="relative max-w-md w-full z-10 modal-in">
+            <div class="thermal-paper p-6 rounded-2xl border-4 border-dashed border-gray-800 shadow-retro-black font-retro text-[15px] space-y-3">
                 <div class="text-center border-b-2 border-dashed border-gray-800 pb-3">
                     <h4 class="font-bold text-base tracking-wider">PORTAL DO TEMPO LTDA</h4>
-                    <p class="text-[10px]">C.G.C. 94.199.400/0001-90 • INSCR. EST. 199.494.110</p>
+                    <p class="text-[10px]">REGISTRO DE BALCÃO Nº 0199401 • DEMONSTRAÇÃO</p>
                     <p class="text-[10px]">RUA DA VIDEOLOCADORA, 1994 — SÃO PAULO - SP</p>
-                    <p class="font-bold mt-1 text-[11px]">CUPOM FISCAL / NOTA DE BALCÃO</p>
+                    <p class="font-bold mt-1 text-[11px]">PEDIDO REGISTRADO NO BALCÃO</p>
                 </div>
                 <div class="flex justify-between text-[11px] text-gray-700"><span>DATA: 17/07/1994 16:30</span><span>CCF: 019940</span></div>
                 <div class="border-t border-b border-gray-600 py-2 space-y-1.5" id="receiptItems"></div>
                 <div class="space-y-1 text-right">
-                    <div class="flex justify-between font-bold text-sm"><span>TOTAL PAGO:</span><span id="receiptTotal">R$ 0,00</span></div>
+                    <div class="flex justify-between font-bold text-sm"><span>TOTAL DO PEDIDO:</span><span id="receiptTotal">R$ 0,00</span></div>
                     <div class="text-[10px] text-gray-600">FORMA DE PAGAMENTO: PIX / CARTÃO</div>
                 </div>
-                <div class="border-2 border-red-700 text-red-700 font-black text-center py-1 rounded rotate-[-2deg] tracking-widest text-sm uppercase">★ PAGO NO BALCÃO DO SEU WILSON ★</div>
-                <div class="text-[10px] text-center text-gray-600 pt-2 border-t border-dashed border-gray-800">Obrigado pela preferência! Rebobine antes de devolver.</div>
-                <button onclick="closeCheckoutModal()" class="w-full py-3 bg-black text-white font-display font-bold text-xs uppercase rounded-xl transition hover:bg-gray-800">VOLTAR PARA A LOCADORA</button>
+                <div class="border-2 border-red-700 text-red-700 font-black text-center py-1 rounded-none rotate-[-2deg] tracking-widest text-sm uppercase">AGUARDANDO CONFIRMAÇÃO</div>
+                <div class="text-[10px] text-center text-gray-600 pt-2 border-t border-dashed border-gray-800">Site de demonstração: nenhuma cobrança é feita e nenhum pedido é processado.</div>
+                <button onclick="closeCheckoutModal()" class="w-full py-3 bg-black text-white font-display font-bold text-xs uppercase rounded-none transition hover:bg-gray-800">VOLTAR PARA A LOCADORA</button>
             </div>
         </div>
     </div>
@@ -703,15 +1183,68 @@
            BANCO DE DADOS DE PRODUTOS GARIMPADOS
            ========================================================================== */
         const PRODUCTS = [
-            { id: 'prod-walkman-sony', category: 'eletronicos', title: 'Walkman Sony WM-FX10 com Rádio AM/FM', year: 1993, price: 490.00, rarity: 'Raridade 9/10', image: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?w=800&auto=format&fit=crop&q=80', desc: 'Original japonês com correia de borracha nova, mecanismo suave e fones de espuma laranja inclusos.', story: 'Encontrado no quarto de um ex-radialista em Campinas/SP. Guardado com sílica desde 1996.' },
-            { id: 'prod-tv-trinitron', category: 'eletronicos', title: 'TV de Tubo Sony Trinitron 14" Colorida', year: 1995, price: 680.00, rarity: 'Peça Única', image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80', desc: 'A rainha dos consoles 16-bit. Tubo fosfórico nítido sem manchas, som estéreo frontal e entrada AV calibrada.', story: 'Pertenceu à sala de jogos de uma chácara em Petrópolis/RJ. Menos de 400 horas de uso originais.' },
-            { id: 'prod-megadrive-tectoy', category: 'games', title: 'Mega Drive III Tec Toy com Sonic The Hedgehog', year: 1993, price: 790.00, rarity: 'Item de Colecionador', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80', desc: 'Modelo original nacional da Tec Toy com saída de áudio pura e controle original de 3 botões.', story: 'Guardado na caixa por uma família em Santos/SP após a chegada do PlayStation em 1998.' },
-            { id: 'prod-vinil-legiao', category: 'midia', title: 'LP Vinil Duplo Acústico MTV Original', year: 1992, price: 240.00, rarity: 'Prensagem de Época', image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&auto=format&fit=crop&q=80', desc: 'Capa dupla conservada com encarte de letras manuscritas e encarte original sem rasgos.', story: 'Garimpado no acervo particular de uma loja desativada na Galeria do Rock em São Paulo.' },
-            { id: 'prod-videocassete-gradiente', category: 'eletronicos', title: 'Videocassete Gradiente 4 Cabeças Hi-Fi', year: 1996, price: 520.00, rarity: 'Revisado', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80', desc: 'Auto-tracking digital dinâmico. Cabeçotes desmagnetizados e controle remoto original incluído.', story: 'Revisado pelo técnico Seu Agenor (71 anos), mestre em eletrônica analógica na Santa Ifigênia.' },
-            { id: 'prod-console-snes', category: 'games', title: 'Console Super Nintendo Gradiente Nacional', year: 1993, price: 890.00, rarity: 'Lendário', image: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=800&auto=format&fit=crop&q=80', desc: 'Placa revisada com capacitores novos e dois controles originais com botões concavos intactos.', story: 'Acompanha cartucho de Super Mario World com bateria de save recém-trocada para 25 anos.' },
-            { id: 'prod-telefone-disco', category: 'eletronicos', title: 'Telefone Tijolo de Disco Cinza Telebrás', year: 1991, price: 290.00, rarity: 'Funcional', image: 'https://images.unsplash.com/photo-1520923642038-b4259aceafd7?w=800&auto=format&fit=crop&q=80', desc: 'Campainha mecânica dupla de bronze ("pim-pom"). Adaptado para conector telefônico moderno RJ11.', story: 'Retirado intacto de uma agência postal no interior de Minas Gerais.' },
-            { id: 'prod-boombox-cce', category: 'eletronicos', title: 'Boombox Rádio CCE Duplo Deck com Equalizador', year: 1994, price: 590.00, rarity: 'Relíquia Sonora', image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&auto=format&fit=crop&q=80', desc: 'Duplo deck com recurso de gravação rápida (High Speed Dubbing) e equalizador gráfico de 5 bandas.', story: 'O clássico companheiro dos churrascos de domingo nos anos 90.' }
+            { id: 'prod-walkman-sony', condition: 'RESTAURADO', category: 'eletronicos', title: 'Walkman Sony WM-FX10 com Rádio AM/FM', year: 1993, price: 490.00, rarity: 'Raridade 9/10', image: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?w=800&auto=format&fit=crop&q=80', desc: 'Original japonês com correia de borracha nova, mecanismo suave e fones de espuma laranja inclusos.', story: 'Encontrado no quarto de um ex-radialista em Campinas/SP. Guardado com sílica desde 1996.' },
+            { id: 'prod-tv-trinitron', condition: 'DE GAVETA', category: 'eletronicos', title: 'TV de Tubo Sony Trinitron 14" Colorida', year: 1995, price: 680.00, rarity: 'Peça Única', image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80', desc: 'A rainha dos consoles 16-bit. Tubo fosfórico nítido sem manchas, som estéreo frontal e entrada AV calibrada.', story: 'Pertenceu à sala de jogos de uma chácara em Petrópolis/RJ. Menos de 400 horas de uso originais.' },
+            { id: 'prod-megadrive-tectoy', condition: 'DE GAVETA', category: 'games', title: 'Mega Drive III Tec Toy com Sonic The Hedgehog', year: 1993, price: 790.00, rarity: 'Item de Colecionador', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80', desc: 'Modelo original nacional da Tec Toy com saída de áudio pura e controle original de 3 botões.', story: 'Guardado na caixa por uma família em Santos/SP após a chegada do PlayStation em 1998.' },
+            { id: 'prod-vinil-legiao', condition: 'COM PÁTINA', category: 'midia', title: 'LP Vinil Duplo Acústico MTV Original', year: 1992, price: 240.00, rarity: 'Prensagem de Época', image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&auto=format&fit=crop&q=80', desc: 'Capa dupla conservada com encarte de letras manuscritas e encarte original sem rasgos.', story: 'Garimpado no acervo particular de uma loja desativada na Galeria do Rock em São Paulo.' },
+            { id: 'prod-videocassete-gradiente', condition: 'RESTAURADO', category: 'eletronicos', title: 'Videocassete Gradiente 4 Cabeças Hi-Fi', year: 1996, price: 520.00, rarity: 'Revisado', image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80', desc: 'Auto-tracking digital dinâmico. Cabeçotes desmagnetizados e controle remoto original incluído.', story: 'Revisado pelo técnico Seu Agenor (71 anos), mestre em eletrônica analógica na Santa Ifigênia.' },
+            { id: 'prod-console-snes', condition: 'RESTAURADO', category: 'games', title: 'Console Super Nintendo Gradiente Nacional', year: 1993, price: 890.00, rarity: 'Lendário', image: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=800&auto=format&fit=crop&q=80', desc: 'Placa revisada com capacitores novos e dois controles originais com botões concavos intactos.', story: 'Acompanha cartucho de Super Mario World com bateria de save recém-trocada para 25 anos.' },
+            { id: 'prod-telefone-disco', condition: 'COM PÁTINA', category: 'eletronicos', title: 'Telefone Tijolo de Disco Cinza Telebrás', year: 1991, price: 290.00, rarity: 'Funcional', image: 'https://images.unsplash.com/photo-1520923642038-b4259aceafd7?w=800&auto=format&fit=crop&q=80', desc: 'Campainha mecânica dupla de bronze ("pim-pom"). Adaptado para conector telefônico moderno RJ11.', story: 'Retirado intacto de uma agência postal no interior de Minas Gerais.' },
+            { id: 'prod-boombox-cce', condition: 'COM PÁTINA', category: 'eletronicos', title: 'Boombox Rádio CCE Duplo Deck com Equalizador', year: 1994, price: 590.00, rarity: 'Relíquia Sonora', image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&auto=format&fit=crop&q=80', desc: 'Duplo deck com recurso de gravação rápida (High Speed Dubbing) e equalizador gráfico de 5 bandas.', story: 'O clássico companheiro dos churrascos de domingo nos anos 90.' }
         ];
+
+
+        /* ==========================================================================
+           PÔSTER DE FALLBACK — SVG local, um por categoria.
+           A CSP do ambiente de preview bloqueia images.unsplash.com E placehold.co,
+           então o onerror antigo levava de uma imagem quebrada para outra. Estes
+           pôsteres são data-URI: funcionam offline, sob qualquer CSP, e usam só
+           cores que já estão na config.
+           ========================================================================== */
+        const POSTER = {
+            eletronicos: "data:image/svg+xml;utf8," + encodeURIComponent(
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" shape-rendering="crispEdges">' +
+                '<rect width="120" height="120" fill="#101018"/>' +
+                '<g fill="#00f0ff"><rect x="24" y="34" width="60" height="44"/><rect x="88" y="42" width="10" height="10"/><rect x="88" y="58" width="10" height="10"/></g>' +
+                '<rect x="30" y="40" width="48" height="32" fill="#07070a"/>' +
+                '<g fill="#fef000"><rect x="36" y="48" width="36" height="3"/><rect x="36" y="56" width="24" height="3"/></g>' +
+                '<rect x="34" y="78" width="40" height="6" fill="#28283e"/>' +
+                '<rect x="0" y="98" width="120" height="8" fill="#ff007f"/>' +
+                '<rect x="0" y="106" width="120" height="14" fill="#101018"/></svg>'),
+            games: "data:image/svg+xml;utf8," + encodeURIComponent(
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" shape-rendering="crispEdges">' +
+                '<rect width="120" height="120" fill="#101018"/>' +
+                '<rect x="22" y="52" width="76" height="36" fill="#ff007f"/>' +
+                '<g fill="#07070a"><rect x="32" y="62" width="8" height="16"/><rect x="28" y="66" width="16" height="8"/>' +
+                '<rect x="72" y="64" width="9" height="9"/><rect x="84" y="64" width="9" height="9"/></g>' +
+                '<g fill="#39ff14"><rect x="52" y="28" width="16" height="16"/><rect x="44" y="36" width="8" height="8"/><rect x="68" y="36" width="8" height="8"/></g>' +
+                '<rect x="0" y="98" width="120" height="8" fill="#fef000"/>' +
+                '<rect x="0" y="106" width="120" height="14" fill="#101018"/></svg>'),
+            midia: "data:image/svg+xml;utf8," + encodeURIComponent(
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" shape-rendering="crispEdges">' +
+                '<rect width="120" height="120" fill="#101018"/>' +
+                '<rect x="18" y="38" width="84" height="44" fill="#8b5cf6"/>' +
+                '<rect x="26" y="46" width="68" height="22" fill="#07070a"/>' +
+                '<g fill="#fef000"><rect x="36" y="52" width="12" height="12"/><rect x="72" y="52" width="12" height="12"/></g>' +
+                '<rect x="26" y="72" width="68" height="4" fill="#00f0ff"/>' +
+                '<rect x="0" y="98" width="120" height="8" fill="#39ff14"/>' +
+                '<rect x="0" y="106" width="120" height="14" fill="#101018"/></svg>')
+        };
+        /* Handler único de fallback. Função declarada (não const) de propósito:
+           handler inline precisa enxergá-la, e ela precisa existir mesmo que um
+           erro de imagem dispare antes do resto do script. */
+        function posterFallback(img) {
+            img.onerror = null;
+            var cat = (img.dataset && img.dataset.cat) || 'eletronicos';
+            img.src = POSTER[cat] || POSTER.eletronicos;
+        }
+
+        const CONDITION_STYLE = {
+            'LACRADO':     'bg-neonYellow text-black',
+            'DE GAVETA':   'bg-neonCyan text-black',
+            'COM PÁTINA':  'bg-neonGreen text-black',
+            'RESTAURADO':  'bg-neonOrange text-black'
+        };
 
         let cart = [];
         let currentFilterCategory = 'todos';
@@ -800,20 +1333,20 @@
 
         function toggleChiptuneMusic() {
             initAudio();
-            const icon = document.getElementById('chiptuneIcon');
+            const icon = document.getElementById('chiptuneUse');
             const label = document.getElementById('chiptuneLabel');
             const tape = document.getElementById('cassetteTape');
             if (isChiptunePlaying) {
                 clearInterval(chiptuneInterval);
                 isChiptunePlaying = false;
-                icon.textContent = '▶';
+                icon.setAttribute('href', '#i-play');
                 label.textContent = 'TOCAR FITA K7';
                 tape.classList.add('tape-paused');
                 playRetroSound('click');
                 showToast('Toca-Fitas Pausado', 'Aperte o Play quando quiser mais som.', '⏸️');
             } else {
                 isChiptunePlaying = true;
-                icon.textContent = '⏸';
+                icon.setAttribute('href', '#i-pause');
                 label.textContent = 'PAUSAR FITA K7';
                 tape.classList.remove('tape-paused');
                 playRetroSound('click');
@@ -850,7 +1383,7 @@
 
         function toggleAudio() {
             isSoundEnabled = !isSoundEnabled;
-            const icon = document.getElementById('soundIcon');
+            const icon = document.getElementById('soundUse');
             const label = document.getElementById('soundLabel');
             if (isSoundEnabled) {
                 icon.textContent = '🔊'; label.textContent = 'Sons ON';
@@ -879,7 +1412,7 @@
         }
 
         const TV_CHANNELS = {
-            3: { label: 'CANAL 03 • VIDEOCASSETE', status: 'REC ● HI-FI', img: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80' },
+            3: { label: 'CANAL 03 • VIDEOCASSETE', status: 'REC HI-FI', img: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800&auto=format&fit=crop&q=80' },
             4: { label: 'CANAL 04 • MEGA DRIVE 16-BIT', status: 'SINAL 60Hz OK', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80' },
             'av1': { label: 'AV-1 • SESSÃO DA TARDE', status: 'ESTÉREO NICAM', img: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?w=800&auto=format&fit=crop&q=80' },
             'av2': { label: 'AV-2 • DISCO VINIL MTV', status: 'PHONO PRE-AMP', img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=800&auto=format&fit=crop&q=80' }
@@ -893,34 +1426,52 @@
             document.getElementById('tvStatusLabel').textContent = data.status;
             const screen = document.getElementById('tvScreenImage');
             screen.style.opacity = '0.3';
-            setTimeout(() => { screen.src = data.img; screen.style.opacity = '0.9'; }, 120);
+            setTimeout(() => { screen.src = data.img; screen.style.opacity = '0.9'; screen.style.visibility = 'visible'; }, 120);
             ['btnCh3', 'btnCh4', 'btnAv1', 'btnAv2'].forEach(id => {
                 const btn = document.getElementById(id);
-                btn.className = "px-2.5 py-1 bg-surface text-gray-300 font-retro text-sm rounded border border-gray-700 hover:border-neonYellow transition";
+                btn.className = "px-2.5 py-1 bg-surface text-gray-300 font-retro text-base rounded-none border border-gray-700 hover:border-neonYellow transition";
             });
             const activeBtn = ch === 3 ? 'btnCh3' : ch === 4 ? 'btnCh4' : ch === 'av1' ? 'btnAv1' : 'btnAv2';
-            document.getElementById(activeBtn).className = "px-2.5 py-1 bg-neonYellow text-black font-retro text-sm rounded border border-black font-bold transition";
+            document.getElementById(activeBtn).className = "px-2.5 py-1 bg-neonYellow text-black font-retro text-base rounded-none border border-black font-bold transition";
         }
 
         const GEMINI_MODEL = "gemini-3-flash-preview";
+        /* ATENÇÃO — NÃO cole uma chave de API aqui.
+           Este arquivo é HTML público: qualquer pessoa lê o código-fonte, copia a chave
+           e gasta a sua cota (e a sua fatura). Chave de API só vive no servidor.
+           O caminho certo é um proxy: o navegador chama o SEU endpoint, o seu endpoint
+           chama o Gemini com a chave guardada em variável de ambiente.
+           Com a chave vazia, as 4 funções de IA caem no texto de reserva local em ~1s. */
         const apiKey = "";
 
         async function callGeminiApi(promptText, systemInstructionText = "", maxRetries = 3) {
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
             const payload = { contents: [ { role: "user", parts: [{ text: promptText }] } ] };
             if (systemInstructionText) { payload.systemInstruction = { parts: [{ text: systemInstructionText }] }; }
+            /* Sem chave, falhar rápido. Antes eram 3 tentativas com backoff (1s+2s+4s)
+               num erro que nunca ia passar: sete segundos de falso carregamento antes
+               do texto de reserva. Os 900ms abaixo são o "beat" da linha discada. */
+            if (!apiKey) {
+                await new Promise(r => setTimeout(r, 900));
+                throw new Error('SEM_CHAVE');
+            }
+
             let delay = 1000;
             for (let attempt = 0; attempt <= maxRetries; attempt++) {
                 try {
                     const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                     if (!response.ok) {
+                        /* 400/401/403 são permanentes: repetir só faz o usuário esperar. */
                         if (response.status === 429 && attempt < maxRetries) { await new Promise(r => setTimeout(r, delay)); delay *= 2; continue; }
+                        const permanente = response.status >= 400 && response.status < 500 && response.status !== 429;
+                        if (permanente) { throw new Error(`HTTP ${response.status}`); }
                         throw new Error(`HTTP Error: ${response.status}`);
                     }
                     const data = await response.json();
                     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (text) { return text; } else { throw new Error("Resposta vazia da API"); }
                 } catch (err) {
+                    if (String(err.message).startsWith('HTTP 4')) { throw err; }
                     if (attempt < maxRetries) { await new Promise(r => setTimeout(r, delay)); delay *= 2; } else { throw err; }
                 }
             }
@@ -939,53 +1490,53 @@ Responda em português brasileiro com riqueza de detalhes sensoriais e bom humor
             const query = input.value.trim();
             if (!query) return;
             playRetroSound('click');
-            history.innerHTML += `
+            history.insertAdjacentHTML('beforeend', `
                 <div class="flex items-start gap-3 justify-end">
-                    <div class="bg-purple-950/70 border border-neonPurple/50 rounded-2xl rounded-tr-none p-3.5 max-w-[85%] text-gray-100 leading-relaxed shadow">
+                    <div class="bg-purple-950/70 border border-neonPurple/50 rounded-none rounded-tr-none p-3.5 max-w-[85%] text-gray-100 leading-relaxed ">
                         <span class="text-xs font-retro text-neonPink block mb-1">VOCÊ:</span>
                         ${escapeHtml(query)}
                     </div>
                     <span class="text-2xl mt-0.5">👤</span>
                 </div>
-            `;
+            `);
             input.value = '';
             input.disabled = true;
             submitBtn.disabled = true;
             const loadingId = 'loading-' + Date.now();
-            history.innerHTML += `
+            history.insertAdjacentHTML('beforeend', `
                 <div class="flex items-start gap-3" id="${loadingId}">
                     <span class="text-2xl mt-0.5 animate-bounce">📼</span>
-                    <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-neonYellow font-mono text-xs flex items-center gap-2">
+                    <div class="bg-surface border border-gray-700 rounded-none rounded-tl-none p-3 max-w-[85%] text-neonYellow font-sans text-xs flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-neonYellow animate-ping"></span>
                         Seu Wilson está procurando na prateleira da locadora...
                     </div>
                 </div>
-            `;
+            `);
             history.scrollTop = history.scrollHeight;
             try {
                 const response = await callGeminiApi(query, SEU_WILSON_SYSTEM_PROMPT);
                 document.getElementById(loadingId)?.remove();
-                history.innerHTML += `
+                history.insertAdjacentHTML('beforeend', `
                     <div class="flex items-start gap-3">
                         <span class="text-2xl mt-0.5">👨🏻‍🦳</span>
-                        <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-gray-200 leading-relaxed shadow">
+                        <div class="bg-surface border border-gray-700 rounded-none rounded-tl-none p-3.5 max-w-[85%] text-gray-200 leading-relaxed ">
                             <span class="text-xs font-retro text-neonYellow block mb-1">SEU WILSON DA LOCADORA:</span>
                             <div class="whitespace-pre-line text-sm">${formatMarkdown(response)}</div>
                         </div>
                     </div>
-                `;
+                `);
                 playRetroSound('coin');
             } catch (err) {
                 document.getElementById(loadingId)?.remove();
-                history.innerHTML += `
+                history.insertAdjacentHTML('beforeend', `
                     <div class="flex items-start gap-3">
                         <span class="text-2xl mt-0.5">👨🏻‍🦳</span>
-                        <div class="bg-surface border border-gray-700 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-gray-200 leading-relaxed shadow">
+                        <div class="bg-surface border border-gray-700 rounded-none rounded-tl-none p-3.5 max-w-[85%] text-gray-200 leading-relaxed ">
                             <span class="text-xs font-retro text-neonYellow block mb-1">SEU WILSON DA LOCADORA:</span>
                             Opa, meu camarada! A linha discada do modem deu um chiado daqueles, mas eu ouvi sua pergunta! O segredo dos anos 90 era ter paciência gostosa para rebobinar a fita e guardar os cartuchos na vertical longe do sol. Dá uma olhada no nosso garimpo aqui embaixo que você vai achar relíquia fina!
                         </div>
                     </div>
-                `;
+                `);
             } finally {
                 input.disabled = false;
                 submitBtn.disabled = false;
@@ -1008,7 +1559,7 @@ Responda em português brasileiro com riqueza de detalhes sensoriais e bom humor
             const contentBox = document.getElementById('capsuleContent');
             const heading = document.getElementById('capsuleHeading');
             btn.disabled = true;
-            btn.innerHTML = `<span>⏳ SINTONIZANDO CANAL 3 E REBOBINANDO...</span>`;
+            btn.innerHTML = `<span>SINTONIZANDO CANAL 3…</span>`;
             playRetroSound('click');
             const prompt = `Escreva uma crônica memorialística rica, calorosa e cheia de nostalgia brasileira para o leitor "${name}".
 Ano: ${year}.
@@ -1033,7 +1584,7 @@ Inclua: sons característicos (tubo da TV estalando, fita K7, barulho de videoga
                 showToast('Sintonia Local', 'Crônica carregada do arquivo da locadora!', '📼');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = `<span>⏳ SINTONIZAR NESTE ANO E GERAR CRÔNICA</span>`;
+                btn.innerHTML = `<span>SINTONIZAR ESTE ANO</span>`;
             }
         }
 
@@ -1057,7 +1608,7 @@ Inclua: sons característicos (tubo da TV estalando, fita K7, barulho de videoga
             const contentBox = document.getElementById('mixtapeContent');
             const titleDisplay = document.getElementById('mixtapeTitleDisplay');
             btn.disabled = true;
-            btn.innerHTML = `<span>📼 GRAVANDO FITA COM CABEÇOTE MAGNÉTICO...</span>`;
+            btn.innerHTML = `<span>GRAVANDO NO CABEÇOTE…</span>`;
             playRetroSound('click');
             const prompt = `Crie uma seleção de Mixtape em fita K7 TDK de 60 minutos para o tema: "${genre}".
 Estruture com:
@@ -1086,7 +1637,7 @@ Estruture com:
                 showToast('Mixtape Clássica', 'Carregada do encarte físico!', '📼');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = `<span>📼 GRAVAR MIXTAPE NO GEMINI</span>`;
+                btn.innerHTML = `<span>GRAVAR A FITA</span>`;
             }
         }
 
@@ -1124,6 +1675,110 @@ Como Seu Wilson da locadora:
             }
         }
 
+
+        /* ==========================================================================
+           COMBOS DE SALA — laço sobre o addToCart existente. Sem motor de preço:
+           a alavanca de desconto continua sendo o cupom TETRA94 que já existe.
+           ========================================================================== */
+        const COMBOS = [
+            { nome: 'SESSÃO DA TARDE', ids: ['prod-tv-trinitron', 'prod-videocassete-gradiente'],
+              linha: 'A TV que aguentava a antena e o aparelho que rodava a fita. Juntos, é a sessão da tarde inteira de volta — com chiado.',
+              cor: 'neonCyan' },
+            { nome: 'DOMINGO DE 16 BITS', ids: ['prod-tv-trinitron', 'prod-console-snes'],
+              linha: 'Tubo de verdade e console revisado com capacitor novo. Jogo de 16 bits em tela plana fica borrado; aqui não.',
+              cor: 'neonPink' },
+            { nome: 'SOM DA VIZINHANÇA', ids: ['prod-boombox-cce', 'prod-walkman-sony'],
+              linha: 'O boombox pro churrasco e o Walkman pro ônibus. Duplo deck de um lado, auto-reverse do outro.',
+              cor: 'neonGreen' }
+        ];
+
+        /* Peças em restauro. Sem preço: ainda não se sabe se recupera. */
+        const BENCH_QUEUE = [
+            { nome: 'Videocassete Sharp 2 cabeças', ano: 1992, etapa: 'Correia de tração trocada; falta alinhar o cabeçote', pct: 70 },
+            { nome: 'Fliperama de mesa cocktail',   ano: 1991, etapa: 'Monitor de tubo remagnetizado; aguardando manche novo', pct: 45 },
+            { nome: 'Toca-discos Gradiente com agulha', ano: 1990, etapa: 'Motor limpo e lubrificado; testando rotação em 33 e 45', pct: 85 }
+        ];
+
+        function renderCombos() {
+            const grid = document.getElementById('combosGrid');
+            if (!grid) return;
+            grid.innerHTML = COMBOS.map(c => {
+                const itens = c.ids.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+                if (itens.length !== c.ids.length) return '';
+                const soma = itens.reduce((a, i) => a + i.price, 0);
+                const repetida = c.ids.includes('prod-tv-trinitron');
+                return `
+                <article class="bg-cardBg border-2 border-gray-800 bevel flex flex-col">
+                    <div class="bg-${c.cor} text-black font-pixel text-[10px] leading-relaxed px-3 py-2">${c.nome}</div>
+                    <div class="p-5 flex-1 flex flex-col">
+                        <p class="text-sm text-gray-300 leading-relaxed mb-4">${c.linha}</p>
+                        <ul class="space-y-2 mb-4 flex-1">
+                            ${itens.map(i => `
+                            <li class="flex items-start gap-2 text-xs text-gray-400">
+                                <span class="text-${c.cor} mt-0.5 shrink-0"><svg class="w-3 h-3" aria-hidden="true"><use href="#i-check"></use></svg></span>
+                                <span><span class="text-white">${i.title}</span> — R$ ${i.price.toFixed(2).replace('.', ',')}</span>
+                            </li>`).join('')}
+                        </ul>
+                        ${repetida ? '<p class="text-[11px] text-neonOrange mb-3 leading-relaxed">Usa a mesma TV Trinitron do outro combo — e ela é peça única.</p>' : ''}
+                        <div class="border-t-2 border-gray-800 pt-3 flex items-baseline justify-between mb-3">
+                            <span class="font-pixel text-[9px] leading-relaxed text-gray-400">OS DOIS</span>
+                            <span class="font-display font-black text-neonYellow text-lg">R$ ${soma.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <button onclick="addComboToCart(['${c.ids.join("','")}'])" class="w-full py-3 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-xs uppercase rounded-none transition shadow-retro-pink active:translate-x-px active:translate-y-px">Levar os dois</button>
+                    </div>
+                </article>`;
+            }).join('');
+        }
+
+        function renderBench() {
+            const grid = document.getElementById('benchGrid');
+            if (!grid) return;
+            grid.innerHTML = BENCH_QUEUE.map(b => `
+                <article class="bg-cardBg border-2 border-gray-800 bevel p-4">
+                    <div class="flex items-baseline justify-between mb-2">
+                        <h3 class="font-display font-bold text-white text-sm leading-tight">${b.nome}</h3>
+                        <span class="font-retro text-[15px] text-neonOrange shrink-0 ml-2">${b.ano}</span>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">${b.etapa}</p>
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="flex-1 h-3 bg-void border border-gray-700 overflow-hidden">
+                            <div class="h-full tex-hazard" style="width:${b.pct}%"></div>
+                        </div>
+                        <span class="font-retro text-[15px] text-gray-300 shrink-0">${b.pct}%</span>
+                    </div>
+                    <button onclick="notifyMeAboutBench('${b.nome.replace(/'/g, "\\'")}')" class="w-full py-2.5 bg-surface hover:bg-gray-800 border-2 border-gray-700 hover:border-neonOrange text-gray-300 font-display text-[11px] uppercase rounded-none transition">Avise-me quando chegar</button>
+                </article>`).join('');
+        }
+
+        /* Não reimplementa a checagem de duplicata: o addToCart já barra com toast próprio. */
+        function addComboToCart(ids) {
+            ids.forEach(id => addToCart(id));
+            toggleCartDrawer();
+        }
+
+        /* Leva ao formulário que já existe — não cria um segundo campo de e-mail. */
+        function notifyMeAboutBench(nome) {
+            playRetroSound('click');
+            const alvo = document.getElementById('alerta-estoque');
+            if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+                const campo = document.getElementById('newsletterEmail');
+                if (campo) campo.focus({ preventScroll: true });
+            }, 600);
+            showToast('Anotado na lista', nome + ' — avisamos quando sair da bancada.');
+        }
+
+        /* Linha do tempo -> Máquina de Crônicas. Só os 6 anos que o select tem. */
+        function tuneCapsuleYear(year) {
+            playRetroSound('click');
+            const sel = document.getElementById('capsuleYear');
+            if (sel) sel.value = year;
+            switchAiTab('capsule');
+            const alvo = document.getElementById('oraculo-ia');
+            if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showToast('Canal sintonizado', 'Ano ' + year + ' pronto na Máquina de Crônicas.');
+        }
+
         function getFilteredAndSortedProducts() {
             let list = [...PRODUCTS];
             if (currentFilterCategory !== 'todos') { list = list.filter(p => p.category === currentFilterCategory); }
@@ -1153,27 +1808,39 @@ Como Seu Wilson da locadora:
             emptyState.classList.add('hidden');
             counter.textContent = `Exibindo ${items.length} ${items.length === 1 ? 'relíquia única' : 'relíquias únicas'}`;
             grid.innerHTML = items.map(product => `
-                <div class="group bg-cardBg border border-gray-800 hover:border-neonYellow/70 rounded-2xl p-4 transition duration-300 flex flex-col justify-between hover:shadow-neon-yellow">
-                    <div>
-                        <div class="relative rounded-xl overflow-hidden aspect-square bg-black mb-3 border border-gray-800">
-                            <img src="${product.image}" alt="${product.title}" onerror="this.src='https://placehold.co/600x600/1e1b4b/facc15?text=Reliquia+Anos+90'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            <span class="absolute top-2 left-2 bg-neonPink text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow">${product.rarity}</span>
-                            <span class="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm text-neonYellow font-retro text-xs px-2 py-0.5 rounded border border-gray-700">ANO ${product.year}</span>
-                        </div>
-                        <h4 class="font-display font-bold text-white text-base group-hover:text-neonYellow transition line-clamp-1">${product.title}</h4>
-                        <p class="text-xs text-gray-400 mt-1 line-clamp-2 leading-relaxed">${product.desc}</p>
+                <article class="group bg-cardBg border-2 border-gray-800 hover:border-neonYellow rounded-none bevel transition duration-200 flex flex-col justify-between hover:shadow-retro-yellow">
+                    <!-- Lombada: a categoria fica na borda superior, como fita na prateleira -->
+                    <div class="bg-void border-b-2 border-black px-3 py-1.5 flex items-center justify-between">
+                        <span class="font-pixel text-[9px] leading-relaxed text-gray-400">${product.category.toUpperCase()}</span>
+                        <span class="font-retro text-[15px] text-neonYellow">${product.year}</span>
                     </div>
-                    <div class="mt-4 pt-3 border-t border-gray-800">
-                        <div class="flex items-baseline justify-between mb-3">
-                            <span class="text-[10px] font-mono text-gray-400">VALOR DO GARIMPO:</span>
+                    <div class="p-3 sm:p-4">
+                        <div class="relative overflow-hidden aspect-square bg-black mb-3 border-2 border-gray-800">
+                            <img src="${product.image}" alt="${product.title} — foto ilustrativa"
+                                 width="600" height="600" loading="lazy" decoding="async"
+                                 onerror="posterFallback(this)"
+                                 data-cat="${product.category}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-0 left-0 ${CONDITION_STYLE[product.condition] || 'bg-neonCyan text-black'} font-pixel text-[9px] leading-relaxed px-2 py-1">${product.condition}</span>
+                            <span class="absolute bottom-0 right-0 bg-neonPink text-black font-display text-[10px] font-bold px-2 py-0.5">${product.rarity}</span>
+                        </div>
+                        <h4 class="font-display font-bold text-white text-sm sm:text-base leading-tight group-hover:text-neonYellow transition line-clamp-2 min-h-[2.6em]">${product.title}</h4>
+                        <p class="text-xs text-gray-400 mt-1.5 line-clamp-2 leading-relaxed">${product.desc}</p>
+                    </div>
+                    <div class="px-3 sm:px-4 pb-3 sm:pb-4 pt-3 border-t-2 border-gray-800 mx-3 sm:mx-4 mb-0">
+                        <div class="flex items-baseline justify-between mb-0.5">
+                            <span class="font-pixel text-[9px] leading-relaxed text-gray-400">VALOR</span>
                             <span class="font-display font-black text-neonYellow text-lg">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="openProductModal('${product.id}')" class="py-2.5 px-2 bg-surface hover:bg-gray-800 border border-gray-700 text-gray-300 font-mono text-[11px] rounded-xl transition text-center active:scale-95">Detalhes</button>
-                            <button onclick="addToCart('${product.id}')" class="py-2.5 px-2 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-[11px] uppercase rounded-xl transition shadow-retro-black text-center active:scale-95">+ Cesto</button>
+                        <!-- CONFIRMAR COM O RICHARD: parcelamento sem valor de parcela é a forma
+                             segura — anunciar "sem juros" que não existe é infração -->
+                        <p class="text-[11px] text-gray-400 text-right mb-3">em até 12x no cartão</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <button onclick="openProductModal('${product.id}')" class="py-2.5 px-2 bg-surface hover:bg-gray-800 border-2 border-gray-700 text-gray-300 font-display text-[11px] uppercase rounded-none transition text-center active:translate-x-px active:translate-y-px">Detalhes</button>
+                            <button onclick="addToCart('${product.id}')" class="py-2.5 px-2 bg-neonYellow hover:bg-yellow-300 text-black font-display font-bold text-[11px] uppercase rounded-none transition shadow-retro-pink text-center active:translate-x-px active:translate-y-px">+ Cesto</button>
                         </div>
                     </div>
-                </div>
+                </article>
             `).join('');
         }
 
@@ -1198,8 +1865,10 @@ Como Seu Wilson da locadora:
 
         function clearSearch() {
             searchQuery = '';
-            const input = document.getElementById('searchInput');
-            if (input) input.value = '';
+            ['searchInput', 'searchInputMobile'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
             const clearBtn = document.getElementById('clearSearchBtn');
             if (clearBtn) clearBtn.classList.add('hidden');
             renderProducts();
@@ -1265,14 +1934,14 @@ Como Seu Wilson da locadora:
             subtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
             totalEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
             list.innerHTML = cart.map(item => `
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-void border border-gray-800">
-                    <img src="${item.image}" alt="${item.title}" class="w-14 h-14 object-cover rounded-lg border border-gray-700">
+                <div class="flex items-center gap-3 p-3 rounded-none bg-void border border-gray-800">
+                    <img src="${item.image}" alt="${item.title} — foto ilustrativa" width="56" height="56" loading="lazy" decoding="async" onerror="posterFallback(this)" data-cat="${item.category}" class="w-14 h-14 object-cover border-2 border-gray-700">
                     <div class="flex-1 min-w-0">
                         <h5 class="font-display font-bold text-white text-xs truncate">${item.title}</h5>
-                        <span class="text-[10px] font-mono text-neonPink">Peça Única • Ano ${item.year}</span>
+                        <span class="text-[10px] font-sans text-neonPink">Peça Única • Ano ${item.year}</span>
                         <div class="font-display font-bold text-neonYellow text-sm mt-0.5">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                     </div>
-                    <button onclick="removeFromCart('${item.id}')" class="p-2 text-gray-500 hover:text-red-400 text-xs font-mono">✕</button>
+                    <button onclick="removeFromCart('${item.id}')" class="p-2 text-gray-400 hover:text-red-400 text-xs font-sans">✕</button>
                 </div>
             `).join('');
         }
@@ -1333,7 +2002,10 @@ Como Seu Wilson da locadora:
                 <strong class="text-white">Origem do Garimpo:</strong> ${product.story}
             `;
             document.getElementById('modalProductPrice').textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
-            document.getElementById('modalProductImage').src = product.image;
+            const mImg = document.getElementById('modalProductImage');
+            mImg.dataset.cat = product.category;
+            mImg.src = product.image;
+            mImg.alt = product.title + ' — foto ilustrativa';
             const addBtn = document.getElementById('modalAddToCartBtn');
             addBtn.onclick = () => { addToCart(productId); closeProductModal(); };
             const storyBox = document.getElementById('modalAiStoryBox');
@@ -1353,7 +2025,7 @@ Como Seu Wilson da locadora:
             const storyBox = document.getElementById('modalAiStoryBox');
             storyBox.classList.remove('hidden');
             storyBox.innerHTML = `
-                <div class="flex items-center gap-2 text-neonCyan font-mono">
+                <div class="flex items-center gap-2 text-neonCyan font-sans">
                     <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
                     <span>Seu Wilson está soprando a fita e puxando as memórias de ${product.year}...</span>
                 </div>
@@ -1365,7 +2037,7 @@ Conte uma história nostálgica de 2 parágrafos sobre como era ter esse aparelh
                 const story = await callGeminiApi(prompt, SEU_WILSON_SYSTEM_PROMPT);
                 storyBox.innerHTML = `
                     <div class="border-l-2 border-neonYellow pl-3">
-                        <span class="text-neonYellow font-retro text-xs block mb-1">MEMÓRIA DO SEU WILSON:</span>
+                        <span class="text-neonYellow font-retro text-[15px] block mb-1">MEMÓRIA DO SEU WILSON:</span>
                         <div class="whitespace-pre-line">${formatMarkdown(story)}</div>
                     </div>
                 `;
@@ -1413,7 +2085,7 @@ Conte uma história nostálgica de 2 parágrafos sobre como era ter esse aparelh
             const container = document.getElementById('toastContainer');
             if (!container) return;
             const toast = document.createElement('div');
-            toast.className = 'pointer-events-auto bg-cardBg border-2 border-neonYellow p-3.5 rounded-xl shadow-retro-black flex items-center gap-3 text-xs max-w-xs transition transform translate-y-4 opacity-0';
+            toast.className = 'pointer-events-auto bg-cardBg border-2 border-neonYellow p-3.5 rounded-none shadow-retro-black flex items-center gap-3 text-xs max-w-xs transition transform translate-y-4 opacity-0';
             toast.innerHTML = `
                 <span class="text-2xl">${icon}</span>
                 <div>
@@ -1440,10 +2112,40 @@ Conte uma história nostálgica de 2 parágrafos sobre como era ter esse aparelh
             }
         }
 
+        /* Esc fecha o que estiver aberto — hoje só dava para fechar clicando fora. */
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            const modalProd = document.getElementById('productModal');
+            const modalChk  = document.getElementById('checkoutSuccessModal');
+            const gaveta    = document.getElementById('cartDrawer');
+            if (modalProd && !modalProd.classList.contains('hidden')) { closeProductModal(); return; }
+            if (modalChk  && !modalChk.classList.contains('hidden'))  { closeCheckoutModal(); return; }
+            if (gaveta    && !gaveta.classList.contains('hidden'))    { toggleCartDrawer(); }
+        });
+
         window.addEventListener('DOMContentLoaded', () => {
             renderProducts();
+            renderCombos();
+            renderBench();
             updateCartBadge();
         });
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Vocês testam mesmo antes de enviar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Cada eletrônico fica 48 horas ligado na bancada, em uso real: fita rodando de ponta a ponta no videocassete, jogo aberto no console, rádio sintonizado no boombox. O que não passa no teste não vai para o site."}},
+        {"@type":"Question","name":"Qual a garantia e o que ela cobre?","acceptedAnswer":{"@type":"Answer","text":"90 dias cobrindo funcionamento. Se a peça parar de funcionar por defeito que já existia, consertamos ou devolvemos o dinheiro. Não cobre pátina, risco e marcas de uso já descritas e fotografadas no anúncio."}},
+        {"@type":"Question","name":"É 110V ou 220V?","acceptedAnswer":{"@type":"Answer","text":"A voltagem vai na ficha de cada peça. Aparelhos com chave seletora são enviados na voltagem da sua cidade, com aviso colado no gabinete. Os de voltagem fixa estão identificados no anúncio."}},
+        {"@type":"Question","name":"Dá para ligar videocassete ou console numa TV moderna?","acceptedAnswer":{"@type":"Answer","text":"Sim, se a TV tiver entrada AV (plugues amarelo, vermelho e branco). Todo aparelho vai com cabo RCA incluso. Em TVs só com HDMI é preciso um conversor RCA para HDMI."}},
+        {"@type":"Question","name":"Posso desistir depois de comprar?","acceptedAnswer":{"@type":"Answer","text":"Sim, em até 7 dias corridos após receber, conforme o artigo 49 do Código de Defesa do Consumidor. O frete da devolução é por nossa conta."}},
+        {"@type":"Question","name":"E se chegar quebrado no transporte?","acceptedAnswer":{"@type":"Answer","text":"Toda peça sai com três camadas de plástico-bolha, canto reforçado e caixa sob medida. Em caso de avaria, peça única tem o valor devolvido integralmente, porque não existe outra igual para troca."}},
+        {"@type":"Question","name":"Quanto tempo leva para chegar?","acceptedAnswer":{"@type":"Answer","text":"O prazo é calculado por CEP e aparece no fechamento do pedido, antes do pagamento. Móveis grandes e fliperamas vão de transportadora com entrega agendada."}},
+        {"@type":"Question","name":"A foto é da peça de verdade?","acceptedAnswer":{"@type":"Answer","text":"Ainda não: as imagens desta página são ilustrativas e mostram o modelo, não a unidade à venda. O acervo está sendo fotografado na bancada peça a peça."}}
+      ]
+    }
     </script>
 </body>
 </html>
